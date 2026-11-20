@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_20_230100) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_21_090000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -250,6 +250,23 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_20_230100) do
     t.index ["user_id"], name: "index_waitlist_entries_on_user_id"
   end
 
+  create_table "word_reviews", force: :cascade do |t|
+    t.bigint "user_word_id", null: false
+    t.bigint "user_id", null: false
+    t.integer "rating", null: false
+    t.integer "state", null: false
+    t.integer "elapsed_days", default: 0, null: false
+    t.integer "scheduled_days", default: 0, null: false
+    t.datetime "due_before", null: false
+    t.datetime "due_after", null: false
+    t.datetime "reviewed_at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id", "reviewed_at"], name: "index_word_reviews_on_user_id_and_reviewed_at"
+    t.index ["user_id"], name: "index_word_reviews_on_user_id"
+    t.index ["user_word_id"], name: "index_word_reviews_on_user_word_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "bubbles", "characters"
@@ -270,4 +287,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_20_230100) do
   add_foreign_key "users", "language_pairs"
   add_foreign_key "waitlist_entries", "language_pairs"
   add_foreign_key "waitlist_entries", "users"
+  add_foreign_key "word_reviews", "user_words", on_delete: :cascade
+  add_foreign_key "word_reviews", "users"
 end

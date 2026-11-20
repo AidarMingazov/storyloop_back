@@ -66,3 +66,5 @@ group :test do
 end
 
 gem "json_schemer", "~> 2.5"
+
+gem "fsrs_ruby", "~> 1.0"

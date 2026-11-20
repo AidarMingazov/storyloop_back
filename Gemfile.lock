@@ -120,6 +120,7 @@ GEM
     ffi (1.17.4-arm-linux-musl)
     ffi (1.17.4-x86_64-linux-gnu)
     ffi (1.17.4-x86_64-linux-musl)
+    fsrs_ruby (1.0.0)
     fugit (1.14.0)
       et-orbi (~> 1.4)
       raabro (~> 1.4)
@@ -407,6 +408,7 @@ DEPENDENCIES
   bundler-audit
   capybara
   debug
+  fsrs_ruby (~> 1.0)
   image_processing (~> 1.2)
   importmap-rails
   json_schemer (~> 2.5)

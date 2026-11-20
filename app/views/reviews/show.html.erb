@@ -1,18 +1,93 @@
-<% content_for :title, t("reader.review.title") %>
-<h1 class="font-serif text-4xl font-semibold text-ink-strong mb-2"><%= t("reader.review.title") %></h1>
-<p class="text-muted mb-6"><%= t("reader.review.soon") %></p>
-<% if @words.empty? %>
-  <p class="card p-6"><%= t("reader.review.empty") %></p>
-<% else %>
-  <ul class="grid gap-3">
-    <% @words.each do |word| %>
-      <li class="card p-4">
-        <p class="font-serif text-xl font-semibold text-ink-strong"><span class="marker"><%= word.lexeme.lemma %></span>
-          <% if word.lexeme.romanization %><span class="text-sm font-sans font-normal text-muted"><%= word.lexeme.romanization %></span><% end %></p>
-        <p class="mt-1"><%= word.lexeme.translations.values.first %></p>
-        <% if word.source_token %><p class="text-sm text-muted mt-1 font-serif"><%= word.source_token.bubble.text %></p><% end %>
-      </li>
-    <% end %>
-  </ul>
+<% content_for :title, t("review.title") %>
+<header class="flex items-center justify-between gap-3 mb-5">
+  <%= link_to root_path, class: "reader-icon-btn -ml-3 text-ink", aria: { label: t("reader.back") } do %>
+    <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <% end %>
+  <h1 class="font-serif text-2xl font-semibold text-ink-strong"><%= t("review.title") %></h1>
+  <span class="w-8"></span>
+</header>
+
+<%= turbo_frame_tag "review" do %>
+  <% if @word %>
+    <% pair = @word.language_pair %>
+    <% lang = pair&.target_lang || @word.lexeme.language %>
+    <% token = @word.source_token %>
+    <p class="mb-3 flex justify-between text-xs font-semibold uppercase tracking-wider text-muted tabular-nums">
+      <span><%= t("review.remaining", count: @remaining) %></span>
+      <span><%= t("review.reviewed_today", count: @reviewed_today) %></span>
+    </p>
+
+    <article class="card p-5 sm:p-6" data-controller="flashcard" data-flashcard-lang-value="<%= lang %>"
+             data-flashcard-speech-value="<%= @word.lexeme.lemma %>" data-action="keydown@window->flashcard#key">
+      <p class="label"><%= token ? t("review.question") : t("review.question_word") %></p>
+      <% if token %>
+        <p class="font-serif text-2xl leading-snug text-ink-strong review-text" lang="<%= lang %>"><%= review_sentence(token) %></p>
+        <p class="text-xs text-muted mt-2"><%= t("review.from_episode", title: token.bubble.panel.episode.title) %></p>
+      <% else %>
+        <p class="font-serif text-3xl font-semibold text-ink-strong review-text" lang="<%= lang %>"><%= @word.lexeme.lemma %></p>
+      <% end %>
+
+      <button type="button" class="btn-primary w-full mt-6 h-12" data-flashcard-target="flip" data-action="flashcard#show">
+        <%= t("review.show_answer") %>
+      </button>
+
+      <div data-flashcard-target="back" hidden>
+        <hr class="my-5 border-edge">
+        <div class="flex items-start justify-between gap-3">
+          <div class="min-w-0">
+            <p class="font-serif text-3xl font-semibold text-ink-strong review-text" lang="<%= lang %>"><%= @word.lexeme.lemma %></p>
+            <% if @word.lexeme.romanization %><p class="text-sm text-muted"><%= @word.lexeme.romanization %></p><% end %>
+          </div>
+          <button type="button" class="btn-secondary size-11 shrink-0 px-0" data-action="flashcard#speak"
+                  aria-label="<%= t("review.listen") %>" title="<%= t("review.listen") %>">🔊</button>
+        </div>
+        <p class="text-xl font-semibold text-ink-strong mt-3"><%= @word.lexeme.translation_for(pair&.native_lang) %></p>
+
+        <% if token %>
+          <% if token.context_translation.present? && token.context_translation != @word.lexeme.translation_for(pair&.native_lang) %>
+            <p class="mt-3 text-sm"><span class="text-muted"><%= t("review.in_context") %>:</span> <span lang="<%= lang %>"><%= token.surface %></span> — <%= token.context_translation %></p>
+          <% end %>
+          <% if token.context_note.present? %><p class="mt-2 text-sm text-muted"><%= token.context_note %></p><% end %>
+          <% if token.breakdown.present? || token.politeness %>
+            <p class="mt-3 flex flex-wrap gap-1.5 text-xs">
+              <% Array(token.breakdown).each do |part| %>
+                <span class="badge"><b class="font-semibold" lang="<%= lang %>"><%= part["part"] %></b>&nbsp;· <%= t("reader.js.roles.#{part["role"]}", default: part["role"]) %><%= " — #{part["meaning"]}" if part["meaning"].present? %></span>
+              <% end %>
+              <% if token.politeness %><span class="badge"><%= t("reader.js.politeness.#{token.politeness}") %></span><% end %>
+            </p>
+          <% end %>
+          <% if token.bubble.translation.present? %>
+            <p class="mt-4 text-sm"><span class="text-muted"><%= t("review.sentence") %>:</span> <%= token.bubble.translation %></p>
+          <% end %>
+        <% end %>
+
+        <div class="grid grid-cols-4 gap-2 mt-6">
+          <% ReviewScheduler::RATINGS.each_key.with_index(1) do |rating, key| %>
+            <%= button_to answer_review_path, params: { user_word_id: @word.id, rating: rating },
+                  form: { class: "contents" },
+                  class: "review-rate review-rate--#{rating}", data: { flashcard_key: key, turbo_submits_with: "…" } do %>
+              <span class="text-sm font-semibold"><%= t("review.ratings.#{rating}") %></span>
+              <span class="text-xs opacity-75 tabular-nums"><%= review_interval(@intervals[rating]) %></span>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </article>
+  <% elsif @reader&.user_words&.exists? %>
+    <section class="card p-6 text-center">
+      <p class="text-4xl" aria-hidden="true">✓</p>
+      <h2 class="font-serif text-3xl font-semibold text-ink-strong mt-2"><%= t("review.done.title") %></h2>
+      <p class="mt-2"><%= t("review.done.body", count: @reviewed_today) %></p>
+      <% if @next_due %>
+        <p class="text-sm text-muted mt-1"><%= t("review.done.next", interval: review_interval(@next_due - Time.current)) %></p>
+      <% end %>
+      <%= link_to t("review.done.read"), root_path, class: "btn-primary mt-6", data: { turbo_frame: "_top" } %>
+    </section>
+  <% else %>
+    <section class="card p-6 text-center">
+      <h2 class="font-serif text-3xl font-semibold text-ink-strong"><%= t("review.empty.title") %></h2>
+      <p class="mt-3"><%= t("review.empty.body") %></p>
+      <%= link_to t("review.empty.read"), root_path, class: "btn-primary mt-6", data: { turbo_frame: "_top" } %>
+    </section>
+  <% end %>
 <% end %>
-<%= link_to t("reader.locked.back"), root_path, class: "btn-secondary mt-8" %>

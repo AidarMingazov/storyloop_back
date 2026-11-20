@@ -9,6 +9,7 @@ class EpisodesController < ApplicationController
     raise ActiveRecord::RecordNotFound unless @episode.published? || resume_session&.user&.admin?
 
     @reader = current_reader
+    @reader.update!(language_pair: @episode.series.language_pair) if @reader.language_pair.nil?
     I18n.with_locale(@episode.series.language_pair.ui_locale) do
       if @reader.can_read?(@episode)
         @payload = EpisodePayload.new(@episode, user: @reader)

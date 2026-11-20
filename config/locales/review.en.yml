@@ -1,0 +1,39 @@
+en:
+  review:
+    title: Review
+    remaining: "Left: %{count}"
+    reviewed_today: "Today: %{count}"
+    question: What does the highlighted word mean?
+    question_word: What does this word mean?
+    show_answer: Show answer
+    in_context: In this sentence
+    sentence: Sentence
+    listen: Listen
+    from_episode: "From “%{title}”"
+    ratings:
+      again: Again
+      hard: Hard
+      good: Good
+      easy: Easy
+    done:
+      title: All done for today
+      body: "Reviewed today: %{count}"
+      next: "Next review in %{interval}"
+      read: Keep reading
+    empty:
+      title: Nothing to review yet
+      body: Tap words while you read and save them. They come back here right when you're about to forget them.
+      read: Go to stories
+    interval:
+      under_minute: "<1 min"
+      minutes: "%{count} min"
+      hours: "%{count} h"
+      days:
+        one: "%{count} day"
+        other: "%{count} days"
+      months:
+        one: "%{count} mo"
+        other: "%{count} mo"
+      years:
+        one: "%{count} yr"
+        other: "%{count} yrs"

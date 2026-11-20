@@ -1,0 +1,13 @@
+en:
+  home:
+    tagline: Read stories, tap words, review.
+    due_today:
+      zero: No words to review today
+      one: "%{count} word to review today"
+      other: "%{count} words to review today"
+    review: Review
+    continue: Continue reading
+    next_up: Next episode
+    panel_progress: "%{done} of %{total}"
+    my_words: My words
+    completed: read

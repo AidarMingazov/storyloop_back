@@ -8,7 +8,9 @@ Rails.application.routes.draw do
     resource :progress, only: :update, controller: "reading_progresses"
   end
   resources :user_words, only: %i[create destroy], param: :lexeme_id
-  resource :review, only: :show
+  resource :review, only: :show do
+    post :answer
+  end
   resources :passwords, param: :token
 
   namespace :admin do

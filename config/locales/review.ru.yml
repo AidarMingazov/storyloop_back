@@ -1,0 +1,33 @@
+ru:
+  review:
+    title: Повторение
+    remaining: "Осталось: %{count}"
+    reviewed_today: "Сегодня: %{count}"
+    question: Что значит выделенное слово?
+    question_word: Что значит это слово?
+    show_answer: Показать ответ
+    in_context: В этом предложении
+    sentence: Перевод фразы
+    listen: Слушать
+    from_episode: "Из эпизода «%{title}»"
+    ratings:
+      again: Снова
+      hard: Трудно
+      good: Хорошо
+      easy: Легко
+    done:
+      title: На сегодня всё
+      body: "Повторено сегодня: %{count}"
+      next: "Следующее повторение через %{interval}"
+      read: Читать дальше
+    empty:
+      title: Пока нечего повторять
+      body: Нажимайте на слова во время чтения и сохраняйте их. Здесь они вернутся в нужный момент, чтобы запомниться.
+      read: К историям
+    interval:
+      under_minute: "<1 мин"
+      minutes: "%{count} мин"
+      hours: "%{count} ч"
+      days: "%{count} д"
+      months: "%{count} мес"
+      years: "%{count} г"

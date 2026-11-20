@@ -1,0 +1,23 @@
+# Prices in USD, checked 2026-11-21 in official docs. Re-check in each console before trusting totals.
+# LLM: per 1M tokens. Image: per generated image (+ extra reference). TTS: per 1M billable characters.
+deepseek:
+  # https://api-docs.deepseek.com/quick_start/pricing — peak prices; off-peak is half (see Probe.deepseek_peak?)
+  deepseek-flash:   { input: 0.30, input_cached: 0.006, output: 1.20 }
+  deepseek-v4-pro:  { input: 1.32, input_cached: 0.044, output: 3.96 }
+qwen:
+  # https://www.alibabacloud.com/help/en/model-studio/model-pricing — International (Singapore), ≤256K tokens
+  qwen3.5-plus:     { input: 0.40, output: 2.40 }
+  qwen3.6-plus:     { input: 0.50, output: 3.00 }
+  qwen3.7-plus:     { input: 0.40, output: 1.60 }
+  qwen-plus-latest: { input: 0.40, output: 1.20 }
+anthropic:
+  # reference model for comparison only
+  claude-sonnet-5-5: { input: 3.00, output: 15.00 }
+openrouter: {}      # OpenRouter returns usage.cost itself
+byteplus:
+  # Not on the docs page; ~$0.035–0.045/image by third parties. Fix after the first bill in the ModelArk console.
+  default:          { image: 0.045, extra_reference: 0.003 }
+minimax:
+  # https://platform.minimax.io/docs/guides/pricing-speech — billed by extra_info.usage_characters
+  speech-2.8-turbo: { per_million_chars: 60 }
+  speech-2.8-hd:    { per_million_chars: 100 }
