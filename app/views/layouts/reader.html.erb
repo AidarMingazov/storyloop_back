@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="<%= I18n.locale %>">
+  <head>
+    <title><%= content_for(:title) || "Storyloop" %></title>
+    <%# Apply the night theme before first paint; reader_controller keeps it in sync. %>
+    <script>
+      try { if (localStorage.getItem("storyloop:night") === "1") document.documentElement.dataset.theme = "night" } catch (e) {}
+    </script>
+    <%= render "layouts/head" %>
+  </head>
+
+  <body class="min-h-dvh">
+    <%= yield %>
+  </body>
+</html>

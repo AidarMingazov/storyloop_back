@@ -1,0 +1,56 @@
+ru:
+  reader:
+    back: Назад
+    episode: "Эпизод %{number}"
+    settings: Настройки
+    ai_notice: Иллюстрации созданы с помощью AI
+    locked:
+      title: Этот эпизод — по подписке
+      body: Первые эпизоды каждой серии бесплатные. Остальные откроются с подпиской.
+      back: К библиотеке
+    review:
+      title: Мои слова
+      empty: Пока нет сохранённых слов. Нажмите на слово в истории и сохраните его.
+      soon: Повторение по карточкам появится совсем скоро.
+    js:
+      romanization: Романизация
+      highlight_saved: Подсвечивать сохранённые слова
+      night_mode: Ночной режим
+      save_word: Сохранить слово
+      saved: Сохранено
+      listen: Слушать
+      translate_phrase: Перевод фразы
+      close: Закрыть
+      next_message: Дальше
+      summary_title: Эпизод прочитан
+      new_words: Новые слова
+      saved_count: Сохранено
+      review_words: Повторить слова
+      next_episode: Следующий эпизод
+      next_locked: Следующий эпизод — по подписке
+      back_to_library: К библиотеке
+      save_failed: Не получилось сохранить. Проверьте интернет и попробуйте ещё раз.
+      pos:
+        noun: существительное
+        verb: глагол
+        adjective: прилагательное
+        adverb: наречие
+        pronoun: местоимение
+        preposition: предлог
+        conjunction: союз
+        interjection: междометие
+        determiner: определитель
+        numeral: числительное
+        particle: частица
+        phrasal_verb: фразовый глагол
+        idiom: идиома
+        phrase: выражение
+      politeness:
+        casual: 반말 · неформально
+        polite: 해요체 · вежливо
+        formal: 합쇼체 · официально
+      roles:
+        stem: основа
+        ending: окончание
+        particle: частица
+        suffix: суффикс

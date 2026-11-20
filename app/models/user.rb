@@ -15,4 +15,13 @@ class User < ApplicationRecord
   validates :self_level, inclusion: { in: Cefr::LEVELS }, allow_nil: true
 
   scope :registered, -> { where(guest: false) }
+
+  # Free episodes are open to everyone; paid ones need a subscription (wave 4 paywall, wave 7 Stripe).
+  def can_read?(episode)
+    admin? || episode.free?
+  end
+
+  def saved?(lexeme)
+    user_words.exists?(lexeme_id: lexeme.id)
+  end
 end

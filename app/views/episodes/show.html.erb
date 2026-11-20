@@ -1,0 +1,48 @@
+<% content_for :title, "#{@episode.title} · #{@episode.series.title}" %>
+<% pair = @episode.series.language_pair %>
+<div class="reader" data-format="<%= @episode.format %>" data-controller="reader"
+     data-reader-i18n-value="<%= t("reader.js").to_json %>"
+     data-reader-progress-url-value="<%= episode_progress_path(@episode) %>"
+     data-reader-save-url-value="<%= user_words_path %>"
+     data-reader-review-url-value="<%= review_path %>"
+     data-reader-library-url-value="<%= root_path %>"
+     data-reader-episode-url-value="<%= episode_path("__ID__") %>">
+  <script type="application/json" data-reader-target="payload"><%= json_escape(@payload.to_json).html_safe %></script>
+
+  <header class="reader-header">
+    <div class="reader-header-row">
+      <%= link_to root_path, class: "reader-icon-btn", aria: { label: t("reader.back") } do %>
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <% end %>
+      <div class="min-w-0 flex-1 text-center">
+        <p class="truncate text-sm font-semibold"><%= @episode.series.title %></p>
+        <p class="truncate text-xs reader-muted"><%= t("reader.episode", number: @episode.number) %> · <%= @episode.title %> · <%= @episode.cefr_level %></p>
+      </div>
+      <button type="button" class="reader-icon-btn" data-action="reader#toggleSettings" aria-label="<%= t("reader.settings") %>"
+              aria-expanded="false" aria-controls="reader-settings" data-reader-target="settingsButton">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="16" cy="7" r="2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="10" cy="17" r="2" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      </button>
+    </div>
+    <div class="reader-progress"><i data-reader-target="progressBar"></i></div>
+
+    <div id="reader-settings" class="reader-settings" data-reader-target="settings" hidden>
+      <% if pair.target_lang == "ko" %>
+        <label class="reader-switch"><span><%= t("reader.js.romanization") %></span>
+          <input type="checkbox" id="pref_romanization" data-reader-target="romanizationToggle" data-action="reader#setPref" data-pref="romanization"></label>
+      <% end %>
+      <label class="reader-switch"><span><%= t("reader.js.highlight_saved") %></span>
+        <input type="checkbox" id="pref_highlight" data-reader-target="highlightToggle" data-action="reader#setPref" data-pref="highlight"></label>
+      <label class="reader-switch"><span><%= t("reader.js.night_mode") %></span>
+        <input type="checkbox" id="pref_night" data-reader-target="nightToggle" data-action="reader#setPref" data-pref="night"></label>
+    </div>
+  </header>
+
+  <main class="reader-stage" data-reader-target="stage" lang="<%= pair.target_lang %>"
+        data-action="click->reader#stageClick keydown->reader#stageKeydown"></main>
+
+  <section class="reader-summary" data-reader-target="summary" hidden aria-live="polite"></section>
+
+  <p class="reader-ai-notice"><%= t("reader.ai_notice") %></p>
+
+  <aside class="word-sheet" data-reader-target="sheet" role="dialog" aria-modal="false" aria-hidden="true" tabindex="-1"></aside>
+</div>

@@ -49,6 +49,7 @@ services:
       <<: *app-env
       RAILS_ENV: test
       SELENIUM_REMOTE_URL: http://chrome:4444
+      PARALLEL_WORKERS: "2" # Docker Desktop has ~3 GB; 8 workers run out of memory
     depends_on:
       db:
         condition: service_healthy

@@ -19,7 +19,7 @@
             <% series.episodes.select(&:published?).each do |episode| %>
               <li class="flex items-center gap-2">
                 <span class="tabular-nums text-muted w-5"><%= episode.number %></span>
-                <span class="text-ink-strong"><%= episode.title %></span>
+                <%= link_to episode.title, episode_path(episode), class: "text-ink-strong underline decoration-edge underline-offset-4 hover:decoration-ink-strong" %>
                 <span class="text-muted">· <%= episode.format %></span>
                 <% unless episode.free? %><span class="badge ml-auto">🔒</span><% end %>
               </li>
@@ -31,4 +31,4 @@
   </section>
 <% end %>
 
-<p class="text-sm text-muted">Читалка появится в волне 2.</p>
+<p class="text-sm text-muted"><%= link_to "Мои слова", review_path, class: "underline" %></p>

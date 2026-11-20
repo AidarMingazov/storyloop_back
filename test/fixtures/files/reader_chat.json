@@ -1,0 +1,130 @@
+{
+  "language_pair": "ko-en",
+  "series": {
+    "slug": "reader-seoul",
+    "title": "Test Seoul",
+    "cefr_level": "A1",
+    "characters": [
+      {
+        "key": "jisoo",
+        "name": "Jisoo",
+        "protagonist": true
+      },
+      {
+        "key": "minho",
+        "name": "Minho"
+      }
+    ]
+  },
+  "episode": {
+    "number": 1,
+    "title": "Tired",
+    "format": "chat",
+    "free": true,
+    "panels": [
+      {
+        "bubbles": [
+          {
+            "kind": "chat_message",
+            "character": "minho",
+            "text": "지수 씨, 안녕하세요!",
+            "translation": "Hi, Jisoo!",
+            "tokens": [
+              {
+                "surface": "지수",
+                "lemma": "지수",
+                "pos": "noun",
+                "translation": "Jisoo",
+                "romanization": "Jisu"
+              },
+              {
+                "surface": "씨",
+                "lemma": "씨",
+                "pos": "noun",
+                "translation": "Ms. (polite)",
+                "romanization": "ssi"
+              },
+              {
+                "surface": "안녕하세요",
+                "lemma": "안녕하다",
+                "pos": "adjective",
+                "translation": "hello",
+                "romanization": "annyeonghaseyo",
+                "politeness": "polite"
+              }
+            ]
+          },
+          {
+            "kind": "chat_message",
+            "character": "jisoo",
+            "text": "😴 오늘 너무 피곤해요!",
+            "translation": "😴 I'm so tired today!",
+            "tokens": [
+              {
+                "surface": "오늘",
+                "lemma": "오늘",
+                "pos": "noun",
+                "translation": "today",
+                "romanization": "oneul"
+              },
+              {
+                "surface": "너무",
+                "lemma": "너무",
+                "pos": "adverb",
+                "translation": "so, too"
+              },
+              {
+                "surface": "피곤해요",
+                "lemma": "피곤하다",
+                "pos": "adjective",
+                "translation": "(I'm) tired",
+                "lemma_translation": "to be tired",
+                "romanization": "pigonhaeyo",
+                "lemma_romanization": "pigonhada",
+                "politeness": "polite",
+                "breakdown": [
+                  {
+                    "part": "피곤하",
+                    "role": "stem",
+                    "meaning": "be tired"
+                  },
+                  {
+                    "part": "-아/어요",
+                    "role": "ending",
+                    "meaning": "polite present"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "chat_message",
+            "character": "minho",
+            "text": "푹 쉬세요.",
+            "translation": "Get some good rest.",
+            "tokens": [
+              {
+                "surface": "푹",
+                "lemma": "푹",
+                "pos": "adverb",
+                "translation": "deeply, well",
+                "romanization": "puk"
+              },
+              {
+                "surface": "쉬세요",
+                "lemma": "쉬다",
+                "pos": "verb",
+                "translation": "(please) rest",
+                "romanization": "swiseyo",
+                "politeness": "polite"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "target_words": [
+      "피곤하다"
+    ]
+  }
+}

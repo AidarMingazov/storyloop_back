@@ -77,3 +77,188 @@
   .badge-generating { @apply badge bg-[#e3ecfb] text-link; }
   .badge-archived { @apply badge text-muted; }
 }
+
+/* ───────────── Reader ─────────────
+   Light: style A (paper + marker). Night: style D (dark stage, coral tap, violet saved).
+   Story text uses the serif face for English and Noto Sans KR for Korean (webtoon convention). */
+@layer components {
+  .reader {
+    --r-bg: var(--color-paper);
+    --r-fg: var(--color-ink);
+    --r-muted: var(--color-muted);
+    --r-edge: var(--color-edge);
+    --r-sheet: var(--color-panel);
+    --r-chip: var(--color-recess);
+    --r-accent: var(--color-ink-strong);
+    --r-on-accent: #fff;
+    --r-tap-bg: var(--color-marker-soft);
+    --r-tap-fg: var(--color-ink-strong);
+    --r-saved-bg: var(--color-marker);
+    --r-saved-shadow: none;
+    --r-saved-fg: var(--color-ink-strong);
+    --r-me-bg: var(--color-ink-strong);
+    --r-me-fg: #fff;
+    --r-them-bg: var(--color-panel);
+    min-height: 100dvh;
+    background: var(--r-bg);
+    color: var(--r-fg);
+  }
+  .night .reader, [data-theme=night] .reader {
+    --r-bg: var(--color-night);
+    --r-fg: var(--color-night-fg);
+    --r-muted: #9a9aa6;
+    --r-edge: var(--color-night-edge);
+    --r-sheet: var(--color-night-sheet);
+    --r-chip: #26262f;
+    --r-accent: var(--color-coral);
+    --r-on-accent: #1a0d09;
+    --r-tap-bg: #ffd9cf;
+    --r-tap-fg: #7a2a17;
+    --r-saved-bg: transparent;
+    --r-saved-shadow: inset 0 -2px 0 var(--color-violet);
+    --r-saved-fg: inherit;
+    --r-me-bg: var(--color-violet);
+    --r-me-fg: #fff;
+    --r-them-bg: #23232c;
+  }
+  .reader-muted { color: var(--r-muted); }
+
+  .reader-header {
+    position: sticky; top: 0; z-index: 20;
+    background: color-mix(in srgb, var(--r-bg) 92%, transparent);
+    backdrop-filter: blur(8px);
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+  .reader-header-row { @apply mx-auto flex max-w-[640px] items-center gap-2 px-2 py-1.5; }
+  .reader-icon-btn {
+    @apply inline-flex size-11 shrink-0 items-center justify-center rounded-full;
+    color: var(--r-fg);
+  }
+  .reader-icon-btn:hover { background: var(--r-chip); }
+  .reader-progress { height: 3px; background: var(--r-edge); }
+  .reader-progress i { display: block; height: 100%; width: 0; background: var(--r-accent); transition: width .3s ease; }
+
+  .reader-settings {
+    @apply mx-auto grid max-w-[640px] gap-1 px-4 pb-3 pt-1;
+    border-bottom: 1px solid var(--r-edge);
+  }
+  .reader-switch { @apply flex min-h-11 cursor-pointer items-center justify-between gap-4 text-sm; }
+  .reader-switch input { @apply size-5; accent-color: var(--r-accent); }
+
+  .reader-stage { @apply mx-auto max-w-[640px]; }
+  .reader-ai-notice { @apply mx-auto max-w-[640px] px-4 pt-6 pb-[calc(2rem+env(safe-area-inset-bottom))] text-center text-xs; color: var(--r-muted); }
+
+  /* story text + tokens */
+  .story-text { font-family: var(--font-serif); line-height: 1.35; }
+  .story-text:lang(ko), [lang=ko] .story-text { font-family: "Noto Sans KR", var(--font-sans); word-break: keep-all; }
+  .tok { cursor: pointer; border-radius: 3px; box-decoration-break: clone; -webkit-box-decoration-break: clone; transition: background-color .15s; }
+  .tok:focus-visible { outline: 2px solid var(--color-link); outline-offset: 1px; }
+  .reader[data-highlight="on"] .tok.is-saved { background: var(--r-saved-bg); box-shadow: var(--r-saved-shadow); color: var(--r-saved-fg); }
+  .tok.is-active, .reader[data-highlight="on"] .tok.is-active { background: var(--r-tap-bg); color: var(--r-tap-fg); box-shadow: 0 0 0 2px var(--r-tap-bg); }
+  .tok-rt { display: none; font-family: var(--font-sans); font-size: .55em; line-height: 1.1; letter-spacing: .01em; color: var(--r-muted); }
+  .reader[data-romanization="on"] .tok--roman { display: inline-flex; flex-direction: column; align-items: center; vertical-align: top; }
+  .reader[data-romanization="on"] .tok-rt { display: block; }
+
+  /* webtoon */
+  .wt-panel { position: relative; container-type: inline-size; overflow: hidden; background: var(--r-chip); margin: 0 0 6px; scroll-margin-top: 64px; }
+  .wt-panel img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .wt-bubble {
+    position: absolute; background: #fff; color: #161616; border: 1px solid #dbd7cd;
+    border-radius: 1.1em; padding: .55em .8em; font-size: clamp(14px, 4.3cqw, 22px);
+    box-shadow: 0 1px 0 rgb(0 0 0 / .04);
+  }
+  .wt-bubble .tok-rt { color: #7b7a79; }
+  .wt-bubble--thought { border-style: dashed; font-style: italic; }
+  .wt-bubble--narration { background: #f5f1e8; border-radius: .35em; }
+  .wt-bubble--narration .story-text { font-family: var(--font-sans); font-size: .92em; }
+  .bubble-translate {
+    position: absolute; right: -.55em; top: -.55em; width: 1.7em; height: 1.7em; border-radius: 999px;
+    display: inline-flex; align-items: center; justify-content: center; font-size: .72em; font-weight: 700;
+    background: #161616; color: #fff; font-family: var(--font-sans); font-style: normal;
+  }
+  .bubble-translate::after { content: ""; position: absolute; inset: -10px; } /* 44px touch target */
+  .wt-caption { padding: .75rem 1rem; }
+
+  /* chat */
+  .chat { @apply grid gap-2 px-3 pt-4 pb-28; }
+  .chat-msg { display: flex; gap: .5rem; align-items: flex-end; max-width: 86%; animation: chat-in .22s ease-out; }
+  .chat-msg--me { margin-left: auto; flex-direction: row-reverse; }
+  .chat-msg--narration { max-width: 100%; justify-content: center; font-size: .85rem; color: var(--r-muted); text-align: center; }
+  .chat-avatar {
+    width: 2rem; height: 2rem; border-radius: 999px; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center;
+    font-size: .8rem; font-weight: 700; color: #fff; background: var(--avatar-bg, #7b7a79);
+  }
+  .chat-avatar--hidden { visibility: hidden; }
+  .chat-name { font-size: .75rem; color: var(--r-muted); margin: 0 0 .15rem .25rem; }
+  .chat-bubble {
+    position: relative; padding: .6rem .85rem; border-radius: 1.1rem; font-size: 1.08rem;
+    background: var(--r-them-bg); border: 1px solid var(--r-edge); border-bottom-left-radius: .35rem;
+  }
+  .chat-msg--me .chat-bubble { background: var(--r-me-bg); color: var(--r-me-fg); border-color: transparent; border-bottom-left-radius: 1.1rem; border-bottom-right-radius: .35rem; }
+  .chat-msg--me .tok-rt { color: rgb(255 255 255 / .7); }
+  .chat-msg--me .tok.is-saved { color: var(--color-ink-strong); }
+  .chat-translate { align-self: center; flex-shrink: 0; width: 2.75rem; height: 2.75rem; border-radius: 999px; color: var(--r-muted); font-size: .75rem; font-weight: 700; }
+  .chat-translate:hover { background: var(--r-chip); }
+  .chat-image { border-radius: 1rem; overflow: hidden; max-width: 70%; }
+  .chat-next-bar {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 15; display: flex; justify-content: center;
+    padding: .75rem max(16px, env(safe-area-inset-left)) calc(.75rem + env(safe-area-inset-bottom));
+    background: linear-gradient(transparent, var(--r-bg) 40%);
+  }
+  .reader-btn {
+    @apply inline-flex h-12 items-center justify-center gap-2 rounded-pill px-6 text-[15px] font-semibold;
+    background: var(--r-accent); color: var(--r-on-accent);
+  }
+  .reader-btn--ghost { background: var(--r-chip); color: var(--r-fg); }
+
+  /* summary */
+  .reader-summary { @apply mx-auto grid max-w-[640px] gap-5 px-4 pt-8; }
+  .summary-title { font-family: var(--font-serif); font-size: 2rem; font-weight: 600; line-height: 1.1; }
+  .summary-stats { display: flex; gap: 2rem; }
+  .summary-stat b { display: block; font-size: 2rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .summary-stat span { font-size: .8rem; color: var(--r-muted); text-transform: uppercase; letter-spacing: .06em; }
+  .summary-words { display: grid; gap: .5rem; }
+  .summary-word {
+    display: flex; align-items: center; gap: .75rem; padding: .7rem .9rem; border-radius: 1rem;
+    background: var(--r-sheet); border: 1px solid var(--r-edge);
+  }
+  .summary-word .lemma { font-family: var(--font-serif); font-weight: 600; font-size: 1.1rem; }
+  .summary-word .lemma:lang(ko) { font-family: "Noto Sans KR", var(--font-sans); }
+  .summary-word.is-saved .lemma { background: var(--r-saved-bg); box-shadow: var(--r-saved-shadow); border-radius: 3px; padding: 0 .15em; }
+  .summary-word button { margin-left: auto; }
+  .summary-actions { display: grid; gap: .6rem; }
+
+  /* bottom sheet */
+  .word-sheet {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; margin: 0 auto; max-width: 640px;
+    background: var(--r-sheet); color: var(--r-fg); border-top: 1px solid var(--r-edge);
+    border-radius: 22px 22px 0 0; box-shadow: 0 -8px 30px rgb(0 0 0 / .14);
+    padding: .6rem 1.1rem calc(1.1rem + env(safe-area-inset-bottom));
+    transform: translateY(105%); transition: transform .24s cubic-bezier(.2,.8,.2,1);
+    max-height: 70dvh; overflow-y: auto; overscroll-behavior: contain;
+  }
+  .word-sheet.is-open { transform: translateY(0); }
+  .sheet-grab { width: 2.25rem; height: 4px; border-radius: 4px; background: currentColor; opacity: .2; margin: 0 auto .6rem; }
+  .sheet-head { display: flex; align-items: baseline; flex-wrap: wrap; gap: .25rem .6rem; }
+  .sheet-word { font-family: var(--font-serif); font-size: 1.75rem; font-weight: 600; line-height: 1.15; }
+  .sheet-word:lang(ko) { font-family: "Noto Sans KR", var(--font-sans); font-weight: 700; }
+  .sheet-lemma { font-size: .85rem; color: var(--r-muted); }
+  .sheet-roman { font-size: .9rem; color: var(--r-muted); margin-top: .1rem; }
+  .sheet-translation { font-size: 1.15rem; font-weight: 600; margin-top: .5rem; }
+  .sheet-note { font-size: .92rem; color: var(--r-muted); margin-top: .35rem; line-height: 1.45; }
+  .sheet-chips { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .6rem; }
+  .sheet-chip { font-size: .8rem; padding: .2rem .55rem; border-radius: 999px; background: var(--r-chip); }
+  .sheet-chip b { font-weight: 700; }
+  .sheet-phrase { font-family: var(--font-serif); font-size: 1.25rem; line-height: 1.4; }
+  .sheet-phrase:lang(ko) { font-family: "Noto Sans KR", var(--font-sans); }
+  .sheet-actions { display: flex; gap: .6rem; margin-top: 1rem; }
+  .sheet-actions .reader-btn { flex: 1; }
+  .sheet-actions .reader-btn--icon { flex: 0 0 3rem; padding: 0; }
+  .sheet-close { position: absolute; right: .5rem; top: .35rem; }
+}
+
+@keyframes chat-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .word-sheet, .reader-progress i { transition: none; }
+  .chat-msg { animation: none; }
+}

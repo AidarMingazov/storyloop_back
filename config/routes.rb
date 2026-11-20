@@ -2,6 +2,13 @@ Rails.application.routes.draw do
   root "home#show"
 
   resource :session
+
+  # Reader
+  resources :episodes, only: :show do
+    resource :progress, only: :update, controller: "reading_progresses"
+  end
+  resources :user_words, only: %i[create destroy], param: :lexeme_id
+  resource :review, only: :show
   resources :passwords, param: :token
 
   namespace :admin do

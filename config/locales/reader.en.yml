@@ -1,0 +1,56 @@
+en:
+  reader:
+    back: Back
+    episode: "Episode %{number}"
+    settings: Settings
+    ai_notice: Illustrations created with AI
+    locked:
+      title: This episode needs a subscription
+      body: The first episodes of every series are free. The rest open with a subscription.
+      back: Back to library
+    review:
+      title: My words
+      empty: No saved words yet. Tap a word in a story and save it.
+      soon: Flashcard review is coming very soon.
+    js:
+      romanization: Romanization
+      highlight_saved: Highlight saved words
+      night_mode: Night mode
+      save_word: Save word
+      saved: Saved
+      listen: Listen
+      translate_phrase: Translate phrase
+      close: Close
+      next_message: Next
+      summary_title: Episode complete
+      new_words: New words
+      saved_count: Saved
+      review_words: Review words
+      next_episode: Next episode
+      next_locked: Next episode — subscription
+      back_to_library: Back to library
+      save_failed: Couldn't save. Check your connection and try again.
+      pos:
+        noun: noun
+        verb: verb
+        adjective: adjective
+        adverb: adverb
+        pronoun: pronoun
+        preposition: preposition
+        conjunction: conjunction
+        interjection: interjection
+        determiner: determiner
+        numeral: numeral
+        particle: particle
+        phrasal_verb: phrasal verb
+        idiom: idiom
+        phrase: phrase
+      politeness:
+        casual: 반말 · casual
+        polite: 해요체 · polite
+        formal: 합쇼체 · formal
+      roles:
+        stem: stem
+        ending: ending
+        particle: particle
+        suffix: suffix
