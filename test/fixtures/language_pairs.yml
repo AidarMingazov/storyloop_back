@@ -1,0 +1,9 @@
+en_ru:
+  code: en-ru
+  target_lang: en
+  native_lang: ru
+
+ko_en:
+  code: ko-en
+  target_lang: ko
+  native_lang: en

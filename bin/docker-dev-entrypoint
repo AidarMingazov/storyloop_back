@@ -1,0 +1,8 @@
+#!/bin/bash -e
+# Dev container entrypoint: install missing gems into the shared volume, clear a stale pid, then run the command.
+
+bundle check >/dev/null 2>&1 || bundle install
+
+rm -f tmp/pids/server.pid
+
+exec "$@"

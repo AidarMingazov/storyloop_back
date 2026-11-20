@@ -1,0 +1,83 @@
+<% bubble = form.bubble %>
+<div class="card p-4 mb-6 max-w-2xl">
+  <p class="label">Текст пузыря</p>
+  <p class="font-serif text-xl text-ink-strong"><%= tokenized_text(bubble) %></p>
+</div>
+<%= form_with model: form, url: form.persisted? ? admin_token_path(form.token) : admin_bubble_tokens_path(bubble),
+      method: form.persisted? ? :patch : :post, class: "card p-6 grid gap-5 max-w-2xl" do |f| %>
+  <%= form_errors(form) %>
+  <div class="grid gap-5 sm:grid-cols-[2fr_1fr_1fr]">
+    <div>
+      <%= f.label :surface, "Как в тексте", class: "label" %>
+      <%= f.text_field :surface, class: "input", required: true %>
+    </div>
+    <div>
+      <%= f.label :start_offset, "Начало", class: "label" %>
+      <%= f.number_field :start_offset, class: "input", min: 0 %>
+    </div>
+    <div>
+      <%= f.label :end_offset, "Конец", class: "label" %>
+      <%= f.number_field :end_offset, class: "input", min: 1 %>
+    </div>
+  </div>
+  <p class="text-xs text-muted -mt-3">Оставьте позиции пустыми, чтобы найти слово в тексте автоматически.</p>
+  <div>
+    <%= f.label :context_translation, "Перевод в контексте", class: "label" %>
+    <%= f.text_field :context_translation, class: "input", required: true %>
+  </div>
+  <div>
+    <%= f.label :context_note, "Пояснение", class: "label" %>
+    <%= f.text_area :context_note, rows: 2, class: "input" %>
+  </div>
+
+  <fieldset class="grid gap-5 rounded-xl bg-paper p-4">
+    <legend class="label px-1">Лексема (словарная форма)</legend>
+    <div class="grid gap-5 sm:grid-cols-[2fr_1fr_1fr]">
+      <div>
+        <%= f.label :lemma, "Начальная форма", class: "label" %>
+        <%= f.text_field :lemma, class: "input", required: true %>
+      </div>
+      <div>
+        <%= f.label :pos, "Часть речи", class: "label" %>
+        <%= f.select :pos, Lexeme::POS, {}, class: "input" %>
+      </div>
+      <div>
+        <%= f.label :cefr_level, "CEFR", class: "label" %>
+        <%= f.select :cefr_level, Cefr::LEVELS, { include_blank: true }, class: "input" %>
+      </div>
+    </div>
+    <div>
+      <%= f.label :lemma_translation, "Словарный перевод", class: "label" %>
+      <%= f.text_field :lemma_translation, class: "input" %>
+    </div>
+  </fieldset>
+
+  <% if bubble.episode.series.language_pair.target_lang == "ko" %>
+    <fieldset class="grid gap-5 rounded-xl bg-paper p-4">
+      <legend class="label px-1">Корейский</legend>
+      <div class="grid gap-5 sm:grid-cols-3">
+        <div>
+          <%= f.label :romanization, "Романизация слова", class: "label" %>
+          <%= f.text_field :romanization, class: "input" %>
+        </div>
+        <div>
+          <%= f.label :lemma_romanization, "Романизация леммы", class: "label" %>
+          <%= f.text_field :lemma_romanization, class: "input" %>
+        </div>
+        <div>
+          <%= f.label :politeness, "Вежливость", class: "label" %>
+          <%= f.select :politeness, [ [ "반말 (casual)", "casual" ], [ "해요체 (polite)", "polite" ], [ "합쇼체 (formal)", "formal" ] ], { include_blank: true }, class: "input" %>
+        </div>
+      </div>
+      <div>
+        <%= f.label :breakdown_json, "Разбор (JSON)", class: "label" %>
+        <%= f.text_area :breakdown_json, rows: 5, class: "input font-mono text-sm", placeholder: '[{"part":"피곤하","role":"stem","meaning":"be tired"}]' %>
+      </div>
+    </fieldset>
+  <% end %>
+
+  <div class="flex gap-2">
+    <%= f.submit "Сохранить", class: "btn-primary" %>
+    <%= link_to "Отмена", admin_episode_path(bubble.episode, anchor: dom_id(bubble.panel)), class: "btn-secondary" %>
+  </div>
+<% end %>

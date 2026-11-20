@@ -1,0 +1,42 @@
+{
+  "language_pair": "en-ru",
+  "series": {
+    "slug": "test-cafe",
+    "title": "Test Café",
+    "cefr_level": "A2",
+    "characters": [
+      { "key": "mia", "name": "Mia", "protagonist": true },
+      { "key": "leo", "name": "Leo" }
+    ]
+  },
+  "episode": {
+    "number": 1,
+    "title": "Spilled",
+    "format": "webtoon",
+    "free": true,
+    "target_words": ["run into"],
+    "panels": [
+      {
+        "image_prompt": "A small café",
+        "layout": { "aspect_ratio": 0.8 },
+        "bubbles": [
+          {
+            "kind": "speech",
+            "character": "mia",
+            "text": "Guess who I ran into today!",
+            "translation": "Угадай, кого я сегодня встретила!",
+            "box": { "x": 5, "y": 5, "w": 60, "h": 18 },
+            "tokens": [
+              { "surface": "Guess", "lemma": "guess", "pos": "verb", "translation": "угадай" },
+              { "surface": "who", "lemma": "who", "pos": "pronoun", "translation": "кого" },
+              { "surface": "I", "lemma": "I", "pos": "pronoun", "translation": "я" },
+              { "surface": "ran into", "lemma": "run into", "pos": "phrasal_verb", "translation": "случайно встретила",
+                "lemma_translation": "случайно встретить", "note": "Неожиданная встреча со знакомым.", "cefr": "B1" },
+              { "surface": "today", "lemma": "today", "pos": "adverb", "translation": "сегодня" }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

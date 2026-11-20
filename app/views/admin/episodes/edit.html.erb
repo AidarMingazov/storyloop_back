@@ -1,0 +1,5 @@
+<% content_for :title, @episode.title %>
+<h1 class="font-serif text-4xl font-semibold text-ink-strong mb-6">#<%= @episode.number %> <%= @episode.title %></h1>
+<%= render "form", episode: @episode %>
+<%= button_to "Удалить эпизод", admin_episode_path(@episode), method: :delete, class: "btn-danger mt-6",
+      form: { data: { turbo_confirm: "Удалить эпизод со всеми кадрами?" } } %>

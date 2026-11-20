@@ -1,0 +1,26 @@
+<% content_for :title, "Лексемы" %>
+<h1 class="font-serif text-4xl font-semibold text-ink-strong mb-6">Лексемы</h1>
+<%= form_with url: admin_lexemes_path, method: :get, class: "flex flex-wrap gap-2 mb-6" do |f| %>
+  <%= f.select :language, [ [ "Все языки", "" ] ] + Lexeme.distinct.order(:language).pluck(:language).map { [ _1, _1 ] }, { selected: @language }, class: "input w-auto" %>
+  <%= f.search_field :q, value: @query, placeholder: "Поиск по начальной форме", class: "input w-64" %>
+  <%= f.submit "Найти", class: "btn-secondary" %>
+<% end %>
+<p class="text-sm text-muted mb-3 tabular-nums">Найдено: <%= @total %><%= " (показаны первые 200)" if @total > 200 %></p>
+<div class="card overflow-x-auto">
+  <table class="table">
+    <thead><tr><th>Язык</th><th>Начальная форма</th><th>Часть речи</th><th>CEFR</th><th>Переводы</th><th>Токенов</th><th></th></tr></thead>
+    <tbody>
+      <% @lexemes.each do |lexeme| %>
+        <tr>
+          <td><%= lexeme.language %></td>
+          <td class="font-semibold text-ink-strong"><%= lexeme.lemma %><% if lexeme.romanization %><div class="font-normal text-xs text-muted"><%= lexeme.romanization %></div><% end %></td>
+          <td><%= lexeme.pos %></td>
+          <td><%= lexeme.cefr_level %></td>
+          <td><%= lexeme.translations.map { |lang, t| "#{lang}: #{t}" }.join("; ") %></td>
+          <td class="tabular-nums"><%= lexeme.tokens_count %></td>
+          <td><%= link_to "Изм.", edit_admin_lexeme_path(lexeme), class: "text-link hover:underline" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

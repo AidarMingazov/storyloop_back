@@ -1,0 +1,1726 @@
+{
+  "language_pair": "ko-en",
+  "series": {
+    "slug": "seoul-starter",
+    "title": "Seoul Starter · 서울 생활",
+    "description": "Jisoo has just moved to Seoul for a new job. Follow her first days in the city: a friendly neighbor, convenience stores, subway lines and a brand-new office.",
+    "genre": "slice of life",
+    "cefr_level": "A1",
+    "style_prompt": "Bright, clean Korean webtoon style with crisp line art and soft cel shading; modern Seoul streets, small red-brick apartment buildings, convenience stores, offices and subway stations; soft natural daylight, warm pastel palette, friendly expressive faces. No text, letters or speech bubbles in the image.",
+    "characters": [
+      {
+        "key": "jisoo",
+        "name": "Jisoo",
+        "protagonist": true,
+        "appearance_prompt": "Korean woman, 28, shoulder-length straight black hair with soft see-through bangs, warm brown eyes, slim build; casual look: cream knit cardigan over a white T-shirt, light-blue jeans, white sneakers and a small tan crossbody bag; office look: navy blazer over a white blouse. Bright, slightly nervous smile."
+      },
+      {
+        "key": "minho",
+        "name": "Minho",
+        "appearance_prompt": "Korean man, 28, tall, short tousled dark-brown hair, friendly crescent-shaped eyes and an easy grin; at home a gray hoodie, black joggers and slippers, outside a navy bomber jacket with earphones around his neck. Relaxed, helpful body language."
+      },
+      {
+        "key": "yuna",
+        "name": "Yuna",
+        "appearance_prompt": "Korean woman, 31, chin-length dark bob tucked behind one ear, small silver earrings, the same friendly crescent-shaped eyes as her younger brother Minho; office look: beige blouse, navy slacks, ID badge on a lanyard. Confident, warm, big-sister energy."
+      },
+      {
+        "key": "clerk",
+        "name": "Clerk",
+        "appearance_prompt": "Young Korean convenience-store clerk, early 20s, short black hair, round glasses, green-and-white store uniform vest over a white shirt, polite cheerful expression."
+      },
+      {
+        "key": "team_leader",
+        "name": "Team Leader Kim",
+        "appearance_prompt": "Korean man in his late 40s, neatly combed short black hair with a little gray at the temples, rectangular glasses, dark suit, white shirt and navy tie; calm, kind but serious expression."
+      }
+    ]
+  },
+  "episode": {
+    "number": 3,
+    "title": "교통카드 주세요 · A Transit Card, Please",
+    "format": "webtoon",
+    "cefr_level": "A2",
+    "free": true,
+    "estimated_minutes": 4,
+    "synopsis": "On Saturday Jisoo makes a test trip to her new office. She buys and tops up a transit card at the convenience store and asks the clerk the way to the subway station, but the huge subway map confuses her until Minho turns up and points her to green Line 2. Monday is her first day at work, and she is already nervous.",
+    "target_words": [
+      "편의점",
+      "교통카드",
+      "주다",
+      "충전하다",
+      "지하철역",
+      "어디",
+      "왼쪽",
+      "걷다",
+      "걸리다",
+      "길",
+      "모르다",
+      "타다"
+    ],
+    "panels": [
+      {
+        "image_prompt": "Bright Saturday morning on a Seoul side street lined with small shops and a convenience store with a green-and-white storefront (no readable signs); Jisoo in a casual jacket walks out of her red-brick building, checking a map on her phone with a determined smile.",
+        "layout": {
+          "aspect_ratio": 0.8
+        },
+        "bubbles": [
+          {
+            "kind": "narration",
+            "character": null,
+            "text": "토요일 아침. 지수는 회사에 미리 가 봐요.",
+            "translation": "Saturday morning. Jisoo is doing a test trip to her new office.",
+            "box": {
+              "x": 4,
+              "y": 3,
+              "w": 68,
+              "h": 20
+            },
+            "tokens": [
+              {
+                "surface": "토요일",
+                "lemma": "토요일",
+                "pos": "noun",
+                "translation": "Saturday",
+                "lemma_translation": "Saturday",
+                "romanization": "toyoil",
+                "lemma_romanization": "toyoil",
+                "cefr": "A1"
+              },
+              {
+                "surface": "아침",
+                "lemma": "아침",
+                "pos": "noun",
+                "translation": "morning",
+                "lemma_translation": "morning; breakfast",
+                "romanization": "achim",
+                "lemma_romanization": "achim",
+                "cefr": "A1"
+              },
+              {
+                "surface": "지수는",
+                "lemma": "지수",
+                "pos": "noun",
+                "translation": "Jisoo (topic)",
+                "lemma_translation": "Jisoo (name)",
+                "romanization": "Jisuneun",
+                "lemma_romanization": "Jisu",
+                "breakdown": [
+                  {
+                    "part": "지수",
+                    "role": "stem",
+                    "meaning": "Jisoo"
+                  },
+                  {
+                    "part": "는",
+                    "role": "particle",
+                    "meaning": "topic marker"
+                  }
+                ]
+              },
+              {
+                "surface": "회사에",
+                "lemma": "회사",
+                "pos": "noun",
+                "translation": "to the office",
+                "lemma_translation": "company, office",
+                "romanization": "hoesae",
+                "lemma_romanization": "hoesa",
+                "breakdown": [
+                  {
+                    "part": "회사",
+                    "role": "stem",
+                    "meaning": "company, office"
+                  },
+                  {
+                    "part": "에",
+                    "role": "particle",
+                    "meaning": "to (destination)"
+                  }
+                ],
+                "cefr": "A1"
+              },
+              {
+                "surface": "미리",
+                "lemma": "미리",
+                "pos": "adverb",
+                "translation": "ahead of time",
+                "lemma_translation": "in advance, beforehand",
+                "romanization": "miri",
+                "lemma_romanization": "miri",
+                "cefr": "A2"
+              },
+              {
+                "surface": "가 봐요",
+                "lemma": "가 보다",
+                "pos": "phrase",
+                "translation": "goes to check it out",
+                "lemma_translation": "to try going, go and see",
+                "romanization": "ga bwayo",
+                "lemma_romanization": "ga boda",
+                "breakdown": [
+                  {
+                    "part": "가",
+                    "role": "stem",
+                    "meaning": "go"
+                  },
+                  {
+                    "part": "-아",
+                    "role": "ending",
+                    "meaning": "connector"
+                  },
+                  {
+                    "part": "보",
+                    "role": "stem",
+                    "meaning": "try (and see)"
+                  },
+                  {
+                    "part": "-아요",
+                    "role": "ending",
+                    "meaning": "polite present (보 + 아요 → 봐요)"
+                  }
+                ],
+                "politeness": "polite",
+                "cefr": "A2",
+                "note": "V-아/어 보다 = try doing / do and see: 가 봐요 = goes to see for herself."
+              }
+            ]
+          },
+          {
+            "kind": "thought",
+            "character": "jisoo",
+            "text": "먼저 편의점에 가야지!",
+            "translation": "First, the convenience store!",
+            "box": {
+              "x": 47,
+              "y": 26,
+              "w": 49,
+              "h": 16
+            },
+            "tokens": [
+              {
+                "surface": "먼저",
+                "lemma": "먼저",
+                "pos": "adverb",
+                "translation": "first",
+                "lemma_translation": "first, before anything else",
+                "romanization": "meonjeo",
+                "lemma_romanization": "meonjeo",
+                "cefr": "A1"
+              },
+              {
+                "surface": "편의점에",
+                "lemma": "편의점",
+                "pos": "noun",
+                "translation": "to the convenience store",
+                "lemma_translation": "convenience store",
+                "romanization": "pyeonuijeome",
+                "lemma_romanization": "pyeonuijeom",
+                "breakdown": [
+                  {
+                    "part": "편의점",
+                    "role": "stem",
+                    "meaning": "convenience store"
+                  },
+                  {
+                    "part": "에",
+                    "role": "particle",
+                    "meaning": "to (destination)"
+                  }
+                ],
+                "cefr": "A1",
+                "note": "Target word: 편의점 = convenience store (CU, GS25, 7-Eleven), on almost every Seoul corner."
+              },
+              {
+                "surface": "가야지",
+                "lemma": "가다",
+                "pos": "verb",
+                "translation": "I should go",
+                "lemma_translation": "to go",
+                "romanization": "gayaji",
+                "lemma_romanization": "gada",
+                "breakdown": [
+                  {
+                    "part": "가",
+                    "role": "stem",
+                    "meaning": "go"
+                  },
+                  {
+                    "part": "-아야지",
+                    "role": "ending",
+                    "meaning": "I should, I'd better (to oneself)"
+                  }
+                ],
+                "politeness": "casual",
+                "cefr": "A1",
+                "note": "-아/어야지 = 'I should / I'd better', common when talking to yourself."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "image_prompt": "Inside a bright, tidy Korean convenience store with shelves of snacks, instant noodles and drinks; a young clerk with round glasses behind the counter greets Jisoo with a cheerful smile as she walks in.",
+        "layout": {
+          "aspect_ratio": 0.9
+        },
+        "bubbles": [
+          {
+            "kind": "speech",
+            "character": "clerk",
+            "text": "어서 오세요!",
+            "translation": "Welcome!",
+            "box": {
+              "x": 55,
+              "y": 3,
+              "w": 41,
+              "h": 12
+            },
+            "tokens": [
+              {
+                "surface": "어서 오세요",
+                "lemma": "어서 오다",
+                "pos": "phrase",
+                "translation": "welcome!",
+                "lemma_translation": "come on in (welcome)",
+                "romanization": "eoseo oseyo",
+                "lemma_romanization": "eoseo oda",
+                "breakdown": [
+                  {
+                    "part": "어서",
+                    "role": "stem",
+                    "meaning": "quickly, please"
+                  },
+                  {
+                    "part": "오",
+                    "role": "stem",
+                    "meaning": "come"
+                  },
+                  {
+                    "part": "-세요",
+                    "role": "ending",
+                    "meaning": "polite request (honorific)"
+                  }
+                ],
+                "politeness": "polite",
+                "cefr": "A1",
+                "note": "Set phrase staff say when you walk into a shop; you don't need to answer."
+              }
+            ]
+          },
+          {
+            "kind": "speech",
+            "character": "jisoo",
+            "text": "교통카드 있어요?",
+            "translation": "Do you have transit cards?",
+            "box": {
+              "x": 4,
+              "y": 18,
+              "w": 44,
+              "h": 12
+            },
+            "tokens": [
+              {
+                "surface": "교통카드",
+                "lemma": "교통카드",
+                "pos": "noun",
+                "translation": "transit card",
+                "lemma_translation": "transportation card (e.g. T-money)",
+                "romanization": "gyotongkadeu",
+                "lemma_romanization": "gyotongkadeu",
+                "cefr": "A2",
+                "note": "Target word: 교통카드 = rechargeable card for the subway and buses."
+              },
+              {
+                "surface": "있어요",
+                "lemma": "있다",
+                "pos": "verb",
+                "translation": "do you have",
+                "lemma_translation": "to be (somewhere), exist, have",
+                "romanization": "isseoyo",
+                "lemma_romanization": "itda",
+                "breakdown": [
+                  {
+                    "part": "있",
+                    "role": "stem",
+                    "meaning": "exist, have"
+                  },
+                  {
+                    "part": "-어요",
+                    "role": "ending",
+                    "meaning": "polite present"
+                  }
+                ],
+                "politeness": "polite",
+                "cefr": "A1",
+                "note": "N 있어요? = 'Do you have N?' or 'Is there N?'"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "image_prompt": "Close-up at the counter: the clerk holds up a colorful plain transit card with a cute character design (no text); Jisoo points at it happily.",
+        "layout": {
+          "aspect_ratio": 0.85
+        },
+        "bubbles": [
+          {
+            "kind": "speech",
+            "character": "clerk",
+            "text": "네, 이 카드는 삼천 원이에요.",
+            "translation": "Yes, this card is 3,000 won.",
+            "box": {
+              "x": 39,
+              "y": 3,
+              "w": 57,
+              "h": 16
+            },
+            "tokens": [
+              {
+                "surface": "네",
+                "lemma": "네",
+                "pos": "interjection",
+                "translation": "yes",
+                "lemma_translation": "yes",
+                "romanization": "ne",
+                "lemma_romanization": "ne",
+                "cefr": "A1"
+              },
+              {
+                "surface": "이",
+                "lemma": "이",
+                "pos": "determiner",
+                "translation": "this",
+                "lemma_translation": "this",
+                "romanization": "i",
+                "lemma_romanization": "i",
+                "cefr": "A1"
+              },
+              {
+                "surface": "카드는",
+                "lemma": "카드",
+                "pos": "noun",
+                "translation": "card (as for)",
+                "lemma_translation": "card",
+                "romanization": "kadeuneun",
+                "lemma_romanization": "kadeu",
+                "breakdown": [
+                  {
+                    "part": "카드",
+                    "role": "stem",
+                    "meaning": "card"
+                  },
+                  {
+                    "part": "는",
+                    "role": "particle",
+                    "meaning": "topic marker"
+                  }
+                ],
+                "cefr": "A1"
+              },
+              {
+                "surface": "삼천",
+                "lemma": "삼천",
+                "pos": "numeral",
+                "translation": "three thousand",
+                "lemma_translation": "three thousand (Sino-Korean)",
+                "romanization": "samcheon",
+                "lemma_romanization": "samcheon",
+                "cefr": "A2",
+                "note": "Prices use Sino-Korean numbers: 천 = 1,000, 삼천 = 3,000, 만 = 10,000."
+              },
+              {
+                "surface": "원이에요",
+                "lemma": "원",
+                "pos": "noun",
+                "translation": "won (it is)",
+                "lemma_translation": "won (Korean currency)",
+                "romanization": "wonieyo",
+                "lemma_romanization": "won",
+                "breakdown": [
+                  {
+                    "part": "원",
+                    "role": "stem",
+                    "meaning": "won"
+                  },
+                  {
+                    "part": "이에요",
+                    "role": "particle",
+                    "meaning": "is (polite copula after a consonant)"
+                  }
+                ],
+                "politeness": "polite",
+                "cefr": "A1"
+              }
+            ]
+          },
+          {
+            "kind": "speech",
+            "character": "jisoo",
+            "text": "이거 하나 주세요.",
+            "translation": "I'll take one of these, please.",
+            "box": {
+              "x": 4,
+              "y": 22,
+              "w": 46,
+              "h": 12
+            },
+            "tokens": [
+              {
+                "surface": "이거",
+                "lemma": "이것",
+                "pos": "pronoun",
+                "translation": "this (one)",
+                "lemma_translation": "this thing",
+                "romanization": "igeo",
+                "lemma_romanization": "igeot",
+                "cefr": "A1"
+              },
+              {
+                "surface": "하나",
+                "lemma": "하나",
+                "pos": "numeral",
+                "translation": "one",
+                "lemma_translation": "one (native Korean)",
+                "romanization": "hana",
+                "lemma_romanization": "hana",
+                "cefr": "A1"
+              },
+              {
+                "surface": "주세요",
+                "lemma": "주다",
+                "pos": "verb",
+                "translation": "please give me",
+                "lemma_translation": "to give",
+                "romanization": "juseyo",
+                "lemma_romanization": "juda",
+                "breakdown": [
+                  {
+                    "part": "주",
+                    "role": "stem",
+                    "meaning": "give"
+                  },
+                  {
+                    "part": "-세요",
+                    "role": "ending",
+                    "meaning": "polite request (honorific)"
+                  }
+                ],
+                "politeness": "polite",
+                "cefr": "A1",
+                "note": "Target word: N 주세요 = 'N, please', the #1 phrase for shopping and ordering."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "image_prompt": "Jisoo hands a 10,000-won bill across the counter; the clerk taps the transit card on a small card reader next to the register.",
+        "layout": {
+          "aspect_ratio": 0.8
+        },
+        "bubbles": [
+          {
+            "kind": "speech",
+            "character": "jisoo",
+            "text": "그리고 만 원 충전해 주세요.",
+            "translation": "And please put 10,000 won on it.",
+            "box": {
+              "x": 4,
+              "y": 3,
+              "w": 56,
+              "h": 16
+            },
+            "tokens": [
+              {
+                "surface": "그리고",
+                "lemma": "그리고",
+                "pos": "conjunction",
+                "translation": "and",
+                "lemma_translation": "and, and then",
+                "romanization": "geurigo",
+                "lemma_romanization": "geurigo",
+                "cefr": "A1"
+              },
+              {
+                "surface": "만",
+                "lemma": "만",
+                "pos": "numeral",
+                "translation": "ten thousand",
+                "lemma_translation": "ten thousand",
+                "romanization": "man",
+                "lemma_romanization": "man",
+                "cefr": "A2"
+              },
+              {
+                "surface": "원",
+                "lemma": "원",
+                "pos": "noun",
+                "translation": "won",
+                "lemma_translation": "won (Korean currency)",
+                "romanization": "won",
+                "lemma_romanization": "won",
+                "cefr": "A1"
+              },
+              {
+                "surface": "충전해",
+                "lemma": "충전하다",
+                "pos": "verb",
+                "translation": "charge, top up",
+                "lemma_translation": "to charge, top up",
+                "romanization": "chungjeonhae",
+                "lemma_romanization": "chungjeonhada",
+                "breakdown": [
+                  {
+                    "part": "충전하",
+                    "role": "stem",
+                    "meaning": "charge"
+                  },
+                  {
+                    "part": "-아/어",
+                    "role": "ending",
+                    "meaning": "connector (+ 주다 = for me)"
+                  }
+                ],
+                "cefr": "A2",
+                "note": "Target word: 충전하다 = to top up a card or charge a phone."
+              },
+              {
+                "surface": "주세요",
+                "lemma": "주다",
+                "pos": "verb",
+                "translation": "please (do it for me)",
+                "lemma_translation": "to give",
+                "romanization": "juseyo",
+                "lemma_romanization": "juda",
+                "breakdown": [
+                  {
+                    "part": "주",
+                    "role": "stem",
+                    "meaning": "give"
+                  },
+                  {
+                    "part": "-세요",
+                    "role": "ending",
+                    "meaning": "polite request (honorific)"
+                  }
+                ],
+                "politeness": "polite",
+                "cefr": "A1",
+                "note": "V-아/어 주세요 = 'please do V for me'."
+              }
+            ]
+          },
+          {
+            "kind": "speech",
+            "character": "clerk",
+            "text": "네, 잠깐만요. 여기 있어요.",
+            "translation": "Sure, one moment. Here you go.",
+            "box": {
+              "x": 40,
+              "y": 22,
+              "w": 56,
+              "h": 16
+            },
+            "tokens": [
+              {
+                "surface": "네",
+                "lemma": "네",
+                "pos": "interjection",
+                "translation": "sure",
+                "lemma_translation": "yes",
+                "romanization": "ne",
+                "lemma_romanization": "ne",
+                "cefr": "A1"
+              },
+              {
+                "surface": "잠깐만요",
+                "lemma": "잠깐",
+                "pos": "noun",
+                "translation": "just a moment",
+                "lemma_translation": "a moment, a short while",
+                "romanization": "jamkkanmanyo",
+                "lemma_romanization": "jamkkan",
+                "breakdown": [
+                  {
+                    "part": "잠깐",
+                    "role": "stem",
+                    "meaning": "a moment"
+                  },
+                  {
+                    "part": "만",
+                    "role": "particle",
+                    "meaning": "just, only"
+                  },
+                  {
+                    "part": "요",
+                    "role": "particle",
+                    "meaning": "polite marker"
+                  }
+                ],
+                "politeness": "polite",
+                "cefr": "A1",
+                "note": "Set phrase: 잠깐만요 = 'Just a moment', also 'excuse me' to get past people."
+              },
+              {
+                "surface": "여기 있어요",
+                "lemma": "여기 있다",
+                "pos": "phrase",
+                "translation": "here you go",
+                "lemma_translation": "to be here",
+                "romanization": "yeogi isseoyo",
+                "lemma_romanization": "yeogi itda",
+                "breakdown": [
+                  {
+                    "part": "여기",
+                    "role": "stem",
+                    "meaning": "here"
+                  },
+                  {
+                    "part": "있",
+                    "role": "stem",
+                    "meaning": "be, exist"
+                  },
+                  {
+                    "part": "-어요",
+                    "role": "ending",
+                    "meaning": "polite present"
+                  }
+                ],
+                "politeness": "polite",
+                "cefr": "A1",
+                "note": "Set phrase: 'Here you are', said when handing something over."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "image_prompt": "Jisoo leans in with a questioning look, phone in hand; the clerk smiles and points toward the store's glass door, gesturing to the left.",
+        "layout": {
+          "aspect_ratio": 0.8
+        },
+        "bubbles": [
+          {
+            "kind": "speech",
+            "character": "jisoo",
+            "text": "저기, 지하철역이 어디에 있어요?",
+            "translation": "Excuse me, where's the subway station?",
+            "box": {
+              "x": 4,
+              "y": 3,
+              "w": 59,
+              "h": 16
+            },
+            "tokens": [
+              {
+                "surface": "저기",
+                "lemma": "저기",
+                "pos": "interjection",
+                "translation": "excuse me",
+                "lemma_translation": "um, excuse me (to get attention); over there",
+                "romanization": "jeogi",
+                "lemma_romanization": "jeogi",
+                "cefr": "A1",
+                "note": "저기 (lit. 'over there') is a soft 'excuse me…' to get someone's attention."
+              },
+              {
+                "surface": "지하철역이",
+                "lemma": "지하철역",
+                "pos": "noun",
+                "translation": "the subway station (subject)",
+                "lemma_translation": "subway station",
+                "romanization": "jihacheollyeogi",
+                "lemma_romanization": "jihacheollyeok",
+                "breakdown": [
+                  {
+                    "part": "지하철",
+                    "role": "stem",
+                    "meaning": "subway"
+                  },
+                  {
+                    "part": "역",
+                    "role": "stem",
+                    "meaning": "station"
+                  },
+                  {
+                    "part": "이",
+                    "role": "particle",
+                    "meaning": "subject marker"
+                  }
+                ],
+                "cefr": "A1",
+                "note": "Target word: 지하철역 = subway station (지하철 subway + 역 station)."
+              },
+              {
+                "surface": "어디에",
+                "lemma": "어디",
+                "pos": "pronoun",
+                "translation": "where",
+                "lemma_translation": "where",
+                "romanization": "eodie",
+                "lemma_romanization": "eodi",
+                "breakdown": [
+                  {
+                    "part": "어디",
+                    "role": "stem",
+                    "meaning": "where"
+                  },
+                  {
+                    "part": "에",
+                    "role": "particle",
+                    "meaning": "at, in (location)"
+                  }
+                ],
+                "cefr": "A1",
+                "note": "Target word: N이/가 어디에 있어요? = Where is N?"
+              },
+              {
+                "surface": "있어요",
+                "lemma": "있다",
+                "pos": "verb",
+                "translation": "is",
+                "lemma_translation": "to be (somewhere), exist, have",
+                "romanization": "isseoyo",
+                "lemma_romanization": "itda",
+                "breakdown": [
+                  {
+                    "part": "있",
+                    "role": "stem",
+                    "meaning": "exist, have"
+                  },
+                  {
+                    "part": "-어요",
+                    "role": "ending",
+                    "meaning": "polite present"
+                  }
+                ],
+                "politeness": "polite",
+                "cefr": "A1"
+              }
+            ]
+          },
+          {
+            "kind": "speech",
+            "character": "clerk",
+            "text": "나가서 왼쪽으로 쭉 가세요.",
+            "translation": "Go out and keep going to the left.",
+            "box": {
+              "x": 42,
+              "y": 22,
+              "w": 54,
+              "h": 16
+            },
+            "tokens": [
+              {
+                "surface": "나가서",
+                "lemma": "나가다",
+                "pos": "verb",
+                "translation": "go out and (then)",
+                "lemma_translation": "to go out",
+                "romanization": "nagaseo",
+                "lemma_romanization": "nagada",
+                "breakdown": [
+                  {
+                    "part": "나가",
+                    "role": "stem",
+                    "meaning": "go out"
+                  },
+                  {
+                    "part": "-아서",
+                    "role": "ending",
+                    "meaning": "and then (sequence)"
+                  }
+                ],
+                "cefr": "A1",
+                "note": "-아/어서 links steps in order: go out, and then…"
+              },
+              {
+                "surface": "왼쪽으로",
+                "lemma": "왼쪽",
+                "pos": "noun",
+                "translation": "to the left",
+                "lemma_translation": "left side",
+                "romanization": "oenjjogeuro",
+                "lemma_romanization": "oenjjok",
+                "breakdown": [
+                  {
+                    "part": "왼쪽",
+                    "role": "stem",
+                    "meaning": "left side"
+                  },
+                  {
+                    "part": "으로",
+                    "role": "particle",
+                    "meaning": "toward (direction)"
+                  }
+                ],
+                "cefr": "A1",
+                "note": "Target word: 왼쪽 = left (오른쪽 = right)."
+              },
+              {
+                "surface": "쭉",
+                "lemma": "쭉",
+                "pos": "adverb",
+                "translation": "straight on",
+                "lemma_translation": "straight, all the way",
+                "romanization": "jjuk",
+                "lemma_romanization": "jjuk",
+                "cefr": "A2"
+              },
+              {
+                "surface": "가세요",
+                "lemma": "가다",
+                "pos": "verb",
+                "translation": "go (please)",
+                "lemma_translation": "to go",
+                "romanization": "gaseyo",
+                "lemma_romanization": "gada",
+                "breakdown": [
+                  {
+                    "part": "가",
+                    "role": "stem",
+                    "meaning": "go"
+                  },
+                  {
+                    "part": "-세요",
+                    "role": "ending",
+                    "meaning": "polite request (honorific)"
+                  }
+                ],
+                "politeness": "polite",
+                "cefr": "A1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "image_prompt": "Jisoo bows politely at the counter with her new card in hand while the clerk bows back with a friendly little wave.",
+        "layout": {
+          "aspect_ratio": 0.85
+        },
+        "bubbles": [
+          {
+            "kind": "speech",
+            "character": "clerk",
+            "text": "걸어서 오 분 걸려요.",
+            "translation": "It's a five-minute walk.",
+            "box": {
+              "x": 47,
+              "y": 3,
+              "w": 49,
+              "h": 16
+            },
+            "tokens": [
+              {
+                "surface": "걸어서",
+                "lemma": "걷다",
+                "pos": "verb",
+                "translation": "on foot, walking",
+                "lemma_translation": "to walk",
+                "romanization": "georeoseo",
+                "lemma_romanization": "geotda",
+                "breakdown": [
+                  {
+                    "part": "걷",
+                    "role": "stem",
+                    "meaning": "walk (ㄷ → ㄹ)"
+                  },
+                  {
+                    "part": "-어서",
+                    "role": "ending",
+                    "meaning": "by (means)"
+                  }
+                ],
+                "cefr": "A1",
+                "note": "Target word: 걷다 is ㄷ-irregular: 걷 + 어서 → 걸어서 = on foot."
+              },
+              {
+                "surface": "오",
+                "lemma": "오",
+                "pos": "numeral",
+                "translation": "five",
+                "lemma_translation": "five (Sino-Korean)",
+                "romanization": "o",
+                "lemma_romanization": "o",
+                "cefr": "A1"
+              },
+              {
+                "surface": "분",
+                "lemma": "분",
+                "pos": "noun",
+                "translation": "minutes",
+                "lemma_translation": "minute",
+                "romanization": "bun",
+                "lemma_romanization": "bun",
+                "cefr": "A1"
+              },
+              {
+                "surface": "걸려요",
+                "lemma": "걸리다",
+                "pos": "verb",
+                "translation": "it takes",
+                "lemma_translation": "to take (time)",
+                "romanization": "geollyeoyo",
+                "lemma_romanization": "geollida",
+                "breakdown": [
+                  {
+                    "part": "걸리",
+                    "role": "stem",
+                    "meaning": "take (time)"
+                  },
+                  {
+                    "part": "-어요",
+                    "role": "ending",
+                    "meaning": "polite present (걸리 + 어요 → 걸려요)"
+                  }
+                ],
+                "politeness": "polite",
+                "cefr": "A2",
+                "note": "Target word: (time) 걸려요 = it takes (time)."
+              }
+            ]
+          },
+          {
+            "kind": "speech",
+            "character": "jisoo",
+            "text": "감사합니다! 안녕히 계세요.",
+            "translation": "Thank you! Have a good day.",
+            "box": {
+              "x": 4,
+              "y": 22,
+              "w": 54,
+              "h": 16
+            },
+            "tokens": [
+              {
+                "surface": "감사합니다",
+                "lemma": "감사하다",
+                "pos": "verb",
+                "translation": "thank you",
+                "lemma_translation": "to thank, be grateful",
+                "romanization": "gamsahamnida",
+                "lemma_romanization": "gamsahada",
+                "breakdown": [
+                  {
+                    "part": "감사하",
+                    "role": "stem",
+                    "meaning": "thank"
+                  },
+                  {
+                    "part": "-ㅂ니다",
+                    "role": "ending",
+                    "meaning": "formal present"
+                  }
+                ],
+                "politeness": "formal",
+                "cefr": "A1"
+              },
+              {
+                "surface": "안녕히 계세요",
+                "lemma": "안녕히 계시다",
+                "pos": "phrase",
+                "translation": "goodbye (to someone who stays)",
+                "lemma_translation": "stay well (goodbye said when you leave)",
+                "romanization": "annyeonghi gyeseyo",
+                "lemma_romanization": "annyeonghi gyesida",
+                "breakdown": [
+                  {
+                    "part": "안녕히",
+                    "role": "stem",
+                    "meaning": "in peace, well"
+                  },
+                  {
+                    "part": "계시",
+                    "role": "stem",
+                    "meaning": "stay (honorific of 있다)"
+                  },
+                  {
+                    "part": "-어요",
+                    "role": "ending",
+                    "meaning": "polite (계시 + 어요 → 계세요)"
+                  }
+                ],
+                "politeness": "polite",
+                "cefr": "A1",
+                "note": "Set phrase: say 안녕히 계세요 when YOU leave; say 안녕히 가세요 to someone who leaves."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "image_prompt": "Inside a busy Seoul subway station: Jisoo stands in front of a huge colorful subway map on the wall (only colored lines and dots, no readable text), eyes spinning in confusion, a sweat drop on her cheek, commuters rushing past behind her.",
+        "layout": {
+          "aspect_ratio": 0.8
+        },
+        "bubbles": [
+          {
+            "kind": "thought",
+            "character": "jisoo",
+            "text": "어... 어느 쪽이지? 너무 복잡해.",
+            "translation": "Uh... which way is it? This is so confusing.",
+            "box": {
+              "x": 4,
+              "y": 3,
+              "w": 62,
+              "h": 16
+            },
+            "tokens": [
+              {
+                "surface": "어",
+                "lemma": "어",
+                "pos": "interjection",
+                "translation": "uh...",
+                "lemma_translation": "uh, huh (hesitation or surprise)",
+                "romanization": "eo",
+                "lemma_romanization": "eo",
+                "cefr": "A1"
+              },
+              {
+                "surface": "어느",
+                "lemma": "어느",
+                "pos": "determiner",
+                "translation": "which",
+                "lemma_translation": "which",
+                "romanization": "eoneu",
+                "lemma_romanization": "eoneu",
+                "cefr": "A1"
+              },
+              {
+                "surface": "쪽이지",
+                "lemma": "쪽",
+                "pos": "noun",
+                "translation": "way (is it)?",
+                "lemma_translation": "side, direction",
+                "romanization": "jjogiji",
+                "lemma_romanization": "jjok",
+                "breakdown": [
+                  {
+                    "part": "쪽",
+                    "role": "stem",
+                    "meaning": "side, direction"
+                  },
+                  {
+                    "part": "이",
+                    "role": "particle",
+                    "meaning": "copula 'to be'"
+                  },
+                  {
+                    "part": "-지",
+                    "role": "ending",
+                    "meaning": "…I wonder? (to oneself)"
+                  }
+                ],
+                "politeness": "casual",
+                "cefr": "A2"
+              },
+              {
+                "surface": "너무",
+                "lemma": "너무",
+                "pos": "adverb",
+                "translation": "so, too",
+                "lemma_translation": "too, very",
+                "romanization": "neomu",
+                "lemma_romanization": "neomu",
+                "cefr": "A1"
+              },
+              {
+                "surface": "복잡해",
+                "lemma": "복잡하다",
+                "pos": "adjective",
+                "translation": "(is) complicated",
+                "lemma_translation": "to be complicated; to be crowded",
+                "romanization": "bokjapae",
+                "lemma_romanization": "bokjapada",
+                "breakdown": [
+                  {
+                    "part": "복잡하",
+                    "role": "stem",
+                    "meaning": "be complicated"
+                  },
+                  {
+                    "part": "-아/어",
+                    "role": "ending",
+                    "meaning": "casual present (하 + 어 → 해)"
+                  }
+                ],
+                "politeness": "casual",
+                "cefr": "A2"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "image_prompt": "Minho, in a navy bomber jacket with earphones around his neck, appears behind Jisoo in the station and taps her shoulder; she turns around, surprised and relieved.",
+        "layout": {
+          "aspect_ratio": 0.8
+        },
+        "bubbles": [
+          {
+            "kind": "speech",
+            "character": "minho",
+            "text": "지수야! 여기서 뭐 해?",
+            "translation": "Jisoo! What are you doing here?",
+            "box": {
+              "x": 45,
+              "y": 3,
+              "w": 51,
+              "h": 16
+            },
+            "tokens": [
+              {
+                "surface": "지수야",
+                "lemma": "지수",
+                "pos": "noun",
+                "translation": "Jisoo! (calling her)",
+                "lemma_translation": "Jisoo (name)",
+                "romanization": "Jisuya",
+                "lemma_romanization": "Jisu",
+                "breakdown": [
+                  {
+                    "part": "지수",
+                    "role": "stem",
+                    "meaning": "Jisoo"
+                  },
+                  {
+                    "part": "야",
+                    "role": "particle",
+                    "meaning": "vocative (calling a friend)"
+                  }
+                ]
+              },
+              {
+                "surface": "여기서",
+                "lemma": "여기",
+                "pos": "pronoun",
+                "translation": "here (at)",
+                "lemma_translation": "here",
+                "romanization": "yeogiseo",
+                "lemma_romanization": "yeogi",
+                "breakdown": [
+                  {
+                    "part": "여기",
+                    "role": "stem",
+                    "meaning": "here"
+                  },
+                  {
+                    "part": "서",
+                    "role": "particle",
+                    "meaning": "at (short for 에서)"
+                  }
+                ],
+                "cefr": "A1"
+              },
+              {
+                "surface": "뭐",
+                "lemma": "뭐",
+                "pos": "pronoun",
+                "translation": "what",
+                "lemma_translation": "what (spoken form of 무엇)",
+                "romanization": "mwo",
+                "lemma_romanization": "mwo",
+                "cefr": "A1"
+              },
+              {
+                "surface": "해",
+                "lemma": "하다",
+                "pos": "verb",
+                "translation": "are (you) doing",
+                "lemma_translation": "to do",
+                "romanization": "hae",
+                "lemma_romanization": "hada",
+                "breakdown": [
+                  {
+                    "part": "하",
+                    "role": "stem",
+                    "meaning": "do"
+                  },
+                  {
+                    "part": "-아/어",
+                    "role": "ending",
+                    "meaning": "casual present (하 + 어 → 해)"
+                  }
+                ],
+                "politeness": "casual",
+                "cefr": "A1",
+                "note": "Casual 반말: since episode 2, Minho and Jisoo talk as friends."
+              }
+            ]
+          },
+          {
+            "kind": "speech",
+            "character": "jisoo",
+            "text": "강남역에 가고 싶어. 근데 길을 몰라.",
+            "translation": "I want to go to Gangnam Station. But I don't know the way.",
+            "box": {
+              "x": 4,
+              "y": 22,
+              "w": 64,
+              "h": 20
+            },
+            "tokens": [
+              {
+                "surface": "강남역에",
+                "lemma": "강남역",
+                "pos": "noun",
+                "translation": "to Gangnam Station",
+                "lemma_translation": "Gangnam Station",
+                "romanization": "Gangnamyeoge",
+                "lemma_romanization": "Gangnamyeok",
+                "breakdown": [
+                  {
+                    "part": "강남역",
+                    "role": "stem",
+                    "meaning": "Gangnam Station"
+                  },
+                  {
+                    "part": "에",
+                    "role": "particle",
+                    "meaning": "to (destination)"
+                  }
+                ]
+              },
+              {
+                "surface": "가고",
+                "lemma": "가다",
+                "pos": "verb",
+                "translation": "to go",
+                "lemma_translation": "to go",
+                "romanization": "gago",
+                "lemma_romanization": "gada",
+                "breakdown": [
+                  {
+                    "part": "가",
+                    "role": "stem",
+                    "meaning": "go"
+                  },
+                  {
+                    "part": "-고",
+                    "role": "ending",
+                    "meaning": "connector (+ 싶다 = want to)"
+                  }
+                ],
+                "cefr": "A1"
+              },
+              {
+                "surface": "싶어",
+                "lemma": "싶다",
+                "pos": "adjective",
+                "translation": "(I) want",
+                "lemma_translation": "to want to (after V-고)",
+                "romanization": "sipeo",
+                "lemma_romanization": "sipda",
+                "breakdown": [
+                  {
+                    "part": "싶",
+                    "role": "stem",
+                    "meaning": "want"
+                  },
+                  {
+                    "part": "-어",
+                    "role": "ending",
+                    "meaning": "casual present"
+                  }
+                ],
+                "politeness": "casual",
+                "cefr": "A1"
+              },
+              {
+                "surface": "근데",
+                "lemma": "근데",
+                "pos": "conjunction",
+                "translation": "but",
+                "lemma_translation": "but; by the way (spoken 그런데)",
+                "romanization": "geunde",
+                "lemma_romanization": "geunde",
+                "cefr": "A2"
+              },
+              {
+                "surface": "길을",
+                "lemma": "길",
+                "pos": "noun",
+                "translation": "the way (object)",
+                "lemma_translation": "road, way",
+                "romanization": "gireul",
+                "lemma_romanization": "gil",
+                "breakdown": [
+                  {
+                    "part": "길",
+                    "role": "stem",
+                    "meaning": "road, way"
+                  },
+                  {
+                    "part": "을",
+                    "role": "particle",
+                    "meaning": "object marker"
+                  }
+                ],
+                "cefr": "A1",
+                "note": "Target word: 길 = road, or the way somewhere: 길을 몰라요 = I don't know the way."
+              },
+              {
+                "surface": "몰라",
+                "lemma": "모르다",
+                "pos": "verb",
+                "translation": "(I) don't know",
+                "lemma_translation": "to not know",
+                "romanization": "molla",
+                "lemma_romanization": "moreuda",
+                "breakdown": [
+                  {
+                    "part": "모르",
+                    "role": "stem",
+                    "meaning": "not know (르-irregular)"
+                  },
+                  {
+                    "part": "-아",
+                    "role": "ending",
+                    "meaning": "casual present (모르 + 아 → 몰라)"
+                  }
+                ],
+                "politeness": "casual",
+                "cefr": "A1",
+                "note": "Target word: 모르다 = not to know; 르-irregular: 모르 + 아 → 몰라."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "image_prompt": "Minho points confidently toward green-colored signs and stairs leading down to a platform in the distance (only colors and arrows, no text); Jisoo follows his finger with a bright 'aha' expression.",
+        "layout": {
+          "aspect_ratio": 0.85
+        },
+        "bubbles": [
+          {
+            "kind": "speech",
+            "character": "minho",
+            "text": "저기서 2호선을 타. 초록색이야.",
+            "translation": "Take Line 2 over there. It's the green one.",
+            "box": {
+              "x": 37,
+              "y": 3,
+              "w": 59,
+              "h": 16
+            },
+            "tokens": [
+              {
+                "surface": "저기서",
+                "lemma": "저기",
+                "pos": "pronoun",
+                "translation": "(from) over there",
+                "lemma_translation": "over there",
+                "romanization": "jeogiseo",
+                "lemma_romanization": "jeogi",
+                "breakdown": [
+                  {
+                    "part": "저기",
+                    "role": "stem",
+                    "meaning": "over there"
+                  },
+                  {
+                    "part": "서",
+                    "role": "particle",
+                    "meaning": "at, from (short for 에서)"
+                  }
+                ],
+                "cefr": "A1"
+              },
+              {
+                "surface": "2호선을",
+                "lemma": "2호선",
+                "pos": "noun",
+                "translation": "Line 2 (object)",
+                "lemma_translation": "subway Line 2",
+                "romanization": "ihoseoneul",
+                "lemma_romanization": "ihoseon",
+                "breakdown": [
+                  {
+                    "part": "2호선",
+                    "role": "stem",
+                    "meaning": "Line 2 (read 이호선)"
+                  },
+                  {
+                    "part": "을",
+                    "role": "particle",
+                    "meaning": "object marker"
+                  }
+                ],
+                "cefr": "A2",
+                "note": "Subway lines are 호선 with Sino-Korean numbers: 2호선 = 이호선."
+              },
+              {
+                "surface": "타",
+                "lemma": "타다",
+                "pos": "verb",
+                "translation": "take (ride)",
+                "lemma_translation": "to ride, take (a vehicle)",
+                "romanization": "ta",
+                "lemma_romanization": "tada",
+                "breakdown": [
+                  {
+                    "part": "타",
+                    "role": "stem",
+                    "meaning": "ride, take"
+                  },
+                  {
+                    "part": "-아",
+                    "role": "ending",
+                    "meaning": "casual command (타 + 아 → 타)"
+                  }
+                ],
+                "politeness": "casual",
+                "cefr": "A1",
+                "note": "Target word: 타다 = to take a bus, subway or taxi; the vehicle gets 을/를."
+              },
+              {
+                "surface": "초록색이야",
+                "lemma": "초록색",
+                "pos": "noun",
+                "translation": "it's green",
+                "lemma_translation": "green (color)",
+                "romanization": "choroksaegiya",
+                "lemma_romanization": "choroksaek",
+                "breakdown": [
+                  {
+                    "part": "초록색",
+                    "role": "stem",
+                    "meaning": "green"
+                  },
+                  {
+                    "part": "이야",
+                    "role": "particle",
+                    "meaning": "is (casual copula)"
+                  }
+                ],
+                "politeness": "casual",
+                "cefr": "A2"
+              }
+            ]
+          },
+          {
+            "kind": "speech",
+            "character": "jisoo",
+            "text": "아, 고마워! 이제 알겠어.",
+            "translation": "Oh, thanks! Now I get it.",
+            "box": {
+              "x": 4,
+              "y": 22,
+              "w": 54,
+              "h": 16
+            },
+            "tokens": [
+              {
+                "surface": "아",
+                "lemma": "아",
+                "pos": "interjection",
+                "translation": "oh",
+                "lemma_translation": "ah, oh",
+                "romanization": "a",
+                "lemma_romanization": "a",
+                "cefr": "A1"
+              },
+              {
+                "surface": "고마워",
+                "lemma": "고맙다",
+                "pos": "adjective",
+                "translation": "thanks",
+                "lemma_translation": "to be thankful",
+                "romanization": "gomawo",
+                "lemma_romanization": "gomapda",
+                "breakdown": [
+                  {
+                    "part": "고맙",
+                    "role": "stem",
+                    "meaning": "be thankful (ㅂ → 우)"
+                  },
+                  {
+                    "part": "-어",
+                    "role": "ending",
+                    "meaning": "casual present"
+                  }
+                ],
+                "politeness": "casual",
+                "cefr": "A1",
+                "note": "Casual 'thanks' between friends; polite: 고마워요."
+              },
+              {
+                "surface": "이제",
+                "lemma": "이제",
+                "pos": "adverb",
+                "translation": "now",
+                "lemma_translation": "now (from now on)",
+                "romanization": "ije",
+                "lemma_romanization": "ije",
+                "cefr": "A1"
+              },
+              {
+                "surface": "알겠어",
+                "lemma": "알다",
+                "pos": "verb",
+                "translation": "I get it",
+                "lemma_translation": "to know",
+                "romanization": "algesseo",
+                "lemma_romanization": "alda",
+                "breakdown": [
+                  {
+                    "part": "알",
+                    "role": "stem",
+                    "meaning": "know"
+                  },
+                  {
+                    "part": "-겠-",
+                    "role": "suffix",
+                    "meaning": "(here) understanding"
+                  },
+                  {
+                    "part": "-어",
+                    "role": "ending",
+                    "meaning": "casual"
+                  }
+                ],
+                "politeness": "casual",
+                "cefr": "A1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "image_prompt": "Jisoo sits on a clean, quiet Seoul subway train holding her new transit card, smiling at her reflection in the dark window; a soft, hopeful mood with a hint of nerves.",
+        "layout": {
+          "aspect_ratio": 0.75
+        },
+        "bubbles": [
+          {
+            "kind": "narration",
+            "character": null,
+            "text": "월요일은 첫 출근이에요. 지수는 조금 떨려요.",
+            "translation": "Monday is her first day at work. Jisoo is a little nervous.",
+            "box": {
+              "x": 4,
+              "y": 3,
+              "w": 68,
+              "h": 20
+            },
+            "tokens": [
+              {
+                "surface": "월요일은",
+                "lemma": "월요일",
+                "pos": "noun",
+                "translation": "Monday (as for)",
+                "lemma_translation": "Monday",
+                "romanization": "woryoireun",
+                "lemma_romanization": "woryoil",
+                "breakdown": [
+                  {
+                    "part": "월요일",
+                    "role": "stem",
+                    "meaning": "Monday"
+                  },
+                  {
+                    "part": "은",
+                    "role": "particle",
+                    "meaning": "topic marker"
+                  }
+                ],
+                "cefr": "A1"
+              },
+              {
+                "surface": "첫",
+                "lemma": "첫",
+                "pos": "determiner",
+                "translation": "first",
+                "lemma_translation": "first",
+                "romanization": "cheot",
+                "lemma_romanization": "cheot",
+                "cefr": "A1"
+              },
+              {
+                "surface": "출근이에요",
+                "lemma": "출근",
+                "pos": "noun",
+                "translation": "is (her first) day at work",
+                "lemma_translation": "going to work, commute",
+                "romanization": "chulgeunieyo",
+                "lemma_romanization": "chulgeun",
+                "breakdown": [
+                  {
+                    "part": "출근",
+                    "role": "stem",
+                    "meaning": "going to work"
+                  },
+                  {
+                    "part": "이에요",
+                    "role": "particle",
+                    "meaning": "is (polite copula)"
+                  }
+                ],
+                "politeness": "polite",
+                "cefr": "A2"
+              },
+              {
+                "surface": "지수는",
+                "lemma": "지수",
+                "pos": "noun",
+                "translation": "Jisoo (topic)",
+                "lemma_translation": "Jisoo (name)",
+                "romanization": "Jisuneun",
+                "lemma_romanization": "Jisu",
+                "breakdown": [
+                  {
+                    "part": "지수",
+                    "role": "stem",
+                    "meaning": "Jisoo"
+                  },
+                  {
+                    "part": "는",
+                    "role": "particle",
+                    "meaning": "topic marker"
+                  }
+                ]
+              },
+              {
+                "surface": "조금",
+                "lemma": "조금",
+                "pos": "adverb",
+                "translation": "a little",
+                "lemma_translation": "a little, a bit",
+                "romanization": "jogeum",
+                "lemma_romanization": "jogeum",
+                "cefr": "A1"
+              },
+              {
+                "surface": "떨려요",
+                "lemma": "떨리다",
+                "pos": "verb",
+                "translation": "(she) is nervous",
+                "lemma_translation": "to tremble; to feel nervous",
+                "romanization": "tteollyeoyo",
+                "lemma_romanization": "tteollida",
+                "breakdown": [
+                  {
+                    "part": "떨리",
+                    "role": "stem",
+                    "meaning": "tremble, feel nervous"
+                  },
+                  {
+                    "part": "-어요",
+                    "role": "ending",
+                    "meaning": "polite present (떨리 + 어요 → 떨려요)"
+                  }
+                ],
+                "politeness": "polite",
+                "cefr": "A2"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

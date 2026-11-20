@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+/* Style A «Бумага и маркер» (Readwise + Oku) for the whole product.
+   The reader's night theme comes from style D (ElevenReader + Kippo): <html data-theme="night">. */
+@custom-variant night (&:where([data-theme=night], [data-theme=night] *));
+
+@theme {
+  --font-serif: "Source Serif 4", "Noto Serif KR", Georgia, serif;
+  --font-sans: "Inter", "Noto Sans KR", ui-sans-serif, system-ui, sans-serif;
+
+  /* light — paper & marker */
+  --color-paper: #fbf9f3;        /* page canvas */
+  --color-panel: #ffffff;        /* cards, sheets */
+  --color-recess: #f5f1e8;       /* inset fills */
+  --color-pebble: #e8e6e1;       /* neutral buttons */
+  --color-edge: #dbd7cd;         /* borders, dividers */
+  --color-ink: #333333;          /* text */
+  --color-ink-strong: #161616;   /* primary actions, headings */
+  --color-muted: #7b7a79;        /* secondary text */
+  --color-marker: #f9e874;       /* saved word highlight */
+  --color-marker-soft: #f9ed9e;  /* tapped word */
+  --color-link: #2675de;
+  --color-warm: #ff8904;         /* badges, best value */
+
+  /* night reader — style D */
+  --color-night: #0e0e12;
+  --color-night-sheet: #1b1b22;
+  --color-night-edge: #2c2c36;
+  --color-night-fg: #ececf1;
+  --color-coral: #f58971;        /* night accent */
+  --color-violet: #7767d8;       /* night saved word */
+
+  --radius-pill: 40px;
+}
+
+@layer base {
+  html { background: var(--color-paper); color: var(--color-ink); -webkit-tap-highlight-color: transparent; }
+  html[data-theme="night"] { background: var(--color-night); color: var(--color-night-fg); }
+  body { font-family: var(--font-sans); }
+  h1, h2, h3 { text-wrap: balance; }
+  :focus-visible { outline: 2px solid var(--color-link); outline-offset: 2px; }
+}
+
+/* Base shapes as utilities so components can @apply them (Tailwind v4). */
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-pill px-5 h-[42px] text-sm font-semibold
+         cursor-pointer transition-colors disabled:opacity-50;
+}
+@utility badge { @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold bg-recess text-ink; }
+@utility flash { @apply rounded-xl px-4 py-3 text-sm font-medium; }
+
+@layer components {
+  .btn-primary { @apply btn bg-ink-strong text-white hover:bg-ink; }
+  .btn-secondary { @apply btn bg-pebble text-ink-strong hover:bg-edge; }
+  .btn-danger { @apply btn bg-transparent text-red-700 hover:bg-red-50; }
+  .btn-sm { @apply h-8 px-3.5 text-xs; }
+
+  .label { @apply block text-xs font-semibold uppercase tracking-wider text-muted mb-1.5; }
+  .input {
+    @apply block w-full rounded-lg border border-edge bg-panel px-3 py-2 text-base text-ink-strong
+           placeholder:text-muted/70 focus:border-ink-strong focus:outline-none;
+  }
+  .card { @apply rounded-2xl border border-edge bg-panel; }
+
+  .marker { background: var(--color-marker); border-radius: 3px; box-decoration-break: clone; padding: 0 .1em; }
+
+  .flash-notice { @apply flash bg-marker-soft text-ink-strong; }
+  .flash-alert { @apply flash bg-red-50 text-red-800; }
+
+  .table { @apply w-full text-sm; }
+  .table th { @apply text-left text-xs font-semibold uppercase tracking-wider text-muted px-3 py-2 border-b border-edge; }
+  .table td { @apply px-3 py-2.5 border-b border-recess align-top; }
+
+  .badge-published { @apply badge bg-[#e6f2e4] text-[#2f6b2a]; }
+  .badge-review { @apply badge bg-marker-soft text-ink-strong; }
+  .badge-draft { @apply badge; }
+  .badge-generating { @apply badge bg-[#e3ecfb] text-link; }
+  .badge-archived { @apply badge text-muted; }
+}

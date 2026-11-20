@@ -1,0 +1,5 @@
+<% content_for :title, @series.title %>
+<h1 class="font-serif text-4xl font-semibold text-ink-strong mb-6"><%= @series.title %></h1>
+<%= render "form", series: @series %>
+<%= button_to "Удалить серию", admin_series_path(@series), method: :delete, class: "btn-danger mt-6",
+      form: { data: { turbo_confirm: "Удалить серию со всеми эпизодами?" } } %>

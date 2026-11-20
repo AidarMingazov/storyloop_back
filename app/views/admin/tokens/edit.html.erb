@@ -1,0 +1,4 @@
+<% content_for :title, @token.surface %>
+<h1 class="font-serif text-4xl font-semibold text-ink-strong mb-6">Токен «<%= @token.surface %>»</h1>
+<%= render "form", form: @form %>
+<%= button_to "Удалить токен", admin_token_path(@token), method: :delete, class: "btn-danger mt-6" %>

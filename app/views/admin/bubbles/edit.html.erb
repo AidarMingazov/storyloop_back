@@ -1,0 +1,33 @@
+<% content_for :title, "Пузырь" %>
+<p class="text-sm text-muted"><%= link_to "##{@bubble.episode.number} #{@bubble.episode.title}, кадр #{@bubble.panel.position + 1}", admin_episode_path(@bubble.episode, anchor: dom_id(@bubble.panel)), class: "hover:underline" %></p>
+<h1 class="font-serif text-4xl font-semibold text-ink-strong mt-1 mb-6">Пузырь</h1>
+<%= form_with model: [ :admin, @bubble ], class: "card p-6 grid gap-5 max-w-2xl" do |f| %>
+  <%= form_errors(@bubble) %>
+  <div class="grid gap-5 sm:grid-cols-2">
+    <div>
+      <%= f.label :kind, "Тип", class: "label" %>
+      <%= f.select :kind, Bubble::KINDS, {}, class: "input" %>
+    </div>
+    <div>
+      <%= f.label :character_id, "Говорящий", class: "label" %>
+      <%= f.collection_select :character_id, @bubble.episode.series.characters, :id, :name, { include_blank: "— (рассказчик)" }, class: "input" %>
+    </div>
+  </div>
+  <div>
+    <%= f.label :text, "Текст", class: "label" %>
+    <%= f.text_area :text, rows: 3, class: "input font-serif text-lg" %>
+    <p class="text-xs text-muted mt-1">Если меняете текст, проверьте токены: их позиции должны совпадать с новым текстом.</p>
+  </div>
+  <div>
+    <%= f.label :translation, "Перевод фразы", class: "label" %>
+    <%= f.text_area :translation, rows: 2, class: "input" %>
+  </div>
+  <div>
+    <%= f.label :box_json, "Позиция на картинке (JSON, проценты)", class: "label" %>
+    <%= f.text_field :box_json, value: @bubble.box&.to_json, class: "input font-mono text-sm", placeholder: '{"x":5,"y":5,"w":60,"h":18}' %>
+  </div>
+  <div class="flex gap-2">
+    <%= f.submit "Сохранить", class: "btn-primary" %>
+    <%= link_to "Отмена", admin_episode_path(@bubble.episode, anchor: dom_id(@bubble.panel)), class: "btn-secondary" %>
+  </div>
+<% end %>

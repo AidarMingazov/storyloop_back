@@ -1,0 +1,5 @@
+<% content_for :title, @character.name %>
+<h1 class="font-serif text-4xl font-semibold text-ink-strong mb-6"><%= @character.name %> · <%= @character.series.title %></h1>
+<%= render "form", character: @character %>
+<%= button_to "Удалить персонажа", admin_character_path(@character), method: :delete, class: "btn-danger mt-6",
+      form: { data: { turbo_confirm: "Удалить персонажа? Его реплики станут без говорящего." } } %>

@@ -1,0 +1,137 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://storyloop.app/schemas/episode.json",
+  "title": "Storyloop episode",
+  "description": "One episode with its series and characters. Same format for hand-written seeds, `rake episodes:import` and step 1 of the AI pipeline. Token offsets are optional: when missing, the importer finds each surface in the bubble text in order.",
+  "type": "object",
+  "required": ["language_pair", "series", "episode"],
+  "additionalProperties": false,
+  "properties": {
+    "language_pair": { "type": "string", "pattern": "^[a-z]{2}-[a-z]{2}$", "examples": ["en-ru", "ko-en"] },
+    "series": { "$ref": "#/$defs/series" },
+    "episode": { "$ref": "#/$defs/episode" }
+  },
+  "$defs": {
+    "cefr": { "type": "string", "enum": ["A1", "A2", "B1", "B2", "C1"] },
+    "series": {
+      "type": "object",
+      "required": ["slug", "title", "cefr_level", "characters"],
+      "additionalProperties": false,
+      "properties": {
+        "slug": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+        "title": { "type": "string", "minLength": 1 },
+        "description": { "type": "string" },
+        "genre": { "type": "string" },
+        "cefr_level": { "$ref": "#/$defs/cefr" },
+        "style_prompt": { "type": "string", "description": "Visual style of the series for image generation" },
+        "characters": { "type": "array", "items": { "$ref": "#/$defs/character" } }
+      }
+    },
+    "character": {
+      "type": "object",
+      "required": ["key", "name"],
+      "additionalProperties": false,
+      "properties": {
+        "key": { "type": "string", "pattern": "^[a-z0-9_]+$" },
+        "name": { "type": "string", "minLength": 1 },
+        "appearance_prompt": { "type": "string" },
+        "protagonist": { "type": "boolean", "description": "Chat format: protagonist's messages are on the right" },
+        "voice": { "type": "string", "description": "TTS voice id" }
+      }
+    },
+    "episode": {
+      "type": "object",
+      "required": ["number", "title", "format", "panels"],
+      "additionalProperties": false,
+      "properties": {
+        "number": { "type": "integer", "minimum": 1 },
+        "title": { "type": "string", "minLength": 1 },
+        "format": { "type": "string", "enum": ["webtoon", "manga", "chat", "illustrated"] },
+        "cefr_level": { "$ref": "#/$defs/cefr" },
+        "free": { "type": "boolean" },
+        "estimated_minutes": { "type": "integer", "minimum": 1 },
+        "synopsis": { "type": "string", "description": "2-3 sentences, used as context when generating the next episodes" },
+        "target_words": { "type": "array", "items": { "type": "string" } },
+        "panels": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/panel" } }
+      }
+    },
+    "panel": {
+      "type": "object",
+      "required": ["bubbles"],
+      "additionalProperties": false,
+      "properties": {
+        "image_prompt": { "type": "string" },
+        "image": { "type": "string", "description": "Image file path relative to the JSON file. Missing → placeholder" },
+        "layout": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "aspect_ratio": { "type": "number", "exclusiveMinimum": 0, "description": "width / height, default 0.8" }
+          }
+        },
+        "bubbles": { "type": "array", "items": { "$ref": "#/$defs/bubble" } }
+      }
+    },
+    "bubble": {
+      "type": "object",
+      "required": ["kind", "text"],
+      "additionalProperties": false,
+      "properties": {
+        "kind": { "type": "string", "enum": ["speech", "thought", "narration", "chat_message"] },
+        "character": { "type": ["string", "null"], "description": "Character key; null for narration" },
+        "text": { "type": "string", "minLength": 1 },
+        "translation": { "type": "string" },
+        "box": { "$ref": "#/$defs/box" },
+        "tokens": { "type": "array", "items": { "$ref": "#/$defs/token" } }
+      }
+    },
+    "box": {
+      "type": "object",
+      "required": ["x", "y", "w", "h"],
+      "additionalProperties": false,
+      "description": "Percent of the panel image",
+      "properties": {
+        "x": { "type": "number", "minimum": 0, "maximum": 100 },
+        "y": { "type": "number", "minimum": 0, "maximum": 100 },
+        "w": { "type": "number", "exclusiveMinimum": 0, "maximum": 100 },
+        "h": { "type": "number", "exclusiveMinimum": 0, "maximum": 100 }
+      }
+    },
+    "token": {
+      "type": "object",
+      "required": ["surface", "lemma", "pos", "translation"],
+      "additionalProperties": false,
+      "properties": {
+        "start": { "type": "integer", "minimum": 0, "description": "Character (codepoint) offset, inclusive" },
+        "end": { "type": "integer", "minimum": 1, "description": "Character (codepoint) offset, exclusive" },
+        "surface": { "type": "string", "minLength": 1, "description": "Exactly as in the text" },
+        "lemma": { "type": "string", "minLength": 1, "description": "Dictionary form: ran into → run into, 피곤해 → 피곤하다" },
+        "pos": {
+          "type": "string",
+          "enum": ["noun", "verb", "adjective", "adverb", "pronoun", "preposition", "conjunction", "interjection", "determiner", "numeral", "particle", "phrasal_verb", "idiom", "phrase"]
+        },
+        "translation": { "type": "string", "minLength": 1, "description": "Translation in this context, in the native language" },
+        "lemma_translation": { "type": "string", "description": "Dictionary translation of the lemma; defaults to translation" },
+        "note": { "type": "string", "description": "Short explanation in the native language" },
+        "cefr": { "$ref": "#/$defs/cefr" },
+        "romanization": { "type": "string", "description": "Korean: romanization of the surface" },
+        "lemma_romanization": { "type": "string", "description": "Korean: romanization of the lemma" },
+        "breakdown": {
+          "type": "array",
+          "description": "Korean: stem + endings/particles",
+          "items": {
+            "type": "object",
+            "required": ["part", "role"],
+            "additionalProperties": false,
+            "properties": {
+              "part": { "type": "string" },
+              "role": { "type": "string", "enum": ["stem", "ending", "particle", "suffix"] },
+              "meaning": { "type": "string" }
+            }
+          }
+        },
+        "politeness": { "type": "string", "enum": ["casual", "polite", "formal"], "description": "Korean speech level: 반말 / 해요체 / 합쇼체" }
+      }
+    }
+  }
+}

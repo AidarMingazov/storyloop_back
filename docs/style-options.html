@@ -1,0 +1,226 @@
+<title>Storyloop Style Directions</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&family=Nunito:wght@600;800;900&family=Manrope:wght@500;700;800&family=Unbounded:wght@500;700&family=Oswald:wght@500;700&family=Noto+Sans+KR:wght@500;700&display=swap">
+<style>
+/* Layout: page shell is a quiet spec sheet; each direction gets a self-themed phone mockup of the reader */
+:root{
+  --bg:#f6f6f4; --fg:#1b1b1d; --muted:#6b6b70; --line:#e2e1dc; --card:#ffffff; --accent:#3b5bdb;
+  --sans:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141416;--fg:#ececee;--muted:#9a9aa2;--line:#2b2b30;--card:#1c1c20;--accent:#8ea2ff;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#141416;--fg:#ececee;--muted:#9a9aa2;--line:#2b2b30;--card:#1c1c20;--accent:#8ea2ff;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:15px;line-height:1.55;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:32px 64px}
+.wrap{max-width:1180px;margin:0 auto;display:flex;flex-direction:column;gap:40px}
+header h1{font-size:clamp(26px,4vw,38px);line-height:1.15;margin:0 0 10px;text-wrap:balance;letter-spacing:-.02em}
+header p{margin:0;max-width:68ch;color:var(--muted)}
+.how{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:18px}
+.how div{border-top:2px solid var(--fg);padding-top:10px;font-size:14px}
+.how b{display:block;margin-bottom:4px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:24px}
+.opt{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.opt.rec{outline:2px solid var(--accent);outline-offset:-2px}
+.opt-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+.opt-head h2{margin:0;font-size:19px;letter-spacing:-.01em}
+.tag{font-size:12px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.06em}
+.ref{font-size:13px;color:var(--muted)}
+.ref a{color:inherit}
+.sw{display:flex;gap:6px;flex-wrap:wrap}
+.sw span{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.sw i{width:18px;height:18px;border-radius:50%;border:1px solid var(--line);display:inline-block}
+.meta{font-size:13.5px;display:grid;gap:6px}
+.meta dt{font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.meta dd{margin:0 0 4px}
+.pc{display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:13px}
+.pc ul{margin:0;padding-left:16px}
+.pc h3{margin:0 0 4px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+
+/* ---------- phone mockup (shared skeleton, each theme sets its own vars) ---------- */
+.phone{width:100%;max-width:310px;margin:0 auto;aspect-ratio:9/17.5;border-radius:30px;overflow:hidden;position:relative;background:var(--p-bg);color:var(--p-fg);font-family:var(--p-font);border:6px solid #111;box-shadow:0 8px 24px rgb(0 0 0 / .12)}
+.p-top{display:flex;justify-content:space-between;align-items:center;padding:14px 16px 8px;font-size:12px;font-weight:600}
+.p-top .ep{opacity:.7}
+.p-prog{height:4px;margin:0 16px 10px;border-radius:4px;background:var(--p-track)}
+.p-prog i{display:block;height:100%;width:38%;border-radius:4px;background:var(--p-accent)}
+.panel{margin:0 12px;height:47%;border-radius:var(--p-radius);position:relative;overflow:hidden;background:var(--p-scene)}
+.panel .sun{position:absolute;width:70px;height:70px;border-radius:50%;right:22px;top:20px;background:var(--p-sun)}
+.panel .hill{position:absolute;left:-10%;right:-10%;bottom:-40px;height:110px;border-radius:50%;background:var(--p-hill)}
+.panel .fig{position:absolute;bottom:30px;width:34px;height:70px;border-radius:17px 17px 6px 6px;background:var(--p-fig)}
+.panel .fig::before{content:"";position:absolute;width:30px;height:30px;border-radius:50%;left:2px;top:-30px;background:var(--p-fig)}
+.panel .f1{left:58px}.panel .f2{left:150px;opacity:.85}
+.bubble{position:absolute;left:12px;top:14px;max-width:72%;background:var(--p-bubble);color:var(--p-bubble-fg);padding:9px 12px;border-radius:var(--p-bubble-radius);font-size:14px;line-height:1.35;font-family:var(--p-read);border:var(--p-bubble-border)}
+.bubble .t{border-radius:3px;padding:0 1px}
+.bubble .saved{background:var(--p-saved-bg);box-shadow:var(--p-saved-shadow);color:var(--p-saved-fg);text-decoration:var(--p-saved-deco)}
+.bubble .tap{background:var(--p-tap-bg);color:var(--p-tap-fg);box-shadow:0 0 0 2px var(--p-tap-bg)}
+.ai{position:absolute;right:8px;bottom:6px;font-size:9px;opacity:.75;color:#fff}
+.sheet{position:absolute;left:0;right:0;bottom:0;background:var(--p-sheet);color:var(--p-sheet-fg);border-radius:var(--p-sheet-radius) var(--p-sheet-radius) 0 0;padding:10px 16px 16px;display:flex;flex-direction:column;gap:6px;box-shadow:0 -6px 20px rgb(0 0 0 / .12);border-top:var(--p-sheet-border)}
+.grab{width:36px;height:4px;border-radius:4px;background:currentColor;opacity:.25;margin:0 auto 4px}
+.w{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.w b{font-family:var(--p-display);font-size:22px;line-height:1.1;font-weight:var(--p-display-w);letter-spacing:var(--p-display-ls);text-transform:var(--p-display-tt)}
+.w small{font-size:12px;opacity:.65}
+.tr{font-size:15px;font-weight:600}
+.ex{font-size:12px;opacity:.75;line-height:1.4}
+.acts{display:flex;gap:8px;margin-top:4px}
+.btn{flex:1;text-align:center;font-size:13px;font-weight:700;padding:10px 8px;border-radius:var(--p-btn-radius);background:var(--p-accent);color:var(--p-on-accent);box-shadow:var(--p-btn-shadow);text-transform:var(--p-btn-tt);letter-spacing:var(--p-btn-ls)}
+.btn.sec{flex:0 0 44px;background:var(--p-sec);color:var(--p-sheet-fg);box-shadow:none}
+
+/* A — Paper & marker (Readwise / Oku) */
+.t-paper{--p-bg:#fbf9f3;--p-fg:#333;--p-font:"Inter",sans-serif;--p-read:"Source Serif 4","Noto Serif KR",Georgia,serif;--p-display:"Source Serif 4",Georgia,serif;--p-display-w:600;--p-display-ls:-.01em;--p-display-tt:none;
+  --p-track:#e8e6e1;--p-accent:#161616;--p-on-accent:#fff;--p-radius:12px;--p-scene:linear-gradient(#f7c9a0,#fbeedb);--p-sun:#ff8904;--p-hill:#c9b99a;--p-fig:#4a4540;
+  --p-bubble:#fff;--p-bubble-fg:#161616;--p-bubble-radius:16px;--p-bubble-border:1px solid #dbd7cd;--p-saved-bg:#f9e874;--p-saved-shadow:none;--p-saved-fg:#161616;--p-saved-deco:none;--p-tap-bg:#f9ed9e;--p-tap-fg:#161616;
+  --p-sheet:#fff;--p-sheet-fg:#333;--p-sheet-radius:20px;--p-sheet-border:1px solid #dbd7cd;--p-btn-radius:40px;--p-btn-shadow:none;--p-btn-tt:none;--p-btn-ls:0;--p-sec:#f5f1e8}
+/* B — Playful green (Duolingo-adjacent) */
+.t-play{--p-bg:#fff;--p-fg:#4b4b4b;--p-font:"Nunito","Noto Sans KR",sans-serif;--p-read:"Nunito","Noto Sans KR",sans-serif;--p-display:"Nunito",sans-serif;--p-display-w:900;--p-display-ls:0;--p-display-tt:none;
+  --p-track:#e5e5e5;--p-accent:#58cc02;--p-on-accent:#fff;--p-radius:16px;--p-scene:linear-gradient(#ddf4ff,#bfe9ff);--p-sun:#ffc800;--p-hill:#89e219;--p-fig:#1cb0f6;
+  --p-bubble:#fff;--p-bubble-fg:#3c3c3c;--p-bubble-radius:14px;--p-bubble-border:2px solid #e5e5e5;--p-saved-bg:transparent;--p-saved-shadow:inset 0 -3px 0 #58cc02;--p-saved-fg:#3c3c3c;--p-saved-deco:none;--p-tap-bg:#ddf4ff;--p-tap-fg:#1899d6;
+  --p-sheet:#fff;--p-sheet-fg:#4b4b4b;--p-sheet-radius:18px;--p-sheet-border:2px solid #e5e5e5;--p-btn-radius:12px;--p-btn-shadow:0 4px 0 #46a302;--p-btn-tt:uppercase;--p-btn-ls:.05em;--p-sec:#f1f1f1}
+/* C — Friendly companion (Headspace) */
+.t-friend{--p-bg:#f9f4f2;--p-fg:#2d2c2b;--p-font:"Manrope","Noto Sans KR",sans-serif;--p-read:"Manrope","Noto Sans KR",sans-serif;--p-display:"Manrope",sans-serif;--p-display-w:800;--p-display-ls:-.03em;--p-display-tt:none;
+  --p-track:#e2ded9;--p-accent:#0061ef;--p-on-accent:#fff;--p-radius:24px;--p-scene:linear-gradient(#ffce00,#ffe36b);--p-sun:#ffa1cc;--p-hill:#ff7a45;--p-fig:#2d2c2b;
+  --p-bubble:#fff;--p-bubble-fg:#2d2c2b;--p-bubble-radius:20px;--p-bubble-border:none;--p-saved-bg:#ffa1cc;--p-saved-shadow:0 0 0 2px #ffa1cc;--p-saved-fg:#2d2c2b;--p-saved-deco:none;--p-tap-bg:#cfe2ff;--p-tap-fg:#0047b3;
+  --p-sheet:#fff;--p-sheet-fg:#2d2c2b;--p-sheet-radius:24px;--p-sheet-border:none;--p-btn-radius:48px;--p-btn-shadow:none;--p-btn-tt:none;--p-btn-ls:0;--p-sec:#f9f4f2}
+/* D — Night webtoon (ElevenReader / Kippo) */
+.t-night{--p-bg:#0e0e12;--p-fg:#ececf1;--p-font:"Inter","Noto Sans KR",sans-serif;--p-read:"Inter","Noto Sans KR",sans-serif;--p-display:"Unbounded",sans-serif;--p-display-w:700;--p-display-ls:-.01em;--p-display-tt:none;
+  --p-track:#26262e;--p-accent:#f58971;--p-on-accent:#1a0d09;--p-radius:6px;--p-scene:linear-gradient(#2a2156,#7767d8 70%,#f58971);--p-sun:#ffd6a8;--p-hill:#14122b;--p-fig:#0b0a18;
+  --p-bubble:#fff;--p-bubble-fg:#111;--p-bubble-radius:18px;--p-bubble-border:none;--p-saved-bg:transparent;--p-saved-shadow:inset 0 -2px 0 #7767d8;--p-saved-fg:#4b3fb0;--p-saved-deco:none;--p-tap-bg:#ffd9cf;--p-tap-fg:#7a2a17;
+  --p-sheet:#1b1b22;--p-sheet-fg:#ececf1;--p-sheet-radius:22px;--p-sheet-border:1px solid #2c2c36;--p-btn-radius:14px;--p-btn-shadow:none;--p-btn-tt:none;--p-btn-ls:0;--p-sec:#2a2a34}
+/* E — Manga poster (DICE) */
+.t-poster{--p-bg:#fff;--p-fg:#000;--p-font:"Inter","Noto Sans KR",sans-serif;--p-read:"Inter","Noto Sans KR",sans-serif;--p-display:"Oswald",sans-serif;--p-display-w:700;--p-display-ls:.01em;--p-display-tt:uppercase;
+  --p-track:#d9d9d9;--p-accent:#000;--p-on-accent:#fff;--p-radius:0;--p-scene:repeating-radial-gradient(circle at 70% 30%,#fff 0 2px,#e9e9e9 2px 5px);--p-sun:#d70015;--p-hill:#111;--p-fig:#333;
+  --p-bubble:#fff;--p-bubble-fg:#000;--p-bubble-radius:50%/40%;--p-bubble-border:2.5px solid #000;--p-saved-bg:transparent;--p-saved-shadow:inset 0 -3px 0 #d70015;--p-saved-fg:#000;--p-saved-deco:none;--p-tap-bg:#000;--p-tap-fg:#fff;
+  --p-sheet:#fff;--p-sheet-fg:#000;--p-sheet-radius:0;--p-sheet-border:3px solid #000;--p-btn-radius:0;--p-btn-shadow:4px 4px 0 #d70015;--p-btn-tt:uppercase;--p-btn-ls:.06em;--p-sec:#eee}
+.t-poster .bubble{padding:12px 16px}
+.t-poster .phone,.phone.t-poster{border-color:#000}
+
+.next{border-top:1px solid var(--line);padding-top:20px;display:grid;gap:8px;max-width:72ch}
+.next h2{margin:0;font-size:20px}
+.next p{margin:0;color:var(--muted)}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Storyloop: пять направлений стиля</h1>
+    <p>Каждое направление собрано из реального стиля с Refero (его DESIGN.md: палитра, шрифты, правила) и показано на главном экране продукта: кадр эпизода, пузырь с токенами и нижняя панель слова. Жёлтая/подчёркнутая фраза — уже сохранённое слово, выделенная — слово, на которое только что нажали.</p>
+    <div class="how">
+      <div><b>Почему это важно для нас</b>Картинки комиксов яркие и меняются от серии к серии. Интерфейс не должен с ними спорить.</div>
+      <div><b>Что учтено</b>Шрифты с латиницей и кириллицей; хангыль идёт через Noto Sans KR / Noto Serif KR как fallback.</div>
+      <div><b>Как выбирать</b>Смотрите на панель слова и на сохранённое слово: это 80% времени пользователя.</div>
+    </div>
+  </header>
+
+  <section class="grid" aria-label="Варианты стиля">
+
+    <!-- A -->
+    <article class="opt rec">
+      <div class="opt-head"><h2>A. Бумага и маркер</h2><span class="tag">Рекомендую</span></div>
+      <div class="ref">Основа: <a href="https://refero.design/styles/9ac1d116-0743-490c-acae-0feb6c3d2785">Readwise</a> + <a href="https://refero.design/styles/02e73826-e911-4cdc-b23d-7aabce7a8a27">Oku</a> · Cream &amp; serif</div>
+      <div class="phone t-paper" role="img" aria-label="Макет читалки в стиле A">
+        <div class="p-top"><span>Coffee &amp; Coincidences</span><span class="ep">Эп. 2 · A2</span></div>
+        <div class="p-prog"><i></i></div>
+        <div class="panel"><div class="sun"></div><div class="hill"></div><div class="fig f1"></div><div class="fig f2"></div>
+          <div class="bubble">Guess who I <span class="t tap">ran into</span> at the café? My <span class="t saved">ex</span>!</div><span class="ai">AI-иллюстрация</span></div>
+        <div class="sheet"><div class="grab"></div>
+          <div class="w"><b>ran into</b><small>→ run into · phrasal verb · B1</small></div>
+          <div class="tr">случайно встретить</div>
+          <div class="ex">Говорят о неожиданной встрече со знакомым. Не «врезаться»: здесь без столкновения.</div>
+          <div class="acts"><span class="btn sec">🔊</span><span class="btn">Сохранить слово</span></div>
+        </div>
+      </div>
+      <div class="sw"><span><i style="background:#fbf9f3"></i>#fbf9f3</span><span><i style="background:#333"></i>#333333</span><span><i style="background:#f9e874"></i>#f9e874</span><span><i style="background:#ff8904"></i>#ff8904</span><span><i style="background:#2675de"></i>#2675de</span></div>
+      <dl class="meta"><dt>Шрифты</dt><dd>Source Serif 4 (текст историй, заголовки) + Inter (интерфейс)</dd><dt>Метафора</dt><dd>Книга с маркером: сохранённое слово подсвечено как выделение текстовыделителем.</dd></dl>
+      <div class="pc"><div><h3>Плюсы</h3><ul><li>Нейтральный фон не спорит с картинками</li><li>Маркер = «сохранено», понятно без объяснений</li><li>Легко сделать тёмную тему для чтения ночью</li></ul></div><div><h3>Минусы</h3><ul><li>Спокойный, «взрослый»; меньше азарта</li><li>Тёплый крем + serif — частый шаблон, нужна своя деталь</li></ul></div></div>
+    </article>
+
+    <!-- B -->
+    <article class="opt">
+      <div class="opt-head"><h2>B. Игровой</h2><span class="ref">Playful &amp; colorful</span></div>
+      <div class="ref">Основа: <a href="https://refero.design/styles/bd4b3de7-fd30-4620-a8ca-e850b0f2817b">Duolingo</a>, похожие: Promova, Brilliant</div>
+      <div class="phone t-play" role="img" aria-label="Макет читалки в стиле B">
+        <div class="p-top"><span>Coffee &amp; Coincidences</span><span class="ep">🔥 3 · A2</span></div>
+        <div class="p-prog"><i></i></div>
+        <div class="panel"><div class="sun"></div><div class="hill"></div><div class="fig f1"></div><div class="fig f2"></div>
+          <div class="bubble">Guess who I <span class="t tap">ran into</span> at the café? My <span class="t saved">ex</span>!</div><span class="ai">AI-иллюстрация</span></div>
+        <div class="sheet"><div class="grab"></div>
+          <div class="w"><b>ran into</b><small>→ run into · B1</small></div>
+          <div class="tr">случайно встретить</div>
+          <div class="ex">Неожиданная встреча со знакомым человеком.</div>
+          <div class="acts"><span class="btn sec">🔊</span><span class="btn">Сохранить</span></div>
+        </div>
+      </div>
+      <div class="sw"><span><i style="background:#fff"></i>#ffffff</span><span><i style="background:#58cc02"></i>#58cc02</span><span><i style="background:#1cb0f6"></i>#1cb0f6</span><span><i style="background:#ffc800"></i>#ffc800</span><span><i style="background:#4b4b4b"></i>#4b4b4b</span></div>
+      <dl class="meta"><dt>Шрифты</dt><dd>Nunito 800–900 (округлый, есть кириллица)</dd><dt>Метафора</dt><dd>Игра: кнопки с «губой» снизу, стрики, прогресс.</dd></dl>
+      <div class="pc"><div><h3>Плюсы</h3><ul><li>Сразу читается как «учить язык»</li><li>Хорошо ложится на стрики и повторение</li></ul></div><div><h3>Минусы</h3><ul><li>Слишком похоже на Duolingo, теряем отличие</li><li>Зелёный спорит с цветными кадрами</li></ul></div></div>
+    </article>
+
+    <!-- C -->
+    <article class="opt">
+      <div class="opt-head"><h2>C. Дружелюбный спутник</h2><span class="ref">Friendly startup</span></div>
+      <div class="ref">Основа: <a href="https://refero.design/styles/10f8c9d2-d38e-4e2b-a58b-67e7b7beecf9">Headspace</a>, похожие: Bumble, HEY</div>
+      <div class="phone t-friend" role="img" aria-label="Макет читалки в стиле C">
+        <div class="p-top"><span>Coffee &amp; Coincidences</span><span class="ep">Эп. 2 · A2</span></div>
+        <div class="p-prog"><i></i></div>
+        <div class="panel"><div class="sun"></div><div class="hill"></div><div class="fig f1"></div><div class="fig f2"></div>
+          <div class="bubble">Guess who I <span class="t tap">ran into</span> at the café? My <span class="t saved">ex</span>!</div><span class="ai">AI-иллюстрация</span></div>
+        <div class="sheet"><div class="grab"></div>
+          <div class="w"><b>ran into</b><small>→ run into · B1</small></div>
+          <div class="tr">случайно встретить</div>
+          <div class="ex">Неожиданная встреча со знакомым. Без столкновения.</div>
+          <div class="acts"><span class="btn sec">🔊</span><span class="btn">Сохранить слово</span></div>
+        </div>
+      </div>
+      <div class="sw"><span><i style="background:#f9f4f2"></i>#f9f4f2</span><span><i style="background:#ffce00"></i>#ffce00</span><span><i style="background:#0061ef"></i>#0061ef</span><span><i style="background:#ffa1cc"></i>#ffa1cc</span><span><i style="background:#2d2c2b"></i>#2d2c2b</span></div>
+      <dl class="meta"><dt>Шрифты</dt><dd>Manrope 700–800 (замена Apercu, есть кириллица)</dd><dt>Метафора</dt><dd>Тёплый спутник: крупные скругления, цветные «сцены» на лендинге.</dd></dl>
+      <div class="pc"><div><h3>Плюсы</h3><ul><li>Тёплый и не детский</li><li>Яркие сцены хороши для лендингов и пейвола</li></ul></div><div><h3>Минусы</h3><ul><li>Три ярких цвета: нужна дисциплина рядом с картинками</li><li>Ассоциация с wellness, а не с историями</li></ul></div></div>
+    </article>
+
+    <!-- D -->
+    <article class="opt">
+      <div class="opt-head"><h2>D. Ночной вебтун</h2><span class="ref">Cinematic dark</span></div>
+      <div class="ref">Основа: <a href="https://refero.design/styles/6227c9cb-5652-4b0c-bd9c-93d7cd0a07a8">ElevenReader</a> + <a href="https://refero.design/styles/cc2c7131-7fc0-4da0-86e2-c5beb8bfad1f">Kippo</a></div>
+      <div class="phone t-night" role="img" aria-label="Макет читалки в стиле D">
+        <div class="p-top"><span>Coffee &amp; Coincidences</span><span class="ep">Эп. 2 · A2</span></div>
+        <div class="p-prog"><i></i></div>
+        <div class="panel"><div class="sun"></div><div class="hill"></div><div class="fig f1"></div><div class="fig f2"></div>
+          <div class="bubble">Guess who I <span class="t tap">ran into</span> at the café? My <span class="t saved">ex</span>!</div><span class="ai">AI-иллюстрация</span></div>
+        <div class="sheet"><div class="grab"></div>
+          <div class="w"><b>ran into</b><small>→ run into · B1</small></div>
+          <div class="tr">случайно встретить</div>
+          <div class="ex">Неожиданная встреча со знакомым человеком.</div>
+          <div class="acts"><span class="btn sec">🔊</span><span class="btn">Сохранить слово</span></div>
+        </div>
+      </div>
+      <div class="sw"><span><i style="background:#0e0e12"></i>#0e0e12</span><span><i style="background:#1b1b22"></i>#1b1b22</span><span><i style="background:#f58971"></i>#f58971</span><span><i style="background:#7767d8"></i>#7767d8</span><span><i style="background:#ececf1"></i>#ececf1</span></div>
+      <dl class="meta"><dt>Шрифты</dt><dd>Unbounded (заголовки) + Inter (интерфейс)</dd><dt>Метафора</dt><dd>Кинозал: тёмный фон, кадры светятся сами.</dd></dl>
+      <div class="pc"><div><h3>Плюсы</h3><ul><li>Кадры выглядят максимально ярко</li><li>Привычно для читателей вебтунов (вечернее чтение)</li></ul></div><div><h3>Минусы</h3><ul><li>Хуже для лендинга и рекламы</li><li>Режим повторения слов на тёмном утомляет днём</li></ul></div></div>
+    </article>
+
+    <!-- E -->
+    <article class="opt">
+      <div class="opt-head"><h2>E. Манга-постер</h2><span class="ref">Black &amp; white + 1 accent</span></div>
+      <div class="ref">Основа: <a href="https://refero.design/styles/737682af-c9f0-4384-be9a-fa979413b398">DICE</a></div>
+      <div class="phone t-poster" role="img" aria-label="Макет читалки в стиле E">
+        <div class="p-top"><span>COFFEE &amp; COINCIDENCES</span><span class="ep">ЭП. 2 · A2</span></div>
+        <div class="p-prog"><i></i></div>
+        <div class="panel"><div class="sun"></div><div class="hill"></div><div class="fig f1"></div><div class="fig f2"></div>
+          <div class="bubble">Guess who I <span class="t tap">ran into</span> at the café? My <span class="t saved">ex</span>!</div><span class="ai">AI-иллюстрация</span></div>
+        <div class="sheet"><div class="grab"></div>
+          <div class="w"><b>ran into</b><small>→ run into · B1</small></div>
+          <div class="tr">случайно встретить</div>
+          <div class="ex">Неожиданная встреча со знакомым человеком.</div>
+          <div class="acts"><span class="btn sec">🔊</span><span class="btn">Сохранить</span></div>
+        </div>
+      </div>
+      <div class="sw"><span><i style="background:#fff"></i>#ffffff</span><span><i style="background:#000"></i>#000000</span><span><i style="background:#d70015"></i>#d70015</span><span><i style="background:#d9d9d9"></i>#d9d9d9</span></div>
+      <dl class="meta"><dt>Шрифты</dt><dd>Oswald (капс-заголовки, кириллица) + Inter</dd><dt>Метафора</dt><dd>Печатная манга: чёрная обводка, скринтон, жёсткие тени.</dd></dl>
+      <div class="pc"><div><h3>Плюсы</h3><ul><li>Самый узнаваемый и «комиксовый»</li><li>Дерзко для рекламы в TikTok/Reels</li></ul></div><div><h3>Минусы</h3><ul><li>Подходит к манге, хуже к chat/illustrated</li><li>Корейский в капсе не работает, нужны исключения</li></ul></div></div>
+    </article>
+
+  </section>
+
+  <section class="next">
+    <h2>Что дальше</h2>
+    <p>Выберите направление (или смесь, например A для читалки + тёмный режим из D). Я заберу DESIGN.md выбранного стиля с Refero, переложу его в Tailwind-токены для Rails и сделаю на нём экраны M2: читалку, панель слова и экран итогов.</p>
+  </section>
+</div>

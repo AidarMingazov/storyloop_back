@@ -1,0 +1,1300 @@
+{
+  "language_pair": "en-ru",
+  "series": {
+    "slug": "coffee-and-coincidences",
+    "title": "Coffee & Coincidences",
+    "description": "Бариста Миа путает заказы и проливает кофе на альбом нового посетителя — художника Лео. С этой неловкой встречи начинается тёплая история о случайностях, первых свиданиях и маленьких чудесах.",
+    "genre": "romance",
+    "cefr_level": "A2",
+    "style_prompt": "Soft, warm Korean webtoon style with clean, thin line art and gentle cel shading. Pastel palette of peach, cream, mint and latte brown, cozy golden lighting, expressive but simple faces, slightly rounded proportions, uncluttered backgrounds with soft bokeh. Vertical-scroll comic panel composition. No text, letters, readable signs or speech bubbles in the image.",
+    "characters": [
+      {
+        "key": "mia",
+        "name": "Mia",
+        "appearance_prompt": "24-year-old woman, petite, shoulder-length wavy auburn hair usually tied in a messy low bun with a few loose strands, warm brown eyes, light freckles across her nose and cheeks, small silver star earrings. At work she wears a mustard-yellow barista apron over a cream knit sweater with pushed-up sleeves, black jeans and white sneakers.",
+        "protagonist": true
+      },
+      {
+        "key": "leo",
+        "name": "Leo",
+        "appearance_prompt": "26-year-old man, tall and slim, messy dark-brown hair falling over his forehead, round tortoiseshell glasses, soft green eyes, a small ink stain on his right hand. Wears an oversized olive-green corduroy jacket over a plain white T-shirt, beige chinos and worn white sneakers; usually carries a brown leather sketchbook."
+      },
+      {
+        "key": "sam",
+        "name": "Sam",
+        "appearance_prompt": "25-year-old woman, Mia's roommate, short bleached-blonde pixie cut, bright blue eyes, wide cheerful grin, several small silver ear piercings. Wears oversized lavender hoodies, patterned leggings and fuzzy socks; very expressive face, often has her phone in her hand."
+      },
+      {
+        "key": "nora",
+        "name": "Nora",
+        "appearance_prompt": "28-year-old woman, tall and elegant, long glossy black hair in loose waves, soft green eyes exactly like Leo's, bright red lipstick, gold hoop earrings. Wears a fitted red dress under a cream trench coat and red heels; dramatic, confident gestures."
+      }
+    ]
+  },
+  "episode": {
+    "number": 2,
+    "title": "Tell Me Everything",
+    "format": "chat",
+    "cefr_level": "A2",
+    "free": true,
+    "estimated_minutes": 3,
+    "synopsis": "That evening, Mia texts her roommate Sam about the coffee disaster and the cute customer who drew her on a napkin. Sam wants every detail and tells Mia not to give up. Then Mia turns the napkin over and finds a message from Leo: \"See you on Friday?\"",
+    "target_words": [
+      "make a fool of yourself",
+      "no way",
+      "to be honest",
+      "kind of",
+      "embarrassed",
+      "give up",
+      "come back",
+      "on my way",
+      "turn over",
+      "can't wait"
+    ],
+    "panels": [
+      {
+        "bubbles": [
+          {
+            "kind": "chat_message",
+            "character": "mia",
+            "text": "Sam, are you busy? I need to tell you something.",
+            "translation": "Сэм, ты занята? Мне нужно тебе кое-что рассказать.",
+            "tokens": [
+              {
+                "surface": "Sam",
+                "lemma": "Sam",
+                "pos": "noun",
+                "translation": "Сэм"
+              },
+              {
+                "surface": "are",
+                "lemma": "be",
+                "pos": "verb",
+                "translation": "есть (связка)",
+                "lemma_translation": "быть",
+                "cefr": "A1"
+              },
+              {
+                "surface": "you",
+                "lemma": "you",
+                "pos": "pronoun",
+                "translation": "ты",
+                "lemma_translation": "ты; вы"
+              },
+              {
+                "surface": "busy",
+                "lemma": "busy",
+                "pos": "adjective",
+                "translation": "занята",
+                "lemma_translation": "занятой",
+                "cefr": "A1"
+              },
+              {
+                "surface": "I",
+                "lemma": "I",
+                "pos": "pronoun",
+                "translation": "мне",
+                "lemma_translation": "я"
+              },
+              {
+                "surface": "need",
+                "lemma": "need",
+                "pos": "verb",
+                "translation": "нужно",
+                "lemma_translation": "нуждаться; нужно",
+                "cefr": "A1"
+              },
+              {
+                "surface": "to",
+                "lemma": "to",
+                "pos": "particle",
+                "translation": "частица инфинитива"
+              },
+              {
+                "surface": "tell",
+                "lemma": "tell",
+                "pos": "verb",
+                "translation": "рассказать",
+                "lemma_translation": "рассказывать; говорить",
+                "cefr": "A1"
+              },
+              {
+                "surface": "you",
+                "lemma": "you",
+                "pos": "pronoun",
+                "translation": "тебе",
+                "lemma_translation": "ты; вы"
+              },
+              {
+                "surface": "something",
+                "lemma": "something",
+                "pos": "pronoun",
+                "translation": "кое-что",
+                "lemma_translation": "что-то"
+              }
+            ]
+          },
+          {
+            "kind": "chat_message",
+            "character": "sam",
+            "text": "Never too busy for you! What happened?",
+            "translation": "Для тебя я никогда не занята! Что случилось?",
+            "tokens": [
+              {
+                "surface": "Never",
+                "lemma": "never",
+                "pos": "adverb",
+                "translation": "никогда не",
+                "lemma_translation": "никогда",
+                "cefr": "A1"
+              },
+              {
+                "surface": "too",
+                "lemma": "too",
+                "pos": "adverb",
+                "translation": "слишком",
+                "cefr": "A1"
+              },
+              {
+                "surface": "busy",
+                "lemma": "busy",
+                "pos": "adjective",
+                "translation": "занята",
+                "lemma_translation": "занятой",
+                "cefr": "A1"
+              },
+              {
+                "surface": "for",
+                "lemma": "for",
+                "pos": "preposition",
+                "translation": "для"
+              },
+              {
+                "surface": "you",
+                "lemma": "you",
+                "pos": "pronoun",
+                "translation": "тебя",
+                "lemma_translation": "ты; вы"
+              },
+              {
+                "surface": "What",
+                "lemma": "what",
+                "pos": "pronoun",
+                "translation": "что"
+              },
+              {
+                "surface": "happened",
+                "lemma": "happen",
+                "pos": "verb",
+                "translation": "случилось",
+                "lemma_translation": "случаться",
+                "cefr": "A2"
+              }
+            ]
+          },
+          {
+            "kind": "chat_message",
+            "character": "mia",
+            "text": "I made a fool of myself at work today 🙈",
+            "translation": "Я сегодня опозорилась на работе 🙈",
+            "tokens": [
+              {
+                "surface": "I",
+                "lemma": "I",
+                "pos": "pronoun",
+                "translation": "я"
+              },
+              {
+                "surface": "made a fool of myself",
+                "lemma": "make a fool of yourself",
+                "pos": "idiom",
+                "translation": "опозорилась",
+                "lemma_translation": "выставить себя дураком, опозориться",
+                "cefr": "B1",
+                "note": "Make a fool of yourself — выставить себя в глупом виде. Местоимение меняется: myself, yourself, himself."
+              },
+              {
+                "surface": "at",
+                "lemma": "at",
+                "pos": "preposition",
+                "translation": "на",
+                "lemma_translation": "в; на"
+              },
+              {
+                "surface": "work",
+                "lemma": "work",
+                "pos": "noun",
+                "translation": "работе",
+                "lemma_translation": "работа",
+                "cefr": "A1"
+              },
+              {
+                "surface": "today",
+                "lemma": "today",
+                "pos": "adverb",
+                "translation": "сегодня",
+                "cefr": "A1"
+              }
+            ]
+          },
+          {
+            "kind": "chat_message",
+            "character": "sam",
+            "text": "Again? 😂",
+            "translation": "Опять? 😂",
+            "tokens": [
+              {
+                "surface": "Again",
+                "lemma": "again",
+                "pos": "adverb",
+                "translation": "опять",
+                "lemma_translation": "снова, опять",
+                "cefr": "A1"
+              }
+            ]
+          },
+          {
+            "kind": "chat_message",
+            "character": "mia",
+            "text": "Hey! This time it was really bad. I spilled coffee on a customer's sketchbook.",
+            "translation": "Эй! В этот раз всё было очень плохо. Я пролила кофе на альбом посетителя.",
+            "tokens": [
+              {
+                "surface": "Hey",
+                "lemma": "hey",
+                "pos": "interjection",
+                "translation": "эй"
+              },
+              {
+                "surface": "This",
+                "lemma": "this",
+                "pos": "determiner",
+                "translation": "этот"
+              },
+              {
+                "surface": "time",
+                "lemma": "time",
+                "pos": "noun",
+                "translation": "раз",
+                "lemma_translation": "время; раз",
+                "cefr": "A1"
+              },
+              {
+                "surface": "it",
+                "lemma": "it",
+                "pos": "pronoun",
+                "translation": "всё",
+                "lemma_translation": "оно; это"
+              },
+              {
+                "surface": "was",
+                "lemma": "be",
+                "pos": "verb",
+                "translation": "было",
+                "lemma_translation": "быть",
+                "cefr": "A1"
+              },
+              {
+                "surface": "really",
+                "lemma": "really",
+                "pos": "adverb",
+                "translation": "очень",
+                "lemma_translation": "действительно; очень",
+                "cefr": "A1"
+              },
+              {
+                "surface": "bad",
+                "lemma": "bad",
+                "pos": "adjective",
+                "translation": "плохо",
+                "lemma_translation": "плохой",
+                "cefr": "A1"
+              },
+              {
+                "surface": "I",
+                "lemma": "I",
+                "pos": "pronoun",
+                "translation": "я"
+              },
+              {
+                "surface": "spilled",
+                "lemma": "spill",
+                "pos": "verb",
+                "translation": "пролила",
+                "lemma_translation": "проливать, разливать",
+                "cefr": "B1",
+                "note": "Spill — пролить жидкость. Spilled — прошедшее время."
+              },
+              {
+                "surface": "coffee",
+                "lemma": "coffee",
+                "pos": "noun",
+                "translation": "кофе",
+                "cefr": "A1"
+              },
+              {
+                "surface": "on",
+                "lemma": "on",
+                "pos": "preposition",
+                "translation": "на"
+              },
+              {
+                "surface": "a",
+                "lemma": "a",
+                "pos": "determiner",
+                "translation": "неопределённый артикль"
+              },
+              {
+                "surface": "customer's",
+                "lemma": "customer",
+                "pos": "noun",
+                "translation": "посетителя",
+                "lemma_translation": "покупатель, клиент",
+                "cefr": "A2",
+                "note": "'s показывает принадлежность: a customer's sketchbook — альбом посетителя."
+              },
+              {
+                "surface": "sketchbook",
+                "lemma": "sketchbook",
+                "pos": "noun",
+                "translation": "альбом",
+                "lemma_translation": "альбом для рисования, скетчбук",
+                "cefr": "B1"
+              }
+            ]
+          },
+          {
+            "kind": "chat_message",
+            "character": "sam",
+            "text": "Oh no! Was he angry?",
+            "translation": "О нет! Он разозлился?",
+            "tokens": [
+              {
+                "surface": "Oh no",
+                "lemma": "oh no",
+                "pos": "interjection",
+                "translation": "о нет"
+              },
+              {
+                "surface": "Was",
+                "lemma": "be",
+                "pos": "verb",
+                "translation": "был",
+                "lemma_translation": "быть",
+                "cefr": "A1"
+              },
+              {
+                "surface": "he",
+                "lemma": "he",
+                "pos": "pronoun",
+                "translation": "он"
+              },
+              {
+                "surface": "angry",
+                "lemma": "angry",
+                "pos": "adjective",
+                "translation": "разозлился",
+                "lemma_translation": "злой, сердитый",
+                "cefr": "A1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "bubbles": [
+          {
+            "kind": "chat_message",
+            "character": "mia",
+            "text": "No, that's the strange part. He just laughed. And then he drew me on a napkin!",
+            "translation": "Нет, в этом-то и странность. Он просто засмеялся. А потом нарисовал меня на салфетке!",
+            "tokens": [
+              {
+                "surface": "No",
+                "lemma": "no",
+                "pos": "interjection",
+                "translation": "нет"
+              },
+              {
+                "surface": "that's",
+                "lemma": "that is",
+                "pos": "pronoun",
+                "translation": "это и есть",
+                "lemma_translation": "это",
+                "note": "That's = that is."
+              },
+              {
+                "surface": "the",
+                "lemma": "the",
+                "pos": "determiner",
+                "translation": "определённый артикль"
+              },
+              {
+                "surface": "strange",
+                "lemma": "strange",
+                "pos": "adjective",
+                "translation": "странная",
+                "lemma_translation": "странный",
+                "cefr": "A2"
+              },
+              {
+                "surface": "part",
+                "lemma": "part",
+                "pos": "noun",
+                "translation": "часть",
+                "cefr": "A1"
+              },
+              {
+                "surface": "He",
+                "lemma": "he",
+                "pos": "pronoun",
+                "translation": "он"
+              },
+              {
+                "surface": "just",
+                "lemma": "just",
+                "pos": "adverb",
+                "translation": "просто",
+                "lemma_translation": "просто; только что",
+                "cefr": "A1"
+              },
+              {
+                "surface": "laughed",
+                "lemma": "laugh",
+                "pos": "verb",
+                "translation": "засмеялся",
+                "lemma_translation": "смеяться",
+                "cefr": "A1"
+              },
+              {
+                "surface": "And",
+                "lemma": "and",
+                "pos": "conjunction",
+                "translation": "а",
+                "lemma_translation": "и"
+              },
+              {
+                "surface": "then",
+                "lemma": "then",
+                "pos": "adverb",
+                "translation": "потом",
+                "lemma_translation": "тогда; потом",
+                "cefr": "A1"
+              },
+              {
+                "surface": "he",
+                "lemma": "he",
+                "pos": "pronoun",
+                "translation": "он"
+              },
+              {
+                "surface": "drew",
+                "lemma": "draw",
+                "pos": "verb",
+                "translation": "нарисовал",
+                "lemma_translation": "рисовать",
+                "cefr": "A1",
+                "note": "Неправильный глагол: draw — drew — drawn."
+              },
+              {
+                "surface": "me",
+                "lemma": "me",
+                "pos": "pronoun",
+                "translation": "меня",
+                "lemma_translation": "меня; мне"
+              },
+              {
+                "surface": "on",
+                "lemma": "on",
+                "pos": "preposition",
+                "translation": "на"
+              },
+              {
+                "surface": "a",
+                "lemma": "a",
+                "pos": "determiner",
+                "translation": "неопределённый артикль"
+              },
+              {
+                "surface": "napkin",
+                "lemma": "napkin",
+                "pos": "noun",
+                "translation": "салфетке",
+                "lemma_translation": "салфетка",
+                "cefr": "B1"
+              }
+            ]
+          },
+          {
+            "kind": "chat_message",
+            "character": "sam",
+            "text": "Wait. He DREW you?! No way! That's so romantic!",
+            "translation": "Стоп. Он НАРИСОВАЛ тебя?! Не может быть! Это так романтично!",
+            "tokens": [
+              {
+                "surface": "Wait",
+                "lemma": "wait",
+                "pos": "verb",
+                "translation": "стоп",
+                "lemma_translation": "ждать",
+                "cefr": "A1"
+              },
+              {
+                "surface": "He",
+                "lemma": "he",
+                "pos": "pronoun",
+                "translation": "он"
+              },
+              {
+                "surface": "DREW",
+                "lemma": "draw",
+                "pos": "verb",
+                "translation": "нарисовал",
+                "lemma_translation": "рисовать",
+                "cefr": "A1"
+              },
+              {
+                "surface": "you",
+                "lemma": "you",
+                "pos": "pronoun",
+                "translation": "тебя",
+                "lemma_translation": "ты; вы"
+              },
+              {
+                "surface": "No way",
+                "lemma": "no way",
+                "pos": "phrase",
+                "translation": "не может быть",
+                "cefr": "A2",
+                "note": "No way! — «не может быть!» (сильное удивление) или «ни за что!» (резкий отказ)."
+              },
+              {
+                "surface": "That's",
+                "lemma": "that is",
+                "pos": "pronoun",
+                "translation": "это"
+              },
+              {
+                "surface": "so",
+                "lemma": "so",
+                "pos": "adverb",
+                "translation": "так",
+                "cefr": "A1"
+              },
+              {
+                "surface": "romantic",
+                "lemma": "romantic",
+                "pos": "adjective",
+                "translation": "романтично",
+                "lemma_translation": "романтичный",
+                "cefr": "B1"
+              }
+            ]
+          },
+          {
+            "kind": "chat_message",
+            "character": "mia",
+            "text": "He's an artist, I think. And to be honest... he's kind of cute.",
+            "translation": "Он, кажется, художник. И, честно говоря... он довольно милый.",
+            "tokens": [
+              {
+                "surface": "He's",
+                "lemma": "he is",
+                "pos": "pronoun",
+                "translation": "он",
+                "note": "He's = he is."
+              },
+              {
+                "surface": "an",
+                "lemma": "a",
+                "pos": "determiner",
+                "translation": "неопределённый артикль"
+              },
+              {
+                "surface": "artist",
+                "lemma": "artist",
+                "pos": "noun",
+                "translation": "художник",
+                "cefr": "A2"
+              },
+              {
+                "surface": "I",
+                "lemma": "I",
+                "pos": "pronoun",
+                "translation": "я"
+              },
+              {
+                "surface": "think",
+                "lemma": "think",
+                "pos": "verb",
+                "translation": "думаю",
+                "lemma_translation": "думать",
+                "cefr": "A1"
+              },
+              {
+                "surface": "And",
+                "lemma": "and",
+                "pos": "conjunction",
+                "translation": "и"
+              },
+              {
+                "surface": "to be honest",
+                "lemma": "to be honest",
+                "pos": "phrase",
+                "translation": "честно говоря",
+                "cefr": "B1",
+                "note": "To be honest — «честно говоря»: так начинают искреннее признание или мнение."
+              },
+              {
+                "surface": "he's",
+                "lemma": "he is",
+                "pos": "pronoun",
+                "translation": "он"
+              },
+              {
+                "surface": "kind of",
+                "lemma": "kind of",
+                "pos": "phrase",
+                "translation": "довольно",
+                "lemma_translation": "вроде, как бы; довольно",
+                "cefr": "B1",
+                "note": "Kind of — разговорное «довольно, вроде как»: смягчает слово после него."
+              },
+              {
+                "surface": "cute",
+                "lemma": "cute",
+                "pos": "adjective",
+                "translation": "милый",
+                "lemma_translation": "милый, симпатичный",
+                "cefr": "A2"
+              }
+            ]
+          },
+          {
+            "kind": "chat_message",
+            "character": "sam",
+            "text": "I knew it! Did you get his number?",
+            "translation": "Я так и знала! Ты взяла его номер?",
+            "tokens": [
+              {
+                "surface": "I knew it",
+                "lemma": "I knew it",
+                "pos": "phrase",
+                "translation": "я так и знала",
+                "lemma_translation": "я так и знал(а)",
+                "cefr": "A2",
+                "note": "I knew it! — «я так и знала!»: когда твоя догадка подтвердилась."
+              },
+              {
+                "surface": "Did",
+                "lemma": "do",
+                "pos": "verb",
+                "translation": "вспомогательный глагол",
+                "lemma_translation": "делать",
+                "note": "Did помогает задать вопрос в прошедшем времени: Did you get…? — Ты взяла…?"
+              },
+              {
+                "surface": "you",
+                "lemma": "you",
+                "pos": "pronoun",
+                "translation": "ты",
+                "lemma_translation": "ты; вы"
+              },
+              {
+                "surface": "get",
+                "lemma": "get",
+                "pos": "verb",
+                "translation": "взяла",
+                "lemma_translation": "получать; брать",
+                "cefr": "A1"
+              },
+              {
+                "surface": "his",
+                "lemma": "his",
+                "pos": "determiner",
+                "translation": "его"
+              },
+              {
+                "surface": "number",
+                "lemma": "number",
+                "pos": "noun",
+                "translation": "номер",
+                "lemma_translation": "число; номер",
+                "cefr": "A1"
+              }
+            ]
+          },
+          {
+            "kind": "chat_message",
+            "character": "mia",
+            "text": "No. I was too embarrassed. I'll probably never see him again.",
+            "translation": "Нет. Мне было слишком неловко. Наверное, я его больше никогда не увижу.",
+            "tokens": [
+              {
+                "surface": "No",
+                "lemma": "no",
+                "pos": "interjection",
+                "translation": "нет"
+              },
+              {
+                "surface": "I",
+                "lemma": "I",
+                "pos": "pronoun",
+                "translation": "мне",
+                "lemma_translation": "я"
+              },
+              {
+                "surface": "was",
+                "lemma": "be",
+                "pos": "verb",
+                "translation": "было",
+                "lemma_translation": "быть",
+                "cefr": "A1"
+              },
+              {
+                "surface": "too",
+                "lemma": "too",
+                "pos": "adverb",
+                "translation": "слишком",
+                "cefr": "A1"
+              },
+              {
+                "surface": "embarrassed",
+                "lemma": "embarrassed",
+                "pos": "adjective",
+                "translation": "неловко",
+                "lemma_translation": "смущённый",
+                "cefr": "B1",
+                "note": "Embarrassed — смущённый; I was embarrassed — мне было неловко. Не путай с embarrassing — неловкий (о ситуации)."
+              },
+              {
+                "surface": "I'll",
+                "lemma": "I will",
+                "pos": "pronoun",
+                "translation": "я",
+                "lemma_translation": "я буду",
+                "note": "I'll = I will: будущее время."
+              },
+              {
+                "surface": "probably",
+                "lemma": "probably",
+                "pos": "adverb",
+                "translation": "наверное",
+                "lemma_translation": "вероятно",
+                "cefr": "A2"
+              },
+              {
+                "surface": "never",
+                "lemma": "never",
+                "pos": "adverb",
+                "translation": "никогда не",
+                "lemma_translation": "никогда",
+                "cefr": "A1"
+              },
+              {
+                "surface": "see",
+                "lemma": "see",
+                "pos": "verb",
+                "translation": "увижу",
+                "lemma_translation": "видеть",
+                "cefr": "A1"
+              },
+              {
+                "surface": "him",
+                "lemma": "him",
+                "pos": "pronoun",
+                "translation": "его",
+                "lemma_translation": "его; ему"
+              },
+              {
+                "surface": "again",
+                "lemma": "again",
+                "pos": "adverb",
+                "translation": "больше",
+                "lemma_translation": "снова, опять",
+                "cefr": "A1",
+                "note": "Never… again — «больше никогда»."
+              }
+            ]
+          },
+          {
+            "kind": "chat_message",
+            "character": "sam",
+            "text": "Don't give up so fast! Cute guys always come back for good coffee.",
+            "translation": "Не сдавайся так быстро! Милые парни всегда возвращаются за хорошим кофе.",
+            "tokens": [
+              {
+                "surface": "Don't",
+                "lemma": "do not",
+                "pos": "verb",
+                "translation": "не",
+                "note": "Don't = do not: так образуется запрет или совет «не делай»: Don't give up! — Не сдавайся!"
+              },
+              {
+                "surface": "give up",
+                "lemma": "give up",
+                "pos": "phrasal_verb",
+                "translation": "сдавайся",
+                "lemma_translation": "сдаваться; бросать",
+                "cefr": "A2",
+                "note": "Give up — сдаться, перестать пытаться: Don't give up! — Не сдавайся!"
+              },
+              {
+                "surface": "so",
+                "lemma": "so",
+                "pos": "adverb",
+                "translation": "так",
+                "cefr": "A1"
+              },
+              {
+                "surface": "fast",
+                "lemma": "fast",
+                "pos": "adverb",
+                "translation": "быстро",
+                "cefr": "A1"
+              },
+              {
+                "surface": "Cute",
+                "lemma": "cute",
+                "pos": "adjective",
+                "translation": "милые",
+                "lemma_translation": "милый",
+                "cefr": "A2"
+              },
+              {
+                "surface": "guys",
+                "lemma": "guy",
+                "pos": "noun",
+                "translation": "парни",
+                "lemma_translation": "парень",
+                "cefr": "B1"
+              },
+              {
+                "surface": "always",
+                "lemma": "always",
+                "pos": "adverb",
+                "translation": "всегда",
+                "cefr": "A1"
+              },
+              {
+                "surface": "come back",
+                "lemma": "come back",
+                "pos": "phrasal_verb",
+                "translation": "возвращаются",
+                "lemma_translation": "возвращаться",
+                "cefr": "A2",
+                "note": "Come back — вернуться туда, где уже был: come back for coffee — вернуться за кофе."
+              },
+              {
+                "surface": "for",
+                "lemma": "for",
+                "pos": "preposition",
+                "translation": "за",
+                "lemma_translation": "для; за"
+              },
+              {
+                "surface": "good",
+                "lemma": "good",
+                "pos": "adjective",
+                "translation": "хорошим",
+                "lemma_translation": "хороший",
+                "cefr": "A1"
+              },
+              {
+                "surface": "coffee",
+                "lemma": "coffee",
+                "pos": "noun",
+                "translation": "кофе",
+                "cefr": "A1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "bubbles": [
+          {
+            "kind": "chat_message",
+            "character": "mia",
+            "text": "My coffee is good. My hands are the problem 😂",
+            "translation": "Кофе у меня хороший. Проблема — в моих руках 😂",
+            "tokens": [
+              {
+                "surface": "My",
+                "lemma": "my",
+                "pos": "determiner",
+                "translation": "мой"
+              },
+              {
+                "surface": "coffee",
+                "lemma": "coffee",
+                "pos": "noun",
+                "translation": "кофе",
+                "cefr": "A1"
+              },
+              {
+                "surface": "is",
+                "lemma": "be",
+                "pos": "verb",
+                "translation": "есть (связка)",
+                "lemma_translation": "быть",
+                "cefr": "A1"
+              },
+              {
+                "surface": "good",
+                "lemma": "good",
+                "pos": "adjective",
+                "translation": "хороший",
+                "cefr": "A1"
+              },
+              {
+                "surface": "My",
+                "lemma": "my",
+                "pos": "determiner",
+                "translation": "мои",
+                "lemma_translation": "мой"
+              },
+              {
+                "surface": "hands",
+                "lemma": "hand",
+                "pos": "noun",
+                "translation": "руки",
+                "lemma_translation": "рука",
+                "cefr": "A1"
+              },
+              {
+                "surface": "are",
+                "lemma": "be",
+                "pos": "verb",
+                "translation": "есть (связка)",
+                "lemma_translation": "быть",
+                "cefr": "A1"
+              },
+              {
+                "surface": "the",
+                "lemma": "the",
+                "pos": "determiner",
+                "translation": "определённый артикль"
+              },
+              {
+                "surface": "problem",
+                "lemma": "problem",
+                "pos": "noun",
+                "translation": "проблема",
+                "cefr": "A1"
+              }
+            ]
+          },
+          {
+            "kind": "chat_message",
+            "character": "sam",
+            "text": "Okay, I'm on my way home with pizza. I want to hear everything!",
+            "translation": "Ладно, я уже еду домой с пиццей. Хочу услышать всё!",
+            "tokens": [
+              {
+                "surface": "Okay",
+                "lemma": "okay",
+                "pos": "interjection",
+                "translation": "ладно",
+                "lemma_translation": "хорошо; ладно"
+              },
+              {
+                "surface": "I'm",
+                "lemma": "I am",
+                "pos": "pronoun",
+                "translation": "я"
+              },
+              {
+                "surface": "on my way",
+                "lemma": "on my way",
+                "pos": "phrase",
+                "translation": "уже еду",
+                "lemma_translation": "в пути, по дороге",
+                "cefr": "A2",
+                "note": "On my way — «уже иду / еду, я в пути». Часто пишут в сообщениях: On my way!"
+              },
+              {
+                "surface": "home",
+                "lemma": "home",
+                "pos": "adverb",
+                "translation": "домой",
+                "lemma_translation": "дом; домой",
+                "cefr": "A1"
+              },
+              {
+                "surface": "with",
+                "lemma": "with",
+                "pos": "preposition",
+                "translation": "с"
+              },
+              {
+                "surface": "pizza",
+                "lemma": "pizza",
+                "pos": "noun",
+                "translation": "пиццей",
+                "lemma_translation": "пицца",
+                "cefr": "A1"
+              },
+              {
+                "surface": "I",
+                "lemma": "I",
+                "pos": "pronoun",
+                "translation": "я"
+              },
+              {
+                "surface": "want",
+                "lemma": "want",
+                "pos": "verb",
+                "translation": "хочу",
+                "lemma_translation": "хотеть",
+                "cefr": "A1"
+              },
+              {
+                "surface": "to",
+                "lemma": "to",
+                "pos": "particle",
+                "translation": "частица инфинитива"
+              },
+              {
+                "surface": "hear",
+                "lemma": "hear",
+                "pos": "verb",
+                "translation": "услышать",
+                "lemma_translation": "слышать",
+                "cefr": "A1"
+              },
+              {
+                "surface": "everything",
+                "lemma": "everything",
+                "pos": "pronoun",
+                "translation": "всё"
+              }
+            ]
+          },
+          {
+            "kind": "chat_message",
+            "character": "mia",
+            "text": "Wait! I just turned over the napkin. There's a message on the back!",
+            "translation": "Подожди! Я только что перевернула салфетку. На обороте сообщение!",
+            "tokens": [
+              {
+                "surface": "Wait",
+                "lemma": "wait",
+                "pos": "verb",
+                "translation": "подожди",
+                "lemma_translation": "ждать",
+                "cefr": "A1"
+              },
+              {
+                "surface": "I",
+                "lemma": "I",
+                "pos": "pronoun",
+                "translation": "я"
+              },
+              {
+                "surface": "just",
+                "lemma": "just",
+                "pos": "adverb",
+                "translation": "только что",
+                "lemma_translation": "просто; только что",
+                "cefr": "A1"
+              },
+              {
+                "surface": "turned over",
+                "lemma": "turn over",
+                "pos": "phrasal_verb",
+                "translation": "перевернула",
+                "lemma_translation": "переворачивать",
+                "cefr": "B1",
+                "note": "Turn over — перевернуть другой стороной: turn over the page — перевернуть страницу."
+              },
+              {
+                "surface": "the",
+                "lemma": "the",
+                "pos": "determiner",
+                "translation": "определённый артикль"
+              },
+              {
+                "surface": "napkin",
+                "lemma": "napkin",
+                "pos": "noun",
+                "translation": "салфетку",
+                "lemma_translation": "салфетка",
+                "cefr": "B1"
+              },
+              {
+                "surface": "There's",
+                "lemma": "there is",
+                "pos": "phrase",
+                "translation": "есть",
+                "lemma_translation": "есть, имеется",
+                "cefr": "A1",
+                "note": "There's = there is — «есть, находится»."
+              },
+              {
+                "surface": "a",
+                "lemma": "a",
+                "pos": "determiner",
+                "translation": "неопределённый артикль"
+              },
+              {
+                "surface": "message",
+                "lemma": "message",
+                "pos": "noun",
+                "translation": "сообщение",
+                "cefr": "A1"
+              },
+              {
+                "surface": "on",
+                "lemma": "on",
+                "pos": "preposition",
+                "translation": "на"
+              },
+              {
+                "surface": "the",
+                "lemma": "the",
+                "pos": "determiner",
+                "translation": "определённый артикль"
+              },
+              {
+                "surface": "back",
+                "lemma": "back",
+                "pos": "noun",
+                "translation": "обороте",
+                "lemma_translation": "оборотная сторона; спина",
+                "cefr": "A2"
+              }
+            ]
+          },
+          {
+            "kind": "chat_message",
+            "character": "sam",
+            "text": "WHAT does it say?!",
+            "translation": "И ЧТО там написано?!",
+            "tokens": [
+              {
+                "surface": "WHAT",
+                "lemma": "what",
+                "pos": "pronoun",
+                "translation": "что"
+              },
+              {
+                "surface": "does",
+                "lemma": "do",
+                "pos": "verb",
+                "translation": "вспомогательный глагол",
+                "lemma_translation": "делать",
+                "note": "Does помогает задать вопрос в настоящем времени, если речь о he / she / it."
+              },
+              {
+                "surface": "it",
+                "lemma": "it",
+                "pos": "pronoun",
+                "translation": "там",
+                "lemma_translation": "оно; это"
+              },
+              {
+                "surface": "say",
+                "lemma": "say",
+                "pos": "verb",
+                "translation": "написано",
+                "lemma_translation": "говорить",
+                "cefr": "A1",
+                "note": "What does it say? — «Что там написано?»: о тексте тоже говорят say."
+              }
+            ]
+          },
+          {
+            "kind": "chat_message",
+            "character": "mia",
+            "text": "It says: “See you on Friday? – Leo”",
+            "translation": "Там написано: «Увидимся в пятницу? – Лео»",
+            "tokens": [
+              {
+                "surface": "It",
+                "lemma": "it",
+                "pos": "pronoun",
+                "translation": "там",
+                "lemma_translation": "оно; это"
+              },
+              {
+                "surface": "says",
+                "lemma": "say",
+                "pos": "verb",
+                "translation": "написано",
+                "lemma_translation": "говорить",
+                "cefr": "A1"
+              },
+              {
+                "surface": "See you",
+                "lemma": "see you",
+                "pos": "phrase",
+                "translation": "увидимся",
+                "cefr": "A1",
+                "note": "See you — «увидимся, до встречи»: короткое прощание."
+              },
+              {
+                "surface": "on",
+                "lemma": "on",
+                "pos": "preposition",
+                "translation": "в",
+                "lemma_translation": "на; в",
+                "note": "С днями недели используется on: on Friday — в пятницу."
+              },
+              {
+                "surface": "Friday",
+                "lemma": "Friday",
+                "pos": "noun",
+                "translation": "пятницу",
+                "lemma_translation": "пятница",
+                "cefr": "A1"
+              },
+              {
+                "surface": "Leo",
+                "lemma": "Leo",
+                "pos": "noun",
+                "translation": "Лео"
+              }
+            ]
+          },
+          {
+            "kind": "chat_message",
+            "character": "sam",
+            "text": "Friday?! Oh my god. I can't wait!",
+            "translation": "В пятницу?! Боже мой. Не могу дождаться!",
+            "tokens": [
+              {
+                "surface": "Friday",
+                "lemma": "Friday",
+                "pos": "noun",
+                "translation": "в пятницу",
+                "lemma_translation": "пятница",
+                "cefr": "A1"
+              },
+              {
+                "surface": "Oh my god",
+                "lemma": "oh my god",
+                "pos": "interjection",
+                "translation": "боже мой"
+              },
+              {
+                "surface": "I",
+                "lemma": "I",
+                "pos": "pronoun",
+                "translation": "я"
+              },
+              {
+                "surface": "can't wait",
+                "lemma": "can't wait",
+                "pos": "phrase",
+                "translation": "не могу дождаться",
+                "cefr": "A2",
+                "note": "Can't wait — «не могу дождаться»: так говорят, когда очень ждут чего-то приятного."
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

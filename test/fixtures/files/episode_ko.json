@@ -1,0 +1,39 @@
+{
+  "language_pair": "ko-en",
+  "series": {
+    "slug": "test-seoul",
+    "title": "Test Seoul",
+    "cefr_level": "A1",
+    "characters": [ { "key": "jisoo", "name": "Jisoo", "protagonist": true } ]
+  },
+  "episode": {
+    "number": 1,
+    "title": "Tired",
+    "format": "chat",
+    "free": true,
+    "panels": [
+      {
+        "bubbles": [
+          {
+            "kind": "chat_message",
+            "character": "jisoo",
+            "text": "😴 오늘 너무 피곤해요!",
+            "translation": "😴 I'm so tired today!",
+            "tokens": [
+              { "start": 2, "end": 4, "surface": "오늘", "lemma": "오늘", "pos": "noun", "translation": "today",
+                "romanization": "oneul" },
+              { "surface": "너무", "lemma": "너무", "pos": "adverb", "translation": "so, too" },
+              { "surface": "피곤해요", "lemma": "피곤하다", "pos": "adjective", "translation": "(I'm) tired",
+                "lemma_translation": "to be tired", "romanization": "pigonhaeyo", "lemma_romanization": "pigonhada",
+                "politeness": "polite",
+                "breakdown": [
+                  { "part": "피곤하", "role": "stem", "meaning": "be tired" },
+                  { "part": "-아/어요", "role": "ending", "meaning": "polite present" }
+                ] }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

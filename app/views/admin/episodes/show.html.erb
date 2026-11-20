@@ -1,0 +1,109 @@
+<% content_for :title, "#{@episode.series.title} ##{@episode.number}" %>
+<% pair = @episode.series.language_pair %>
+<div class="flex flex-wrap items-start justify-between gap-4 mb-6">
+  <div class="min-w-0">
+    <p class="text-sm text-muted">
+      <%= link_to @episode.series.title, admin_series_path(@episode.series), class: "hover:underline" %> ·
+      <%= pair.code %> · <%= @episode.format %> · <%= @episode.cefr_level %> ·
+      <%= @episode.free? ? "бесплатно" : "пейвол" %><%= " · ~#{@episode.estimated_minutes} мин" if @episode.estimated_minutes %>
+    </p>
+    <h1 class="font-serif text-4xl font-semibold text-ink-strong mt-1">#<%= @episode.number %> <%= @episode.title %></h1>
+    <% if @episode.synopsis.present? %><p class="mt-2 max-w-3xl"><%= @episode.synopsis %></p><% end %>
+    <% if @episode.target_words.any? %>
+      <p class="mt-3 flex flex-wrap gap-1.5">
+        <% @episode.target_words.each do |word| %><span class="marker text-sm text-ink-strong"><%= word %></span><% end %>
+      </p>
+    <% end %>
+  </div>
+  <div class="flex flex-wrap items-center gap-2">
+    <%= status_badge(@episode) %>
+    <%= link_to "Изменить", edit_admin_episode_path(@episode), class: "btn-secondary btn-sm" %>
+    <% if @episode.published? %>
+      <%= button_to "Снять с публикации", unpublish_admin_episode_path(@episode), class: "btn-secondary btn-sm" %>
+    <% else %>
+      <%= button_to "Опубликовать", publish_admin_episode_path(@episode), class: "btn-primary btn-sm" %>
+    <% end %>
+  </div>
+</div>
+
+<p class="text-sm text-muted mb-6 tabular-nums">
+  <%= @panels.size %> кадров · <%= @panels.sum { |p| p.bubbles.size } %> пузырей ·
+  <%= @panels.sum { |p| p.bubbles.sum { |b| b.tokens.size } } %> токенов
+</p>
+
+<div class="grid gap-6">
+  <% @panels.each do |panel| %>
+    <section id="<%= dom_id(panel) %>" class="card p-4 sm:p-5 grid gap-5 md:grid-cols-[minmax(0,320px)_minmax(0,1fr)] scroll-mt-20">
+      <div>
+        <div class="flex items-center justify-between mb-2">
+          <h2 class="label mb-0">Кадр <%= panel.position + 1 %></h2>
+          <%= link_to "Кадр", edit_admin_panel_path(panel), class: "text-xs text-link hover:underline" %>
+        </div>
+        <% if panel.image.attached? %>
+          <figure class="relative @container overflow-hidden rounded-xl bg-recess" style="aspect-ratio: <%= panel.aspect_ratio %>">
+            <%= image_tag panel.image, class: "absolute inset-0 size-full object-cover", loading: "lazy", alt: panel.image_prompt.to_s.truncate(120) %>
+            <% panel.bubbles.select(&:box).each do |bubble| %>
+              <div class="absolute rounded-[1em] border border-edge bg-white/95 px-[0.6em] py-[0.4em] font-serif text-[4.2cqw] leading-snug text-ink-strong <%= "italic" if bubble.thought? %> <%= "bg-recess/95 font-sans" if bubble.narration? %>"
+                   style="left: <%= bubble.box["x"] %>%; top: <%= bubble.box["y"] %>%; width: <%= bubble.box["w"] %>%; min-height: <%= bubble.box["h"] %>%">
+                <%= bubble.text %>
+              </div>
+            <% end %>
+          </figure>
+        <% elsif !@episode.format_chat? %>
+          <div class="rounded-xl bg-recess p-6 text-sm text-muted">Нет картинки</div>
+        <% end %>
+        <% if panel.image_prompt.present? %>
+          <p class="text-xs text-muted mt-2 line-clamp-4" title="<%= panel.image_prompt %>"><%= panel.image_prompt %></p>
+        <% end %>
+      </div>
+
+      <div class="grid gap-4 content-start min-w-0">
+        <% panel.bubbles.each do |bubble| %>
+          <article class="rounded-xl bg-paper p-3 sm:p-4 min-w-0">
+            <div class="flex flex-wrap items-center gap-2 text-xs text-muted mb-1.5">
+              <span class="badge"><%= bubble.kind %></span>
+              <span class="font-semibold text-ink"><%= bubble.character&.name || "—" %></span>
+              <% if bubble.box %><span class="tabular-nums">box <%= bubble.box.values_at("x", "y", "w", "h").join(" / ") %></span><% end %>
+              <span class="ml-auto flex gap-3">
+                <%= link_to "Пузырь", edit_admin_bubble_path(bubble), class: "text-link hover:underline" %>
+                <%= link_to "+ токен", new_admin_bubble_token_path(bubble), class: "text-link hover:underline" %>
+              </span>
+            </div>
+            <p class="font-serif text-xl leading-relaxed text-ink-strong"><%= tokenized_text(bubble) %></p>
+            <p class="text-sm text-muted mt-1"><%= bubble.translation %></p>
+
+            <% if bubble.tokens.any? %>
+              <details class="mt-3">
+                <summary class="cursor-pointer text-xs font-semibold uppercase tracking-wider text-muted">Токены (<%= bubble.tokens.size %>)</summary>
+                <div class="overflow-x-auto mt-2">
+                  <table class="table text-xs">
+                    <thead><tr><th>Слово</th><th>Лемма</th><th>Часть речи</th><th>Перевод в контексте</th><th>Пояснение</th><th></th></tr></thead>
+                    <tbody>
+                      <% bubble.tokens.each do |token| %>
+                        <tr>
+                          <td class="font-semibold text-ink-strong whitespace-nowrap">
+                            <%= token.surface %>
+                            <% if token.romanization %><div class="font-normal text-muted"><%= token.romanization %></div><% end %>
+                          </td>
+                          <td class="whitespace-nowrap"><%= token.lexeme.lemma %><% if token.lexeme.cefr_level %> <span class="text-muted"><%= token.lexeme.cefr_level %></span><% end %></td>
+                          <td><%= token.lexeme.pos %><% if token.politeness %><div class="text-muted"><%= token.politeness %></div><% end %></td>
+                          <td><%= token.context_translation %>
+                            <% if token.breakdown.present? %>
+                              <div class="text-muted mt-1"><%= token.breakdown.map { |p| "#{p["part"]} (#{p["role"]})" }.join(" + ") %></div>
+                            <% end %>
+                          </td>
+                          <td class="min-w-48"><%= token.context_note %></td>
+                          <td><%= link_to "Изм.", edit_admin_token_path(token), class: "text-link hover:underline" %></td>
+                        </tr>
+                      <% end %>
+                    </tbody>
+                  </table>
+                </div>
+              </details>
+            <% end %>
+          </article>
+        <% end %>
+      </div>
+    </section>
+  <% end %>
+</div>

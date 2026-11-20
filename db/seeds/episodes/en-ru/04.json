@@ -1,0 +1,1204 @@
+{
+  "language_pair": "en-ru",
+  "series": {
+    "slug": "coffee-and-coincidences",
+    "title": "Coffee & Coincidences",
+    "description": "Бариста Миа путает заказы и проливает кофе на альбом нового посетителя — художника Лео. С этой неловкой встречи начинается тёплая история о случайностях, первых свиданиях и маленьких чудесах.",
+    "genre": "romance",
+    "cefr_level": "A2",
+    "style_prompt": "Soft, warm Korean webtoon style with clean, thin line art and gentle cel shading. Pastel palette of peach, cream, mint and latte brown, cozy golden lighting, expressive but simple faces, slightly rounded proportions, uncluttered backgrounds with soft bokeh. Vertical-scroll comic panel composition. No text, letters, readable signs or speech bubbles in the image.",
+    "characters": [
+      {
+        "key": "mia",
+        "name": "Mia",
+        "appearance_prompt": "24-year-old woman, petite, shoulder-length wavy auburn hair usually tied in a messy low bun with a few loose strands, warm brown eyes, light freckles across her nose and cheeks, small silver star earrings. At work she wears a mustard-yellow barista apron over a cream knit sweater with pushed-up sleeves, black jeans and white sneakers.",
+        "protagonist": true
+      },
+      {
+        "key": "leo",
+        "name": "Leo",
+        "appearance_prompt": "26-year-old man, tall and slim, messy dark-brown hair falling over his forehead, round tortoiseshell glasses, soft green eyes, a small ink stain on his right hand. Wears an oversized olive-green corduroy jacket over a plain white T-shirt, beige chinos and worn white sneakers; usually carries a brown leather sketchbook."
+      },
+      {
+        "key": "sam",
+        "name": "Sam",
+        "appearance_prompt": "25-year-old woman, Mia's roommate, short bleached-blonde pixie cut, bright blue eyes, wide cheerful grin, several small silver ear piercings. Wears oversized lavender hoodies, patterned leggings and fuzzy socks; very expressive face, often has her phone in her hand."
+      },
+      {
+        "key": "nora",
+        "name": "Nora",
+        "appearance_prompt": "28-year-old woman, tall and elegant, long glossy black hair in loose waves, soft green eyes exactly like Leo's, bright red lipstick, gold hoop earrings. Wears a fitted red dress under a cream trench coat and red heels; dramatic, confident gestures."
+      }
+    ]
+  },
+  "episode": {
+    "number": 4,
+    "title": "The Wrong Door",
+    "format": "webtoon",
+    "cefr_level": "A2",
+    "free": false,
+    "estimated_minutes": 4,
+    "synopsis": "On Saturday evening, Mia is running late for Leo's exhibition: her phone dies, she goes to the wrong gallery, and then she gets caught in the rain. She finally arrives soaking wet and discovers that Leo's big painting is a portrait of her. But just then a glamorous woman named Nora runs in, hugs Leo and calls him \"my love\", and Mia has no idea who she is.",
+    "target_words": [
+      "believe your eyes",
+      "run late",
+      "run out of",
+      "close enough",
+      "wrong",
+      "run into",
+      "make it",
+      "soaking wet",
+      "get lost",
+      "there you are"
+    ],
+    "panels": [
+      {
+        "image_prompt": "Mia and Sam's small cozy apartment in the evening, fairy lights on the wall. Mia stands in front of a full-length mirror in a soft pink dress, her auburn hair down in loose waves, looking nervous. Sam sits cross-legged on the bed in a lavender hoodie, holding up two pairs of earrings and grinning.",
+        "layout": {
+          "aspect_ratio": 0.8
+        },
+        "bubbles": [
+          {
+            "kind": "speech",
+            "character": "sam",
+            "text": "You look amazing! Leo won't believe his eyes.",
+            "translation": "Ты потрясающе выглядишь! Лео глазам своим не поверит.",
+            "box": {
+              "x": 3,
+              "y": 3,
+              "w": 52,
+              "h": 15
+            },
+            "tokens": [
+              {
+                "surface": "You",
+                "lemma": "you",
+                "pos": "pronoun",
+                "translation": "ты",
+                "lemma_translation": "ты; вы"
+              },
+              {
+                "surface": "look",
+                "lemma": "look",
+                "pos": "verb",
+                "translation": "выглядишь",
+                "lemma_translation": "выглядеть; смотреть",
+                "cefr": "A1"
+              },
+              {
+                "surface": "amazing",
+                "lemma": "amazing",
+                "pos": "adjective",
+                "translation": "потрясающе",
+                "lemma_translation": "потрясающий",
+                "cefr": "A2"
+              },
+              {
+                "surface": "Leo",
+                "lemma": "Leo",
+                "pos": "noun",
+                "translation": "Лео"
+              },
+              {
+                "surface": "won't",
+                "lemma": "will not",
+                "pos": "verb",
+                "translation": "не",
+                "note": "Won't = will not — отрицание в будущем времени."
+              },
+              {
+                "surface": "believe his eyes",
+                "lemma": "believe your eyes",
+                "pos": "idiom",
+                "translation": "поверит своим глазам",
+                "lemma_translation": "поверить своим глазам",
+                "cefr": "B1",
+                "note": "Not believe your eyes — «не поверить своим глазам», очень сильно удивиться. Местоимение меняется: his, her, my."
+              }
+            ]
+          },
+          {
+            "kind": "speech",
+            "character": "mia",
+            "text": "Stop it! I'm already running late.",
+            "translation": "Перестань! Я и так уже опаздываю.",
+            "box": {
+              "x": 42,
+              "y": 21,
+              "w": 52,
+              "h": 15
+            },
+            "tokens": [
+              {
+                "surface": "Stop it",
+                "lemma": "stop it",
+                "pos": "phrase",
+                "translation": "перестань",
+                "cefr": "A2",
+                "note": "Stop it! — «перестань!»; часто говорят шутливо, когда смущают комплиментами."
+              },
+              {
+                "surface": "I'm",
+                "lemma": "I am",
+                "pos": "pronoun",
+                "translation": "я"
+              },
+              {
+                "surface": "already",
+                "lemma": "already",
+                "pos": "adverb",
+                "translation": "уже",
+                "cefr": "A2"
+              },
+              {
+                "surface": "running late",
+                "lemma": "run late",
+                "pos": "phrase",
+                "translation": "опаздываю",
+                "lemma_translation": "опаздывать",
+                "cefr": "B1",
+                "note": "Be running late — «опаздывать, не успевать вовремя»: так говорят, пока ещё в пути."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "image_prompt": "A city street at dusk with warm streetlights coming on. Mia in her pink dress and a light denim jacket stares in panic at her phone; the screen is completely black. A bus drives away in the blurred background.",
+        "layout": {
+          "aspect_ratio": 0.8
+        },
+        "bubbles": [
+          {
+            "kind": "speech",
+            "character": "mia",
+            "text": "Oh no! My phone ran out of battery.",
+            "translation": "О нет! У телефона села батарейка.",
+            "box": {
+              "x": 6,
+              "y": 4,
+              "w": 52,
+              "h": 15
+            },
+            "tokens": [
+              {
+                "surface": "Oh no",
+                "lemma": "oh no",
+                "pos": "interjection",
+                "translation": "о нет"
+              },
+              {
+                "surface": "My",
+                "lemma": "my",
+                "pos": "determiner",
+                "translation": "мой"
+              },
+              {
+                "surface": "phone",
+                "lemma": "phone",
+                "pos": "noun",
+                "translation": "телефон",
+                "cefr": "A1"
+              },
+              {
+                "surface": "ran out of",
+                "lemma": "run out of",
+                "pos": "phrasal_verb",
+                "translation": "села",
+                "lemma_translation": "заканчиваться (о запасе)",
+                "cefr": "B1",
+                "note": "Run out of something — «израсходовать, остаться без чего-то»: My phone ran out of battery — У телефона села батарейка."
+              },
+              {
+                "surface": "battery",
+                "lemma": "battery",
+                "pos": "noun",
+                "translation": "батарейка",
+                "lemma_translation": "батарейка, аккумулятор",
+                "cefr": "A2"
+              }
+            ]
+          },
+          {
+            "kind": "thought",
+            "character": "mia",
+            "text": "Where's the gallery? Blue... something?",
+            "translation": "Где же галерея? «Синяя»... что-то там?",
+            "box": {
+              "x": 43,
+              "y": 22,
+              "w": 52,
+              "h": 15
+            },
+            "tokens": [
+              {
+                "surface": "Where's",
+                "lemma": "where is",
+                "pos": "adverb",
+                "translation": "где",
+                "note": "Where's = where is."
+              },
+              {
+                "surface": "the",
+                "lemma": "the",
+                "pos": "determiner",
+                "translation": "определённый артикль"
+              },
+              {
+                "surface": "gallery",
+                "lemma": "gallery",
+                "pos": "noun",
+                "translation": "галерея",
+                "cefr": "A2"
+              },
+              {
+                "surface": "Blue",
+                "lemma": "blue",
+                "pos": "adjective",
+                "translation": "синяя",
+                "lemma_translation": "синий",
+                "cefr": "A1"
+              },
+              {
+                "surface": "something",
+                "lemma": "something",
+                "pos": "pronoun",
+                "translation": "что-то там",
+                "lemma_translation": "что-то"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "image_prompt": "Mia stands in front of an elegant old stone building with tall columns and a large round silver moon emblem above the entrance (no letters). Through the tall windows, elderly visitors in formal clothes look at classical paintings. Mia looks hopeful but a little unsure.",
+        "layout": {
+          "aspect_ratio": 0.85
+        },
+        "bubbles": [
+          {
+            "kind": "narration",
+            "character": null,
+            "text": "Blue Moon Gallery. Close enough, right?",
+            "translation": "Галерея «Голубая луна». Почти то же самое, да?",
+            "box": {
+              "x": 5,
+              "y": 5,
+              "w": 52,
+              "h": 15
+            },
+            "tokens": [
+              {
+                "surface": "Blue",
+                "lemma": "blue",
+                "pos": "adjective",
+                "translation": "голубая",
+                "lemma_translation": "синий; голубой",
+                "cefr": "A1"
+              },
+              {
+                "surface": "Moon",
+                "lemma": "moon",
+                "pos": "noun",
+                "translation": "луна",
+                "cefr": "A2"
+              },
+              {
+                "surface": "Gallery",
+                "lemma": "gallery",
+                "pos": "noun",
+                "translation": "галерея",
+                "cefr": "A2"
+              },
+              {
+                "surface": "Close enough",
+                "lemma": "close enough",
+                "pos": "phrase",
+                "translation": "почти то же самое",
+                "lemma_translation": "достаточно близко",
+                "cefr": "B1",
+                "note": "Close enough — «почти то, что нужно; сойдёт»."
+              },
+              {
+                "surface": "right",
+                "lemma": "right",
+                "pos": "adverb",
+                "translation": "да",
+                "lemma_translation": "правильно; верно",
+                "cefr": "A1",
+                "note": "Right? в конце фразы — «да? правда?»: так просят согласиться."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "image_prompt": "Inside a quiet classical gallery with heavy golden frames: huge old landscape and portrait paintings on dark red walls. Mia stands in the middle of the room among elderly visitors, slowly realizing her mistake, a big comic sweat drop on her forehead.",
+        "layout": {
+          "aspect_ratio": 0.8
+        },
+        "bubbles": [
+          {
+            "kind": "thought",
+            "character": "mia",
+            "text": "These paintings are... very old. Wait. This is the wrong place!",
+            "translation": "Эти картины... очень старые. Стоп. Это не то место!",
+            "box": {
+              "x": 4,
+              "y": 3,
+              "w": 60,
+              "h": 18
+            },
+            "tokens": [
+              {
+                "surface": "These",
+                "lemma": "this",
+                "pos": "determiner",
+                "translation": "эти",
+                "lemma_translation": "этот"
+              },
+              {
+                "surface": "paintings",
+                "lemma": "painting",
+                "pos": "noun",
+                "translation": "картины",
+                "lemma_translation": "картина",
+                "cefr": "A2"
+              },
+              {
+                "surface": "are",
+                "lemma": "be",
+                "pos": "verb",
+                "translation": "есть (связка)",
+                "lemma_translation": "быть",
+                "cefr": "A1"
+              },
+              {
+                "surface": "very",
+                "lemma": "very",
+                "pos": "adverb",
+                "translation": "очень",
+                "cefr": "A1"
+              },
+              {
+                "surface": "old",
+                "lemma": "old",
+                "pos": "adjective",
+                "translation": "старые",
+                "lemma_translation": "старый",
+                "cefr": "A1"
+              },
+              {
+                "surface": "Wait",
+                "lemma": "wait",
+                "pos": "verb",
+                "translation": "стоп",
+                "lemma_translation": "ждать",
+                "cefr": "A1"
+              },
+              {
+                "surface": "This",
+                "lemma": "this",
+                "pos": "pronoun",
+                "translation": "это"
+              },
+              {
+                "surface": "is",
+                "lemma": "be",
+                "pos": "verb",
+                "translation": "есть (связка)",
+                "lemma_translation": "быть",
+                "cefr": "A1"
+              },
+              {
+                "surface": "the",
+                "lemma": "the",
+                "pos": "determiner",
+                "translation": "определённый артикль"
+              },
+              {
+                "surface": "wrong",
+                "lemma": "wrong",
+                "pos": "adjective",
+                "translation": "не то",
+                "lemma_translation": "неправильный, не тот",
+                "cefr": "A2",
+                "note": "Wrong — «не тот, неправильный»: the wrong place — не то место."
+              },
+              {
+                "surface": "place",
+                "lemma": "place",
+                "pos": "noun",
+                "translation": "место",
+                "cefr": "A1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "image_prompt": "Heavy rain at night. Mia runs down a wet street holding her denim jacket over her head, splashing through puddles, her dress and shoes getting soaked, streetlights reflecting in the water. Determined, slightly desperate expression.",
+        "layout": {
+          "aspect_ratio": 0.75
+        },
+        "bubbles": [
+          {
+            "kind": "narration",
+            "character": null,
+            "text": "And then, of course, it started to rain.",
+            "translation": "А потом, конечно же, пошёл дождь.",
+            "box": {
+              "x": 3,
+              "y": 4,
+              "w": 52,
+              "h": 15
+            },
+            "tokens": [
+              {
+                "surface": "And",
+                "lemma": "and",
+                "pos": "conjunction",
+                "translation": "а",
+                "lemma_translation": "и"
+              },
+              {
+                "surface": "then",
+                "lemma": "then",
+                "pos": "adverb",
+                "translation": "потом",
+                "lemma_translation": "тогда; потом",
+                "cefr": "A1"
+              },
+              {
+                "surface": "of course",
+                "lemma": "of course",
+                "pos": "phrase",
+                "translation": "конечно же",
+                "lemma_translation": "конечно",
+                "cefr": "A1",
+                "note": "Of course — «конечно». Здесь с иронией: «как же без этого»."
+              },
+              {
+                "surface": "it",
+                "lemma": "it",
+                "pos": "pronoun",
+                "translation": "(не переводится)",
+                "lemma_translation": "оно; это",
+                "note": "В предложениях о погоде it не переводится: it's raining — идёт дождь."
+              },
+              {
+                "surface": "started",
+                "lemma": "start",
+                "pos": "verb",
+                "translation": "пошёл",
+                "lemma_translation": "начинать(ся)",
+                "cefr": "A1"
+              },
+              {
+                "surface": "to",
+                "lemma": "to",
+                "pos": "particle",
+                "translation": "частица инфинитива"
+              },
+              {
+                "surface": "rain",
+                "lemma": "rain",
+                "pos": "verb",
+                "translation": "дождь",
+                "lemma_translation": "идти (о дожде)",
+                "cefr": "A1"
+              }
+            ]
+          },
+          {
+            "kind": "speech",
+            "character": "mia",
+            "text": "Blue DOOR! Not Blue Moon! Why am I like this?!",
+            "translation": "«Синяя ДВЕРЬ»! А не «Голубая луна»! Ну почему я такая?!",
+            "box": {
+              "x": 42,
+              "y": 22,
+              "w": 52,
+              "h": 15
+            },
+            "tokens": [
+              {
+                "surface": "Blue",
+                "lemma": "blue",
+                "pos": "adjective",
+                "translation": "синяя",
+                "lemma_translation": "синий",
+                "cefr": "A1"
+              },
+              {
+                "surface": "DOOR",
+                "lemma": "door",
+                "pos": "noun",
+                "translation": "дверь",
+                "cefr": "A1"
+              },
+              {
+                "surface": "Not",
+                "lemma": "not",
+                "pos": "adverb",
+                "translation": "не"
+              },
+              {
+                "surface": "Blue",
+                "lemma": "blue",
+                "pos": "adjective",
+                "translation": "голубая",
+                "lemma_translation": "синий; голубой",
+                "cefr": "A1"
+              },
+              {
+                "surface": "Moon",
+                "lemma": "moon",
+                "pos": "noun",
+                "translation": "луна",
+                "cefr": "A2"
+              },
+              {
+                "surface": "Why",
+                "lemma": "why",
+                "pos": "adverb",
+                "translation": "почему",
+                "cefr": "A1"
+              },
+              {
+                "surface": "am",
+                "lemma": "be",
+                "pos": "verb",
+                "translation": "есть (связка)",
+                "lemma_translation": "быть",
+                "cefr": "A1"
+              },
+              {
+                "surface": "I",
+                "lemma": "I",
+                "pos": "pronoun",
+                "translation": "я"
+              },
+              {
+                "surface": "like this",
+                "lemma": "like this",
+                "pos": "phrase",
+                "translation": "такая",
+                "lemma_translation": "такой; вот так",
+                "cefr": "A2",
+                "note": "Like this — «такой, вот так». Why am I like this? — шутливая жалоба на себя: «Ну почему я такая?»"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "image_prompt": "Night. A small modern gallery with a bright blue wooden door and warm light inside. Mia, soaking wet with dripping hair, bumps right into Leo, who is stepping out of the doorway; both stumble and Leo catches her by the shoulders, shocked.",
+        "layout": {
+          "aspect_ratio": 0.8
+        },
+        "bubbles": [
+          {
+            "kind": "narration",
+            "character": null,
+            "text": "At the door, I ran into Leo. Literally.",
+            "translation": "У двери я столкнулась с Лео. В буквальном смысле.",
+            "box": {
+              "x": 6,
+              "y": 5,
+              "w": 52,
+              "h": 15
+            },
+            "tokens": [
+              {
+                "surface": "At",
+                "lemma": "at",
+                "pos": "preposition",
+                "translation": "у",
+                "lemma_translation": "в; у"
+              },
+              {
+                "surface": "the",
+                "lemma": "the",
+                "pos": "determiner",
+                "translation": "определённый артикль"
+              },
+              {
+                "surface": "door",
+                "lemma": "door",
+                "pos": "noun",
+                "translation": "двери",
+                "lemma_translation": "дверь",
+                "cefr": "A1"
+              },
+              {
+                "surface": "I",
+                "lemma": "I",
+                "pos": "pronoun",
+                "translation": "я"
+              },
+              {
+                "surface": "ran into",
+                "lemma": "run into",
+                "pos": "phrasal_verb",
+                "translation": "столкнулась с",
+                "lemma_translation": "случайно встретить; врезаться",
+                "cefr": "A2",
+                "note": "Run into somebody — случайно встретить знакомого. А буквально — врезаться, столкнуться."
+              },
+              {
+                "surface": "Leo",
+                "lemma": "Leo",
+                "pos": "noun",
+                "translation": "Лео"
+              },
+              {
+                "surface": "Literally",
+                "lemma": "literally",
+                "pos": "adverb",
+                "translation": "в буквальном смысле",
+                "lemma_translation": "буквально",
+                "cefr": "B1",
+                "note": "Literally — «буквально, в прямом смысле слова»."
+              }
+            ]
+          },
+          {
+            "kind": "speech",
+            "character": "leo",
+            "text": "Mia! You made it! But... you're soaking wet!",
+            "translation": "Миа! Ты пришла! Но... ты насквозь промокла!",
+            "box": {
+              "x": 43,
+              "y": 23,
+              "w": 52,
+              "h": 15
+            },
+            "tokens": [
+              {
+                "surface": "Mia",
+                "lemma": "Mia",
+                "pos": "noun",
+                "translation": "Миа"
+              },
+              {
+                "surface": "You",
+                "lemma": "you",
+                "pos": "pronoun",
+                "translation": "ты",
+                "lemma_translation": "ты; вы"
+              },
+              {
+                "surface": "made it",
+                "lemma": "make it",
+                "pos": "idiom",
+                "translation": "пришла",
+                "lemma_translation": "успеть, добраться",
+                "cefr": "A2",
+                "note": "Make it — «успеть, добраться, прийти» (несмотря на трудности): You made it! — Ты пришла!"
+              },
+              {
+                "surface": "But",
+                "lemma": "but",
+                "pos": "conjunction",
+                "translation": "но"
+              },
+              {
+                "surface": "you're",
+                "lemma": "you are",
+                "pos": "pronoun",
+                "translation": "ты",
+                "lemma_translation": "ты; вы"
+              },
+              {
+                "surface": "soaking wet",
+                "lemma": "soaking wet",
+                "pos": "phrase",
+                "translation": "насквозь промокла",
+                "lemma_translation": "промокший насквозь",
+                "cefr": "B1",
+                "note": "Soaking wet — «мокрый насквозь». Soaking усиливает слово wet."
+              }
+            ]
+          },
+          {
+            "kind": "speech",
+            "character": "mia",
+            "text": "Sorry I'm late. I got lost.",
+            "translation": "Прости, что опоздала. Я заблудилась.",
+            "box": {
+              "x": 4,
+              "y": 41,
+              "w": 44,
+              "h": 13
+            },
+            "tokens": [
+              {
+                "surface": "Sorry",
+                "lemma": "sorry",
+                "pos": "adjective",
+                "translation": "прости",
+                "lemma_translation": "извини(те); сожалеющий",
+                "cefr": "A1"
+              },
+              {
+                "surface": "I'm",
+                "lemma": "I am",
+                "pos": "pronoun",
+                "translation": "я"
+              },
+              {
+                "surface": "late",
+                "lemma": "late",
+                "pos": "adjective",
+                "translation": "опоздала",
+                "lemma_translation": "поздний; опоздавший",
+                "cefr": "A1"
+              },
+              {
+                "surface": "I",
+                "lemma": "I",
+                "pos": "pronoun",
+                "translation": "я"
+              },
+              {
+                "surface": "got lost",
+                "lemma": "get lost",
+                "pos": "phrase",
+                "translation": "заблудилась",
+                "lemma_translation": "заблудиться",
+                "cefr": "A2",
+                "note": "Get lost — «заблудиться». (Грубое Get lost! — «Отвали!», но здесь не тот случай.)"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "image_prompt": "Leo gently puts his olive-green corduroy jacket over Mia's wet shoulders. He smiles warmly and gestures toward the bright gallery hall behind him. Mia holds the jacket close, shy.",
+        "layout": {
+          "aspect_ratio": 0.85
+        },
+        "bubbles": [
+          {
+            "kind": "speech",
+            "character": "leo",
+            "text": "Here, take my jacket. Come in, I want to show you something.",
+            "translation": "Вот, возьми мою куртку. Заходи, я хочу тебе кое-что показать.",
+            "box": {
+              "x": 5,
+              "y": 3,
+              "w": 60,
+              "h": 18
+            },
+            "tokens": [
+              {
+                "surface": "Here",
+                "lemma": "here",
+                "pos": "adverb",
+                "translation": "вот",
+                "lemma_translation": "здесь; вот",
+                "cefr": "A1"
+              },
+              {
+                "surface": "take",
+                "lemma": "take",
+                "pos": "verb",
+                "translation": "возьми",
+                "lemma_translation": "брать",
+                "cefr": "A1"
+              },
+              {
+                "surface": "my",
+                "lemma": "my",
+                "pos": "determiner",
+                "translation": "мою",
+                "lemma_translation": "мой"
+              },
+              {
+                "surface": "jacket",
+                "lemma": "jacket",
+                "pos": "noun",
+                "translation": "куртку",
+                "lemma_translation": "куртка; пиджак",
+                "cefr": "A1"
+              },
+              {
+                "surface": "Come in",
+                "lemma": "come in",
+                "pos": "phrasal_verb",
+                "translation": "заходи",
+                "lemma_translation": "входить",
+                "cefr": "A1",
+                "note": "Come in — «входи, заходи»: так приглашают внутрь."
+              },
+              {
+                "surface": "I",
+                "lemma": "I",
+                "pos": "pronoun",
+                "translation": "я"
+              },
+              {
+                "surface": "want",
+                "lemma": "want",
+                "pos": "verb",
+                "translation": "хочу",
+                "lemma_translation": "хотеть",
+                "cefr": "A1"
+              },
+              {
+                "surface": "to",
+                "lemma": "to",
+                "pos": "particle",
+                "translation": "частица инфинитива"
+              },
+              {
+                "surface": "show",
+                "lemma": "show",
+                "pos": "verb",
+                "translation": "показать",
+                "lemma_translation": "показывать",
+                "cefr": "A1"
+              },
+              {
+                "surface": "you",
+                "lemma": "you",
+                "pos": "pronoun",
+                "translation": "тебе",
+                "lemma_translation": "ты; вы"
+              },
+              {
+                "surface": "something",
+                "lemma": "something",
+                "pos": "pronoun",
+                "translation": "кое-что",
+                "lemma_translation": "что-то"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "image_prompt": "Wide shot inside the bright gallery: a large painting on a white wall shows a barista girl with auburn hair and a mustard apron, coffee splashing in the air around her like golden stars, in warm pastel colors. Mia, wrapped in Leo's jacket, stares at it with her mouth open. Leo stands next to her, rubbing the back of his neck shyly.",
+        "layout": {
+          "aspect_ratio": 1.0
+        },
+        "bubbles": [
+          {
+            "kind": "speech",
+            "character": "mia",
+            "text": "Leo... is that... me?",
+            "translation": "Лео... это... я?",
+            "box": {
+              "x": 4,
+              "y": 4,
+              "w": 44,
+              "h": 13
+            },
+            "tokens": [
+              {
+                "surface": "Leo",
+                "lemma": "Leo",
+                "pos": "noun",
+                "translation": "Лео"
+              },
+              {
+                "surface": "is",
+                "lemma": "be",
+                "pos": "verb",
+                "translation": "есть (связка)",
+                "lemma_translation": "быть",
+                "cefr": "A1"
+              },
+              {
+                "surface": "that",
+                "lemma": "that",
+                "pos": "pronoun",
+                "translation": "это",
+                "lemma_translation": "тот; то"
+              },
+              {
+                "surface": "me",
+                "lemma": "me",
+                "pos": "pronoun",
+                "translation": "я",
+                "lemma_translation": "меня; мне"
+              }
+            ]
+          },
+          {
+            "kind": "speech",
+            "character": "leo",
+            "text": "I couldn't stop thinking about Monday. So I painted it.",
+            "translation": "Я не мог перестать думать о понедельнике. Поэтому я его нарисовал.",
+            "box": {
+              "x": 37,
+              "y": 20,
+              "w": 60,
+              "h": 18
+            },
+            "tokens": [
+              {
+                "surface": "I",
+                "lemma": "I",
+                "pos": "pronoun",
+                "translation": "я"
+              },
+              {
+                "surface": "couldn't",
+                "lemma": "could not",
+                "pos": "verb",
+                "translation": "не мог",
+                "lemma_translation": "не мочь",
+                "note": "Couldn't = could not — «не мог» (прошедшее время от can't)."
+              },
+              {
+                "surface": "stop",
+                "lemma": "stop",
+                "pos": "verb",
+                "translation": "перестать",
+                "lemma_translation": "прекращать; останавливать(ся)",
+                "cefr": "A1",
+                "note": "Stop + -ing — перестать что-то делать: stop thinking — перестать думать."
+              },
+              {
+                "surface": "thinking",
+                "lemma": "think",
+                "pos": "verb",
+                "translation": "думать",
+                "cefr": "A1"
+              },
+              {
+                "surface": "about",
+                "lemma": "about",
+                "pos": "preposition",
+                "translation": "о"
+              },
+              {
+                "surface": "Monday",
+                "lemma": "Monday",
+                "pos": "noun",
+                "translation": "понедельнике",
+                "lemma_translation": "понедельник",
+                "cefr": "A1"
+              },
+              {
+                "surface": "So",
+                "lemma": "so",
+                "pos": "conjunction",
+                "translation": "поэтому",
+                "lemma_translation": "так; поэтому",
+                "cefr": "A1"
+              },
+              {
+                "surface": "I",
+                "lemma": "I",
+                "pos": "pronoun",
+                "translation": "я"
+              },
+              {
+                "surface": "painted",
+                "lemma": "paint",
+                "pos": "verb",
+                "translation": "нарисовал",
+                "lemma_translation": "рисовать красками",
+                "cefr": "A1",
+                "note": "Paint — рисовать красками, а draw — карандашом или ручкой."
+              },
+              {
+                "surface": "it",
+                "lemma": "it",
+                "pos": "pronoun",
+                "translation": "его",
+                "lemma_translation": "оно; это"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "image_prompt": "A glamorous young woman with long glossy black hair, bright red lipstick, a fitted red dress and a cream trench coat bursts into the gallery and throws her arms around Leo's neck from the side. Leo looks surprised. Mia, in the foreground and still wrapped in his jacket, turns with wide eyes.",
+        "layout": {
+          "aspect_ratio": 0.8
+        },
+        "bubbles": [
+          {
+            "kind": "speech",
+            "character": "nora",
+            "text": "Leo, my love! There you are!",
+            "translation": "Лео, любовь моя! Вот ты где!",
+            "box": {
+              "x": 3,
+              "y": 5,
+              "w": 44,
+              "h": 13
+            },
+            "tokens": [
+              {
+                "surface": "Leo",
+                "lemma": "Leo",
+                "pos": "noun",
+                "translation": "Лео"
+              },
+              {
+                "surface": "my",
+                "lemma": "my",
+                "pos": "determiner",
+                "translation": "моя",
+                "lemma_translation": "мой"
+              },
+              {
+                "surface": "love",
+                "lemma": "love",
+                "pos": "noun",
+                "translation": "любовь",
+                "cefr": "A1"
+              },
+              {
+                "surface": "There you are",
+                "lemma": "there you are",
+                "pos": "phrase",
+                "translation": "вот ты где",
+                "cefr": "A2",
+                "note": "There you are! — «вот ты где!»: так говорят, когда наконец нашли человека."
+              }
+            ]
+          },
+          {
+            "kind": "speech",
+            "character": "leo",
+            "text": "Nora?! What are you doing here?",
+            "translation": "Нора?! Что ты здесь делаешь?",
+            "box": {
+              "x": 50,
+              "y": 21,
+              "w": 44,
+              "h": 13
+            },
+            "tokens": [
+              {
+                "surface": "Nora",
+                "lemma": "Nora",
+                "pos": "noun",
+                "translation": "Нора"
+              },
+              {
+                "surface": "What",
+                "lemma": "what",
+                "pos": "pronoun",
+                "translation": "что"
+              },
+              {
+                "surface": "are",
+                "lemma": "be",
+                "pos": "verb",
+                "translation": "вспомогательный глагол",
+                "lemma_translation": "быть"
+              },
+              {
+                "surface": "you",
+                "lemma": "you",
+                "pos": "pronoun",
+                "translation": "ты",
+                "lemma_translation": "ты; вы"
+              },
+              {
+                "surface": "doing",
+                "lemma": "do",
+                "pos": "verb",
+                "translation": "делаешь",
+                "lemma_translation": "делать",
+                "cefr": "A1"
+              },
+              {
+                "surface": "here",
+                "lemma": "here",
+                "pos": "adverb",
+                "translation": "здесь",
+                "cefr": "A1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "image_prompt": "Dramatic close-up of Mia's face, pale and frozen, gripping the edges of Leo's jacket. In the blurred background the woman in red is still hugging Leo. Cool blue tones around Mia, a single raindrop falling from her wet hair.",
+        "layout": {
+          "aspect_ratio": 0.75
+        },
+        "bubbles": [
+          {
+            "kind": "thought",
+            "character": "mia",
+            "text": "“My love”? Who is she?!",
+            "translation": "«Любовь моя»? Кто она такая?!",
+            "box": {
+              "x": 50,
+              "y": 3,
+              "w": 44,
+              "h": 13
+            },
+            "tokens": [
+              {
+                "surface": "My",
+                "lemma": "my",
+                "pos": "determiner",
+                "translation": "моя",
+                "lemma_translation": "мой"
+              },
+              {
+                "surface": "love",
+                "lemma": "love",
+                "pos": "noun",
+                "translation": "любовь",
+                "cefr": "A1"
+              },
+              {
+                "surface": "Who",
+                "lemma": "who",
+                "pos": "pronoun",
+                "translation": "кто"
+              },
+              {
+                "surface": "is",
+                "lemma": "be",
+                "pos": "verb",
+                "translation": "есть (связка)",
+                "lemma_translation": "быть",
+                "cefr": "A1"
+              },
+              {
+                "surface": "she",
+                "lemma": "she",
+                "pos": "pronoun",
+                "translation": "она"
+              }
+            ]
+          },
+          {
+            "kind": "narration",
+            "character": null,
+            "text": "To be continued...",
+            "translation": "Продолжение следует...",
+            "box": {
+              "x": 5,
+              "y": 19,
+              "w": 36,
+              "h": 12
+            },
+            "tokens": [
+              {
+                "surface": "To be continued",
+                "lemma": "to be continued",
+                "pos": "phrase",
+                "translation": "продолжение следует",
+                "cefr": "B1",
+                "note": "To be continued — «продолжение следует»: так заканчивают серию."
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

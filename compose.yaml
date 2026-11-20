@@ -1,0 +1,68 @@
+# Development environment.
+#   docker compose up                      → app on http://localhost:3000
+#   docker compose run --rm web bin/rails db:prepare db:seed
+#   docker compose run --rm test           → unit + system tests (starts Chrome)
+name: storyloop
+
+x-app: &app
+  build:
+    context: .
+    dockerfile: Dockerfile.dev
+  image: storyloop-dev
+  volumes:
+    - .:/rails
+    - bundle:/usr/local/bundle
+  environment: &app-env
+    DATABASE_URL: postgres://postgres:postgres@db:5432
+    RAILS_LOG_TO_STDOUT: "1"
+  depends_on:
+    db:
+      condition: service_healthy
+  tty: true
+  stdin_open: true
+
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5434:5432" # 5432 and 5433 on the host are taken by other Postgres instances
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 2s
+      timeout: 5s
+      retries: 20
+
+  web:
+    <<: *app
+    ports:
+      - "3000:3000"
+
+  test:
+    <<: *app
+    profiles: ["test"]
+    environment:
+      <<: *app-env
+      RAILS_ENV: test
+      SELENIUM_REMOTE_URL: http://chrome:4444
+    depends_on:
+      db:
+        condition: service_healthy
+      chrome:
+        condition: service_started
+    command: bash -c "bin/rails db:test:prepare && bin/rails test:all"
+
+  chrome:
+    image: selenium/standalone-chromium:latest
+    profiles: ["test"]
+    shm_size: 1gb
+    ports:
+      - "7900:7900" # noVNC to watch system tests: http://localhost:7900 (password: secret)
+
+volumes:
+  bundle:
+  pgdata:

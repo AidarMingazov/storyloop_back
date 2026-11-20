@@ -1,0 +1,1672 @@
+{
+  "language_pair": "ko-en",
+  "series": {
+    "slug": "seoul-starter",
+    "title": "Seoul Starter · 서울 생활",
+    "description": "Jisoo has just moved to Seoul for a new job. Follow her first days in the city: a friendly neighbor, convenience stores, subway lines and a brand-new office.",
+    "genre": "slice of life",
+    "cefr_level": "A1",
+    "style_prompt": "Bright, clean Korean webtoon style with crisp line art and soft cel shading; modern Seoul streets, small red-brick apartment buildings, convenience stores, offices and subway stations; soft natural daylight, warm pastel palette, friendly expressive faces. No text, letters or speech bubbles in the image.",
+    "characters": [
+      {
+        "key": "jisoo",
+        "name": "Jisoo",
+        "protagonist": true,
+        "appearance_prompt": "Korean woman, 28, shoulder-length straight black hair with soft see-through bangs, warm brown eyes, slim build; casual look: cream knit cardigan over a white T-shirt, light-blue jeans, white sneakers and a small tan crossbody bag; office look: navy blazer over a white blouse. Bright, slightly nervous smile."
+      },
+      {
+        "key": "minho",
+        "name": "Minho",
+        "appearance_prompt": "Korean man, 28, tall, short tousled dark-brown hair, friendly crescent-shaped eyes and an easy grin; at home a gray hoodie, black joggers and slippers, outside a navy bomber jacket with earphones around his neck. Relaxed, helpful body language."
+      },
+      {
+        "key": "yuna",
+        "name": "Yuna",
+        "appearance_prompt": "Korean woman, 31, chin-length dark bob tucked behind one ear, small silver earrings, the same friendly crescent-shaped eyes as her younger brother Minho; office look: beige blouse, navy slacks, ID badge on a lanyard. Confident, warm, big-sister energy."
+      },
+      {
+        "key": "clerk",
+        "name": "Clerk",
+        "appearance_prompt": "Young Korean convenience-store clerk, early 20s, short black hair, round glasses, green-and-white store uniform vest over a white shirt, polite cheerful expression."
+      },
+      {
+        "key": "team_leader",
+        "name": "Team Leader Kim",
+        "appearance_prompt": "Korean man in his late 40s, neatly combed short black hair with a little gray at the temples, rectangular glasses, dark suit, white shirt and navy tie; calm, kind but serious expression."
+      }
+    ]
+  },
+  "episode": {
+    "number": 4,
+    "title": "첫 출근 · First Day at Work",
+    "format": "webtoon",
+    "cefr_level": "A2",
+    "free": false,
+    "estimated_minutes": 5,
+    "synopsis": "On her first day at the Gangnam office, Jisoo greets Team Leader Kim in formal speech, meets her friendly coworker Yuna and has lunch at Yuna's favorite restaurant. On the way home Yuna says her younger brother also lives in Sinchon, and the door she knocks on is right next to Jisoo's. Minho opens it and calls Yuna 'noona'.",
+    "target_words": [
+      "출근",
+      "긴장되다",
+      "일하다",
+      "환영하다",
+      "자리",
+      "맛집",
+      "맛있다",
+      "수고하다",
+      "살다",
+      "동생",
+      "누나"
+    ],
+    "panels": [
+      {
+        "image_prompt": "Morning in Gangnam: tall glass office towers glittering in the sun, commuters walking with coffee cups; Jisoo in a neat navy blazer and white blouse stands at an office building entrance, gripping her bag strap and taking a deep breath.",
+        "layout": {
+          "aspect_ratio": 0.8
+        },
+        "bubbles": [
+          {
+            "kind": "narration",
+            "character": null,
+            "text": "월요일 아침, 첫 출근 날이에요.",
+            "translation": "Monday morning: her first day at work.",
+            "box": {
+              "x": 4,
+              "y": 3,
+              "w": 59,
+              "h": 16
+            },
+            "tokens": [
+              {
+                "surface": "월요일",
+                "lemma": "월요일",
+                "pos": "noun",
+                "translation": "Monday",
+                "lemma_translation": "Monday",
+                "romanization": "woryoil",
+                "lemma_romanization": "woryoil",
+                "cefr": "A1"
+              },
+              {
+                "surface": "아침",
+                "lemma": "아침",
+                "pos": "noun",
+                "translation": "morning",
+                "lemma_translation": "morning; breakfast",
+                "romanization": "achim",
+                "lemma_romanization": "achim",
+                "cefr": "A1"
+              },
+              {
+                "surface": "첫",
+                "lemma": "첫",
+                "pos": "determiner",
+                "translation": "first",
+                "lemma_translation": "first",
+                "romanization": "cheot",
+                "lemma_romanization": "cheot",
+                "cefr": "A1"
+              },
+              {
+                "surface": "출근",
+                "lemma": "출근",
+                "pos": "noun",
+                "translation": "going to work",
+                "lemma_translation": "going to work, commute",
+                "romanization": "chulgeun",
+                "lemma_romanization": "chulgeun",
+                "cefr": "A2",
+                "note": "Target word: 출근 = going to work (퇴근 = leaving work); 출근하다 = to go to work."
+              },
+              {
+                "surface": "날이에요",
+                "lemma": "날",
+                "pos": "noun",
+                "translation": "(it's the) day",
+                "lemma_translation": "day",
+                "romanization": "narieyo",
+                "lemma_romanization": "nal",
+                "breakdown": [
+                  {
+                    "part": "날",
+                    "role": "stem",
+                    "meaning": "day"
+                  },
+                  {
+                    "part": "이에요",
+                    "role": "particle",
+                    "meaning": "is (polite copula)"
+                  }
+                ],
+                "politeness": "polite",
+                "cefr": "A1"
+              }
+            ]
+          },
+          {
+            "kind": "thought",
+            "character": "jisoo",
+            "text": "긴장돼... 할 수 있어!",
+            "translation": "I'm so nervous... I can do this!",
+            "box": {
+              "x": 44,
+              "y": 22,
+              "w": 52,
+              "h": 16
+            },
+            "tokens": [
+              {
+                "surface": "긴장돼",
+                "lemma": "긴장되다",
+                "pos": "verb",
+                "translation": "I'm nervous",
+                "lemma_translation": "to feel nervous, tense",
+                "romanization": "ginjangdwae",
+                "lemma_romanization": "ginjangdoeda",
+                "breakdown": [
+                  {
+                    "part": "긴장되",
+                    "role": "stem",
+                    "meaning": "feel nervous"
+                  },
+                  {
+                    "part": "-어",
+                    "role": "ending",
+                    "meaning": "casual present (되 + 어 → 돼)"
+                  }
+                ],
+                "politeness": "casual",
+                "cefr": "A2",
+                "note": "Target word: 긴장되다 = to feel nervous; 긴장돼 is how you say it to yourself."
+              },
+              {
+                "surface": "할 수 있어",
+                "lemma": "할 수 있다",
+                "pos": "phrase",
+                "translation": "I can do it",
+                "lemma_translation": "to be able to do, can do",
+                "romanization": "hal su isseo",
+                "lemma_romanization": "hal su itda",
+                "breakdown": [
+                  {
+                    "part": "하",
+                    "role": "stem",
+                    "meaning": "do"
+                  },
+                  {
+                    "part": "-(으)ㄹ 수 있",
+                    "role": "ending",
+                    "meaning": "can (ability)"
+                  },
+                  {
+                    "part": "-어",
+                    "role": "ending",
+                    "meaning": "casual present"
+                  }
+                ],
+                "politeness": "casual",
+                "cefr": "A1",
+                "note": "V-(으)ㄹ 수 있다 = can V; 할 수 있어! = 'I can do it!'"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "image_prompt": "A bright open-plan office with plants and monitors; Jisoo bows deeply in front of Team Leader Kim, a neat man in his late 40s with glasses, who has stood up from his desk and nods with a calm smile.",
+        "layout": {
+          "aspect_ratio": 0.85
+        },
+        "bubbles": [
+          {
+            "kind": "speech",
+            "character": "jisoo",
+            "text": "안녕하십니까! 오늘부터 일하는 김지수입니다.",
+            "translation": "Good morning! I'm Kim Jisoo. I start work here today.",
+            "box": {
+              "x": 4,
+              "y": 3,
+              "w": 68,
+              "h": 20
+            },
+            "tokens": [
+              {
+                "surface": "안녕하십니까",
+                "lemma": "안녕하다",
+                "pos": "adjective",
+                "translation": "good morning, hello (formal)",
+                "lemma_translation": "to be well, at peace (used in greetings)",
+                "romanization": "annyeonghasimnikka",
+                "lemma_romanization": "annyeonghada",
+                "breakdown": [
+                  {
+                    "part": "안녕하",
+                    "role": "stem",
+                    "meaning": "be well"
+                  },
+                  {
+                    "part": "-시-",
+                    "role": "suffix",
+                    "meaning": "honorific"
+                  },
+                  {
+                    "part": "-ㅂ니까",
+                    "role": "ending",
+                    "meaning": "formal question"
+                  }
+                ],
+                "politeness": "formal",
+                "cefr": "A2",
+                "note": "Speech-level switch: formal 합쇼체 (-ㅂ니까/-ㅂ니다) is used for greetings at work, especially to a boss."
+              },
+              {
+                "surface": "오늘부터",
+                "lemma": "오늘",
+                "pos": "noun",
+                "translation": "from today",
+                "lemma_translation": "today",
+                "romanization": "oneulbuteo",
+                "lemma_romanization": "oneul",
+                "breakdown": [
+                  {
+                    "part": "오늘",
+                    "role": "stem",
+                    "meaning": "today"
+                  },
+                  {
+                    "part": "부터",
+                    "role": "particle",
+                    "meaning": "from (starting time)"
+                  }
+                ],
+                "cefr": "A1",
+                "note": "부터 = from (a time): 오늘부터 = starting today."
+              },
+              {
+                "surface": "일하는",
+                "lemma": "일하다",
+                "pos": "verb",
+                "translation": "who works, starting work",
+                "lemma_translation": "to work",
+                "romanization": "ilhaneun",
+                "lemma_romanization": "ilhada",
+                "breakdown": [
+                  {
+                    "part": "일하",
+                    "role": "stem",
+                    "meaning": "work"
+                  },
+                  {
+                    "part": "-는",
+                    "role": "ending",
+                    "meaning": "present modifier (who …)"
+                  }
+                ],
+                "cefr": "A1",
+                "note": "Target word: 일하다 = to work (일 work + 하다 do)."
+              },
+              {
+                "surface": "김지수입니다",
+                "lemma": "김지수",
+                "pos": "noun",
+                "translation": "am Kim Jisoo",
+                "lemma_translation": "Kim Jisoo (full name)",
+                "romanization": "Gimjisuimnida",
+                "lemma_romanization": "Gim Jisu",
+                "breakdown": [
+                  {
+                    "part": "김지수",
+                    "role": "stem",
+                    "meaning": "Kim Jisoo (family name first)"
+                  },
+                  {
+                    "part": "입니다",
+                    "role": "particle",
+                    "meaning": "am, is (formal copula)"
+                  }
+                ],
+                "politeness": "formal",
+                "note": "N입니다 = formal 'I am N'. At work people give their full name, family name first."
+              }
+            ]
+          },
+          {
+            "kind": "speech",
+            "character": "team_leader",
+            "text": "반갑습니다, 지수 씨. 환영합니다.",
+            "translation": "Nice to meet you, Jisoo. Welcome.",
+            "box": {
+              "x": 36,
+              "y": 26,
+              "w": 60,
+              "h": 16
+            },
+            "tokens": [
+              {
+                "surface": "반갑습니다",
+                "lemma": "반갑다",
+                "pos": "adjective",
+                "translation": "nice to meet you",
+                "lemma_translation": "to be glad (to see someone)",
+                "romanization": "bangapseumnida",
+                "lemma_romanization": "bangapda",
+                "breakdown": [
+                  {
+                    "part": "반갑",
+                    "role": "stem",
+                    "meaning": "be glad"
+                  },
+                  {
+                    "part": "-습니다",
+                    "role": "ending",
+                    "meaning": "formal present"
+                  }
+                ],
+                "politeness": "formal",
+                "cefr": "A1"
+              },
+              {
+                "surface": "지수",
+                "lemma": "지수",
+                "pos": "noun",
+                "translation": "Jisoo",
+                "lemma_translation": "Jisoo (name)",
+                "romanization": "Jisu",
+                "lemma_romanization": "Jisu"
+              },
+              {
+                "surface": "씨",
+                "lemma": "씨",
+                "pos": "noun",
+                "translation": "(polite title after a name)",
+                "lemma_translation": "Mr./Ms. (polite title after a name)",
+                "romanization": "ssi",
+                "lemma_romanization": "ssi",
+                "cefr": "A1"
+              },
+              {
+                "surface": "환영합니다",
+                "lemma": "환영하다",
+                "pos": "verb",
+                "translation": "welcome",
+                "lemma_translation": "to welcome",
+                "romanization": "hwanyeonghamnida",
+                "lemma_romanization": "hwanyeonghada",
+                "breakdown": [
+                  {
+                    "part": "환영하",
+                    "role": "stem",
+                    "meaning": "welcome"
+                  },
+                  {
+                    "part": "-ㅂ니다",
+                    "role": "ending",
+                    "meaning": "formal present"
+                  }
+                ],
+                "politeness": "formal",
+                "cefr": "A2",
+                "note": "Target word: 환영하다 = to welcome; 환영합니다 = 'Welcome!'"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "image_prompt": "Team Leader Kim gestures toward Yuna, a woman in her early 30s with a chin-length bob, beige blouse and an ID lanyard, who waves at Jisoo from her desk with a big friendly smile.",
+        "layout": {
+          "aspect_ratio": 0.8
+        },
+        "bubbles": [
+          {
+            "kind": "speech",
+            "character": "team_leader",
+            "text": "이쪽은 박유나 씨예요. 많이 도와줄 거예요.",
+            "translation": "This is Park Yuna. She'll help you a lot.",
+            "box": {
+              "x": 4,
+              "y": 3,
+              "w": 68,
+              "h": 20
+            },
+            "tokens": [
+              {
+                "surface": "이쪽은",
+                "lemma": "이쪽",
+                "pos": "pronoun",
+                "translation": "this (person)",
+                "lemma_translation": "this side, this way; this person (polite)",
+                "romanization": "ijjogeun",
+                "lemma_romanization": "ijjok",
+                "breakdown": [
+                  {
+                    "part": "이쪽",
+                    "role": "stem",
+                    "meaning": "this side"
+                  },
+                  {
+                    "part": "은",
+                    "role": "particle",
+                    "meaning": "topic marker"
+                  }
+                ],
+                "cefr": "A2",
+                "note": "이쪽은 N이에요/예요 = a polite way to introduce someone: 'This is N.'"
+              },
+              {
+                "surface": "박유나",
+                "lemma": "박유나",
+                "pos": "noun",
+                "translation": "Park Yuna",
+                "lemma_translation": "Park Yuna (full name)",
+                "romanization": "Bak Yuna",
+                "lemma_romanization": "Bak Yuna"
+              },
+              {
+                "surface": "씨예요",
+                "lemma": "씨",
+                "pos": "noun",
+                "translation": "Ms. (it is)",
+                "lemma_translation": "Mr./Ms. (polite title after a name)",
+                "romanization": "ssiyeyo",
+                "lemma_romanization": "ssi",
+                "breakdown": [
+                  {
+                    "part": "씨",
+                    "role": "stem",
+                    "meaning": "Mr./Ms."
+                  },
+                  {
+                    "part": "예요",
+                    "role": "particle",
+                    "meaning": "is (polite copula)"
+                  }
+                ],
+                "politeness": "polite",
+                "cefr": "A1"
+              },
+              {
+                "surface": "많이",
+                "lemma": "많이",
+                "pos": "adverb",
+                "translation": "a lot",
+                "lemma_translation": "a lot, much",
+                "romanization": "mani",
+                "lemma_romanization": "mani",
+                "cefr": "A1"
+              },
+              {
+                "surface": "도와줄",
+                "lemma": "도와주다",
+                "pos": "verb",
+                "translation": "will help (you)",
+                "lemma_translation": "to help (someone)",
+                "romanization": "dowajul",
+                "lemma_romanization": "dowajuda",
+                "breakdown": [
+                  {
+                    "part": "도와주",
+                    "role": "stem",
+                    "meaning": "help"
+                  },
+                  {
+                    "part": "-(으)ㄹ",
+                    "role": "ending",
+                    "meaning": "future modifier (+ 거예요)"
+                  }
+                ],
+                "cefr": "A1"
+              },
+              {
+                "surface": "거예요",
+                "lemma": "것",
+                "pos": "noun",
+                "translation": "will (future)",
+                "lemma_translation": "thing; (in -ㄹ 거예요) will",
+                "romanization": "geoyeyo",
+                "lemma_romanization": "geot",
+                "breakdown": [
+                  {
+                    "part": "거",
+                    "role": "stem",
+                    "meaning": "thing (spoken 것)"
+                  },
+                  {
+                    "part": "예요",
+                    "role": "particle",
+                    "meaning": "is (polite copula)"
+                  }
+                ],
+                "politeness": "polite",
+                "cefr": "A1",
+                "note": "V-(으)ㄹ 거예요 = will V (future or prediction)."
+              }
+            ]
+          },
+          {
+            "kind": "speech",
+            "character": "yuna",
+            "text": "안녕하세요! 잘 부탁해요, 지수 씨.",
+            "translation": "Hi! Looking forward to working with you, Jisoo.",
+            "box": {
+              "x": 34,
+              "y": 26,
+              "w": 62,
+              "h": 16
+            },
+            "tokens": [
+              {
+                "surface": "안녕하세요",
+                "lemma": "안녕하다",
+                "pos": "adjective",
+                "translation": "hi",
+                "lemma_translation": "to be well, at peace (used in greetings)",
+                "romanization": "annyeonghaseyo",
+                "lemma_romanization": "annyeonghada",
+                "breakdown": [
+                  {
+                    "part": "안녕하",
+                    "role": "stem",
+                    "meaning": "be well, at peace"
+                  },
+                  {
+                    "part": "-세요",
+                    "role": "ending",
+                    "meaning": "polite honorific (-시- + -어요)"
+                  }
+                ],
+                "politeness": "polite",
+                "cefr": "A1"
+              },
+              {
+                "surface": "잘 부탁해요",
+                "lemma": "잘 부탁하다",
+                "pos": "phrase",
+                "translation": "looking forward to working with you",
+                "lemma_translation": "please take good care of me (set phrase)",
+                "romanization": "jal butakaeyo",
+                "lemma_romanization": "jal butakada",
+                "breakdown": [
+                  {
+                    "part": "잘",
+                    "role": "stem",
+                    "meaning": "well"
+                  },
+                  {
+                    "part": "부탁하",
+                    "role": "stem",
+                    "meaning": "ask a favor"
+                  },
+                  {
+                    "part": "-아/어요",
+                    "role": "ending",
+                    "meaning": "polite present (하 + 어요 → 해요)"
+                  }
+                ],
+                "politeness": "polite",
+                "cefr": "A1",
+                "note": "잘 부탁해요 is a friendlier version of 잘 부탁드려요 from episode 1."
+              },
+              {
+                "surface": "지수",
+                "lemma": "지수",
+                "pos": "noun",
+                "translation": "Jisoo",
+                "lemma_translation": "Jisoo (name)",
+                "romanization": "Jisu",
+                "lemma_romanization": "Jisu"
+              },
+              {
+                "surface": "씨",
+                "lemma": "씨",
+                "pos": "noun",
+                "translation": "(polite title after a name)",
+                "lemma_translation": "Mr./Ms. (polite title after a name)",
+                "romanization": "ssi",
+                "lemma_romanization": "ssi",
+                "cefr": "A1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "image_prompt": "Yuna shows Jisoo a clean, empty desk next to a big sunny window, with a new computer and a small potted plant; Jisoo's eyes sparkle.",
+        "layout": {
+          "aspect_ratio": 0.85
+        },
+        "bubbles": [
+          {
+            "kind": "speech",
+            "character": "yuna",
+            "text": "여기가 지수 씨 자리예요.",
+            "translation": "This is your desk, Jisoo.",
+            "box": {
+              "x": 4,
+              "y": 3,
+              "w": 52,
+              "h": 16
+            },
+            "tokens": [
+              {
+                "surface": "여기가",
+                "lemma": "여기",
+                "pos": "pronoun",
+                "translation": "here, this place (subject)",
+                "lemma_translation": "here",
+                "romanization": "yeogiga",
+                "lemma_romanization": "yeogi",
+                "breakdown": [
+                  {
+                    "part": "여기",
+                    "role": "stem",
+                    "meaning": "here"
+                  },
+                  {
+                    "part": "가",
+                    "role": "particle",
+                    "meaning": "subject marker"
+                  }
+                ],
+                "cefr": "A1"
+              },
+              {
+                "surface": "지수",
+                "lemma": "지수",
+                "pos": "noun",
+                "translation": "Jisoo('s)",
+                "lemma_translation": "Jisoo (name)",
+                "romanization": "Jisu",
+                "lemma_romanization": "Jisu"
+              },
+              {
+                "surface": "씨",
+                "lemma": "씨",
+                "pos": "noun",
+                "translation": "(polite title)",
+                "lemma_translation": "Mr./Ms. (polite title after a name)",
+                "romanization": "ssi",
+                "lemma_romanization": "ssi",
+                "cefr": "A1",
+                "note": "지수 씨 자리 = Jisoo's desk: the possessive 의 is often left out. Name + 씨 can also mean 'you'."
+              },
+              {
+                "surface": "자리예요",
+                "lemma": "자리",
+                "pos": "noun",
+                "translation": "(is your) seat, desk",
+                "lemma_translation": "seat, place, spot",
+                "romanization": "jariyeyo",
+                "lemma_romanization": "jari",
+                "breakdown": [
+                  {
+                    "part": "자리",
+                    "role": "stem",
+                    "meaning": "seat, place"
+                  },
+                  {
+                    "part": "예요",
+                    "role": "particle",
+                    "meaning": "is (polite copula)"
+                  }
+                ],
+                "politeness": "polite",
+                "cefr": "A2",
+                "note": "Target word: 자리 = seat or spot; in an office, your desk."
+              }
+            ]
+          },
+          {
+            "kind": "speech",
+            "character": "jisoo",
+            "text": "와, 창문 옆이네요! 좋아요.",
+            "translation": "Wow, it's by the window! I love it.",
+            "box": {
+              "x": 40,
+              "y": 22,
+              "w": 56,
+              "h": 16
+            },
+            "tokens": [
+              {
+                "surface": "와",
+                "lemma": "와",
+                "pos": "interjection",
+                "translation": "wow",
+                "lemma_translation": "wow",
+                "romanization": "wa",
+                "lemma_romanization": "wa",
+                "cefr": "A1"
+              },
+              {
+                "surface": "창문",
+                "lemma": "창문",
+                "pos": "noun",
+                "translation": "window",
+                "lemma_translation": "window",
+                "romanization": "changmun",
+                "lemma_romanization": "changmun",
+                "cefr": "A1"
+              },
+              {
+                "surface": "옆이네요",
+                "lemma": "옆",
+                "pos": "noun",
+                "translation": "(it's) next to",
+                "lemma_translation": "side; next to",
+                "romanization": "yeopineyo",
+                "lemma_romanization": "yeop",
+                "breakdown": [
+                  {
+                    "part": "옆",
+                    "role": "stem",
+                    "meaning": "side, next to"
+                  },
+                  {
+                    "part": "이",
+                    "role": "particle",
+                    "meaning": "copula 'to be'"
+                  },
+                  {
+                    "part": "-네요",
+                    "role": "ending",
+                    "meaning": "polite (just noticed)"
+                  }
+                ],
+                "politeness": "polite",
+                "cefr": "A1"
+              },
+              {
+                "surface": "좋아요",
+                "lemma": "좋다",
+                "pos": "adjective",
+                "translation": "I love it",
+                "lemma_translation": "to be good, nice",
+                "romanization": "joayo",
+                "lemma_romanization": "jota",
+                "breakdown": [
+                  {
+                    "part": "좋",
+                    "role": "stem",
+                    "meaning": "be good"
+                  },
+                  {
+                    "part": "-아요",
+                    "role": "ending",
+                    "meaning": "polite present"
+                  }
+                ],
+                "politeness": "polite",
+                "cefr": "A1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "image_prompt": "Lunchtime at a cozy, busy Korean restaurant near the office: Yuna and Jisoo sit across from each other with bubbling kimchi stew, bowls of rice and small side dishes; Yuna grins proudly while Jisoo takes a happy first bite.",
+        "layout": {
+          "aspect_ratio": 0.8
+        },
+        "bubbles": [
+          {
+            "kind": "speech",
+            "character": "yuna",
+            "text": "회사 근처 맛집이에요. 맛있죠?",
+            "translation": "It's the best place near the office. Tasty, right?",
+            "box": {
+              "x": 39,
+              "y": 3,
+              "w": 57,
+              "h": 16
+            },
+            "tokens": [
+              {
+                "surface": "회사",
+                "lemma": "회사",
+                "pos": "noun",
+                "translation": "office, company",
+                "lemma_translation": "company, office",
+                "romanization": "hoesa",
+                "lemma_romanization": "hoesa",
+                "cefr": "A1"
+              },
+              {
+                "surface": "근처",
+                "lemma": "근처",
+                "pos": "noun",
+                "translation": "near",
+                "lemma_translation": "nearby area, vicinity",
+                "romanization": "geuncheo",
+                "lemma_romanization": "geuncheo",
+                "cefr": "A2"
+              },
+              {
+                "surface": "맛집이에요",
+                "lemma": "맛집",
+                "pos": "noun",
+                "translation": "(it's a) great restaurant",
+                "lemma_translation": "restaurant famous for good food",
+                "romanization": "matjibieyo",
+                "lemma_romanization": "matjip",
+                "breakdown": [
+                  {
+                    "part": "맛집",
+                    "role": "stem",
+                    "meaning": "great restaurant (맛 taste + 집 place)"
+                  },
+                  {
+                    "part": "이에요",
+                    "role": "particle",
+                    "meaning": "is (polite copula)"
+                  }
+                ],
+                "politeness": "polite",
+                "cefr": "A2",
+                "note": "Target word: 맛집 = a place known for great food, a must-know word in Korea."
+              },
+              {
+                "surface": "맛있죠",
+                "lemma": "맛있다",
+                "pos": "adjective",
+                "translation": "tasty, right?",
+                "lemma_translation": "to be delicious",
+                "romanization": "masitjyo",
+                "lemma_romanization": "masitda",
+                "breakdown": [
+                  {
+                    "part": "맛있",
+                    "role": "stem",
+                    "meaning": "be delicious"
+                  },
+                  {
+                    "part": "-죠",
+                    "role": "ending",
+                    "meaning": "…, right? (polite)"
+                  }
+                ],
+                "politeness": "polite",
+                "cefr": "A1",
+                "note": "Target word: 맛있다 = delicious (맛 taste + 있다 have)."
+              }
+            ]
+          },
+          {
+            "kind": "speech",
+            "character": "jisoo",
+            "text": "네, 정말 맛있어요!",
+            "translation": "Yes, it's really delicious!",
+            "box": {
+              "x": 4,
+              "y": 22,
+              "w": 48,
+              "h": 16
+            },
+            "tokens": [
+              {
+                "surface": "네",
+                "lemma": "네",
+                "pos": "interjection",
+                "translation": "yes",
+                "lemma_translation": "yes",
+                "romanization": "ne",
+                "lemma_romanization": "ne",
+                "cefr": "A1"
+              },
+              {
+                "surface": "정말",
+                "lemma": "정말",
+                "pos": "adverb",
+                "translation": "really",
+                "lemma_translation": "really, truly",
+                "romanization": "jeongmal",
+                "lemma_romanization": "jeongmal",
+                "cefr": "A1"
+              },
+              {
+                "surface": "맛있어요",
+                "lemma": "맛있다",
+                "pos": "adjective",
+                "translation": "is delicious",
+                "lemma_translation": "to be delicious",
+                "romanization": "masisseoyo",
+                "lemma_romanization": "masitda",
+                "breakdown": [
+                  {
+                    "part": "맛있",
+                    "role": "stem",
+                    "meaning": "be delicious"
+                  },
+                  {
+                    "part": "-어요",
+                    "role": "ending",
+                    "meaning": "polite present"
+                  }
+                ],
+                "politeness": "polite",
+                "cefr": "A1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "image_prompt": "Late afternoon at the office in warm orange light: Team Leader Kim, wearing his coat, gives a small nod on his way out; Jisoo, packing her bag, stands up and bows politely.",
+        "layout": {
+          "aspect_ratio": 0.85
+        },
+        "bubbles": [
+          {
+            "kind": "speech",
+            "character": "team_leader",
+            "text": "오늘 수고하셨습니다.",
+            "translation": "Good work today.",
+            "box": {
+              "x": 4,
+              "y": 3,
+              "w": 48,
+              "h": 16
+            },
+            "tokens": [
+              {
+                "surface": "오늘",
+                "lemma": "오늘",
+                "pos": "noun",
+                "translation": "today",
+                "lemma_translation": "today",
+                "romanization": "oneul",
+                "lemma_romanization": "oneul",
+                "cefr": "A1"
+              },
+              {
+                "surface": "수고하셨습니다",
+                "lemma": "수고하다",
+                "pos": "verb",
+                "translation": "good work (you worked hard)",
+                "lemma_translation": "to work hard, take trouble",
+                "romanization": "sugohasyeotseumnida",
+                "lemma_romanization": "sugohada",
+                "breakdown": [
+                  {
+                    "part": "수고하",
+                    "role": "stem",
+                    "meaning": "work hard"
+                  },
+                  {
+                    "part": "-시-",
+                    "role": "suffix",
+                    "meaning": "honorific"
+                  },
+                  {
+                    "part": "-었-",
+                    "role": "suffix",
+                    "meaning": "past"
+                  },
+                  {
+                    "part": "-습니다",
+                    "role": "ending",
+                    "meaning": "formal"
+                  }
+                ],
+                "politeness": "formal",
+                "cefr": "A2",
+                "note": "Target word: 수고하셨습니다 = 'Thanks for your hard work', said to colleagues at the end of the day."
+              }
+            ]
+          },
+          {
+            "kind": "speech",
+            "character": "jisoo",
+            "text": "감사합니다. 내일 뵙겠습니다!",
+            "translation": "Thank you. See you tomorrow!",
+            "box": {
+              "x": 40,
+              "y": 22,
+              "w": 56,
+              "h": 16
+            },
+            "tokens": [
+              {
+                "surface": "감사합니다",
+                "lemma": "감사하다",
+                "pos": "verb",
+                "translation": "thank you",
+                "lemma_translation": "to thank, be grateful",
+                "romanization": "gamsahamnida",
+                "lemma_romanization": "gamsahada",
+                "breakdown": [
+                  {
+                    "part": "감사하",
+                    "role": "stem",
+                    "meaning": "thank"
+                  },
+                  {
+                    "part": "-ㅂ니다",
+                    "role": "ending",
+                    "meaning": "formal present"
+                  }
+                ],
+                "politeness": "formal",
+                "cefr": "A1"
+              },
+              {
+                "surface": "내일",
+                "lemma": "내일",
+                "pos": "noun",
+                "translation": "tomorrow",
+                "lemma_translation": "tomorrow",
+                "romanization": "naeil",
+                "lemma_romanization": "naeil",
+                "cefr": "A1"
+              },
+              {
+                "surface": "뵙겠습니다",
+                "lemma": "뵙다",
+                "pos": "verb",
+                "translation": "I will see you (humble)",
+                "lemma_translation": "to see, meet (humble, someone senior)",
+                "romanization": "boepgetseumnida",
+                "lemma_romanization": "boepda",
+                "breakdown": [
+                  {
+                    "part": "뵙",
+                    "role": "stem",
+                    "meaning": "see (humble)"
+                  },
+                  {
+                    "part": "-겠-",
+                    "role": "suffix",
+                    "meaning": "will (polite intention)"
+                  },
+                  {
+                    "part": "-습니다",
+                    "role": "ending",
+                    "meaning": "formal"
+                  }
+                ],
+                "politeness": "formal",
+                "cefr": "B1",
+                "note": "Set phrase: 내일 뵙겠습니다 = formal 'See you tomorrow' to a boss."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "image_prompt": "Evening on a crowded subway train: Jisoo and Yuna stand side by side holding the hand straps and chatting, city lights blurring past the windows.",
+        "layout": {
+          "aspect_ratio": 0.8
+        },
+        "bubbles": [
+          {
+            "kind": "speech",
+            "character": "yuna",
+            "text": "지수 씨는 어디 살아요?",
+            "translation": "Where do you live, Jisoo?",
+            "box": {
+              "x": 4,
+              "y": 3,
+              "w": 51,
+              "h": 16
+            },
+            "tokens": [
+              {
+                "surface": "지수",
+                "lemma": "지수",
+                "pos": "noun",
+                "translation": "Jisoo",
+                "lemma_translation": "Jisoo (name)",
+                "romanization": "Jisu",
+                "lemma_romanization": "Jisu"
+              },
+              {
+                "surface": "씨는",
+                "lemma": "씨",
+                "pos": "noun",
+                "translation": "(as for) you",
+                "lemma_translation": "Mr./Ms. (polite title after a name)",
+                "romanization": "ssineun",
+                "lemma_romanization": "ssi",
+                "breakdown": [
+                  {
+                    "part": "씨",
+                    "role": "stem",
+                    "meaning": "Mr./Ms."
+                  },
+                  {
+                    "part": "는",
+                    "role": "particle",
+                    "meaning": "topic marker"
+                  }
+                ],
+                "cefr": "A1",
+                "note": "Koreans often say name + 씨 instead of 'you'."
+              },
+              {
+                "surface": "어디",
+                "lemma": "어디",
+                "pos": "pronoun",
+                "translation": "where",
+                "lemma_translation": "where",
+                "romanization": "eodi",
+                "lemma_romanization": "eodi",
+                "cefr": "A1"
+              },
+              {
+                "surface": "살아요",
+                "lemma": "살다",
+                "pos": "verb",
+                "translation": "do you live",
+                "lemma_translation": "to live",
+                "romanization": "sarayo",
+                "lemma_romanization": "salda",
+                "breakdown": [
+                  {
+                    "part": "살",
+                    "role": "stem",
+                    "meaning": "live"
+                  },
+                  {
+                    "part": "-아요",
+                    "role": "ending",
+                    "meaning": "polite present"
+                  }
+                ],
+                "politeness": "polite",
+                "cefr": "A1",
+                "note": "Target word: 살다 = to live; 어디 살아요? = Where do you live?"
+              }
+            ]
+          },
+          {
+            "kind": "speech",
+            "character": "jisoo",
+            "text": "저는 신촌에 살아요.",
+            "translation": "I live in Sinchon.",
+            "box": {
+              "x": 48,
+              "y": 22,
+              "w": 48,
+              "h": 16
+            },
+            "tokens": [
+              {
+                "surface": "저는",
+                "lemma": "저",
+                "pos": "pronoun",
+                "translation": "I (as for me)",
+                "lemma_translation": "I, me (humble)",
+                "romanization": "jeoneun",
+                "lemma_romanization": "jeo",
+                "breakdown": [
+                  {
+                    "part": "저",
+                    "role": "stem",
+                    "meaning": "I (humble)"
+                  },
+                  {
+                    "part": "는",
+                    "role": "particle",
+                    "meaning": "topic marker"
+                  }
+                ],
+                "cefr": "A1"
+              },
+              {
+                "surface": "신촌에",
+                "lemma": "신촌",
+                "pos": "noun",
+                "translation": "in Sinchon",
+                "lemma_translation": "Sinchon (a neighborhood in Seoul)",
+                "romanization": "Sinchone",
+                "lemma_romanization": "Sinchon",
+                "breakdown": [
+                  {
+                    "part": "신촌",
+                    "role": "stem",
+                    "meaning": "Sinchon"
+                  },
+                  {
+                    "part": "에",
+                    "role": "particle",
+                    "meaning": "in (location)"
+                  }
+                ]
+              },
+              {
+                "surface": "살아요",
+                "lemma": "살다",
+                "pos": "verb",
+                "translation": "live",
+                "lemma_translation": "to live",
+                "romanization": "sarayo",
+                "lemma_romanization": "salda",
+                "breakdown": [
+                  {
+                    "part": "살",
+                    "role": "stem",
+                    "meaning": "live"
+                  },
+                  {
+                    "part": "-아요",
+                    "role": "ending",
+                    "meaning": "polite present"
+                  }
+                ],
+                "politeness": "polite",
+                "cefr": "A1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "image_prompt": "Close-up on the subway: Yuna claps her hands together with a delighted expression; Jisoo smiles next to her, a little surprised.",
+        "layout": {
+          "aspect_ratio": 0.9
+        },
+        "bubbles": [
+          {
+            "kind": "speech",
+            "character": "yuna",
+            "text": "어, 제 동생도 신촌에 살아요! 같이 가요.",
+            "translation": "Oh, my younger brother lives in Sinchon too! Let's go together.",
+            "box": {
+              "x": 4,
+              "y": 3,
+              "w": 68,
+              "h": 20
+            },
+            "tokens": [
+              {
+                "surface": "어",
+                "lemma": "어",
+                "pos": "interjection",
+                "translation": "oh",
+                "lemma_translation": "uh, huh (hesitation or surprise)",
+                "romanization": "eo",
+                "lemma_romanization": "eo",
+                "cefr": "A1"
+              },
+              {
+                "surface": "제",
+                "lemma": "저",
+                "pos": "pronoun",
+                "translation": "my",
+                "lemma_translation": "I, me (humble)",
+                "romanization": "je",
+                "lemma_romanization": "jeo",
+                "breakdown": [
+                  {
+                    "part": "저",
+                    "role": "stem",
+                    "meaning": "I (humble)"
+                  },
+                  {
+                    "part": "의",
+                    "role": "particle",
+                    "meaning": "possessive 's (저의 → 제)"
+                  }
+                ],
+                "cefr": "A1",
+                "note": "제 = my (polite). Don't mix it up with 제가 = I (subject)."
+              },
+              {
+                "surface": "동생도",
+                "lemma": "동생",
+                "pos": "noun",
+                "translation": "younger brother too",
+                "lemma_translation": "younger sibling",
+                "romanization": "dongsaengdo",
+                "lemma_romanization": "dongsaeng",
+                "breakdown": [
+                  {
+                    "part": "동생",
+                    "role": "stem",
+                    "meaning": "younger sibling"
+                  },
+                  {
+                    "part": "도",
+                    "role": "particle",
+                    "meaning": "too, also"
+                  }
+                ],
+                "cefr": "A1",
+                "note": "Target word: 동생 = younger brother or sister (남동생 / 여동생 to be specific)."
+              },
+              {
+                "surface": "신촌에",
+                "lemma": "신촌",
+                "pos": "noun",
+                "translation": "in Sinchon",
+                "lemma_translation": "Sinchon (a neighborhood in Seoul)",
+                "romanization": "Sinchone",
+                "lemma_romanization": "Sinchon",
+                "breakdown": [
+                  {
+                    "part": "신촌",
+                    "role": "stem",
+                    "meaning": "Sinchon"
+                  },
+                  {
+                    "part": "에",
+                    "role": "particle",
+                    "meaning": "in (location)"
+                  }
+                ]
+              },
+              {
+                "surface": "살아요",
+                "lemma": "살다",
+                "pos": "verb",
+                "translation": "lives",
+                "lemma_translation": "to live",
+                "romanization": "sarayo",
+                "lemma_romanization": "salda",
+                "breakdown": [
+                  {
+                    "part": "살",
+                    "role": "stem",
+                    "meaning": "live"
+                  },
+                  {
+                    "part": "-아요",
+                    "role": "ending",
+                    "meaning": "polite present"
+                  }
+                ],
+                "politeness": "polite",
+                "cefr": "A1"
+              },
+              {
+                "surface": "같이",
+                "lemma": "같이",
+                "pos": "adverb",
+                "translation": "together",
+                "lemma_translation": "together",
+                "romanization": "gachi",
+                "lemma_romanization": "gachi",
+                "cefr": "A1"
+              },
+              {
+                "surface": "가요",
+                "lemma": "가다",
+                "pos": "verb",
+                "translation": "let's go",
+                "lemma_translation": "to go",
+                "romanization": "gayo",
+                "lemma_romanization": "gada",
+                "breakdown": [
+                  {
+                    "part": "가",
+                    "role": "stem",
+                    "meaning": "go"
+                  },
+                  {
+                    "part": "-아요",
+                    "role": "ending",
+                    "meaning": "polite (here: let's …)"
+                  }
+                ],
+                "politeness": "polite",
+                "cefr": "A1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "image_prompt": "The familiar hallway of Jisoo's red-brick building at night: Yuna stops in front of the door right next to Jisoo's apartment and presses the doorbell; behind her Jisoo freezes, wide-eyed, looking from one door to the other.",
+        "layout": {
+          "aspect_ratio": 0.8
+        },
+        "bubbles": [
+          {
+            "kind": "speech",
+            "character": "yuna",
+            "text": "여기가 동생 집이에요.",
+            "translation": "This is my brother's place.",
+            "box": {
+              "x": 47,
+              "y": 3,
+              "w": 49,
+              "h": 16
+            },
+            "tokens": [
+              {
+                "surface": "여기가",
+                "lemma": "여기",
+                "pos": "pronoun",
+                "translation": "here, this place (subject)",
+                "lemma_translation": "here",
+                "romanization": "yeogiga",
+                "lemma_romanization": "yeogi",
+                "breakdown": [
+                  {
+                    "part": "여기",
+                    "role": "stem",
+                    "meaning": "here"
+                  },
+                  {
+                    "part": "가",
+                    "role": "particle",
+                    "meaning": "subject marker"
+                  }
+                ],
+                "cefr": "A1"
+              },
+              {
+                "surface": "동생",
+                "lemma": "동생",
+                "pos": "noun",
+                "translation": "(my) younger brother('s)",
+                "lemma_translation": "younger sibling",
+                "romanization": "dongsaeng",
+                "lemma_romanization": "dongsaeng",
+                "cefr": "A1"
+              },
+              {
+                "surface": "집이에요",
+                "lemma": "집",
+                "pos": "noun",
+                "translation": "(is the) home",
+                "lemma_translation": "house, home",
+                "romanization": "jibieyo",
+                "lemma_romanization": "jip",
+                "breakdown": [
+                  {
+                    "part": "집",
+                    "role": "stem",
+                    "meaning": "house, home"
+                  },
+                  {
+                    "part": "이에요",
+                    "role": "particle",
+                    "meaning": "is (polite copula)"
+                  }
+                ],
+                "politeness": "polite",
+                "cefr": "A1"
+              }
+            ]
+          },
+          {
+            "kind": "thought",
+            "character": "jisoo",
+            "text": "어...? 여기는 민호 집인데...?",
+            "translation": "Huh...? But this is Minho's place...?",
+            "box": {
+              "x": 4,
+              "y": 22,
+              "w": 62,
+              "h": 16
+            },
+            "tokens": [
+              {
+                "surface": "어",
+                "lemma": "어",
+                "pos": "interjection",
+                "translation": "huh...?",
+                "lemma_translation": "uh, huh (hesitation or surprise)",
+                "romanization": "eo",
+                "lemma_romanization": "eo",
+                "cefr": "A1"
+              },
+              {
+                "surface": "여기는",
+                "lemma": "여기",
+                "pos": "pronoun",
+                "translation": "here (as for)",
+                "lemma_translation": "here",
+                "romanization": "yeogineun",
+                "lemma_romanization": "yeogi",
+                "breakdown": [
+                  {
+                    "part": "여기",
+                    "role": "stem",
+                    "meaning": "here"
+                  },
+                  {
+                    "part": "는",
+                    "role": "particle",
+                    "meaning": "topic, contrast"
+                  }
+                ],
+                "cefr": "A1"
+              },
+              {
+                "surface": "민호",
+                "lemma": "민호",
+                "pos": "noun",
+                "translation": "Minho('s)",
+                "lemma_translation": "Minho (name)",
+                "romanization": "Minho",
+                "lemma_romanization": "Minho"
+              },
+              {
+                "surface": "집인데",
+                "lemma": "집",
+                "pos": "noun",
+                "translation": "is (Minho's) place, but…",
+                "lemma_translation": "house, home",
+                "romanization": "jibinde",
+                "lemma_romanization": "jip",
+                "breakdown": [
+                  {
+                    "part": "집",
+                    "role": "stem",
+                    "meaning": "house, home"
+                  },
+                  {
+                    "part": "이",
+                    "role": "particle",
+                    "meaning": "copula 'to be'"
+                  },
+                  {
+                    "part": "-ㄴ데",
+                    "role": "ending",
+                    "meaning": "but… (trailing off)"
+                  }
+                ],
+                "politeness": "casual",
+                "cefr": "A1",
+                "note": "-(이)ㄴ데 trails off with 'but…', leaving the surprise unsaid."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "image_prompt": "The door swings open: Minho in his gray hoodie and slippers, holding a bag of snacks, freezes in shock as he sees Yuna and, right behind her, Jisoo; dramatic speed lines, comedic surprise.",
+        "layout": {
+          "aspect_ratio": 0.75
+        },
+        "bubbles": [
+          {
+            "kind": "speech",
+            "character": "minho",
+            "text": "누나, 왔어? 어...? 지수야?!",
+            "translation": "Hey sis, you're here? Huh...? Jisoo?!",
+            "box": {
+              "x": 4,
+              "y": 3,
+              "w": 60,
+              "h": 16
+            },
+            "tokens": [
+              {
+                "surface": "누나",
+                "lemma": "누나",
+                "pos": "noun",
+                "translation": "sis (older sister)",
+                "lemma_translation": "older sister (said by a male)",
+                "romanization": "nuna",
+                "lemma_romanization": "nuna",
+                "cefr": "A1",
+                "note": "Target word: 누나 = what a man calls his older sister, or an older female friend."
+              },
+              {
+                "surface": "왔어",
+                "lemma": "오다",
+                "pos": "verb",
+                "translation": "you're here? (you came)",
+                "lemma_translation": "to come",
+                "romanization": "wasseo",
+                "lemma_romanization": "oda",
+                "breakdown": [
+                  {
+                    "part": "오",
+                    "role": "stem",
+                    "meaning": "come"
+                  },
+                  {
+                    "part": "-았-",
+                    "role": "suffix",
+                    "meaning": "past"
+                  },
+                  {
+                    "part": "-어",
+                    "role": "ending",
+                    "meaning": "casual (오 + 았어 → 왔어)"
+                  }
+                ],
+                "politeness": "casual",
+                "cefr": "A1"
+              },
+              {
+                "surface": "어",
+                "lemma": "어",
+                "pos": "interjection",
+                "translation": "huh...?",
+                "lemma_translation": "uh, huh (hesitation or surprise)",
+                "romanization": "eo",
+                "lemma_romanization": "eo",
+                "cefr": "A1"
+              },
+              {
+                "surface": "지수야",
+                "lemma": "지수",
+                "pos": "noun",
+                "translation": "Jisoo! (calling her)",
+                "lemma_translation": "Jisoo (name)",
+                "romanization": "Jisuya",
+                "lemma_romanization": "Jisu",
+                "breakdown": [
+                  {
+                    "part": "지수",
+                    "role": "stem",
+                    "meaning": "Jisoo"
+                  },
+                  {
+                    "part": "야",
+                    "role": "particle",
+                    "meaning": "vocative (calling a friend)"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

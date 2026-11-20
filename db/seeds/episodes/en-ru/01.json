@@ -1,0 +1,1139 @@
+{
+  "language_pair": "en-ru",
+  "series": {
+    "slug": "coffee-and-coincidences",
+    "title": "Coffee & Coincidences",
+    "description": "Бариста Миа путает заказы и проливает кофе на альбом нового посетителя — художника Лео. С этой неловкой встречи начинается тёплая история о случайностях, первых свиданиях и маленьких чудесах.",
+    "genre": "romance",
+    "cefr_level": "A2",
+    "style_prompt": "Soft, warm Korean webtoon style with clean, thin line art and gentle cel shading. Pastel palette of peach, cream, mint and latte brown, cozy golden lighting, expressive but simple faces, slightly rounded proportions, uncluttered backgrounds with soft bokeh. Vertical-scroll comic panel composition. No text, letters, readable signs or speech bubbles in the image.",
+    "characters": [
+      {
+        "key": "mia",
+        "name": "Mia",
+        "appearance_prompt": "24-year-old woman, petite, shoulder-length wavy auburn hair usually tied in a messy low bun with a few loose strands, warm brown eyes, light freckles across her nose and cheeks, small silver star earrings. At work she wears a mustard-yellow barista apron over a cream knit sweater with pushed-up sleeves, black jeans and white sneakers.",
+        "protagonist": true
+      },
+      {
+        "key": "leo",
+        "name": "Leo",
+        "appearance_prompt": "26-year-old man, tall and slim, messy dark-brown hair falling over his forehead, round tortoiseshell glasses, soft green eyes, a small ink stain on his right hand. Wears an oversized olive-green corduroy jacket over a plain white T-shirt, beige chinos and worn white sneakers; usually carries a brown leather sketchbook."
+      },
+      {
+        "key": "sam",
+        "name": "Sam",
+        "appearance_prompt": "25-year-old woman, Mia's roommate, short bleached-blonde pixie cut, bright blue eyes, wide cheerful grin, several small silver ear piercings. Wears oversized lavender hoodies, patterned leggings and fuzzy socks; very expressive face, often has her phone in her hand."
+      },
+      {
+        "key": "nora",
+        "name": "Nora",
+        "appearance_prompt": "28-year-old woman, tall and elegant, long glossy black hair in loose waves, soft green eyes exactly like Leo's, bright red lipstick, gold hoop earrings. Wears a fitted red dress under a cream trench coat and red heels; dramatic, confident gestures."
+      }
+    ]
+  },
+  "episode": {
+    "number": 1,
+    "title": "The Wrong Order",
+    "format": "webtoon",
+    "cefr_level": "A2",
+    "free": true,
+    "estimated_minutes": 4,
+    "synopsis": "On a busy Monday morning, barista Mia mixes up two orders and gives a new customer, Leo, a super-sweet caramel latte instead of his flat white. While she rushes to fix it, she trips and spills coffee all over his sketchbook. Leo just laughs, and before he leaves, he gives Mia a napkin with a quick drawing of her.",
+    "target_words": [
+      "in a hurry",
+      "mix up",
+      "spill",
+      "clean up",
+      "mess",
+      "on the house",
+      "don't worry",
+      "look like",
+      "strange",
+      "by the way"
+    ],
+    "panels": [
+      {
+        "image_prompt": "Interior of a small cozy café on an early Monday morning: warm wooden counter, hanging plants, big windows with soft morning light. A long line of sleepy customers in coats, some looking at their phones. Behind the counter, Mia in her mustard-yellow apron looks tired but keeps a polite smile, steam rising from a big chrome espresso machine.",
+        "layout": {
+          "aspect_ratio": 0.75
+        },
+        "bubbles": [
+          {
+            "kind": "narration",
+            "character": null,
+            "text": "Monday morning. Everyone is in a hurry.",
+            "translation": "Утро понедельника. Все куда-то спешат.",
+            "box": {
+              "x": 3,
+              "y": 3,
+              "w": 52,
+              "h": 15
+            },
+            "tokens": [
+              {
+                "surface": "Monday",
+                "lemma": "Monday",
+                "pos": "noun",
+                "translation": "понедельника",
+                "lemma_translation": "понедельник",
+                "cefr": "A1"
+              },
+              {
+                "surface": "morning",
+                "lemma": "morning",
+                "pos": "noun",
+                "translation": "утро",
+                "cefr": "A1"
+              },
+              {
+                "surface": "Everyone",
+                "lemma": "everyone",
+                "pos": "pronoun",
+                "translation": "все",
+                "lemma_translation": "каждый, все"
+              },
+              {
+                "surface": "is",
+                "lemma": "be",
+                "pos": "verb",
+                "translation": "есть (связка)",
+                "lemma_translation": "быть",
+                "cefr": "A1"
+              },
+              {
+                "surface": "in a hurry",
+                "lemma": "in a hurry",
+                "pos": "phrase",
+                "translation": "спешат",
+                "lemma_translation": "в спешке; торопиться",
+                "cefr": "A2",
+                "note": "Be in a hurry — спешить, торопиться: так говорят, когда у человека мало времени."
+              }
+            ]
+          },
+          {
+            "kind": "speech",
+            "character": "mia",
+            "text": "Next, please!",
+            "translation": "Следующий, пожалуйста!",
+            "box": {
+              "x": 58,
+              "y": 21,
+              "w": 36,
+              "h": 12
+            },
+            "tokens": [
+              {
+                "surface": "Next",
+                "lemma": "next",
+                "pos": "adjective",
+                "translation": "следующий",
+                "cefr": "A1"
+              },
+              {
+                "surface": "please",
+                "lemma": "please",
+                "pos": "adverb",
+                "translation": "пожалуйста",
+                "cefr": "A1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "image_prompt": "Leo, a tall young man with messy dark-brown hair, round tortoiseshell glasses and an olive-green corduroy jacket, steps up to the café counter with a leather sketchbook under his arm and smiles politely. Mia behind the counter holds a paper cup and a black marker, ready to write. Busy café in the soft-focus background.",
+        "layout": {
+          "aspect_ratio": 0.8
+        },
+        "bubbles": [
+          {
+            "kind": "speech",
+            "character": "leo",
+            "text": "Hi! A flat white, please. No sugar.",
+            "translation": "Здравствуйте! Флэт уайт, пожалуйста. Без сахара.",
+            "box": {
+              "x": 6,
+              "y": 4,
+              "w": 52,
+              "h": 15
+            },
+            "tokens": [
+              {
+                "surface": "Hi",
+                "lemma": "hi",
+                "pos": "interjection",
+                "translation": "здравствуйте",
+                "lemma_translation": "привет",
+                "cefr": "A1"
+              },
+              {
+                "surface": "A",
+                "lemma": "a",
+                "pos": "determiner",
+                "translation": "неопределённый артикль"
+              },
+              {
+                "surface": "flat white",
+                "lemma": "flat white",
+                "pos": "noun",
+                "translation": "флэт уайт",
+                "cefr": "B1",
+                "note": "Кофейный напиток: эспрессо с небольшим количеством молока и тонкой пенкой."
+              },
+              {
+                "surface": "please",
+                "lemma": "please",
+                "pos": "adverb",
+                "translation": "пожалуйста",
+                "cefr": "A1"
+              },
+              {
+                "surface": "No",
+                "lemma": "no",
+                "pos": "determiner",
+                "translation": "без",
+                "lemma_translation": "нет; никакой",
+                "cefr": "A1"
+              },
+              {
+                "surface": "sugar",
+                "lemma": "sugar",
+                "pos": "noun",
+                "translation": "сахара",
+                "lemma_translation": "сахар",
+                "cefr": "A1"
+              }
+            ]
+          },
+          {
+            "kind": "speech",
+            "character": "mia",
+            "text": "Sure! Name?",
+            "translation": "Конечно! Ваше имя?",
+            "box": {
+              "x": 59,
+              "y": 22,
+              "w": 36,
+              "h": 12
+            },
+            "tokens": [
+              {
+                "surface": "Sure",
+                "lemma": "sure",
+                "pos": "adverb",
+                "translation": "конечно",
+                "cefr": "A2"
+              },
+              {
+                "surface": "Name",
+                "lemma": "name",
+                "pos": "noun",
+                "translation": "имя",
+                "cefr": "A1"
+              }
+            ]
+          },
+          {
+            "kind": "speech",
+            "character": "leo",
+            "text": "Leo.",
+            "translation": "Лео.",
+            "box": {
+              "x": 4,
+              "y": 37,
+              "w": 36,
+              "h": 12
+            },
+            "tokens": [
+              {
+                "surface": "Leo",
+                "lemma": "Leo",
+                "pos": "noun",
+                "translation": "Лео"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "image_prompt": "Close-up of Mia working fast at the espresso machine: two paper cups side by side on the counter, one plain, one topped with a tall swirl of whipped cream and caramel sauce. Mia looks focused and a little overconfident, a loose strand of auburn hair falling over her face.",
+        "layout": {
+          "aspect_ratio": 0.9
+        },
+        "bubbles": [
+          {
+            "kind": "thought",
+            "character": "mia",
+            "text": "One flat white, one caramel latte with extra cream. Easy!",
+            "translation": "Один флэт уайт, один карамельный латте с дополнительными сливками. Легко!",
+            "box": {
+              "x": 5,
+              "y": 5,
+              "w": 60,
+              "h": 18
+            },
+            "tokens": [
+              {
+                "surface": "One",
+                "lemma": "one",
+                "pos": "numeral",
+                "translation": "один",
+                "cefr": "A1"
+              },
+              {
+                "surface": "flat white",
+                "lemma": "flat white",
+                "pos": "noun",
+                "translation": "флэт уайт",
+                "cefr": "B1"
+              },
+              {
+                "surface": "one",
+                "lemma": "one",
+                "pos": "numeral",
+                "translation": "один",
+                "cefr": "A1"
+              },
+              {
+                "surface": "caramel",
+                "lemma": "caramel",
+                "pos": "noun",
+                "translation": "карамельный",
+                "lemma_translation": "карамель",
+                "cefr": "B1"
+              },
+              {
+                "surface": "latte",
+                "lemma": "latte",
+                "pos": "noun",
+                "translation": "латте",
+                "cefr": "B1"
+              },
+              {
+                "surface": "with",
+                "lemma": "with",
+                "pos": "preposition",
+                "translation": "с"
+              },
+              {
+                "surface": "extra",
+                "lemma": "extra",
+                "pos": "adjective",
+                "translation": "дополнительными",
+                "lemma_translation": "дополнительный",
+                "cefr": "A2"
+              },
+              {
+                "surface": "cream",
+                "lemma": "cream",
+                "pos": "noun",
+                "translation": "сливками",
+                "lemma_translation": "сливки",
+                "cefr": "A2"
+              },
+              {
+                "surface": "Easy",
+                "lemma": "easy",
+                "pos": "adjective",
+                "translation": "легко",
+                "lemma_translation": "лёгкий",
+                "cefr": "A1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "image_prompt": "Leo takes a sip from his paper cup and makes a funny face, eyes squeezed shut, a small whipped-cream mustache on his upper lip. Behind the counter Mia freezes, holding the other cup, slowly realizing her mistake.",
+        "layout": {
+          "aspect_ratio": 0.8
+        },
+        "bubbles": [
+          {
+            "kind": "speech",
+            "character": "leo",
+            "text": "Hmm... This is very... sweet.",
+            "translation": "Хм... Это очень... сладко.",
+            "box": {
+              "x": 4,
+              "y": 3,
+              "w": 44,
+              "h": 13
+            },
+            "tokens": [
+              {
+                "surface": "Hmm",
+                "lemma": "hmm",
+                "pos": "interjection",
+                "translation": "хм"
+              },
+              {
+                "surface": "This",
+                "lemma": "this",
+                "pos": "pronoun",
+                "translation": "это"
+              },
+              {
+                "surface": "is",
+                "lemma": "be",
+                "pos": "verb",
+                "translation": "есть (связка)",
+                "lemma_translation": "быть",
+                "cefr": "A1"
+              },
+              {
+                "surface": "very",
+                "lemma": "very",
+                "pos": "adverb",
+                "translation": "очень",
+                "cefr": "A1"
+              },
+              {
+                "surface": "sweet",
+                "lemma": "sweet",
+                "pos": "adjective",
+                "translation": "сладко",
+                "lemma_translation": "сладкий",
+                "cefr": "A1"
+              }
+            ]
+          },
+          {
+            "kind": "speech",
+            "character": "mia",
+            "text": "Oh no! I mixed up the orders!",
+            "translation": "О нет! Я перепутала заказы!",
+            "box": {
+              "x": 53,
+              "y": 19,
+              "w": 44,
+              "h": 13
+            },
+            "tokens": [
+              {
+                "surface": "Oh no",
+                "lemma": "oh no",
+                "pos": "interjection",
+                "translation": "о нет"
+              },
+              {
+                "surface": "I",
+                "lemma": "I",
+                "pos": "pronoun",
+                "translation": "я"
+              },
+              {
+                "surface": "mixed up",
+                "lemma": "mix up",
+                "pos": "phrasal_verb",
+                "translation": "перепутала",
+                "lemma_translation": "перепутать",
+                "cefr": "A2",
+                "note": "Mix up — перепутать одно с другим: mix up the orders — перепутать заказы."
+              },
+              {
+                "surface": "the",
+                "lemma": "the",
+                "pos": "determiner",
+                "translation": "определённый артикль"
+              },
+              {
+                "surface": "orders",
+                "lemma": "order",
+                "pos": "noun",
+                "translation": "заказы",
+                "lemma_translation": "заказ",
+                "cefr": "A2"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "image_prompt": "Dynamic comedic action shot: Mia hurries around the end of the counter carrying a fresh cup of coffee, her foot catches on a backpack strap lying on the floor, she trips forward and the coffee flies out of the cup in a big splash. Motion lines, wide panicked eyes.",
+        "layout": {
+          "aspect_ratio": 0.85
+        },
+        "bubbles": [
+          {
+            "kind": "speech",
+            "character": "mia",
+            "text": "Wait! I'll bring you the right one!",
+            "translation": "Подождите! Я принесу вам правильный!",
+            "box": {
+              "x": 3,
+              "y": 4,
+              "w": 52,
+              "h": 15
+            },
+            "tokens": [
+              {
+                "surface": "Wait",
+                "lemma": "wait",
+                "pos": "verb",
+                "translation": "подождите",
+                "lemma_translation": "ждать",
+                "cefr": "A1"
+              },
+              {
+                "surface": "I'll",
+                "lemma": "I will",
+                "pos": "pronoun",
+                "translation": "я",
+                "lemma_translation": "я буду",
+                "note": "I'll = I will: так образуется будущее время (I'll bring — я принесу)."
+              },
+              {
+                "surface": "bring",
+                "lemma": "bring",
+                "pos": "verb",
+                "translation": "принесу",
+                "lemma_translation": "приносить",
+                "cefr": "A1"
+              },
+              {
+                "surface": "you",
+                "lemma": "you",
+                "pos": "pronoun",
+                "translation": "вам",
+                "lemma_translation": "ты; вы"
+              },
+              {
+                "surface": "the",
+                "lemma": "the",
+                "pos": "determiner",
+                "translation": "определённый артикль"
+              },
+              {
+                "surface": "right",
+                "lemma": "right",
+                "pos": "adjective",
+                "translation": "правильный",
+                "cefr": "A1"
+              },
+              {
+                "surface": "one",
+                "lemma": "one",
+                "pos": "pronoun",
+                "translation": "напиток",
+                "lemma_translation": "один",
+                "note": "Здесь one заменяет уже названное слово (coffee), чтобы не повторять его: the right one — правильный (кофе)."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "image_prompt": "Coffee splashed all over Leo's open sketchbook on a small café table, brown drips running across pencil drawings. Mia stands next to the table with both hands over her mouth, horrified. Leo sits blinking in surprise, still holding the sweet latte.",
+        "layout": {
+          "aspect_ratio": 1.0
+        },
+        "bubbles": [
+          {
+            "kind": "speech",
+            "character": "mia",
+            "text": "I'm so sorry! I spilled coffee on your drawings!",
+            "translation": "Мне так жаль! Я пролила кофе на ваши рисунки!",
+            "box": {
+              "x": 42,
+              "y": 5,
+              "w": 52,
+              "h": 15
+            },
+            "tokens": [
+              {
+                "surface": "I'm",
+                "lemma": "I am",
+                "pos": "pronoun",
+                "translation": "мне",
+                "lemma_translation": "я",
+                "note": "I'm = I am. По-русски здесь «мне»: I'm sorry — мне жаль."
+              },
+              {
+                "surface": "so",
+                "lemma": "so",
+                "pos": "adverb",
+                "translation": "так",
+                "cefr": "A1"
+              },
+              {
+                "surface": "sorry",
+                "lemma": "sorry",
+                "pos": "adjective",
+                "translation": "жаль",
+                "lemma_translation": "извините; сожалеющий",
+                "cefr": "A1"
+              },
+              {
+                "surface": "I",
+                "lemma": "I",
+                "pos": "pronoun",
+                "translation": "я"
+              },
+              {
+                "surface": "spilled",
+                "lemma": "spill",
+                "pos": "verb",
+                "translation": "пролила",
+                "lemma_translation": "проливать, разливать",
+                "cefr": "B1",
+                "note": "Spill — пролить жидкость: spill coffee on something — пролить кофе на что-то. Прошедшее время: spilled (или spilt)."
+              },
+              {
+                "surface": "coffee",
+                "lemma": "coffee",
+                "pos": "noun",
+                "translation": "кофе",
+                "cefr": "A1"
+              },
+              {
+                "surface": "on",
+                "lemma": "on",
+                "pos": "preposition",
+                "translation": "на"
+              },
+              {
+                "surface": "your",
+                "lemma": "your",
+                "pos": "determiner",
+                "translation": "ваши",
+                "lemma_translation": "твой; ваш"
+              },
+              {
+                "surface": "drawings",
+                "lemma": "drawing",
+                "pos": "noun",
+                "translation": "рисунки",
+                "lemma_translation": "рисунок",
+                "cefr": "A2"
+              }
+            ]
+          },
+          {
+            "kind": "speech",
+            "character": "leo",
+            "text": "Oh... my sketchbook.",
+            "translation": "Ох... мой альбом.",
+            "box": {
+              "x": 5,
+              "y": 23,
+              "w": 44,
+              "h": 13
+            },
+            "tokens": [
+              {
+                "surface": "Oh",
+                "lemma": "oh",
+                "pos": "interjection",
+                "translation": "ох"
+              },
+              {
+                "surface": "my",
+                "lemma": "my",
+                "pos": "determiner",
+                "translation": "мой"
+              },
+              {
+                "surface": "sketchbook",
+                "lemma": "sketchbook",
+                "pos": "noun",
+                "translation": "альбом",
+                "lemma_translation": "альбом для рисования, скетчбук",
+                "cefr": "B1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "image_prompt": "Mia, flustered and blushing, wipes the table with a cloth and a pile of paper napkins. Leo holds his dripping sketchbook up in the air with two fingers. A fresh cup of coffee stands on the table in front of him.",
+        "layout": {
+          "aspect_ratio": 0.8
+        },
+        "bubbles": [
+          {
+            "kind": "speech",
+            "character": "mia",
+            "text": "Let me clean up this mess! Your next coffee is on the house.",
+            "translation": "Давайте я уберу этот беспорядок! А следующий кофе — за счёт заведения.",
+            "box": {
+              "x": 5,
+              "y": 3,
+              "w": 60,
+              "h": 18
+            },
+            "tokens": [
+              {
+                "surface": "Let",
+                "lemma": "let",
+                "pos": "verb",
+                "translation": "давайте",
+                "lemma_translation": "позволять",
+                "cefr": "A1",
+                "note": "Let me + глагол — «давай(те) я…»: так предлагают сделать что-то самому."
+              },
+              {
+                "surface": "me",
+                "lemma": "me",
+                "pos": "pronoun",
+                "translation": "я",
+                "lemma_translation": "меня; мне"
+              },
+              {
+                "surface": "clean up",
+                "lemma": "clean up",
+                "pos": "phrasal_verb",
+                "translation": "уберу",
+                "lemma_translation": "убирать, наводить порядок",
+                "cefr": "A2",
+                "note": "Clean up — убрать, навести порядок: clean up the mess — убрать беспорядок."
+              },
+              {
+                "surface": "this",
+                "lemma": "this",
+                "pos": "determiner",
+                "translation": "этот"
+              },
+              {
+                "surface": "mess",
+                "lemma": "mess",
+                "pos": "noun",
+                "translation": "беспорядок",
+                "lemma_translation": "беспорядок, бардак",
+                "cefr": "B1",
+                "note": "Mess — беспорядок, грязь. What a mess! — Какой бардак!"
+              },
+              {
+                "surface": "Your",
+                "lemma": "your",
+                "pos": "determiner",
+                "translation": "ваш",
+                "lemma_translation": "твой; ваш"
+              },
+              {
+                "surface": "next",
+                "lemma": "next",
+                "pos": "adjective",
+                "translation": "следующий",
+                "cefr": "A1"
+              },
+              {
+                "surface": "coffee",
+                "lemma": "coffee",
+                "pos": "noun",
+                "translation": "кофе",
+                "cefr": "A1"
+              },
+              {
+                "surface": "is",
+                "lemma": "be",
+                "pos": "verb",
+                "translation": "есть (связка)",
+                "lemma_translation": "быть",
+                "cefr": "A1"
+              },
+              {
+                "surface": "on the house",
+                "lemma": "on the house",
+                "pos": "idiom",
+                "translation": "за счёт заведения",
+                "cefr": "B1",
+                "note": "On the house — бесплатно, за счёт заведения. Так говорят в кафе, барах и ресторанах."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "image_prompt": "Leo laughs warmly and turns his sketchbook toward Mia, showing a big brown coffee stain on the page that looks a bit like a sitting cat with pointy ears. Mia leans closer, confused and amused, still holding the wet cloth.",
+        "layout": {
+          "aspect_ratio": 0.8
+        },
+        "bubbles": [
+          {
+            "kind": "speech",
+            "character": "leo",
+            "text": "Don't worry. Look, this stain looks like a cat!",
+            "translation": "Не волнуйтесь. Смотрите, это пятно похоже на кота!",
+            "box": {
+              "x": 4,
+              "y": 4,
+              "w": 52,
+              "h": 15
+            },
+            "tokens": [
+              {
+                "surface": "Don't worry",
+                "lemma": "don't worry",
+                "pos": "phrase",
+                "translation": "не волнуйтесь",
+                "lemma_translation": "не волнуйся",
+                "cefr": "A1",
+                "note": "Don't worry — «не волнуйся, всё в порядке»: так успокаивают собеседника. Don't = do not."
+              },
+              {
+                "surface": "Look",
+                "lemma": "look",
+                "pos": "verb",
+                "translation": "смотрите",
+                "lemma_translation": "смотреть",
+                "cefr": "A1"
+              },
+              {
+                "surface": "this",
+                "lemma": "this",
+                "pos": "determiner",
+                "translation": "это",
+                "lemma_translation": "этот"
+              },
+              {
+                "surface": "stain",
+                "lemma": "stain",
+                "pos": "noun",
+                "translation": "пятно",
+                "cefr": "B1"
+              },
+              {
+                "surface": "looks like",
+                "lemma": "look like",
+                "pos": "phrasal_verb",
+                "translation": "похоже на",
+                "lemma_translation": "быть похожим на",
+                "cefr": "A2",
+                "note": "Look like — быть похожим на кого-то или что-то: It looks like a cat — Это похоже на кота."
+              },
+              {
+                "surface": "a",
+                "lemma": "a",
+                "pos": "determiner",
+                "translation": "неопределённый артикль"
+              },
+              {
+                "surface": "cat",
+                "lemma": "cat",
+                "pos": "noun",
+                "translation": "кота",
+                "lemma_translation": "кот",
+                "cefr": "A1"
+              }
+            ]
+          },
+          {
+            "kind": "speech",
+            "character": "mia",
+            "text": "A cat? You're very kind... or very strange.",
+            "translation": "На кота? Вы очень добрый... или очень странный.",
+            "box": {
+              "x": 45,
+              "y": 22,
+              "w": 52,
+              "h": 15
+            },
+            "tokens": [
+              {
+                "surface": "A",
+                "lemma": "a",
+                "pos": "determiner",
+                "translation": "неопределённый артикль"
+              },
+              {
+                "surface": "cat",
+                "lemma": "cat",
+                "pos": "noun",
+                "translation": "кота",
+                "lemma_translation": "кот",
+                "cefr": "A1"
+              },
+              {
+                "surface": "You're",
+                "lemma": "you are",
+                "pos": "pronoun",
+                "translation": "вы",
+                "lemma_translation": "ты; вы",
+                "note": "You're = you are."
+              },
+              {
+                "surface": "very",
+                "lemma": "very",
+                "pos": "adverb",
+                "translation": "очень",
+                "cefr": "A1"
+              },
+              {
+                "surface": "kind",
+                "lemma": "kind",
+                "pos": "adjective",
+                "translation": "добрый",
+                "cefr": "A2"
+              },
+              {
+                "surface": "or",
+                "lemma": "or",
+                "pos": "conjunction",
+                "translation": "или"
+              },
+              {
+                "surface": "very",
+                "lemma": "very",
+                "pos": "adverb",
+                "translation": "очень",
+                "cefr": "A1"
+              },
+              {
+                "surface": "strange",
+                "lemma": "strange",
+                "pos": "adjective",
+                "translation": "странный",
+                "cefr": "A2",
+                "note": "Strange — странный, необычный. Синоним в разговорной речи — weird."
+              }
+            ]
+          },
+          {
+            "kind": "speech",
+            "character": "leo",
+            "text": "Maybe both.",
+            "translation": "Может быть, и то и другое.",
+            "box": {
+              "x": 6,
+              "y": 40,
+              "w": 36,
+              "h": 12
+            },
+            "tokens": [
+              {
+                "surface": "Maybe",
+                "lemma": "maybe",
+                "pos": "adverb",
+                "translation": "может быть",
+                "cefr": "A1"
+              },
+              {
+                "surface": "both",
+                "lemma": "both",
+                "pos": "pronoun",
+                "translation": "и то и другое",
+                "lemma_translation": "оба",
+                "cefr": "A2"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "image_prompt": "Leo stands at the open café door holding a new cup of coffee, waving goodbye with a friendly smile, a small brass bell above the door. Behind the counter, Mia holds a white paper napkin with a small pencil sketch on it, looking at it in surprise.",
+        "layout": {
+          "aspect_ratio": 0.75
+        },
+        "bubbles": [
+          {
+            "kind": "speech",
+            "character": "leo",
+            "text": "Thanks for the coffee. By the way, this is for you.",
+            "translation": "Спасибо за кофе. Кстати, это для вас.",
+            "box": {
+              "x": 3,
+              "y": 5,
+              "w": 60,
+              "h": 18
+            },
+            "tokens": [
+              {
+                "surface": "Thanks",
+                "lemma": "thanks",
+                "pos": "interjection",
+                "translation": "спасибо",
+                "cefr": "A1"
+              },
+              {
+                "surface": "for",
+                "lemma": "for",
+                "pos": "preposition",
+                "translation": "за",
+                "lemma_translation": "для; за"
+              },
+              {
+                "surface": "the",
+                "lemma": "the",
+                "pos": "determiner",
+                "translation": "определённый артикль"
+              },
+              {
+                "surface": "coffee",
+                "lemma": "coffee",
+                "pos": "noun",
+                "translation": "кофе",
+                "cefr": "A1"
+              },
+              {
+                "surface": "By the way",
+                "lemma": "by the way",
+                "pos": "phrase",
+                "translation": "кстати",
+                "cefr": "A2",
+                "note": "By the way — «кстати, между прочим»: так переходят к новой теме в разговоре."
+              },
+              {
+                "surface": "this",
+                "lemma": "this",
+                "pos": "pronoun",
+                "translation": "это"
+              },
+              {
+                "surface": "is",
+                "lemma": "be",
+                "pos": "verb",
+                "translation": "есть (связка)",
+                "lemma_translation": "быть",
+                "cefr": "A1"
+              },
+              {
+                "surface": "for",
+                "lemma": "for",
+                "pos": "preposition",
+                "translation": "для",
+                "lemma_translation": "для; за"
+              },
+              {
+                "surface": "you",
+                "lemma": "you",
+                "pos": "pronoun",
+                "translation": "вас",
+                "lemma_translation": "ты; вы"
+              }
+            ]
+          },
+          {
+            "kind": "narration",
+            "character": null,
+            "text": "There was a drawing on the napkin. It was me!",
+            "translation": "На салфетке был рисунок. Это была я!",
+            "box": {
+              "x": 42,
+              "y": 26,
+              "w": 52,
+              "h": 15
+            },
+            "tokens": [
+              {
+                "surface": "There was",
+                "lemma": "there is",
+                "pos": "phrase",
+                "translation": "был",
+                "lemma_translation": "есть, имеется",
+                "cefr": "A1",
+                "note": "There is / there was — «есть / был»: так говорят, что что-то где-то находится."
+              },
+              {
+                "surface": "a",
+                "lemma": "a",
+                "pos": "determiner",
+                "translation": "неопределённый артикль"
+              },
+              {
+                "surface": "drawing",
+                "lemma": "drawing",
+                "pos": "noun",
+                "translation": "рисунок",
+                "cefr": "A2"
+              },
+              {
+                "surface": "on",
+                "lemma": "on",
+                "pos": "preposition",
+                "translation": "на"
+              },
+              {
+                "surface": "the",
+                "lemma": "the",
+                "pos": "determiner",
+                "translation": "определённый артикль"
+              },
+              {
+                "surface": "napkin",
+                "lemma": "napkin",
+                "pos": "noun",
+                "translation": "салфетке",
+                "lemma_translation": "салфетка",
+                "cefr": "B1"
+              },
+              {
+                "surface": "It",
+                "lemma": "it",
+                "pos": "pronoun",
+                "translation": "это",
+                "lemma_translation": "оно; это"
+              },
+              {
+                "surface": "was",
+                "lemma": "be",
+                "pos": "verb",
+                "translation": "была",
+                "lemma_translation": "быть",
+                "cefr": "A1"
+              },
+              {
+                "surface": "me",
+                "lemma": "me",
+                "pos": "pronoun",
+                "translation": "я",
+                "lemma_translation": "меня; мне",
+                "note": "После was в разговорной речи говорят me: It was me — Это была я."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "image_prompt": "Close-up of Mia alone at the counter after the morning rush, holding the napkin sketch near her face. The sketch shows a cute pencil portrait of a barista girl with a messy bun. Mia's cheeks are pink, eyes wide; soft pastel sparkles around her.",
+        "layout": {
+          "aspect_ratio": 0.8
+        },
+        "bubbles": [
+          {
+            "kind": "thought",
+            "character": "mia",
+            "text": "Who is this guy?!",
+            "translation": "Кто этот парень?!",
+            "box": {
+              "x": 6,
+              "y": 3,
+              "w": 36,
+              "h": 12
+            },
+            "tokens": [
+              {
+                "surface": "Who",
+                "lemma": "who",
+                "pos": "pronoun",
+                "translation": "кто"
+              },
+              {
+                "surface": "is",
+                "lemma": "be",
+                "pos": "verb",
+                "translation": "есть (связка)",
+                "lemma_translation": "быть",
+                "cefr": "A1"
+              },
+              {
+                "surface": "this",
+                "lemma": "this",
+                "pos": "determiner",
+                "translation": "этот"
+              },
+              {
+                "surface": "guy",
+                "lemma": "guy",
+                "pos": "noun",
+                "translation": "парень",
+                "cefr": "B1"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

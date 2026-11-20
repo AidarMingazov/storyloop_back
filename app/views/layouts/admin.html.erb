@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <title><%= [ content_for(:title), "Админка Storyloop" ].compact.join(" · ") %></title>
+    <%= render "layouts/head" %>
+  </head>
+
+  <body class="min-h-dvh">
+    <header class="sticky top-0 z-10 border-b border-edge bg-paper/95 backdrop-blur">
+      <nav class="mx-auto flex max-w-6xl flex-wrap items-center gap-x-5 gap-y-2 px-4 py-3 text-sm">
+        <%= link_to "Storyloop", admin_root_path, class: "font-serif text-lg font-semibold text-ink-strong" %>
+        <%= link_to "Серии", admin_series_index_path, class: "hover:text-ink-strong" %>
+        <%= link_to "Лексемы", admin_lexemes_path, class: "hover:text-ink-strong" %>
+        <%= link_to "Импорт JSON", new_admin_import_path, class: "hover:text-ink-strong" %>
+        <span class="ml-auto text-muted"><%= Current.user.email_address %></span>
+        <%= button_to "Выйти", session_path, method: :delete, class: "text-muted hover:text-ink-strong" %>
+      </nav>
+    </header>
+
+    <main class="mx-auto max-w-6xl px-4 py-8">
+      <%= render "shared/flash" %>
+      <%= yield %>
+    </main>
+  </body>
+</html>

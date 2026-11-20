@@ -1,0 +1,34 @@
+<% content_for :title, "Storyloop" %>
+<header class="mb-8">
+  <p class="font-serif text-3xl font-semibold text-ink-strong">Storyloop</p>
+  <p class="text-muted mt-1">Читай истории, нажимай на слова, повторяй.</p>
+</header>
+
+<% @pairs.each do |pair| %>
+  <% series_list = pair.series.select(&:published?) %>
+  <% next if series_list.empty? %>
+  <section class="mb-8">
+    <h2 class="label"><%= pair.code %></h2>
+    <div class="grid gap-3">
+      <% series_list.each do |series| %>
+        <article class="card p-5">
+          <h3 class="font-serif text-2xl font-semibold text-ink-strong"><%= series.title %></h3>
+          <p class="text-sm text-muted mt-0.5"><%= series.cefr_level %> · <%= series.genre %></p>
+          <p class="mt-2"><%= series.description %></p>
+          <ol class="mt-4 grid gap-1.5 text-sm">
+            <% series.episodes.select(&:published?).each do |episode| %>
+              <li class="flex items-center gap-2">
+                <span class="tabular-nums text-muted w-5"><%= episode.number %></span>
+                <span class="text-ink-strong"><%= episode.title %></span>
+                <span class="text-muted">· <%= episode.format %></span>
+                <% unless episode.free? %><span class="badge ml-auto">🔒</span><% end %>
+              </li>
+            <% end %>
+          </ol>
+        </article>
+      <% end %>
+    </div>
+  </section>
+<% end %>
+
+<p class="text-sm text-muted">Читалка появится в волне 2.</p>

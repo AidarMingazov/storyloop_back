@@ -1,0 +1,33 @@
+<% content_for :title, @lexeme.lemma %>
+<h1 class="font-serif text-4xl font-semibold text-ink-strong mb-6"><%= @lexeme.lemma %></h1>
+<%= form_with model: [ :admin, @lexeme ], class: "card p-6 grid gap-5 max-w-2xl" do |f| %>
+  <%= form_errors(@lexeme) %>
+  <div class="grid gap-5 sm:grid-cols-[2fr_1fr_1fr]">
+    <div>
+      <%= f.label :lemma, "Начальная форма", class: "label" %>
+      <%= f.text_field :lemma, class: "input", required: true %>
+    </div>
+    <div>
+      <%= f.label :pos, "Часть речи", class: "label" %>
+      <%= f.select :pos, Lexeme::POS, {}, class: "input" %>
+    </div>
+    <div>
+      <%= f.label :cefr_level, "CEFR", class: "label" %>
+      <%= f.select :cefr_level, Cefr::LEVELS, { include_blank: true }, class: "input" %>
+    </div>
+  </div>
+  <div>
+    <%= f.label :romanization, "Романизация", class: "label" %>
+    <%= f.text_field :romanization, class: "input" %>
+  </div>
+  <% LanguagePair.where(target_lang: @lexeme.language).pluck(:native_lang).each do |native| %>
+    <div>
+      <%= label_tag "lexeme_translations_#{native}", "Перевод (#{native})", class: "label" %>
+      <%= text_field_tag "lexeme[translations][#{native}]", @lexeme.translation_for(native), id: "lexeme_translations_#{native}", class: "input" %>
+    </div>
+  <% end %>
+  <div class="flex gap-2">
+    <%= f.submit "Сохранить", class: "btn-primary" %>
+    <%= link_to "Отмена", admin_lexemes_path, class: "btn-secondary" %>
+  </div>
+<% end %>
