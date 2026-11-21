@@ -7,6 +7,8 @@ module Ai
     #   Ai::Steps::Script.call(series)                                   # next number, webtoon, 10 panels
     #   Ai::Steps::Script.call(series, number: 2, format: "chat", brief: "Mia texts Sam about Leo", target_words: %w[…])
     class Script
+      include FallbackChat
+
       ATTEMPTS = 3
       MAX_TOKENS = 16_000 # DeepSeek spends most of it on reasoning
       PANELS = { "chat" => 3 }.freeze
@@ -61,10 +63,9 @@ module Ai
           messages = self.messages
           problems = []
           @problems_seen = []
-          @llm = Ai.llm(:script)
           ATTEMPTS.times do |attempt|
             @attempts = attempt + 1
-            result = chat(messages)
+            result = chat(:script, messages, json: true, max_tokens: MAX_TOKENS)
             doc = document(result.json)
             check = doc && ScriptCheck.new(doc, target: @target, native: @native, characters: character_keys, panels:)
             problems = check ? check.errors : [ "the answer is not a JSON object with \"episode\": #{result.json_error || result.finish_reason}" ]
@@ -80,18 +81,6 @@ module Ai
                           { role: "user", content: "Fix these problems and return the full corrected JSON:\n- #{problems.join("\n- ")}" } ]
           end
           raise InvalidOutput.new("#{series.slug} episode #{number}: the script failed the checks #{ATTEMPTS} times", problems:)
-        end
-
-        # The main provider failed after its HTTP retries (down, out of money, rate limited): one switch to the fallback.
-        def chat(messages)
-          @llm.chat(messages, json: true, max_tokens: MAX_TOKENS)
-        rescue ProviderError => e
-          raise if @fell_back || e.is_a?(ContentRejected)
-
-          Rails.logger.warn("[ai] script: #{e.class}: #{e.message.truncate(200)} — switching to the fallback model")
-          @fell_back = true
-          @llm = Ai.llm(:script, fallback: true)
-          retry
         end
 
         def document(json)

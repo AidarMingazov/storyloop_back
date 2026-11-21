@@ -1,0 +1,25 @@
+- One token per word, in text order, covering every English word. Skip punctuation and emoji; "surface" must be copied
+  EXACTLY from the text, case kept, without punctuation ("Hi!" → Hi, "Name?" → Name).
+- Contractions are one token: I'm (lemma "I am", pos pronoun), don't (lemma "do not", pos verb), Where's (lemma "where is").
+- Phrasal verbs, idioms and set expressions are ONE token: ran into (lemma "run into", pos phrasal_verb),
+  in a hurry (pos phrase), flat white (pos noun) — only real set expressions, not any two words.
+- Fields: surface, lemma, pos, translation, lemma_translation, cefr, note.
+  - lemma: dictionary form, lowercase except proper nouns and "I" (is → be, ran → run, cups → cup, Della → Della).
+  - pos: noun | verb | adjective | adverb | pronoun | preposition | conjunction | interjection | determiner | numeral |
+    phrasal_verb | idiom | phrase.
+  - translation: <%= native.name %> meaning in THIS sentence, short, in the form that fits the <%= native.name %> translation.
+    lemma_translation: dictionary meaning of the lemma in <%= native.name %> (omit if the same).
+  - cefr: A1–C1 estimate of the lemma.
+  - note: ONLY for target words, phrasal verbs, idioms and tricky grammar: one short <%= native.name %> sentence.
+- No romanization, breakdown or politeness fields.
+
+# Example
+Text: Oh no! I mixed up the orders!
+{"tokens": [
+ {"surface": "Oh no", "lemma": "oh no", "pos": "interjection", "translation": "о нет", "cefr": "A1"},
+ {"surface": "I", "lemma": "I", "pos": "pronoun", "translation": "я", "cefr": "A1"},
+ {"surface": "mixed up", "lemma": "mix up", "pos": "phrasal_verb", "translation": "перепутала", "lemma_translation": "перепутать", "cefr": "B1",
+  "note": "Mix up — перепутать: I mixed up the orders = я перепутала заказы."},
+ {"surface": "the", "lemma": "the", "pos": "determiner", "translation": "(определённый артикль)", "cefr": "A1"},
+ {"surface": "orders", "lemma": "order", "pos": "noun", "translation": "заказы", "lemma_translation": "заказ", "cefr": "A2"}
+]}

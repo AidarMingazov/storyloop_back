@@ -44,3 +44,22 @@ module ScriptTestHelper
     } }
   end
 end
+
+# Model answers for the word markup step: one token per word.
+module TokensTestHelper
+  def bubble_id(bubble) = "p#{bubble.panel.position + 1}b#{bubble.position + 1}"
+
+  def ko_tokens(text)
+    text.scan(Ai::TokenCheck::WORD).map do |word|
+      { "surface" => word, "lemma" => word, "pos" => "noun", "translation" => "word", "romanization" => "mal", "cefr" => "A1" }
+    end
+  end
+
+  def en_tokens(text)
+    text.scan(Ai::TokenCheck::WORD).map { |word| { "surface" => word, "lemma" => word.downcase, "pos" => "noun", "translation" => "слово" } }
+  end
+
+  def markup_answer(bubbles, &tokens)
+    { "bubbles" => bubbles.map { |b| { "id" => bubble_id(b), "tokens" => tokens.call(b.text) } } }
+  end
+end

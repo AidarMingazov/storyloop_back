@@ -98,6 +98,17 @@ namespace :ai do
     puts "#{series.slug} ##{episode.number}: placed #{Ai::Steps::Layout.call(episode, force: ENV['FORCE'].present?)} bubbles"
   end
 
+  desc "Step 4 \"Word markup\": SERIES=golden-axe NUMBER=1 — tokens for every bubble (~$0.01, ~50 s per 20 bubbles)"
+  task tokens: :environment do
+    series = Series.find_by!(slug: ENV.fetch("SERIES") { abort "SERIES=<slug> is required" })
+    episode = series.episodes.find_by!(number: ENV.fetch("NUMBER") { abort "NUMBER=<episode number> is required" })
+    summary = Ai::Steps::Tokens.call(episode)
+    log = episode.generation_logs.where(step: "tokens").order(:id).last
+    puts "#{series.slug} ##{episode.number}: #{summary['tokens']} tokens, #{log.model}, #{log.duration_ms} ms, " \
+         "$#{format('%.4f', log.cost_usd)}, #{log.metadata['calls']} calls"
+    summary["unresolved"].each { |id, problems| puts "unresolved #{id}: #{problems.join('; ')}" }
+  end
+
   desc "Generate character sheets with the image model (~$0.04 each): SERIES=golden-axe [CHARACTERS=woodcutter,spirit] " \
        "[FORCE=1 to redo existing sheets]"
   task sheets: :environment do
