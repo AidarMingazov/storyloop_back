@@ -75,4 +75,29 @@ class UserStoriesTest < ApplicationSystemTestCase
     assert_equal %w[story_created story_ready share_opened story_published story_reported],
                  tracked_events & %w[story_created story_ready share_opened story_published story_reported]
   end
+
+  test "story by voice: the recording becomes text in the idea field" do
+    users(:one).update!(language_pair: language_pairs(:en_ru), onboarded_at: Time.current) # the form in Russian
+    sign_in users(:one)
+    visit new_story_path
+    find("label", text: "Своя идея").click
+    fill_in "story_prompt_idea", with: "Cats."
+
+    # Docker serves the app over plain http on an IP, where browsers hide the microphone API: a test tone stands in.
+    execute_script <<~JS
+      const tone = () => { const ctx = new AudioContext(); const osc = ctx.createOscillator(); const out = ctx.createMediaStreamDestination();
+                           osc.connect(out); osc.start(); return out.stream }
+      Object.defineProperty(navigator, "mediaDevices", { value: { getUserMedia: async () => tone() }, configurable: true })
+      document.getElementById("voice-input").hidden = false
+    JS
+    find("#voice-input").click
+    assert_selector "#voice-input[aria-pressed=true]"
+    sleep 1.5 # record a moment of the tone
+    find("#voice-input").click
+
+    assert_field "story_prompt_idea", with: "Cats. #{Ai::Stt::Fake::DEFAULT_TEXT}"
+    assert_selector "#voice-input[aria-pressed=false]:not([disabled])"
+    log = GenerationLog.where(step: "stt").sole
+    assert_operator log.metadata["bytes"], :>, 30_000, "about 1.5 s of 16 kHz WAV"
+  end
 end

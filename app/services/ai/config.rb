@@ -26,11 +26,13 @@ module Ai
     end
 
     # credentials ai.<provider>_api_key, else ENV[<env>] (dev: storyloop_back/.env via compose env_file).
+    # key_of: another provider's key (openrouter_audio uses the openrouter key).
     def api_key(provider_name)
       settings = provider(provider_name)
-      key = Rails.application.credentials.dig(:ai, :"#{provider_name}_api_key").presence
+      key_name = settings["key_of"] || provider_name
+      key = Rails.application.credentials.dig(:ai, :"#{key_name}_api_key").presence
       key ||= ENV[settings["env"]].presence if settings["env"]
-      key || raise(ConfigError, "no API key for #{provider_name}: credentials ai.#{provider_name}_api_key or ENV #{settings['env']}")
+      key || raise(ConfigError, "no API key for #{provider_name}: credentials ai.#{key_name}_api_key or ENV #{settings['env']}")
     end
 
     def price(provider_name, model)

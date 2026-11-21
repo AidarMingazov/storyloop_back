@@ -58,6 +58,11 @@ en:
       idea: Idea
       idea_placeholder: "For example: a cat detective looks for a missing cake at a wedding"
       voice: Dictate
+      voice_stop: "Done"
+      voice_busy: "Transcribing…"
+      voice_failed: "Couldn't transcribe it — try again or type it."
+      voice_denied: "No microphone access — allow it in the browser."
+      voice_hint: "Up to 90 seconds, in any language. You can edit the text."
       soon: soon
       text: Your text
       text_placeholder: Paste a story, a dialogue or a note — AI adapts it to your level

@@ -28,6 +28,7 @@ Rails.application.routes.draw do
     resources :shares, only: :create   # story_shared { channel }
     resources :reports, only: :create  # "Report"
   end
+  post "stories/transcription", to: "story_transcriptions#create", as: :story_transcription # "story by voice" (7.12)
   resources :stories, only: %i[index new create show update destroy] do
     post :reset_link, on: :member
   end

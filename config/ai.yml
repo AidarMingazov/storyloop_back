@@ -23,7 +23,8 @@ shared:
       model: speech-2.8-turbo
       # characters without a voice, narration without series.narrator_voice, dictionary forms of words
       voices: { ko: Korean_CalmLady, en: English_CalmWoman }
-    stt: { provider: fake } # 7.12: provider not chosen yet
+    # "story by voice" (7.12): a multimodal model writes down a short WAV from the browser (~$0.001 per minute)
+    stt: { provider: openrouter_audio, model: google/gemini-3.8-flash }
     # user stories (7.6): the brief before generation and the finished story; cheap and quick, JSON verdict
     moderation:
       provider: openrouter
@@ -51,6 +52,14 @@ shared:
       env: OPENROUTER_API_KEY
       reports_cost: true # usage.cost in the response; OpenRouter reserves credits for max_tokens
       timeout: 300
+    openrouter_audio: # speech-to-text through an OpenRouter chat model with audio input; the openrouter key
+      kind: stt
+      adapter: Ai::Stt::LlmAudio
+      base_url: https://openrouter.ai/api/v1
+      env: OPENROUTER_API_KEY
+      key_of: openrouter
+      reports_cost: true
+      timeout: 120
     seedream:
       kind: image
       adapter: Ai::Image::Seedream

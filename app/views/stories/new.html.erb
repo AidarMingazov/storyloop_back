@@ -37,14 +37,20 @@
     </div>
   </fieldset>
 
-  <div class="grid gap-2" data-story-form-target="section" data-modes="idea">
+  <div class="grid gap-2" data-story-form-target="section" data-modes="idea"
+       data-controller="voice-input" data-voice-input-url-value="<%= story_transcription_path %>"
+       data-voice-input-start-value="<%= t("stories.new.voice") %>" data-voice-input-stop-value="<%= t("stories.new.voice_stop") %>"
+       data-voice-input-busy-value="<%= t("stories.new.voice_busy") %>" data-voice-input-failed-value="<%= t("stories.new.voice_failed") %>"
+       data-voice-input-denied-value="<%= t("stories.new.voice_denied") %>">
     <%= form.label :prompt, t("stories.new.idea"), class: "label", for: "story_prompt_idea" %>
     <%= form.text_area :prompt, id: "story_prompt_idea", rows: 4, maxlength: StoryRequest::PROMPT_LIMITS["idea"],
                        placeholder: t("stories.new.idea_placeholder"), class: "input min-h-28 py-2",
-                       data: { story_form_target: "prompt" } %>
-    <button type="button" class="btn-secondary btn-sm w-fit" disabled title="<%= t("stories.new.soon") %>">
-      🎙 <%= t("stories.new.voice") %> · <%= t("stories.new.soon") %>
-    </button>
+                       data: { story_form_target: "prompt", voice_input_target: "field" } %>
+    <div class="flex flex-wrap items-center gap-3">
+      <button type="button" class="btn-secondary btn-sm w-fit" id="voice-input" aria-pressed="false"
+              data-voice-input-target="button" data-action="voice-input#toggle">🎙 <%= t("stories.new.voice") %></button>
+      <span class="text-xs text-muted" data-voice-input-target="status" aria-live="polite"><%= t("stories.new.voice_hint") %></span>
+    </div>
   </div>
 
   <div class="grid gap-2" data-story-form-target="section" data-modes="text">

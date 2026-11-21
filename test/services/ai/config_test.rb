@@ -25,7 +25,10 @@ class Ai::ConfigTest < ActiveSupport::TestCase
       assert_instance_of Ai::Image::Seedream, Ai.image(:images)
       assert_equal "seedream-5-0-lite-260128", Ai.image(:photo_sheets).model
       assert_instance_of Ai::Tts::Minimax, Ai.tts(:audio)
-      assert_instance_of Ai::Stt::Fake, Ai.stt(:stt) # no provider chosen yet
+      stt = Ai.stt(:stt)
+      assert_instance_of Ai::Stt::LlmAudio, stt
+      assert_equal [ "openrouter_audio", "google/gemini-3.8-flash" ], [ stt.provider, stt.model ]
+      assert_equal [ "openrouter", "anthropic/claude-haiku-5.5" ], Ai.llm(:moderation).then { [ _1.provider, _1.model ] }
     end
   end
 
