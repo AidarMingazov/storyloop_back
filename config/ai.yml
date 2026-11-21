@@ -6,7 +6,10 @@
 # force_provider: every step uses this provider (tests use the fakes). AI_LIVE=1 ignores it.
 shared:
   steps:
-    script: { provider: deepseek, model: deepseek-flash }
+    script:
+      provider: deepseek
+      model: deepseek-flash
+      fallback: { provider: openrouter, model: anthropic/claude-haiku-5.5 }
     tokens:
       provider: openrouter
       model: anthropic/claude-haiku-5.5

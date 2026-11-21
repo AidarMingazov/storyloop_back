@@ -1,0 +1,13 @@
+- Korean text: natural modern spoken Korean, short lines (max ~25 Hangul characters per bubble, one idea per bubble).
+<% if %w[A1 A2].include?(cefr) -%>
+- Level <%= cefr %>: high-frequency vocabulary, simple grammar (-아요/어요, -았/었어요, -고 싶다, -(으)ㄹ까요, -지 마세요, -네요, -(으)세요).
+<% else -%>
+- Level <%= cefr %>: everyday vocabulary and grammar of this level, used naturally (no explanations inside the story).
+<% end -%>
+- "target_words": Korean dictionary forms (verbs and adjectives end in 다). Each target word appears at least twice across the episode.
+- Speech levels: a character marked "always speaks …" keeps exactly that level in every line (casual 반말 / polite 해요체 /
+  formal 합쇼체) — never mix levels in one character's lines (wrong: "나무꾼아, 왜 울어요?"). Characters without a level:
+  polite 해요체 between coworkers, to strangers and elders; casual 반말 between close friends and in thoughts.
+- Requests and orders: -(으)세요 / -아/어 주세요 in 해요체, -아/어 in 반말 — never a plain statement as an order (wrong: "남아요", right: "남아 주세요").
+- Narration: simple 해요체 statements ("옛날에 나무꾼이 살았어요.").
+- No Latin letters, digits or brand names inside the Korean text: write numbers in Hangul.

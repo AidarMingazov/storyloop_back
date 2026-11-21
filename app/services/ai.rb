@@ -29,6 +29,16 @@ module Ai
   # The provider's safety filter rejected the input or the output (photos, prompts, text).
   class ContentRejected < ProviderError; end
 
+  # The model kept returning output that fails our checks (JSON Schema, story/language rules) after all attempts.
+  class InvalidOutput < Error
+    attr_reader :problems
+
+    def initialize(message, problems: [])
+      @problems = problems
+      super("#{message}:\n  #{problems.first(20).join("\n  ")}")
+    end
+  end
+
   # Token / unit counters of one call. Every adapter fills what applies.
   Usage = Data.define(:input_tokens, :output_tokens, :cached_tokens, :reasoning_tokens, :images, :characters) do
     def initialize(input_tokens: 0, output_tokens: 0, cached_tokens: 0, reasoning_tokens: 0, images: 0, characters: 0)

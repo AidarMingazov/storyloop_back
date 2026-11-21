@@ -1,0 +1,55 @@
+# Classic short story (public domain: O. Henry, 1905) retold for A2 learners of English — the en-ru counterpart of
+# folk-golden-axe: learners may already know the plot. Same format as office-romance.yml.
+# Load into the DB: bin/rails "ai:series:load[classic-gift-of-the-magi]"; sheets: bin/rails ai:sheets SERIES=gift-of-the-magi
+language_pair: en-ru
+series:
+  slug: gift-of-the-magi
+  title: "The Gift of the Magi"
+  genre: classic short story
+  cefr_level: A2
+  tone: >-
+    Retell O. Henry's "The Gift of the Magi" faithfully and simply, warm and a little bittersweet, like a graphic novel
+    for adults learning English. Two episodes: 1) Della has only $1.87, sells her long hair and buys a watch chain;
+    it ends with Della waiting for Jim at the door. 2) Jim comes home — the twist (he sold his watch to buy combs for
+    her hair) and the moral, love is the best gift; it ends with the moral instead of a cliffhanger.
+  description: >-
+    New York, 1905. Della has one dollar and eighty-seven cents to buy a Christmas present for her husband Jim.
+    They have only two treasures: her beautiful long hair and Jim's gold watch.
+  # art_style: drawing style only (for character sheets). No palette here: listed colors leak into the outfits
+  # (a coat in three colors) and come out as color swatches on the sheet.
+  art_style: >-
+    Classic American graphic novel style: warm ink lines, soft gouache coloring, gentle film grain, expressive but
+    realistic faces.
+  style_prompt: >-
+    Classic American graphic novel style: warm ink lines, soft gouache colors, gentle film grain, muted palette
+    (burgundy, cream, deep green, gold); New York in 1905 at Christmas: a small shabby rented flat with a gas lamp,
+    snowy streets, shop windows with garlands; warm lamplight inside, cold blue evening outside.
+    Vertical webtoon panel composition. No text, letters, numbers, signs, captions or speech bubbles anywhere in the image.
+  narrator_voice: English_CaptivatingStoryteller
+  characters:
+    - key: della
+      name: Della
+      protagonist: true
+      voice: English_SentimentalLady
+      sheet: characters/della.jpeg
+      appearance_prompt: >-
+        Young American woman of 1905, about 22, slim, pale face with big gray eyes, very long wavy chestnut-brown hair
+        pinned up in a large soft bun, no glasses; plain worn brown wool dress with a high collar and long sleeves, all brown.
+        Loving, quick, emotional.
+    - key: jim
+      name: Jim
+      voice: English_DecentYoungMan
+      sheet: characters/jim.jpeg
+      appearance_prompt: >-
+        Young American man of 1905, about 22, thin, serious kind face, short neat dark hair, clean-shaven with no stubble,
+        a plain old gray overcoat (gray everywhere) too thin for winter, worn white shirt and dark vest, one old gold
+        pocket watch in the vest pocket on a cheap leather strap.
+        Quiet, calm, loving.
+    - key: sofronie
+      name: Madame Sofronie
+      voice: English_AssertiveQueen
+      sheet: characters/sofronie.jpeg
+      appearance_prompt: >-
+        Large middle-aged woman of 1905, about 50, very pale powdered face, cold sharp eyes, tight gray bun, plain black
+        dress with a long black skirt (black everywhere) and a high white lace collar, a measuring tape around her neck;
+        owner of a hair-goods shop. Businesslike, cold.

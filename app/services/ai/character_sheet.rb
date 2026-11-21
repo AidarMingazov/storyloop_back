@@ -22,7 +22,7 @@ module Ai
         "full body front view, full body three-quarter view, head-and-shoulders close-up with a neutral face, " \
         "head-and-shoulders close-up smiling.",
         "Identical person in every view, the close-ups included: same face, hairstyle, facial hair, headwear, " \
-        "glasses and accessories, same outfit with the same colors; even studio lighting, no props, no other people.",
+        "accessories, same outfit with the same colors; even studio lighting, no props, no other people.",
         "No text, labels, names, numbers or color swatches."
       ].compact_blank.join("\n")
     end

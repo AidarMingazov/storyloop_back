@@ -61,6 +61,36 @@ namespace :ai do
     end
   end
 
+  desc "Step 1 \"Scenario\": SERIES=golden-axe [NUMBER=next] [FORMAT=webtoon|chat] [PANELS=10] [BRIEF=\"…\"] " \
+       "[WORDS=\"a, b\"] → draft episode with placeholder pictures (~$0.01, 30–70 s)"
+  task script: :environment do
+    series = Series.find_by!(slug: ENV.fetch("SERIES") { abort "SERIES=<slug> is required" })
+    step = Ai::Steps::Script.new(series, number: ENV["NUMBER"], format: ENV.fetch("FORMAT", "webtoon"), panels: ENV["PANELS"],
+                                         brief: ENV["BRIEF"], target_words: ENV.fetch("WORDS", "").split(","))
+    episode = step.call
+    log = episode.generation_logs.where(step: "script").order(:id).last
+    puts "#{series.slug} ##{episode.number} «#{episode.title}» [#{episode.format}, #{episode.status}]: " \
+         "#{episode.panels.size} panels, #{episode.bubbles.size} bubbles, target words: #{episode.target_words.join(', ')}"
+    puts format("attempts %d, %s, %d ms, $%.4f", step.attempts, log.model, log.duration_ms, log.cost_usd)
+    step.warnings.each { |warning| puts "warning: #{warning}" }
+  rescue Ai::InvalidOutput, Ai::ProviderError => e
+    abort "FAILED #{e.message}"
+  end
+
+  desc "Step 2 \"Images\": SERIES=golden-axe NUMBER=1 [PANELS=2,5 to redraw these] — panels that still have " \
+       "placeholders, 3 at a time (~$0.04 and 10–40 s each)"
+  task images: :environment do
+    series = Series.find_by!(slug: ENV.fetch("SERIES") { abort "SERIES=<slug> is required" })
+    episode = series.episodes.find_by!(number: ENV.fetch("NUMBER") { abort "NUMBER=<episode number> is required" })
+    positions = ENV.fetch("PANELS", "").split(",").map { |n| n.to_i - 1 }
+    panels = episode.panels.where(position: positions).to_a if positions.any?
+    result = Ai::Steps::Images.call(episode, panels:)
+    logs = episode.generation_logs.where(step: "images").order(:id).last(result.drawn.size + result.failed.size)
+    puts "#{series.slug} ##{episode.number}: drawn #{result.drawn.size}, failed #{result.failed.size}, " \
+         "$#{format('%.3f', logs.sum(&:cost_usd))}, longest #{logs.filter_map(&:duration_ms).max.to_i} ms"
+    result.failed.each { |panel, error| puts "panel #{panel.position + 1}: FAILED #{error.message[0, 200]}" }
+  end
+
   desc "Generate character sheets with the image model (~$0.04 each): SERIES=golden-axe [CHARACTERS=woodcutter,spirit] " \
        "[FORCE=1 to redo existing sheets]"
   task sheets: :environment do

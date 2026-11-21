@@ -1,0 +1,14 @@
+- English text: natural modern spoken English, short lines (max 12 words per bubble, one idea per bubble); contractions
+  (I'm, don't), short answers and interjections like real people.
+<% if %w[A1 A2].include?(cefr) -%>
+- Level <%= cefr %>: high-frequency vocabulary, simple grammar (present simple and continuous, past simple, going to, can,
+  have to, will for offers and promises); common phrasal verbs and fixed expressions are welcome.
+<% else -%>
+- Level <%= cefr %>: everyday vocabulary and grammar of this level, used naturally (no explanations inside the story).
+<% end -%>
+- "target_words": dictionary forms; phrasal verbs and fixed expressions count as one ("run into", "by the way", "embarrassed").
+  Each target word or expression appears at least twice across the episode.
+- No <%= native.name %> words inside the English text.
+<% if native.code == "ru" -%>
+- Russian translation: «ты» between friends, family and children, «вы» to strangers, the boss and older people.
+<% end -%>
