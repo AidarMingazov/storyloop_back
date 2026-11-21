@@ -6,6 +6,11 @@
     <div class="mt-3 flex flex-wrap gap-3">
       <%= link_to t("stories.status_page.read"), shared_episode_path(episode.share_token), class: "btn-primary", id: "read-story" %>
     </div>
+  <% elsif story_request.failed? && story_request.rejection %>
+    <p class="font-semibold text-red-800" id="story-rejected"><%= t("stories.status_page.rejected") %></p>
+    <p class="text-sm mt-1"><%= t("stories.rejection.#{story_request.rejection}") %></p>
+    <p class="text-sm text-muted mt-1"><%= t("stories.status_page.rejected_hint") %></p>
+    <%= link_to t("stories.index.create"), new_story_path, class: "btn-secondary mt-3" %>
   <% elsif story_request.failed? %>
     <p class="font-semibold text-red-800"><%= t("stories.status_page.failed") %></p>
     <p class="text-sm text-muted mt-1"><%= t("stories.status_page.failed_hint") %></p>

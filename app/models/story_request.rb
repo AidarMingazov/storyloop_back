@@ -35,7 +35,7 @@ class StoryRequest < ApplicationRecord
   def theme_title = Stories::Themes.title(theme)
 
   def start!
-    update!(status: :running, started_at: Time.current, error: nil)
+    update!(status: :running, started_at: Time.current, error: nil, rejection: nil)
     episode.generating!
   end
 
@@ -45,10 +45,11 @@ class StoryRequest < ApplicationRecord
     update!(status: :succeeded, step: nil, finished_at: Time.current)
   end
 
-  # Must work whatever state the records are in: it is the job's last word.
-  def fail!(error)
+  # Must work whatever state the records are in: it is the job's last word. rejection: the rule category when
+  # moderation stopped the story (Stories::REJECTIONS) — the status page names it.
+  def fail!(error, rejection: nil)
     transaction do
-      assign_attributes(status: :failed, error: error.to_s.truncate(1000), finished_at: Time.current)
+      assign_attributes(status: :failed, error: error.to_s.truncate(1000), rejection:, finished_at: Time.current)
       save!(validate: false)
       episode.update_column(:status, "failed")
     end

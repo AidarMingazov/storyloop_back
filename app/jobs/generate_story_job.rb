@@ -1,7 +1,7 @@
-# Generates one user story in the background (7.3): runs the configured generator (fake today, the AI
-# pipeline after wave 6), checks the result with the moderator, and moves the request along — the
-# status page follows over Turbo Streams. Lower priority than catalog work (Solid Queue runs lower
-# numbers first).
+# Generates one user story in the background (7.3): the moderator checks the brief, the configured generator
+# (fake or the AI pipeline, 7.4) makes the story, the moderator checks the result (7.6), and the request moves
+# along — the status page follows over Turbo Streams. A rejected or failed story does not count toward the free
+# limit. Lower priority than catalog work (Solid Queue runs lower numbers first).
 class GenerateStoryJob < ApplicationJob
   queue_as :stories
   queue_with_priority 10
@@ -11,10 +11,10 @@ class GenerateStoryJob < ApplicationJob
     return if request.succeeded? || request.failed?
 
     request.start!
+    Stories.moderator.check(request.prompt).raise_if_rejected! if request.prompt.present?
     episode = Stories.generator.call(request)
     request.series.reload # the generator saved titles and status through its own records
-    verdict = Stories.moderator.check(text_of(episode))
-    raise Stories::Rejected, verdict.reason unless verdict.ok?
+    Stories.moderator.check(text_of(episode), episode:).raise_if_rejected!
 
     request.series.approved! if request.series.pending?
     request.succeed!
@@ -29,8 +29,8 @@ class GenerateStoryJob < ApplicationJob
 
   private
     def mark_failed(request, error, rejected:)
-      request.fail!(rejected ? error.message : "#{error.class}: #{error.message}")
-      track(request, "story_failed", rejected: rejected)
+      request.fail!(rejected ? error.message : "#{error.class}: #{error.message}", rejection: (error.category if rejected))
+      track(request, "story_failed", rejected: rejected, category: (error.category if rejected))
     end
 
     def text_of(episode)

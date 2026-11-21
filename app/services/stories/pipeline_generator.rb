@@ -45,7 +45,7 @@ module Stories
         IMAGE_ATTEMPTS.times do
           result = Ai::Steps::Images.call(episode, panels:)
           rejected = result.failed.values.find { |error| error.is_a?(Ai::ContentRejected) }
-          raise Rejected, "image rejected by the provider: #{rejected.message}" if rejected
+          raise Rejected.new("image rejected by the provider: #{rejected.message}", category: "images") if rejected
           return if result.ok?
 
           panels = result.failed.keys

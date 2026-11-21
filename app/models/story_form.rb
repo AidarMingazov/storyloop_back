@@ -1,5 +1,5 @@
-# "Create a story" (7.3): validates the brief, checks the text with the moderator, and creates the
-# series + episode #1 (status generating) + StoryRequest in one go. The job does the rest.
+# "Create a story" (7.3): validates the brief and creates the series + episode #1 (status generating) +
+# StoryRequest in one go. The job does the rest, moderation of the brief included (7.6).
 class StoryForm
   include ActiveModel::Model
   include ActiveModel::Attributes
@@ -31,7 +31,7 @@ class StoryForm
   validates :visibility, inclusion: { in: VISIBILITIES }
   validates :display_name, length: { maximum: 40 }
   validates :rules_accepted, acceptance: { accept: true }
-  validate :pair_active, :prompt_fits, :text_file_readable, :prompt_allowed
+  validate :pair_active, :prompt_fits, :text_file_readable
 
   def self.model_name = ActiveModel::Name.new(self, nil, "Story")
 
@@ -90,11 +90,5 @@ class StoryForm
     def prompt_fits
       limit = StoryRequest::PROMPT_LIMITS[mode]
       errors.add(:prompt, :too_long, count: limit) if limit && prompt_text.length > limit
-    end
-
-    # Text moderation before anything is generated (7.6).
-    def prompt_allowed
-      return if prompt_text.blank? || errors.include?(:prompt)
-      errors.add(:prompt, :rejected) unless Stories.moderator.check(prompt_text).ok?
     end
 end

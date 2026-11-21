@@ -105,6 +105,18 @@ en:
       read: Read
       failed: We couldn't create the story
       failed_hint: This attempt doesn't count toward your limit. Try again — maybe with another theme.
+      rejected: "The story didn't pass the check"
+      rejected_hint: "This attempt doesn't count toward your limit. Change the idea or the text and try again."
+    rejection:
+      sexual: "It has explicit content."
+      violence: "It has cruelty or violence."
+      hate: "It has insults or hate against people."
+      self_harm: "It touches on self-harm."
+      personal: "It has personal data or a real person in a hurtful context."
+      copyright: "It looks like a copy of someone else's work — retell it in your own words."
+      illegal: "It has instructions for something illegal."
+      images: "Its pictures didn't pass the safety filter."
+      other: "It breaks the story rules."
     show:
       link: Story link
       reset_link: New link
@@ -181,7 +193,6 @@ en:
             prompt:
               blank: Write an idea or paste your text
               too_long: "The text is too long: up to %{count} characters"
-              rejected: This text can't be used — it breaks the story rules
             text_file:
               too_big: The file is too big — up to 20 KB
               invalid: Please upload a .txt file

@@ -1,11 +1,11 @@
 module Stories
-  # Stand-in for the text classifier (7.6, wave 6). Lets everything through except an explicit marker,
-  # so tests and demos can see a rejection.
+  # Offline stand-in for the AI classifier (Stories::AiModerator): lets everything through except an explicit
+  # marker, so tests and demos can see a rejection.
   class FakeModerator
     MARKER = "[[blocked]]"
 
-    def check(text)
-      text.to_s.include?(MARKER) ? Verdict.rejected("fake moderator: marker found") : Verdict.ok
+    def check(text, episode: nil)
+      text.to_s.include?(MARKER) ? Verdict.rejected("fake moderator: marker found", category: "other") : Verdict.ok
     end
   end
 end

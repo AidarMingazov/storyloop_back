@@ -16,15 +16,11 @@ class StoryLimitsTest < ActiveSupport::TestCase
     assert_equal Stories.free_generations, user.story_generations_left
   end
 
-  test "the form checks the brief and the moderator before anything is created" do
+  test "the form checks the brief before anything is created (moderation runs in the job)" do
     user = users(:one)
     form = StoryForm.new(user: user, mode: "idea", prompt: "", pair: "en-ru")
     assert_nil form.submit
     assert_equal [ "Напишите идею или вставьте текст", "Нужно согласиться с правилами историй" ], form.errors.map(&:message)
-
-    form = StoryForm.new(user: user, mode: "idea", prompt: "a heist #{Stories::FakeModerator::MARKER}", pair: "en-ru", rules_accepted: "1")
-    assert_nil form.submit
-    assert_includes form.errors.map(&:message), "Этот текст нельзя использовать — он нарушает правила историй"
 
     form = StoryForm.new(user: user, mode: "text", prompt: "x" * 3001, pair: "en-ru", rules_accepted: "1")
     assert_nil form.submit

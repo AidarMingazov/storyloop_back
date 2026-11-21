@@ -45,7 +45,20 @@ class GenerateStoryJobTest < ActiveJob::TestCase
     assert_match "marker", request.error
     assert_not StoryAccess.new(request.episode, users(:guest), via_link: true).readable?
     assert_equal Stories.free_generations, users(:one).story_generations_left
-    assert_equal true, tracked("story_failed").sole[:properties][:rejected]
+    assert_equal [ true, "other" ], tracked("story_failed").sole[:properties].values_at(:rejected, :category)
+    assert_equal "other", request.rejection
+  end
+
+  test "a brief the moderator rejects stops before anything is generated; the status page names the rule" do
+    request = submit(prompt: "A story #{Stories::FakeModerator::MARKER}")
+    GenerateStoryJob.perform_now(request)
+
+    assert request.reload.failed?
+    assert_equal "other", request.rejection
+    assert_empty request.episode.reload.panels
+    html = ApplicationController.render(partial: "stories/status", locals: { story_request: request })
+    assert_includes html, "story-rejected"
+    assert_includes html, I18n.t("stories.rejection.other")
   end
 
   test "an unexpected error fails the request with the reason for the admin" do

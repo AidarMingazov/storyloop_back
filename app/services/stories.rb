@@ -13,7 +13,7 @@ module Stories
     GENERATORS.fetch(config.generator).constantize.new
   end
 
-  # #check(text) → Stories::Verdict
+  # #check(text, episode: nil) → Stories::Verdict
   def moderator
     MODERATORS.fetch(config.moderator).constantize.new
   end
@@ -21,12 +21,24 @@ module Stories
   def free_generations = config.free_generations
   def reports_to_hide = config.reports_to_hide
 
-  # Raised by a generator or the job when the story must not be made (moderation, limits).
-  class Rejected < StandardError; end
+  # Rule categories a story can break (moderation, 7.6); the status page names the category.
+  REJECTIONS = %w[sexual violence hate self_harm personal copyright illegal images other].freeze
 
-  Verdict = Data.define(:ok, :reason) do
-    def self.ok = new(ok: true, reason: nil)
-    def self.rejected(reason) = new(ok: false, reason: reason)
+  # Raised by a generator or the job when the story must not be made (moderation).
+  class Rejected < StandardError
+    attr_reader :category
+
+    def initialize(message = nil, category: "other")
+      @category = REJECTIONS.include?(category.to_s) ? category.to_s : "other"
+      super(message)
+    end
+  end
+
+  # #check(text, episode: nil) of a moderator → Verdict
+  Verdict = Data.define(:ok, :reason, :category) do
+    def self.ok = new(ok: true, reason: nil, category: nil)
+    def self.rejected(reason, category: "other") = new(ok: false, reason:, category:)
     def ok? = ok
+    def raise_if_rejected! = ok? || raise(Rejected.new(reason, category:))
   end
 end
