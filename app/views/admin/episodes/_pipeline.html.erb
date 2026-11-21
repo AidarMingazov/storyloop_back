@@ -24,11 +24,12 @@
               <% if row.error %><div class="text-muted mt-1"><%= row.error.truncate(300) %></div><% end %>
             </td>
             <td>
-              <% unless episode.generating? || (row.step == "images" && episode.format_chat?) || (row.step == "layout" && episode.format_chat?) %>
+              <% unless episode.generating? || (row.step.in?(%w[scene images layout]) && episode.format_chat?) %>
                 <%= button_to "Заново", rerun_admin_episode_path(episode, step: row.step), class: "btn-secondary btn-sm",
                       disabled: row.step == "script" && episode.published?,
                       form: { data: { turbo_confirm: {
                         "script" => "Новый сценарий заменит кадры, пузыри и токены, затем пройдут все шаги. Продолжить?",
+                        "scene" => "Заново определить сцену всех кадров (~$0.001)? Теги, поправленные вручную, будут потеряны.",
                         "images" => "Перерисовать все кадры (~$0.04 за кадр)?",
                         "layout" => "Расставить все пузыри заново? Ручные позиции будут потеряны.",
                         "tokens" => "Разметить все реплики заново? Ручные правки токенов будут потеряны.",

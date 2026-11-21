@@ -21,6 +21,9 @@ class Stories::TranslationTest < ActiveSupport::TestCase
 
   test "a user story in another pair: same author and pictures, the text rewritten, words and voices again" do
     story = create_story(visibility: "public")
+    scene = { "v" => 1, "setting" => "interior", "place" => "cafe", "time" => "evening", "weather" => "rain", "light" => "warm",
+              "mood" => "romantic", "shot" => "medium", "focus" => "mia", "elements" => [ "steam" ] }
+    story.panels.first.update!(scene:)
     Ai::Llm::Fake.respond_with(translation(panels: 2), translation, markup) # the first answer drops a panel: fed back
 
     translated = Stories::Translation.call(story, ko_pair)
@@ -30,6 +33,8 @@ class Stories::TranslationTest < ActiveSupport::TestCase
     assert_equal [ story.series.author, "public", "pending", "ko-en" ], [ series.author, series.visibility, series.moderation_state, series.language_pair.code ]
     assert_equal [ story, 1, "카페에서 · At the Café", "카페에서 · At the Café" ], [ translated.origin_episode, translated.number, translated.title, series.title ]
     assert_equal story.panels.order(:position).map { |p| p.image.blob }, translated.panels.order(:position).map { |p| p.image.blob }, "the same pictures"
+    assert_equal [ scene, {}, {} ], translated.panels.order(:position).map(&:scene), "the same scene tags, no new call"
+    assert_not translated.generation_logs.exists?(step: "scene")
     assert_equal %w[leo mia], series.characters.order(:key).pluck(:key)
     assert_equal story.bubbles.map { |b| b.character&.key }, translated.bubbles.map { |b| b.character&.key }, "who says what is kept"
     assert_equal [ KO_TEXT ] * 3, translated.bubbles.map(&:text)

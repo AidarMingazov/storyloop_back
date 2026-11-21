@@ -7,7 +7,7 @@
 # Several calls in one block (retries with error feedback, one image per panel) add up. A raised error marks the
 # log failed and is re-raised.
 class GenerationLog < ApplicationRecord
-  STEPS = %w[script images layout tokens audio vision sheets stt markup_comparison moderation].freeze
+  STEPS = %w[script scene images layout tokens audio vision sheets stt markup_comparison moderation].freeze
 
   belongs_to :episode, optional: true
 

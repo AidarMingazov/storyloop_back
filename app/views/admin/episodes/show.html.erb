@@ -69,6 +69,11 @@
         <% if panel.image_prompt.present? %>
           <p class="text-xs text-muted mt-2 line-clamp-4" title="<%= panel.image_prompt %>"><%= panel.image_prompt %></p>
         <% end %>
+        <% if panel.scene.present? %>
+          <ul class="flex flex-wrap gap-1 mt-2" aria-label="Сцена" data-scene>
+            <% PanelScene.labels(panel.scene).each do |label| %><li class="badge"><%= label %></li><% end %>
+          </ul>
+        <% end %>
       </div>
 
       <div class="grid gap-4 content-start min-w-0">

@@ -71,6 +71,10 @@
             "cols": { "type": "integer", "enum": [1, 2], "description": "Manga: 2 = full page width, 1 = half width (two half panels sit side by side)" }
           }
         },
+        "scene": {
+          "type": "object",
+          "description": "Tags of what the panel shows, checked against config/schemas/scene.json (Ai::Steps::Scene writes them). A translated episode copies them"
+        },
         "bubbles": { "type": "array", "items": { "$ref": "#/$defs/bubble" } }
       }
     },

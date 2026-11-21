@@ -77,6 +77,33 @@ namespace :ai do
     abort "FAILED #{e.message}"
   end
 
+  desc "Step \"Scene\": tags of what each panel shows for the motion player (~$0.001 per episode). SERIES=golden-axe " \
+       "[NUMBER=1] for one series or episode; without SERIES every episode that has untagged panels. FORCE=1 retags"
+  task scene: :environment do
+    episodes = if ENV["SERIES"].present?
+      series = Series.find_by!(slug: ENV["SERIES"])
+      ENV["NUMBER"].present? ? [ series.episodes.find_by!(number: ENV["NUMBER"]) ] : series.episodes.to_a
+    else
+      untagged = Panel.where("scene = '{}'::jsonb").where.not(image_prompt: [ nil, "" ]).select(:episode_id)
+      Episode.where.not(format: "chat").where(id: untagged).includes(:series).order(:id).to_a
+    end
+    total = 0.to_d
+    episodes.each do |episode|
+      name = "#{episode.series.slug} ##{episode.number}"
+      started = GenerationLog.maximum(:id).to_i
+      summary = Ai::Steps::Scene.call(episode, force: ENV["FORCE"].present?)
+      log = episode.generation_logs.where(step: "scene").where("id > ?", started).last
+      next puts("#{name}: nothing to tag") unless log
+
+      total += log.cost_usd
+      puts format("%s: tagged %d, %s, %d ms, $%.4f", name, summary["tagged"], log.model, log.duration_ms, log.cost_usd)
+      summary["failed"].each { |panel, problems| puts "  panel #{panel}: #{problems.join('; ')}" }
+    rescue Ai::Error => e
+      puts "#{name}: FAILED #{e.message[0, 300]}"
+    end
+    puts format("%d episodes, $%.4f", episodes.size, total)
+  end
+
   desc "Step 2 \"Images\": SERIES=golden-axe NUMBER=1 [PANELS=2,5 to redraw these] — panels that still have " \
        "placeholders, 3 at a time (~$0.04 and 10–40 s each)"
   task images: :environment do

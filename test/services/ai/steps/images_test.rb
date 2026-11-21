@@ -33,6 +33,7 @@ class Ai::Steps::ImagesTest < ActiveSupport::TestCase
                    "Do not copy the sheet layout or its gray background.",
                    "Scene: Medium shot: Woodcutter by the pond, panel 1.",
                    "Keep the top 25% of the frame calm and uncluttered (sky, wall or ceiling) for speech bubbles.",
+                   "Keep faces and key details at least 10% away from the frame edges: the picture will be slowly zoomed and panned.",
                    "Single vertical panel, no panel borders, no text, no letters, no speech bubbles." ], first.prompt.lines(chomp: true)
 
     silent = Ai::Steps::PanelImage.new(@panels[1])

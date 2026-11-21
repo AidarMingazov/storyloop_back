@@ -49,6 +49,19 @@ class Episodes::ImporterTest < ActiveSupport::TestCase
     assert_equal 1, Episode.count
   end
 
+  test "imports scene tags of a panel and rejects tags outside config/schemas/scene.json" do
+    data = JSON.parse(json("episode_en.json"))
+    scene = { "v" => 1, "setting" => "interior", "place" => "cafe", "time" => "morning", "weather" => "clear",
+              "light" => "daylight", "mood" => "happy", "shot" => "medium", "focus" => "mia", "elements" => [] }
+    data["episode"]["panels"][0]["scene"] = scene
+
+    assert_equal scene, Episodes::Importer.call(data).panels.first.scene
+
+    data["episode"]["panels"][0]["scene"] = scene.merge("weather" => "drizzle")
+    error = assert_raises(Episodes::Importer::Invalid) { Episodes::Importer.call(data) }
+    assert_match "Scene weather: ", error.message
+  end
+
   test "rejects JSON that breaks the schema" do
     data = JSON.parse(json("episode_en.json"))
     data["episode"]["format"] = "comic"

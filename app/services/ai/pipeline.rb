@@ -7,9 +7,11 @@ module Ai
   #   Ai::Pipeline.generate(series, format: "webtoon", brief: "…")  # new episode, all steps
   #   Ai::Pipeline.rerun(episode, "tokens")                        # tokens again, then audio for new words
   module Pipeline
-    STEPS = %w[script images layout tokens audio].freeze
+    STEPS = %w[script scene images layout tokens audio].freeze
     # Steps that have to run again after a step is redone.
-    THEN = { "script" => %w[images layout tokens audio], "tokens" => %w[audio] }.freeze
+    THEN = { "script" => %w[scene images layout tokens audio], "tokens" => %w[audio] }.freeze
+    # The episode reads fine without them: a failure is logged (GenerationLog) and the run goes on.
+    OPTIONAL = %w[scene].freeze
 
     module_function
 
@@ -48,11 +50,16 @@ module Ai
 
     def run_step(episode, step, force:, bubbles:)
       case step
+      when "scene" then Steps::Scene.call(episode, force:)
       when "images" then Steps::Images.call(episode, panels: (episode.panels.to_a if force))
       when "layout" then Steps::Layout.call(episode, force:)
       when "tokens" then Steps::Tokens.call(episode, bubbles:)
       when "audio" then Steps::Audio.call(episode, force: force && bubbles.nil?)
       end
+    rescue Ai::Error => e
+      raise unless OPTIONAL.include?(step)
+
+      Rails.logger.warn("[ai] optional step #{step} of episode #{episode.id} failed, going on: #{e.class}: #{e.message.truncate(200)}")
     end
   end
 end

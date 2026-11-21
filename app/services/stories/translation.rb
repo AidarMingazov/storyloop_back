@@ -114,7 +114,9 @@ module Stories
       def panel_picture(panel)
         return {} if episode.format_chat?
 
-        { "image_prompt" => panel.image_prompt.presence || "Reused picture of panel #{panel.position + 1}.", "layout" => panel.layout.presence }.compact
+        # The scene tags do not depend on the language: the copy moves the same way as the original (wave M).
+        { "image_prompt" => panel.image_prompt.presence || "Reused picture of panel #{panel.position + 1}.", "layout" => panel.layout.presence,
+          "scene" => panel.scene.presence }.compact
       end
 
       def number(series) = series.source_user? ? 1 : episode.number

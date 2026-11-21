@@ -5,6 +5,7 @@ require_relative "../../test_helpers/script_test_helper"
 
 class Stories::PipelineGeneratorTest < ActiveSupport::TestCase
   include AiTestHelper
+  include SceneTestHelper
   include TokensTestHelper
   include ActiveJob::TestHelper
   include Turbo::Broadcastable::TestHelper
@@ -29,7 +30,7 @@ class Stories::PipelineGeneratorTest < ActiveSupport::TestCase
     } }
   end
 
-  # The script, then the markup of every bubble (Ai::Steps::Tokens asks for 10 bubbles at a time).
+  # The script, the scene tags, then the markup of every bubble (Ai::Steps::Tokens asks for 10 bubbles at a time).
   def script_and_markup(answer)
     ids = answer["episode"]["panels"].each_with_index.flat_map do |panel, p|
       panel["bubbles"].each_with_index.map { |bubble, b| [ "p#{p + 1}b#{b + 1}", bubble["text"] ] }
@@ -37,7 +38,7 @@ class Stories::PipelineGeneratorTest < ActiveSupport::TestCase
     markup = ids.each_slice(Ai::Steps::Tokens::CHUNK).map do |chunk|
       { "bubbles" => chunk.map { |id, text| { "id" => id, "tokens" => en_tokens(text) } } }
     end
-    Ai::Llm::Fake.respond_with(answer, *markup)
+    Ai::Llm::Fake.respond_with(answer, scene_answer(answer["episode"]["panels"].size), *markup)
   end
 
   test "the cast, a complete story from the brief, every pipeline step; the episode is published" do
@@ -57,7 +58,8 @@ class Stories::PipelineGeneratorTest < ActiveSupport::TestCase
     assert episode.bubbles.all?(&:box)
     assert episode.tokens.any?
     assert episode.bubbles.all? { |b| b.audio.attached? }
-    assert_equal %w[script] + %w[images] * 6 + %w[layout tokens audio], episode.generation_logs.order(:id).pluck(:step)
+    assert_equal %w[script scene] + %w[images] * 6 + %w[layout tokens audio], episode.generation_logs.order(:id).pluck(:step)
+    assert episode.panels.all? { |panel| panel.scene["mood"] == "calm" }, "scene tags inside the script phase"
 
     della = series.characters.find_by!(key: "della")
     assert_equal "Masha", della.name, "named after the brief"

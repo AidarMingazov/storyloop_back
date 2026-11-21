@@ -96,7 +96,8 @@ module Episodes
           panel = episode.panels.create!(
             position: panel_index,
             image_prompt: panel_attrs["image_prompt"],
-            layout: panel_attrs["layout"] || {}
+            layout: panel_attrs["layout"] || {},
+            scene: panel_attrs["scene"] || {}
           )
           attach_image(panel, panel_attrs, episode)
 

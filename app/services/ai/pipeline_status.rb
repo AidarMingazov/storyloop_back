@@ -2,7 +2,7 @@ module Ai
   # What the review screen shows per pipeline step, from the episode's GenerationLogs.
   class PipelineStatus
     Row = Data.define(:step, :status, :model, :cost_usd, :duration_ms, :notes, :error)
-    NAMES = { "script" => "Сценарий", "images" => "Картинки", "layout" => "Пузыри", "tokens" => "Разметка",
+    NAMES = { "script" => "Сценарий", "scene" => "Сцена", "images" => "Картинки", "layout" => "Пузыри", "tokens" => "Разметка",
               "audio" => "Озвучка" }.freeze
 
     def initialize(episode)
@@ -48,6 +48,9 @@ module Ai
         case step
         when "script"
           [ "попыток: #{meta['attempts']}", *Array(meta["warnings"]) ].compact.join(" · ") if meta["attempts"]
+        when "scene"
+          [ ("кадров с тегами: #{meta['tagged']}" if meta["tagged"]),
+            ("без тегов: #{meta['failed'].keys.join(', ')}" if meta["failed"].present?) ].compact.join(" · ")
         when "images"
           panels = @episode.panels.includes(image_attachment: :blob).to_a # fresh: steps attach in other threads
           "нарисовано #{panels.count { |panel| !panel.needs_image? }} из #{panels.size}" + (failed_panels.any? ? " · ошибок: #{failed_panels.size}" : "")

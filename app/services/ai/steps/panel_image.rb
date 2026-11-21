@@ -43,6 +43,8 @@ module Ai
            end),
           "Scene: #{@panel.image_prompt.to_s.squish}",
           ("Keep the top 25% of the frame calm and uncluttered (sky, wall or ceiling) for speech bubbles." if @panel.bubbles.any?),
+          # the motion player (wave M) zooms in by up to ~12% and pans: nothing important may sit at the edges
+          "Keep faces and key details at least 10% away from the frame edges: the picture will be slowly zoomed and panned.",
           "Single vertical panel, no panel borders, no text, no letters, no speech bubbles."
         ].compact_blank.join("\n")
       end

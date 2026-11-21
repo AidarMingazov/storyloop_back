@@ -11,6 +11,7 @@ class Panel < ApplicationRecord
 
   validates :position, numericality: { only_integer: true, greater_than_or_equal_to: 0 },
                        uniqueness: { scope: :episode_id }
+  validate :scene_matches_schema
 
   # Episodes::PlaceholderImage until the images step draws the real picture.
   def placeholder_image?
@@ -25,4 +26,12 @@ class Panel < ApplicationRecord
   def aspect_ratio
     layout.fetch("aspect_ratio", DEFAULT_ASPECT_RATIO).to_f
   end
+
+  private
+    # Empty until Ai::Steps::Scene tags the panel.
+    def scene_matches_schema
+      return if scene.blank?
+
+      PanelScene.errors(scene).each { |message| errors.add(:scene, message) }
+    end
 end

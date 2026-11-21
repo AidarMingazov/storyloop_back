@@ -45,6 +45,18 @@ module ScriptTestHelper
   end
 end
 
+# Model answers for the scene step (Ai::Steps::Scene).
+module SceneTestHelper
+  SCENE = { "setting" => "exterior", "place" => "forest", "time" => "day", "weather" => "clear", "light" => "daylight",
+            "mood" => "calm", "shot" => "medium", "focus" => nil, "elements" => [ "water" ] }.freeze
+
+  # Tags that pass the checks for panels 1..n (or the given numbers).
+  def scene_answer(panels, **tags)
+    numbers = panels.is_a?(Integer) ? (1..panels).to_a : panels
+    { "panels" => numbers.map { |number| { "panel" => number }.merge(SCENE).merge(tags.stringify_keys) } }
+  end
+end
+
 # Model answers for the word markup step: one token per word.
 module TokensTestHelper
   def bubble_id(bubble) = "p#{bubble.panel.position + 1}b#{bubble.position + 1}"

@@ -21,6 +21,7 @@ class Ai::ConfigTest < ActiveSupport::TestCase
       tokens = Ai.llm(:tokens)
       assert_equal [ "openrouter", "anthropic/claude-haiku-5.5" ], [ tokens.provider, tokens.model ]
       assert_equal [ "deepseek", "deepseek-flash" ], Ai.llm(:tokens, fallback: true).then { [ _1.provider, _1.model ] }
+      assert_equal [ "openrouter", "anthropic/claude-haiku-5.5" ], Ai.llm(:scene).then { [ _1.provider, _1.model ] }
 
       assert_instance_of Ai::Image::Seedream, Ai.image(:images)
       assert_equal "seedream-5-0-lite-260128", Ai.image(:photo_sheets).model

@@ -14,6 +14,11 @@ shared:
       provider: openrouter
       model: anthropic/claude-haiku-5.5
       fallback: { provider: deepseek, model: deepseek-flash }
+    # scene tags of every panel for the motion player (wave M): one short JSON per episode, ~$0.001
+    scene:
+      provider: openrouter
+      model: anthropic/claude-haiku-5.5
+      fallback: { provider: deepseek, model: deepseek-flash }
     vision: { provider: openrouter, model: google/gemini-3.8-flash }
     images: { provider: seedream, model: seedream-4-5-251128 }
     sheets: { provider: seedream, model: seedream-4-5-251128 }

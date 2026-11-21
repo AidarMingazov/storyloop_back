@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://storyloop.app/schemas/scene.json",
+  "title": "Panel scene",
+  "description": "What one panel shows, as closed tags: panels.scene, written by Ai::Steps::Scene. Does not depend on the language: a translated episode copies it with its panels. The motion player (wave M, docs/motion-research.md) turns the tags into camera moves, weather effects and ambient sound by rules. A new field or value is a new version.",
+  "type": "object",
+  "required": ["v", "setting", "place", "time", "weather", "light", "mood", "shot"],
+  "additionalProperties": false,
+  "properties": {
+    "v": { "const": 1 },
+    "setting": { "enum": ["interior", "exterior"] },
+    "place": {
+      "enum": ["home", "cafe", "restaurant", "shop", "office", "school", "hospital", "transport", "street", "city", "park",
+               "nature", "forest", "mountain", "water", "beach", "village", "palace", "fantasy", "other"]
+    },
+    "time": { "enum": ["morning", "day", "evening", "night"] },
+    "weather": { "enum": ["clear", "cloudy", "rain", "storm", "snow", "fog", "wind"], "description": "Outside, also for interiors" },
+    "light": { "enum": ["daylight", "warm", "cool", "neon", "dim", "dark"] },
+    "mood": { "enum": ["calm", "happy", "romantic", "funny", "sad", "tense", "scary", "action", "mysterious"] },
+    "shot": { "enum": ["close", "medium", "wide"] },
+    "focus": {
+      "type": ["string", "null"],
+      "pattern": "^[a-z0-9_]+$",
+      "description": "Key of the character the camera moves to; null when nobody is in frame"
+    },
+    "elements": {
+      "type": "array",
+      "maxItems": 3,
+      "uniqueItems": true,
+      "description": "Things in the frame that can move",
+      "items": {
+        "enum": ["steam", "smoke", "fire", "candles", "lamps", "city_lights", "stars", "moon", "falling_leaves", "petals",
+                 "fireflies", "dust", "sparkles", "water", "waves", "clouds"]
+      }
+    }
+  }
+}

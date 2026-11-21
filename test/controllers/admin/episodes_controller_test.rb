@@ -13,6 +13,16 @@ class Admin::EpisodesControllerTest < ActionDispatch::IntegrationTest
     assert_select "h1", /Spilled/
     assert_select "span[title='run into — случайно встретила']", "ran into"
     assert_select "td", "phrasal_verb"
+    assert_select "[data-scene]", false
+  end
+
+  test "review screen shows the scene tags of a panel" do
+    @en.panels.first.update!(scene: { "v" => 1, "setting" => "interior", "place" => "cafe", "time" => "evening", "weather" => "rain",
+                                      "light" => "warm", "mood" => "romantic", "shot" => "medium", "focus" => "mia", "elements" => [ "steam" ] })
+    get admin_episode_path(@en)
+    assert_select "[data-scene] li", 9
+    assert_select "[data-scene] li", "→ mia"
+    assert_select "#pipeline tr#step-scene td", "Сцена"
   end
 
   test "review screen for a Korean chat episode shows romanization and breakdown" do

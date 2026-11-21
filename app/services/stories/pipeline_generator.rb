@@ -22,6 +22,7 @@ module Stories
       request.progress!("script")
       episode = Script.new(request, random: @random).call
       series.update!(title: episode.title) # a story is named by its series (feed, "My stories")
+      tag_scenes(episode) # inside the "script" phase: the author sees no extra step
 
       request.progress!("images")
       draw(episode)
@@ -42,6 +43,13 @@ module Stories
     def redraw_sheet(request, character) = PhotoCast.new(request).redraw(character)
 
     private
+      # Scene tags feed only the motion player (wave M): the story goes on without them, the failure is in GenerationLog.
+      def tag_scenes(episode)
+        Ai::Steps::Scene.call(episode)
+      rescue Ai::Error => e
+        Rails.logger.warn("[stories] scene tags of episode #{episode.id} failed, going on: #{e.class}: #{e.message.truncate(200)}")
+      end
+
       # A panel the provider's safety filter refused fails the story as rejected (7.6); other failed panels get one
       # more try, a panel without a picture fails the story (a placeholder is no story to share).
       def draw(episode)

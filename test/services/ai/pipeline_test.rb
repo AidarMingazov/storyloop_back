@@ -5,14 +5,15 @@ require_relative "../../test_helpers/script_test_helper"
 class Ai::PipelineTest < ActiveSupport::TestCase
   include AiTestHelper
   include ScriptTestHelper
+  include SceneTestHelper
   include TokensTestHelper
 
-  # Fake LLM answers in call order: the script, then the markup of every bubble of that script.
+  # Fake LLM answers in call order: the script, the scene tags, then the markup of every bubble of that script.
   def script_and_markup(answer)
     markup = { "bubbles" => answer["episode"]["panels"].each_with_index.flat_map do |panel, p|
       panel["bubbles"].each_with_index.map { |bubble, b| { "id" => "p#{p + 1}b#{b + 1}", "tokens" => ko_tokens(bubble["text"]) } }
     end }
-    Ai::Llm::Fake.respond_with(answer, markup)
+    Ai::Llm::Fake.respond_with(answer, scene_answer(answer["episode"]["panels"].size), markup)
   end
 
   test "generate runs every step and leaves the episode for review" do
@@ -27,17 +28,19 @@ class Ai::PipelineTest < ActiveSupport::TestCase
     audio = episode.generation_logs.find_by!(step: "audio").metadata
     assert_equal [ 6, {} ], [ audio["bubbles"], audio["failed"] ], audio.inspect
     assert episode.bubbles.reload.all? { |b| b.audio.attached? }
-    assert_equal %w[script images images images layout tokens audio], episode.generation_logs.order(:id).pluck(:step)
+    assert_equal %w[script scene images images images layout tokens audio], episode.generation_logs.order(:id).pluck(:step)
+    assert episode.panels.all? { |panel| panel.scene["place"] == "forest" }
 
     status = Ai::PipelineStatus.new(episode)
-    assert_equal %w[succeeded] * 5, status.rows.map(&:status)
+    assert_equal %w[succeeded] * 6, status.rows.map(&:status)
+    assert_equal "кадров с тегами: 3", status.rows.find { |r| r.step == "scene" }.notes
     assert_equal "нарисовано 3 из 3", status.rows.find { |r| r.step == "images" }.notes
     assert_equal "токенов: 24", status.rows.find { |r| r.step == "tokens" }.notes
     assert_empty status.unresolved_bubbles
   end
 
   test "a failing step stops the run and returns the episode to draft" do
-    Ai::Llm::Fake.respond_with(ko_answer(panels: 3), Ai::Unauthorized.new("openrouter: 401", provider: "openrouter"),
+    Ai::Llm::Fake.respond_with(ko_answer(panels: 3), scene_answer(3), Ai::Unauthorized.new("openrouter: 401", provider: "openrouter"),
                                Ai::Unauthorized.new("deepseek: 401", provider: "deepseek"))
 
     assert_raises(Ai::Unauthorized) { Ai::Pipeline.generate(ko_series, panels: 3) }
@@ -48,6 +51,26 @@ class Ai::PipelineTest < ActiveSupport::TestCase
     row = Ai::PipelineStatus.new(episode).rows.find { |r| r.step == "tokens" }
     assert_equal "failed", row.status
     assert_match(/401/, row.error)
+  end
+
+  test "a failing scene step is logged and the run goes on" do
+    Ai::Llm::Fake.respond_with(ko_answer(panels: 2), Ai::Unauthorized.new("openrouter: 401", provider: "openrouter"),
+                               Ai::Unauthorized.new("deepseek: 401", provider: "deepseek"),
+                               { "bubbles" => [] }, { "bubbles" => [] }, { "bubbles" => [] })
+
+    episode = Ai::Pipeline.generate(ko_series, panels: 2)
+
+    assert episode.review?
+    assert episode.panels.all? { |panel| panel.scene.blank? }
+    row = Ai::PipelineStatus.new(episode).rows.find { |r| r.step == "scene" }
+    assert_equal "failed", row.status
+    assert_match(/401/, row.error)
+    assert episode.generation_logs.exists?(step: "audio")
+
+    Ai::Llm::Fake.respond_with(scene_answer(2, weather: "snow"))
+    Ai::Pipeline.rerun(episode, "scene")
+    assert_equal %w[snow snow], episode.panels.reload.map { |panel| panel.scene["weather"] }
+    assert_equal %w[script scene images images layout tokens audio scene], episode.generation_logs.order(:id).pluck(:step)
   end
 
   test "rerun redoes the step with force and its dependents" do
@@ -110,10 +133,12 @@ end
 class GenerateEpisodeJobTest < ActiveSupport::TestCase
   include AiTestHelper
   include ScriptTestHelper
+  include SceneTestHelper
 
   test "count episodes one after another; the brief goes to the first, memory to the next" do
-    Ai::Llm::Fake.respond_with(ko_answer(panels: 2), { "bubbles" => [] }, { "bubbles" => [] }, { "bubbles" => [] },
-                               ko_answer(panels: 2, title: "둘 · Two"), { "bubbles" => [] }, { "bubbles" => [] }, { "bubbles" => [] })
+    Ai::Llm::Fake.respond_with(ko_answer(panels: 2), scene_answer(2), { "bubbles" => [] }, { "bubbles" => [] }, { "bubbles" => [] },
+                               ko_answer(panels: 2, title: "둘 · Two"), scene_answer(2), { "bubbles" => [] }, { "bubbles" => [] },
+                               { "bubbles" => [] })
 
     episodes = GenerateEpisodeJob.perform_now(ko_series, { "count" => 2, "panels" => 2, "brief" => "The axe falls" })
 
