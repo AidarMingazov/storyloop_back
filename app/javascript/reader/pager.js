@@ -39,12 +39,16 @@ const DRAWINGS = { none: "drawPlain", slide: "drawSlide", fade: "drawFade", curl
 export class Pager {
   // pages: elements already inside viewport.
   // onChange(index, previousIndex) fires once a turn settles on a new page (also after goTo without animation).
+  // onTurnStart() fires when a turn begins (drag or animation). onReveal(page) fires when a page becomes
+  // visible: layout that needs real sizes (fitting bubbles) can only be measured then.
   // canTap(event) can veto a tap-to-turn (e.g. the first tap only closes the word sheet).
   // tapIgnore: extra selector of elements whose taps belong to someone else (tokens, bubbles).
-  constructor(viewport, pages, { index = 0, effect = "slide", onChange, onCenterTap, canTap, tapIgnore } = {}) {
+  constructor(viewport, pages, { index = 0, effect = "slide", onChange, onTurnStart, onReveal, onCenterTap, canTap, tapIgnore } = {}) {
     this.viewport = viewport
     this.pages = pages
     this.onChange = onChange
+    this.onTurnStart = onTurnStart
+    this.onReveal = onReveal
     this.onCenterTap = onCenterTap
     this.canTap = canTap || (() => true)
     this.tapIgnore = [ "a", "button", "input", "select", "textarea", "label", "summary", "[role=button]", tapIgnore ]
@@ -169,6 +173,8 @@ export class Pager {
       const shown = page === A || page === B
       if (page.hidden === shown) setShown(page, shown)
     }
+    this.onReveal?.(next)
+    this.onTurnStart?.()
     for (const page of [ A, B ]) page.style.willChange = "transform, opacity"
 
     this.turn = { target, forward, A, B, effect, p: 0, width: this.viewport.clientWidth,
@@ -304,6 +310,7 @@ export class Pager {
                                   willChange: "", position: i === index ? "relative" : "absolute" })
       setShown(page, i === index)
     })
+    this.onReveal?.(this.pages[index])
     this.dim.hidden = this.castShade.hidden = this.foldShade.hidden = this.flap.hidden = true
     this.preloadNeighbours()
   }

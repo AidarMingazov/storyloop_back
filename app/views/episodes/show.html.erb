@@ -37,6 +37,14 @@
         <input type="checkbox" id="pref_highlight" data-reader-target="highlightToggle" data-action="reader#setPref" data-pref="highlight"></label>
       <label class="reader-switch"><span><%= t("reader.js.night_mode") %></span>
         <input type="checkbox" id="pref_night" data-reader-target="nightToggle" data-action="reader#setPref" data-pref="night"></label>
+      <% if @episode.format == "manga" %>
+        <label class="reader-switch" for="pref_page_turn"><span><%= t("reader.js.page_turn") %></span>
+          <select id="pref_page_turn" class="reader-select" data-reader-target="pageTurnSelect" data-action="reader#setPageTurn">
+            <% %w[slide curl none].each do |effect| %>
+              <option value="<%= effect %>"><%= t("reader.js.page_turn_#{effect}") %></option>
+            <% end %>
+          </select></label>
+      <% end %>
     </div>
   </header>
 

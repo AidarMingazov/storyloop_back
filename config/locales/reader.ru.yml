@@ -16,6 +16,10 @@ ru:
       romanization: Романизация
       highlight_saved: Подсвечивать сохранённые слова
       night_mode: Ночной режим
+      page_turn: Листание
+      page_turn_slide: Сдвиг
+      page_turn_curl: Загиб страницы
+      page_turn_none: Без анимации
       save_word: Сохранить слово
       saved: Сохранено
       listen: Слушать

@@ -3,12 +3,13 @@ import { h, prefersReducedMotion } from "reader/dom"
 import { renderWebtoon, fitBubbles } from "reader/webtoon"
 import { renderChat } from "reader/chat"
 import { renderManga } from "reader/manga"
+import { Pager, PAGE_TURN_EFFECTS } from "reader/pager"
 import { renderIllustrated } from "reader/illustrated"
 import { WordSheet } from "reader/sheet"
 import { renderSummary, updateSummary } from "reader/summary"
 import { speak, stopSpeaking } from "reader/speech"
 import { request } from "reader/api"
-import { readPref, writePref } from "reader/prefs"
+import { readPref, writePref, readChoice, writeChoice } from "reader/prefs"
 
 const THEME_COLORS = { light: "#fbf9f3", night: "#0e0e12" }
 
@@ -20,7 +21,7 @@ const THEME_COLORS = { light: "#fbf9f3", night: "#0e0e12" }
 // message for chat.
 export default class extends Controller {
   static targets = [ "payload", "stage", "summary", "sheet", "progressBar", "settings", "settingsButton",
-                     "romanizationToggle", "highlightToggle", "nightToggle" ]
+                     "romanizationToggle", "highlightToggle", "nightToggle", "pageTurnSelect" ]
   static values = { i18n: Object, progressUrl: String, saveUrl: String, reviewUrl: String, libraryUrl: String,
                     episodeUrl: String, signupUrl: String }
 
@@ -74,6 +75,7 @@ export default class extends Controller {
   disconnect() {
     this.observer?.disconnect()
     this.endObserver?.disconnect()
+    this.pager?.destroy()
     this.nextBar?.remove()
     this.flushProgress()
     stopSpeaking()
@@ -112,48 +114,51 @@ export default class extends Controller {
 
   setupManga() {
     const { pager, pages, counter } = renderManga(this.stageTarget, this.episode, this.t)
-    this.pager = pager
     this.pages = pages
     this.pageCounter = counter
     this.total = this.episode.panels.length
-    this.pageIndex = 0
 
-    pager.addEventListener("scroll", () => {
-      clearTimeout(this.pageScrollTimer)
-      this.pageScrollTimer = setTimeout(() => this.pageChanged(), 80)
-    }, { passive: true })
+    const resume = this.completed ? 0 : this.pages.findIndex((page) => Number(page.dataset.lastPosition) >= this.furthest)
+    this.pager = new Pager(pager, pages, {
+      index: Math.max(0, resume),
+      effect: this.prefs.pageTurn,
+      tapIgnore: "[data-token-id], [data-bubble-id], [data-translate-bubble], [data-speak-bubble]",
+      // With the word sheet open, a tap on the page only closes it.
+      canTap: () => !this.sheet.isOpen,
+      onTurnStart: () => this.sheet.close(),
+      onReveal: (page) => fitBubbles(page),
+      onChange: (index, previous) => this.pageChanged(index, previous)
+    })
 
-    if (this.completed) {
-      this.showSummary()
-    } else if (this.furthest > 0) {
-      const page = this.pages.findIndex((p) => Number(p.dataset.lastPosition) >= this.furthest)
-      requestAnimationFrame(() => this.goToPage(Math.max(0, page), "auto"))
+    if (this.completed) this.showSummary()
+    this.pageChanged(this.pager.index)
+  }
+
+  nextPage() { this.pager?.next() }
+  previousPage() { this.pager?.previous() }
+
+  pageChanged(index, previous) {
+    this.pageIndex = index
+    this.updatePageCounter(previous === undefined ? 0 : Math.sign(index - previous))
+    this.reached(Number(this.pages[index].dataset.lastPosition))
+    if (index === this.pages.length - 1) this.complete()
+    if (previous !== undefined && previous !== index) {
+      try { navigator.vibrate?.(8) } catch {} // Android only; iOS haptics come with the native shell (wave S)
     }
-    this.pageChanged()
   }
 
-  nextPage() { this.goToPage(this.pageIndex + 1) }
-  previousPage() { this.goToPage(this.pageIndex - 1) }
-
-  goToPage(index, behavior = prefersReducedMotion() ? "auto" : "smooth") {
-    if (!this.pager || index < 0 || index >= this.pages.length) return
-    this.sheet.close()
-    this.pager.scrollTo({ left: this.pages[index].offsetLeft, behavior })
-    if (behavior === "auto") this.pageChanged()
-  }
-
-  pageChanged() {
-    const index = Math.round(this.pager.scrollLeft / Math.max(1, this.pager.clientWidth))
-    this.pageIndex = Math.min(Math.max(index, 0), this.pages.length - 1)
-    this.pageCounter.textContent = `${this.pageIndex + 1} / ${this.pages.length}`
-    this.pages.forEach((page, i) => page.setAttribute("aria-hidden", String(i !== this.pageIndex)))
-    this.reached(Number(this.pages[this.pageIndex].dataset.lastPosition))
-    if (this.pageIndex === this.pages.length - 1) this.complete()
+  // The new number rolls in from the side the reader is going.
+  updatePageCounter(direction) {
+    const value = h("span", { class: "manga-counter-value" }, `${this.pageIndex + 1} / ${this.pages.length}`)
+    this.pageCounter.replaceChildren(value)
+    if (!direction || prefersReducedMotion()) return
+    value.animate([ { transform: `translateY(${direction * 70}%)`, opacity: 0 }, { transform: "none", opacity: 1 } ],
+                  { duration: 260, easing: "cubic-bezier(.2,.8,.2,1)" })
   }
 
   keydown(event) {
     if (event.key === "Escape") return this.sheet.close()
-    if (!this.pager || event.target.closest("input, textarea")) return
+    if (!this.pager || event.target.closest("input, textarea, select")) return
     if (event.key === "ArrowRight") { event.preventDefault(); this.nextPage() }
     if (event.key === "ArrowLeft") { event.preventDefault(); this.previousPage() }
   }
@@ -386,11 +391,13 @@ export default class extends Controller {
     this.prefs = {
       romanization: readPref("romanization", false),
       highlight: readPref("highlight", true),
-      night: readPref("night", false)
+      night: readPref("night", false),
+      pageTurn: readChoice("page_turn", PAGE_TURN_EFFECTS, "slide")
     }
     if (this.hasRomanizationToggleTarget) this.romanizationToggleTarget.checked = this.prefs.romanization
     this.highlightToggleTarget.checked = this.prefs.highlight
     this.nightToggleTarget.checked = this.prefs.night
+    if (this.hasPageTurnSelectTarget) this.pageTurnSelectTarget.value = this.prefs.pageTurn
     this.applyPrefs()
   }
 
@@ -399,6 +406,12 @@ export default class extends Controller {
     this.prefs[name] = event.target.checked
     writePref(name, event.target.checked)
     this.applyPrefs()
+  }
+
+  setPageTurn(event) {
+    this.prefs.pageTurn = event.target.value
+    writeChoice("page_turn", event.target.value)
+    this.pager?.setEffect(event.target.value)
   }
 
   applyPrefs() {

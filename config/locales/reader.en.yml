@@ -16,6 +16,10 @@ en:
       romanization: Romanization
       highlight_saved: Highlight saved words
       night_mode: Night mode
+      page_turn: Page turn
+      page_turn_slide: Slide
+      page_turn_curl: Page curl
+      page_turn_none: No animation
       save_word: Save word
       saved: Saved
       listen: Listen

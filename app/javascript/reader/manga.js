@@ -3,8 +3,8 @@ import { appendPanel } from "reader/webtoon"
 
 const AUTO_PANELS_PER_PAGE = 3
 
-// Pages laid side by side in a horizontal scroll-snap pager (swipe on phones, arrows and keys
-// everywhere). Each page is a 2-column grid: cols 2 = full width, cols 1 = half width.
+// One page at a time: the controller hands the pages to reader/pager.js (swipe and tap the edges on
+// phones, arrows and keys everywhere). Each page is a 2-column grid: cols 2 = full width, cols 1 = half width.
 // Panels without layout.page are paginated automatically, so any webtoon can be shown as manga.
 export function renderManga(stage, episode, t) {
   const pages = paginate(episode.panels)

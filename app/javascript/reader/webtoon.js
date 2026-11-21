@@ -45,6 +45,7 @@ export function fitBubbles(root) {
   for (const figure of root.querySelectorAll(".wt-panel")) {
     const width = figure.clientWidth
     const height = figure.clientHeight
+    if (!width) continue // hidden (a manga page off stage): fitted when it is shown
     for (const bubble of figure.querySelectorAll(".wt-bubble")) {
       bubble.style.translate = ""
       const overflowY = bubble.offsetTop + bubble.offsetHeight - (height - 4)
