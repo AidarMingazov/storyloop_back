@@ -1,0 +1,29 @@
+<% content_for :title, "Истории пользователей" %>
+<h1 class="font-serif text-3xl font-semibold text-ink-strong mb-4">Истории пользователей</h1>
+<p class="text-sm text-muted mb-4">
+  Всего: <%= @stories.size %> · стоимость генераций: $<%= number_with_precision(@stories.sum { |s| s.episodes.sum { |e| e.generation_logs.sum(&:cost_usd) } }, precision: 4) %>
+  · <%= link_to "Очередь жалоб (#{@open_reports.values.sum})", admin_reports_path, class: "underline" %>
+</p>
+<table class="table" id="admin-stories">
+  <thead><tr><th>История</th><th>Автор</th><th>Пара</th><th>Видимость</th><th>Модерация</th><th>Статус</th><th>Прочт.</th><th>Жалобы</th><th>$</th><th></th></tr></thead>
+  <tbody>
+    <% @stories.each do |story| %>
+      <% episode = story.episodes.first %>
+      <% last_request = story.story_requests.max_by(&:created_at) %>
+      <tr id="<%= dom_id(story) %>">
+        <td><span class="font-medium text-ink-strong"><%= story.title %></span>
+          <span class="block text-xs text-muted"><%= last_request&.mode %><%= " · #{last_request.theme}" if last_request&.theme %> · <%= story.created_at.strftime("%d.%m %H:%M") %></span>
+          <% if last_request&.failed? %><span class="block text-xs text-red-700"><%= last_request.error.to_s.truncate(120) %></span><% end %></td>
+        <td><%= story.author.author_name %><span class="block text-xs text-muted"><%= story.author.email_address %><%= " · заблокирован" if story.author.banned? %></span></td>
+        <td><%= story.language_pair.code %> · <%= story.cefr_level %></td>
+        <td><%= story.visibility %></td>
+        <td><span class="badge"><%= story.moderation_state %></span></td>
+        <td><%= episode ? status_badge(episode) : "—" %></td>
+        <td class="tabular-nums"><%= episode&.reads_count %></td>
+        <td class="tabular-nums"><%= @open_reports[story.id] || 0 %></td>
+        <td class="tabular-nums"><%= number_with_precision(episode&.generation_logs&.sum(&:cost_usd) || 0, precision: 4) %></td>
+        <td><%= render "admin/stories/actions", story: story %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

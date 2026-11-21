@@ -3,7 +3,7 @@ module Admin
     before_action :set_series, only: %i[show edit update destroy]
 
     def index
-      @series = Series.includes(:language_pair, :episodes).order(:language_pair_id, :position, :id)
+      @series = Series.catalog.includes(:language_pair, :episodes).order(:language_pair_id, :position, :id)
     end
 
     def show

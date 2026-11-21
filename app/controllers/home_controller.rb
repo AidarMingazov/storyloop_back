@@ -5,7 +5,7 @@ class HomeController < ApplicationController
     @reader = resume_session&.user
     return redirect_to(start_path) unless @reader&.onboarded? || @reader&.admin?
 
-    @pairs = LanguagePair.active.includes(series: :episodes).order(:code)
+    @pairs = LanguagePair.active.includes(catalog_series: :episodes).order(:code)
 
     @due_today = @reader.user_words.due_today.count
     @progress = @reader.reading_progresses.index_by(&:episode_id)

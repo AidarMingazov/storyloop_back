@@ -1,0 +1,53 @@
+<%# Under the episode: share again; for user stories — the author, and Report / Hide author (7.6). %>
+<% series = episode.series %>
+<section class="mx-auto grid max-w-[640px] gap-4 px-4 pt-10" id="story-footer">
+  <div class="flex flex-wrap items-center gap-3">
+    <% if shareable?(episode) %>
+    <button type="button" class="reader-btn" data-controller="share" data-action="share#share"
+            data-share-url-value="<%= share_path(episode, sharer: @reader) %>"
+            data-share-title-value="<%= story_title(episode) %>"
+            data-share-text-value="<%= t("stories.share.text", pair: pair_label(series.language_pair)) %>"
+            data-share-track-url-value="<%= episode_shares_path(episode) %>"
+            data-share-copied-value="<%= t("stories.share.copied") %>">
+      <%= t("stories.share.cta") %>
+    </button>
+    <% end %>
+    <% if series.user_story? && !@author %>
+      <%= link_to t("stories.reader.more_community"), community_path, class: "reader-btn reader-btn--ghost" %>
+    <% end %>
+  </div>
+
+  <% if series.user_story? %>
+    <% author = series.author %>
+    <% if @author %>
+      <p class="text-sm reader-muted" id="own-story">
+        <%= t("stories.reader.own", visibility: visibility_label(series)) %>
+        · <%= link_to t("stories.reader.manage"), story_path(series), class: "underline" %>
+      </p>
+    <% else %>
+      <p class="text-sm reader-muted">
+        <%= t("stories.reader.by") %> <%= link_to author.author_name, author_path(author.public_id), class: "underline" %>
+      </p>
+      <div class="flex flex-wrap items-start gap-x-5 gap-y-2 text-sm reader-muted">
+        <details class="w-full" id="report">
+          <summary class="cursor-pointer underline min-h-11 inline-flex items-center"><%= t("stories.report.button") %></summary>
+          <%= form_with url: episode_reports_path(episode), class: "mt-2 grid gap-2", data: { turbo: false } do |form| %>
+            <fieldset class="grid gap-1">
+              <legend class="mb-1 font-semibold"><%= t("stories.report.question") %></legend>
+              <% Report::REASONS.each do |reason| %>
+                <label class="flex min-h-9 items-center gap-2">
+                  <%= form.radio_button :reason, reason, required: true %> <%= t("stories.report.reasons.#{reason}") %>
+                </label>
+              <% end %>
+            </fieldset>
+            <%= form.text_area :comment, rows: 2, maxlength: 1000, placeholder: t("stories.report.comment"),
+                               class: "w-full rounded-lg border p-2 text-sm text-black" %>
+            <%= form.submit t("stories.report.submit"), class: "reader-btn w-fit" %>
+          <% end %>
+        </details>
+        <%= button_to t("stories.hide_author.button"), author_block_path(author.public_id), class: "underline min-h-11",
+                      form: { data: { turbo: false } } %>
+      </div>
+    <% end %>
+  <% end %>
+</section>

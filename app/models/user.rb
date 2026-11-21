@@ -6,6 +6,13 @@ class User < ApplicationRecord
   has_many :reading_progresses, dependent: :destroy
   has_many :word_reviews, dependent: :delete_all
   belongs_to :language_pair, optional: true
+  # Wave 7: own stories, share referrals, moderation.
+  belongs_to :referrer, class_name: "User", optional: true
+  has_many :stories, -> { source_user }, class_name: "Series", foreign_key: :author_id, dependent: :destroy, inverse_of: :author
+  has_many :story_requests, dependent: :destroy
+  has_many :reports, foreign_key: :reporter_id, dependent: :delete_all, inverse_of: :reporter
+  has_many :author_blocks, dependent: :delete_all
+  has_many :hidden_authors, through: :author_blocks, source: :author
 
   normalizes :email_address, with: ->(e) { e.strip.downcase }
 
@@ -16,6 +23,10 @@ class User < ApplicationRecord
   validates :password, length: { minimum: 8 }, allow_nil: true
   validates :password, confirmation: true, allow_blank: true
   validates :self_level, inclusion: { in: Cefr::LEVELS }, allow_nil: true
+  validates :display_name, length: { maximum: 40 }
+
+  normalizes :display_name, with: ->(name) { name.squish.presence }
+  before_create { self.public_id ||= SecureRandom.base58(10) }
 
   # Valid for 20 minutes and only until the next magic-link sign-in.
   generates_token_for :magic_login, expires_in: 20.minutes do
@@ -23,6 +34,7 @@ class User < ApplicationRecord
   end
 
   scope :registered, -> { where(guest: false) }
+  scope :not_banned, -> { where(banned_at: nil) }
 
   # Free episodes are open to everyone; paid ones need a subscription (wave 7 Stripe).
   def can_read?(episode)
@@ -40,6 +52,22 @@ class User < ApplicationRecord
   end
 
   def onboarded? = onboarded_at.present? || language_pair_id.present?
+
+  def banned? = banned_at.present?
+
+  # Shown on stories and the author page; never the email.
+  def author_name
+    display_name || I18n.t("stories.author.default_name", code: public_id.first(4))
+  end
+
+  # Free story generations left (7.5): guests get none, admins are not limited, failed ones do not count.
+  def story_generations_left
+    return Float::INFINITY if admin?
+    return 0 if guest? || banned?
+    [ Stories.free_generations - story_requests.counted.count, 0 ].max
+  end
+
+  def hides_author?(author) = author_blocks.exists?(author_id: author.id)
 
   # Guest → registered on the same record: progress, words and analytics id stay.
   def register(email_address:, password: nil)
@@ -72,6 +100,9 @@ class User < ApplicationRecord
       self.self_level ||= guest.self_level
       self.onboarded_at ||= guest.onboarded_at
       self.utm = guest.utm if utm.blank?
+      self.referrer_id ||= guest.referrer_id
+      guest.author_blocks.where.not(author_id: author_blocks.select(:author_id)).update_all(user_id: id)
+      guest.reports.where.not(episode_id: reports.select(:episode_id)).update_all(reporter_id: id)
       save!
       guest.reload.destroy!
     end

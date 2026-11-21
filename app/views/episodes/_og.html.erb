@@ -1,0 +1,22 @@
+<%# Preview card for messengers and social networks (also on the reader page, for crawlers we do not recognise). %>
+<% series = episode.series %>
+<% pair = series.language_pair %>
+<% title = story_title(episode) %>
+<% description = t("stories.og.description", pair: pair_label(pair), level: episode.cefr_level,
+                   author: series.user_story? ? series.author.author_name : "Storyloop") %>
+<% content_for :head do %>
+  <meta name="description" content="<%= description %>">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Storyloop">
+  <meta property="og:title" content="<%= title %>">
+  <meta property="og:description" content="<%= description %>">
+  <meta property="og:url" content="<%= shared_episode_url(episode.share_token) %>">
+  <meta property="og:image" content="<%= og_image_url(episode) %>">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="<%= pair.native_lang %>">
+  <meta name="twitter:card" content="summary_large_image">
+  <% if series.user_story? && !series.visibility_public? %>
+    <meta name="robots" content="noindex">
+  <% end %>
+<% end %>

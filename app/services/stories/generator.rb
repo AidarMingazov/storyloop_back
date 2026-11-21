@@ -1,0 +1,29 @@
+module Stories
+  # The contract every story generator follows — Stories::FakeGenerator today, the AI pipeline of
+  # wave 6 (7.4, Ai::StoryPipeline) later. GenerateStoryJob calls `generator.call(request)`.
+  #
+  # Input — a StoryRequest:
+  #   mode        theme | idea | text | surprise   (later photos, voice)
+  #   theme       key from config/story_themes.yml (mode theme)
+  #   prompt      the idea (≤ 500 chars) or the learner's own text to adapt (≤ 3000 chars)
+  #   language_pair, cefr_level, format (webtoon | chat)
+  #   series      already created: author, visibility, slug, placeholder title
+  #   episode     already created: number 1, status generating
+  #   user, previous_requests — the author and their earlier briefs ("surprise me" should not repeat)
+  #
+  # It must:
+  #   - fill request.episode (panels, bubbles, tokens, images, audio) inside request.series — e.g. by
+  #     building episode JSON and passing it to Episodes::Importer with the series slug and number 1;
+  #   - set real titles on the series and the episode, and `free: true`;
+  #   - leave the episode `published` (no human review for user stories; StoryAccess still applies);
+  #   - write GenerationLog rows with episode_id (cost of user generations, 7.5);
+  #   - call request.progress!(step) when a step starts (GenerationLog::STEPS) — the status page shows it;
+  #   - be safe to run again for the same request (job retries);
+  #   - return the episode; raise to fail (Stories::Rejected for moderation) — the request becomes
+  #     failed and does not count toward the free limit.
+  module Generator
+    def call(request)
+      raise NotImplementedError
+    end
+  end
+end

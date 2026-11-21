@@ -20,7 +20,7 @@
 
     <% if @continue %>
       <% episode = @continue[:episode] %>
-      <%= link_to episode_path(episode), class: "card p-5 block hover:border-ink-strong transition-colors", id: "continue-reading" do %>
+      <%= link_to read_path(episode), class: "card p-5 block hover:border-ink-strong transition-colors", id: "continue-reading" do %>
         <p class="label"><%= @continue[:next] ? t("home.next_up") : t("home.continue") %></p>
         <p class="font-serif text-xl font-semibold text-ink-strong"><%= episode.series.title %> · <%= episode.number %>. <%= episode.title %></p>
         <% unless @continue[:next] %>
@@ -34,8 +34,22 @@
   </section>
 <% end %>
 
+<nav class="grid grid-cols-2 gap-3 mb-8" id="stories-nav" aria-label="<%= t("stories.home.nav") %>">
+  <%= link_to new_story_path, class: "card p-4 col-span-2 flex items-center gap-3 hover:border-ink-strong transition-colors" do %>
+    <span class="text-2xl" aria-hidden="true">✍️</span>
+    <span>
+      <span class="block font-semibold text-ink-strong"><%= t("stories.home.create") %></span>
+      <span class="block text-sm text-muted"><%= t("stories.home.create_hint") %></span>
+    </span>
+  <% end %>
+  <%= link_to t("stories.community.title"), community_path, class: "card p-4 font-medium text-ink-strong hover:border-ink-strong" %>
+  <% if @reader && !@reader.guest? %>
+    <%= link_to t("stories.index.title"), stories_path, class: "card p-4 font-medium text-ink-strong hover:border-ink-strong" %>
+  <% end %>
+</nav>
+
 <% @pairs.sort_by { |pair| pair.id == @reader&.language_pair_id ? 0 : 1 }.each do |pair| %>
-  <% series_list = pair.series.select(&:published?).sort_by { |s| [ s.position, s.id ] } %>
+  <% series_list = pair.catalog_series.select(&:published?).sort_by { |s| [ s.position, s.id ] } %>
   <% next if series_list.empty? %>
   <section class="mb-8">
     <h2 class="label"><%= pair.code %></h2>

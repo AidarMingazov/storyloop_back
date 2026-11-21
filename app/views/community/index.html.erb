@@ -1,0 +1,40 @@
+<% content_for :title, t("stories.community.title") %>
+<header class="mb-5">
+  <p class="label"><%= link_to "Storyloop", root_path, class: "hover:text-ink-strong" %></p>
+  <h1 class="font-serif text-4xl font-semibold text-ink-strong"><%= t("stories.community.title") %></h1>
+  <p class="text-muted mt-1"><%= t("stories.community.lead") %></p>
+</header>
+
+<% filters = { pair: @pair&.code.to_s, level: @feed.level, sort: @feed.sort } %>
+<nav class="grid gap-2 mb-5 text-sm" aria-label="<%= t("stories.community.filters") %>" id="community-filters">
+  <div class="flex flex-wrap gap-2">
+    <%= link_to t("stories.community.all_pairs"), community_path(filters.merge(pair: "")), class: @pair ? "badge" : "badge bg-ink-strong text-white" %>
+    <% @pairs.each do |pair| %>
+      <%= link_to pair_label(pair), community_path(filters.merge(pair: pair.code)), class: @pair == pair ? "badge bg-ink-strong text-white" : "badge" %>
+    <% end %>
+  </div>
+  <div class="flex flex-wrap gap-2">
+    <%= link_to t("stories.community.all_levels"), community_path(filters.merge(level: nil)), class: @feed.level ? "badge" : "badge bg-ink-strong text-white" %>
+    <% StoryRequest::LEVELS.each do |level| %>
+      <%= link_to level, community_path(filters.merge(level: level)), class: @feed.level == level ? "badge bg-ink-strong text-white" : "badge" %>
+    <% end %>
+  </div>
+  <div class="flex flex-wrap gap-2">
+    <% CommunityFeed::SORTS.each do |sort| %>
+      <%= link_to t("stories.community.sort.#{sort}"), community_path(filters.merge(sort: sort)), class: @feed.sort == sort ? "badge bg-ink-strong text-white" : "badge" %>
+    <% end %>
+  </div>
+</nav>
+
+<%= link_to t("stories.index.create"), new_story_path, class: "btn-primary mb-5" %>
+
+<% if @feed.items.empty? %>
+  <p class="card p-6 text-center text-muted" id="community-empty"><%= t("stories.community.empty") %></p>
+<% else %>
+  <div class="grid gap-3" id="community-feed">
+    <%= render partial: "community/card", collection: @feed.items, as: :episode %>
+  </div>
+  <% if @feed.next_page? %>
+    <%= link_to t("stories.community.more"), community_path(filters.merge(page: @feed.page + 1)), class: "btn-secondary mt-4" %>
+  <% end %>
+<% end %>

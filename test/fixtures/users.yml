@@ -2,12 +2,15 @@
 
 one:
   email_address: one@example.com
+  public_id: KqUser1abc
   password_digest: <%= password_digest %>
 
 admin:
   email_address: admin@example.com
+  public_id: KqAdmin1ab
   password_digest: <%= password_digest %>
   admin: true
 
 guest:
   guest: true
+  public_id: KqGuest1ab

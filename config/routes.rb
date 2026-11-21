@@ -22,6 +22,20 @@ Rails.application.routes.draw do
   end
   resources :passwords, param: :token
 
+  # User stories and sharing (wave 7)
+  get "s/:share_token", to: "episodes#show", as: :shared_episode # reader without an account + OG preview
+  resources :episodes, only: [] do
+    resources :shares, only: :create   # story_shared { channel }
+    resources :reports, only: :create  # "Report"
+  end
+  resources :stories, only: %i[index new create show update destroy] do
+    post :reset_link, on: :member
+  end
+  get "community", to: "community#index", as: :community
+  resources :authors, only: :show, path: "u", param: :public_id do
+    resource :block, only: %i[create destroy], controller: "author_blocks" # "Hide author"
+  end
+
   namespace :admin do
     root "series#index"
 
@@ -41,6 +55,16 @@ Rails.application.routes.draw do
     end
     resources :lexemes, only: %i[index edit update]
     resources :imports, only: %i[new create]
+
+    # User stories: list with cost, the report queue, moderation actions
+    resources :stories, only: :index do
+      member do
+        post :hide
+        post :approve
+        post :ban_author
+      end
+    end
+    resources :reports, only: :index
   end
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

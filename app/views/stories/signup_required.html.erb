@@ -1,0 +1,9 @@
+<% content_for :title, t("stories.new.title") %>
+<section class="card p-6" id="signup-required">
+  <h1 class="font-serif text-3xl font-semibold text-ink-strong"><%= t("stories.new.title") %></h1>
+  <p class="mt-2"><%= t("stories.signup.body", count: Stories.free_generations) %></p>
+  <div class="mt-5 flex flex-wrap gap-3">
+    <%= link_to t("stories.signup.cta"), new_registration_path, class: "btn-primary" %>
+    <%= link_to t("stories.signup.sign_in"), new_session_path, class: "btn-secondary" %>
+  </div>
+</section>

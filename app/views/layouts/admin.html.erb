@@ -12,6 +12,8 @@
         <%= link_to "Серии", admin_series_index_path, class: "hover:text-ink-strong" %>
         <%= link_to "Лексемы", admin_lexemes_path, class: "hover:text-ink-strong" %>
         <%= link_to "Импорт JSON", new_admin_import_path, class: "hover:text-ink-strong" %>
+        <%= link_to "Истории пользователей", admin_stories_path, class: "hover:text-ink-strong" %>
+        <%= link_to "Жалобы", admin_reports_path, class: "hover:text-ink-strong" %>
         <span class="ml-auto text-muted"><%= Current.user.email_address %></span>
         <%= button_to "Выйти", session_path, method: :delete, class: "text-muted hover:text-ink-strong" %>
       </nav>

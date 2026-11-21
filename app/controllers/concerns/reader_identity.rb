@@ -12,7 +12,7 @@ module ReaderIdentity
     def start_guest_session(**attrs)
       id = visitor_id.presence
       id = SecureRandom.uuid if id.nil? || User.exists?(analytics_id: id)
-      user = User.create!(guest: true, analytics_id: id, utm: stored_utm, **attrs)
+      user = User.create!(guest: true, analytics_id: id, utm: stored_utm, referrer: stored_referrer, **attrs)
       adopt_visitor_id(user)
       start_new_session_for(user).user
     end

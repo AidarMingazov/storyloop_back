@@ -1,0 +1,12 @@
+<% if shareable?(episode) %>
+<% series = episode.series %>
+<button type="button" class="reader-icon-btn" data-controller="share" data-action="share#share"
+        data-share-url-value="<%= share_path(episode, sharer: @reader) %>"
+        data-share-title-value="<%= story_title(episode) %>"
+        data-share-text-value="<%= t("stories.share.text", pair: pair_label(series.language_pair)) %>"
+        data-share-track-url-value="<%= episode_shares_path(episode) %>"
+        data-share-copied-value="<%= t("stories.share.copied") %>"
+        aria-label="<%= t("stories.share.button") %>" id="share-button">
+  <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 15V3M7 8l5-5 5 5M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+<% end %>

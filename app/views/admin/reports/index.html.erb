@@ -1,0 +1,23 @@
+<% content_for :title, "Жалобы" %>
+<h1 class="font-serif text-3xl font-semibold text-ink-strong mb-4">Жалобы</h1>
+<% if @by_story.empty? %>
+  <p class="text-muted" id="reports-empty">Открытых жалоб нет.</p>
+<% else %>
+  <div class="grid gap-4" id="report-queue">
+    <% @by_story.each do |story, reports| %>
+      <section class="card p-5" id="<%= dom_id(story, :reports) %>">
+        <h2 class="font-serif text-xl font-semibold text-ink-strong"><%= story.title %></h2>
+        <p class="text-sm text-muted">
+          <%= story.author.author_name %> (<%= story.author.email_address %>) · <%= story.visibility %> · модерация: <%= story.moderation_state %>
+        </p>
+        <ul class="mt-3 grid gap-1 text-sm">
+          <% reports.each do |report| %>
+            <li><span class="badge"><%= report.reason %></span> <%= report.comment %>
+              <span class="text-xs text-muted">— <%= report.reporter.guest? ? "гость" : report.reporter.email_address %>, <%= report.created_at.strftime("%d.%m %H:%M") %></span></li>
+          <% end %>
+        </ul>
+        <div class="mt-4"><%= render "admin/stories/actions", story: story %></div>
+      </section>
+    <% end %>
+  </div>
+<% end %>

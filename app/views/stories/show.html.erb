@@ -1,0 +1,55 @@
+<% content_for :title, @story.title %>
+<p class="label"><%= link_to t("stories.index.title"), stories_path, class: "hover:text-ink-strong" %></p>
+<h1 class="font-serif text-4xl font-semibold text-ink-strong" id="story-title"><%= @story.title %></h1>
+<p class="text-muted mt-1">
+  <%= pair_label(@story.language_pair) %> · <%= @story.cefr_level %>
+  <% if @story_request %> · <%= t("stories.modes.#{@story_request.mode}.title") %><% if @story_request.theme %>: <%= @story_request.theme_title %><% end %><% end %>
+</p>
+
+<section class="mt-6 grid gap-4">
+  <% if @story_request %>
+    <%= turbo_stream_from @story_request %>
+    <%= render "stories/status", story_request: @story_request %>
+  <% end %>
+
+  <% if @story.hidden? %>
+    <p class="flash-alert" id="moderation-note"><%= t("stories.show.hidden") %></p>
+  <% elsif @story.pending? && @episode&.published? %>
+    <p class="flash-notice" id="moderation-note"><%= t("stories.show.pending") %></p>
+  <% end %>
+
+  <% if @episode && shareable?(@episode) %>
+    <div class="card p-5 grid gap-3" id="share-box">
+      <p class="label mb-0"><%= t("stories.show.link") %></p>
+      <input type="text" readonly value="<%= share_link_url(@episode, sharer: Current.user) %>" class="input text-sm" id="share-link"
+             onclick="this.select()" aria-label="<%= t("stories.show.link") %>">
+      <div class="flex flex-wrap items-center gap-3">
+        <button type="button" class="btn-primary" data-controller="share" data-action="share#share"
+                data-share-url-value="<%= share_path(@episode, sharer: Current.user) %>"
+                data-share-title-value="<%= @story.title %>"
+                data-share-text-value="<%= t("stories.share.text", pair: pair_label(@story.language_pair)) %>"
+                data-share-track-url-value="<%= episode_shares_path(@episode) %>"
+                data-share-copied-value="<%= t("stories.share.copied") %>"><%= t("stories.share.button") %></button>
+        <%= button_to t("stories.show.reset_link"), reset_link_story_path(@story), class: "btn-secondary btn-sm",
+                      form: { data: { turbo_confirm: t("stories.show.reset_link_confirm") } } %>
+      </div>
+    </div>
+  <% end %>
+
+  <%= form_with url: story_path(@story), method: :patch, class: "card p-5 grid gap-2", id: "visibility-form" do |form| %>
+    <p class="label mb-0"><%= t("stories.new.visibility") %></p>
+    <% StoryForm::VISIBILITIES.each do |visibility| %>
+      <label class="flex items-start gap-3 cursor-pointer">
+        <%= form.radio_button :visibility, visibility, checked: @story.visibility == visibility, class: "mt-1 size-5 accent-ink-strong" %>
+        <span>
+          <span class="block font-medium text-ink-strong"><%= t("stories.visibility.#{visibility}.title") %></span>
+          <span class="block text-xs text-muted"><%= t("stories.visibility.#{visibility}.hint") %></span>
+        </span>
+      </label>
+    <% end %>
+    <%= form.submit t("stories.show.save_visibility"), class: "btn-secondary w-fit mt-2" %>
+  <% end %>
+
+  <%= button_to t("stories.show.delete"), story_path(@story), method: :delete, class: "btn-danger",
+                form: { data: { turbo_confirm: t("stories.show.delete_confirm") } } %>
+</section>

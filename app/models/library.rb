@@ -4,7 +4,7 @@ module Library
 
   def first_episode_for(pair, level)
     wanted = Cefr::LEVELS.index(level) || 0
-    series = pair.series.published.includes(:episodes).min_by do |s|
+    series = pair.series.catalog.published.includes(:episodes).min_by do |s|
       [ (Cefr::LEVELS.index(s.cefr_level).to_i - wanted).abs, s.position, s.id ]
     end
     series&.episodes&.select(&:published?)&.min_by(&:number)

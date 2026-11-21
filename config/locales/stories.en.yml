@@ -1,0 +1,190 @@
+en:
+  stories:
+    author:
+      default_name: "Author %{code}"
+    pairs:
+      en-ru: English (for Russian speakers)
+      ko-en: Korean
+    themes:
+      office-romance: Office romance
+      school: School life
+      idol: K-pop idols
+      detective: Detective
+      fantasy: Fantasy
+      travel: Travel
+      cafe: Café & everyday life
+      folk-tale: Folk tale
+    modes:
+      theme: { title: "Theme", hint: "Pick a genre" }
+      idea: { title: "Your idea", hint: "A couple of lines — AI writes the rest" }
+      text: { title: "Your text", hint: "AI adapts it to your level" }
+      surprise: { title: "Surprise me", hint: "AI comes up with the plot" }
+    formats:
+      webtoon: Comic
+      chat: Chat
+    visibility:
+      private: { title: "Only me", hint: "Only you can see it" }
+      link: { title: "Anyone with the link", hint: "Anyone with the link can read it, no sign-up needed" }
+      public: { title: "Everyone", hint: "By link and in the Community stories feed" }
+    status:
+      ready: Ready
+      generating: In progress
+      failed: Failed
+      hidden: Hidden by a moderator
+    steps:
+      script: Script
+      images: Pictures
+      layout: Bubble layout
+      tokens: Word markup
+      audio: Voice-over
+    home:
+      nav: Your stories
+      create: Create a story
+      create_hint: From a theme, your idea or your own text — then share it with friends
+    index:
+      title: My stories
+      create: Create a story
+      empty: No stories yet
+      empty_hint: Create your first one — from a theme, an idea or your own text.
+      reads:
+        zero: no reads yet
+        one: "%{count} read"
+        other: "%{count} reads"
+    new:
+      title: Create a story
+      lead: A comic in the language you learn, with tappable words — from your theme, idea or text.
+      mode: How
+      theme: Theme
+      idea: Idea
+      idea_placeholder: "For example: a cat detective looks for a missing cake at a wedding"
+      voice: Dictate
+      soon: soon
+      text: Your text
+      text_placeholder: Paste a story, a dialogue or a note — AI adapts it to your level
+      text_hint:
+        one: "Up to %{count} character or a .txt file"
+        other: "Up to %{count} characters or a .txt file"
+      surprise_hint: AI picks the genre, the characters and the plot. Something new every time.
+      surprise_title: Surprise
+      photos: A comic from your photos
+      pair: Language
+      level: Level
+      format: Format
+      visibility: Who can see it
+      display_name: Author name
+      display_name_hint: Readers see this name. We never show your email.
+      rules_html: "I follow the %{terms}: no one else's copyrighted work, no other people's personal data, no violence or explicit content."
+      rules_link: story rules
+      submit: Create
+      rate_limited: Too fast. Please wait a minute.
+      banned: A moderator turned off story creation for your account.
+    signup:
+      body:
+        one: "Sign up to create your own stories: %{count} is free."
+        other: "Sign up to create your own stories: %{count} are free."
+      cta: Sign up
+      sign_in: Sign in
+    limit:
+      title: You've used your free stories
+      body:
+        one: "You've created %{count} free story. With a subscription, create as many as you like."
+        other: "You've created %{count} free stories. With a subscription, create as many as you like."
+      cta: More stories
+      unlimited: No limit
+      left:
+        zero: No free stories left
+        one: "%{count} free story left"
+        other: "%{count} free stories left"
+    status_page:
+      generating: Creating your story…
+      wait_hint: Usually a couple of minutes. You can close this page — the story will appear in My stories.
+      ready: Your story is ready!
+      read: Read
+      failed: We couldn't create the story
+      failed_hint: This attempt doesn't count toward your limit. Try again — maybe with another theme.
+    show:
+      link: Story link
+      reset_link: New link
+      reset_link_confirm: The old link will stop working. Continue?
+      link_reset: New link created, the old one no longer works
+      save_visibility: Save
+      visibility_saved: "Visibility: %{visibility}"
+      delete: Delete story
+      delete_confirm: Delete this story for good?
+      deleted: Story deleted
+      hidden: A moderator hid this story; only you can see it.
+      pending: The story is being reviewed — it's out of the feed for now, the link still works.
+    share:
+      button: Share
+      cta: Share this story
+      copied: Link copied
+      text: "I'm learning a language with comics — %{pair}. Try it!"
+    og:
+      description: "%{pair}, level %{level} — a comic with tappable words. By %{author}. Read without signing up."
+    preview:
+      read: Read
+    reader:
+      by: By
+      own: "Your story · %{visibility}"
+      manage: Manage
+      more_community: More stories
+    report:
+      button: Report
+      question: What's wrong?
+      reasons:
+        sexual: Sexual content
+        violence: Violence or threats
+        hate: Hate or harassment
+        spam: Spam or ads
+        copyright: Copyright violation
+        personal: Someone's personal data or photos
+        other: Something else
+      comment: Comment (optional)
+      submit: Send report
+      thanks: Thanks! The story is hidden for you, and a moderator will review it.
+      invalid: Please choose a reason.
+      rate_limited: Too many reports in a row. Please try later.
+    hide_author:
+      button: Hide author
+      done: "You won't see stories by %{name} any more."
+      undone: The author is visible again.
+      hidden: You've hidden this author.
+      undo: Show again
+    unavailable:
+      title: Story unavailable
+      body: The author closed access to it, deleted it, or a moderator hid it.
+      community: Community stories
+      home: Home
+    community:
+      title: Community stories
+      lead: Stories made by readers. Publish yours — and share them.
+      filters: Filters
+      all_pairs: All languages
+      all_levels: All levels
+      sort:
+        new: New
+        popular: Popular
+      empty: Nothing here yet. Create the first story!
+      author_empty: This author has no public stories yet.
+      more: Show more
+
+  activemodel:
+    errors:
+      models:
+        story:
+          attributes:
+            mode: { inclusion: "Choose how to create the story" }
+            theme: { inclusion: "Choose a theme" }
+            prompt:
+              blank: Write an idea or paste your text
+              too_long: "The text is too long: up to %{count} characters"
+              rejected: This text can't be used — it breaks the story rules
+            text_file:
+              too_big: The file is too big — up to 20 KB
+              invalid: Please upload a .txt file
+            pair: { inclusion: "Choose a language" }
+            cefr_level: { inclusion: "Choose a level" }
+            format: { inclusion: "Choose a format" }
+            visibility: { inclusion: "Choose who can see the story" }
+            display_name: { too_long: "Author name is up to 40 characters" }
+            rules_accepted: { accepted: "Please accept the story rules" }

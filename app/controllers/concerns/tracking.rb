@@ -3,7 +3,7 @@ module Tracking
   extend ActiveSupport::Concern
 
   included do
-    before_action :ensure_visitor_id, :remember_utm
+    before_action :ensure_visitor_id, :remember_utm, :remember_ref
     helper_method :visitor_id, :analytics_context
   end
 
@@ -30,6 +30,17 @@ module Tracking
       return if cookies[:utm].present?
       utm = request.query_parameters.slice(*Analytics::UTM_KEYS).compact_blank
       cookies.permanent[:utm] = { value: utm.to_json, same_site: :lax } if utm.any?
+    end
+
+    # Share links carry ?ref=<sharer's public id>; first touch wins, like UTM.
+    def remember_ref
+      ref = params[:ref].to_s
+      return if cookies[:ref].present? || !ref.match?(/\A[1-9A-HJ-NP-Za-km-z]{10}\z/)
+      cookies.permanent[:ref] = { value: ref, same_site: :lax }
+    end
+
+    def stored_referrer
+      User.find_by(public_id: cookies[:ref]) if cookies[:ref].present?
     end
 
     def stored_utm

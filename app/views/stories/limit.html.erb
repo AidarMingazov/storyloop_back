@@ -1,0 +1,20 @@
+<%# Fake door (7.5): free generations are used up; "Pay" only measures intent (checkout_clicked, reason: generation). %>
+<% content_for :title, t("stories.limit.title") %>
+<p class="label"><%= link_to t("stories.index.title"), stories_path, class: "hover:text-ink-strong" %></p>
+<h1 class="font-serif text-4xl font-semibold text-ink-strong" id="generation-limit"><%= t("stories.limit.title") %></h1>
+<p class="mt-2"><%= t("stories.limit.body", count: Stories.free_generations) %></p>
+
+<%= form_with url: checkout_path, class: "mt-6 grid gap-3", data: { turbo: false } do |form| %>
+  <%= form.hidden_field :reason, value: "generation" %>
+  <% Pricing::PLANS.each do |plan| %>
+    <% info = @plans.fetch(plan) %>
+    <label class="card p-5 flex items-center gap-4 cursor-pointer has-[:checked]:border-ink-strong has-[:checked]:border-2">
+      <%= form.radio_button :plan, plan, checked: plan == "yearly", class: "size-5 accent-ink-strong" %>
+      <span class="min-w-0 flex-1">
+        <span class="font-semibold text-ink-strong"><%= t("paywall.plans.#{plan}") %></span>
+        <span class="block text-sm text-muted"><%= info["price"] %></span>
+      </span>
+    </label>
+  <% end %>
+  <%= form.submit t("stories.limit.cta"), class: "btn-primary" %>
+<% end %>

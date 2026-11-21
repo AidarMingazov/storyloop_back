@@ -1,0 +1,13 @@
+<div class="flex flex-wrap gap-2">
+  <%= link_to "Читать", read_path(story.episodes.first), class: "btn-secondary btn-sm" if story.episodes.first %>
+  <% unless story.hidden? %>
+    <%= button_to "Скрыть", hide_admin_story_path(story), class: "btn-danger btn-sm" %>
+  <% end %>
+  <% unless story.approved? %>
+    <%= button_to "Вернуть", approve_admin_story_path(story), class: "btn-secondary btn-sm" %>
+  <% end %>
+  <% unless story.author.banned? %>
+    <%= button_to "Заблокировать автора", ban_author_admin_story_path(story), class: "btn-danger btn-sm",
+                  form: { data: { turbo_confirm: "Заблокировать #{story.author.author_name}? Его истории исчезнут для всех." } } %>
+  <% end %>
+</div>

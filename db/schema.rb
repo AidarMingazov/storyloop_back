@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_21_150000) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_21_200000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -40,6 +40,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_21_150000) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "author_blocks", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "author_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_id"], name: "index_author_blocks_on_author_id"
+    t.index ["user_id", "author_id"], name: "index_author_blocks_on_user_id_and_author_id", unique: true
+    t.index ["user_id"], name: "index_author_blocks_on_user_id"
   end
 
   create_table "bubbles", force: :cascade do |t|
@@ -85,8 +95,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_21_150000) do
     t.datetime "published_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "share_token", null: false
+    t.bigint "origin_episode_id"
+    t.integer "reads_count", default: 0, null: false
+    t.integer "saves_count", default: 0, null: false
+    t.integer "shares_count", default: 0, null: false
+    t.index ["origin_episode_id"], name: "index_episodes_on_origin_episode_id"
     t.index ["series_id", "number"], name: "index_episodes_on_series_id_and_number", unique: true
     t.index ["series_id"], name: "index_episodes_on_series_id"
+    t.index ["share_token"], name: "index_episodes_on_share_token", unique: true
     t.index ["status"], name: "index_episodes_on_status"
   end
 
@@ -155,6 +172,23 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_21_150000) do
     t.index ["user_id"], name: "index_reading_progresses_on_user_id"
   end
 
+  create_table "reports", force: :cascade do |t|
+    t.bigint "reporter_id", null: false
+    t.bigint "episode_id", null: false
+    t.string "reason", null: false
+    t.text "comment"
+    t.string "status", default: "open", null: false
+    t.bigint "resolved_by_id"
+    t.datetime "resolved_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["episode_id"], name: "index_reports_on_episode_id"
+    t.index ["reporter_id", "episode_id"], name: "index_reports_on_reporter_id_and_episode_id", unique: true
+    t.index ["reporter_id"], name: "index_reports_on_reporter_id"
+    t.index ["resolved_by_id"], name: "index_reports_on_resolved_by_id"
+    t.index ["status", "created_at"], name: "index_reports_on_status_and_created_at"
+  end
+
   create_table "series", force: :cascade do |t|
     t.bigint "language_pair_id", null: false
     t.string "slug", null: false
@@ -167,8 +201,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_21_150000) do
     t.integer "position", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "author_id"
+    t.string "source", default: "catalog", null: false
+    t.string "visibility", default: "public", null: false
+    t.string "moderation_state", default: "approved", null: false
+    t.index ["author_id"], name: "index_series_on_author_id"
     t.index ["language_pair_id", "slug"], name: "index_series_on_language_pair_id_and_slug", unique: true
     t.index ["language_pair_id"], name: "index_series_on_language_pair_id"
+    t.index ["source", "visibility", "moderation_state"], name: "index_series_on_source_and_visibility_and_moderation_state"
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -180,6 +220,30 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_21_150000) do
     t.string "token"
     t.index ["token"], name: "index_sessions_on_token", unique: true
     t.index ["user_id"], name: "index_sessions_on_user_id"
+  end
+
+  create_table "story_requests", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "series_id", null: false
+    t.bigint "episode_id", null: false
+    t.bigint "language_pair_id", null: false
+    t.string "mode", null: false
+    t.string "theme"
+    t.text "prompt"
+    t.string "cefr_level", null: false
+    t.string "format", null: false
+    t.string "status", default: "queued", null: false
+    t.string "step"
+    t.text "error"
+    t.datetime "started_at"
+    t.datetime "finished_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["episode_id"], name: "index_story_requests_on_episode_id"
+    t.index ["language_pair_id"], name: "index_story_requests_on_language_pair_id"
+    t.index ["series_id"], name: "index_story_requests_on_series_id"
+    t.index ["user_id", "created_at"], name: "index_story_requests_on_user_id_and_created_at"
+    t.index ["user_id"], name: "index_story_requests_on_user_id"
   end
 
   create_table "tokens", force: :cascade do |t|
@@ -236,9 +300,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_21_150000) do
     t.jsonb "utm", default: {}, null: false
     t.uuid "analytics_id", default: -> { "gen_random_uuid()" }, null: false
     t.datetime "magic_login_at"
+    t.string "public_id", null: false
+    t.string "display_name"
+    t.datetime "banned_at"
+    t.bigint "referrer_id"
     t.index ["analytics_id"], name: "index_users_on_analytics_id", unique: true
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
     t.index ["language_pair_id"], name: "index_users_on_language_pair_id"
+    t.index ["public_id"], name: "index_users_on_public_id", unique: true
+    t.index ["referrer_id"], name: "index_users_on_referrer_id"
   end
 
   create_table "waitlist_entries", force: :cascade do |t|
@@ -274,22 +344,34 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_21_150000) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "author_blocks", "users", column: "author_id", on_delete: :cascade
+  add_foreign_key "author_blocks", "users", on_delete: :cascade
   add_foreign_key "bubbles", "characters"
   add_foreign_key "bubbles", "panels"
   add_foreign_key "characters", "series"
+  add_foreign_key "episodes", "episodes", column: "origin_episode_id", on_delete: :nullify
   add_foreign_key "episodes", "series"
   add_foreign_key "generation_logs", "episodes"
   add_foreign_key "panels", "episodes"
   add_foreign_key "reading_progresses", "episodes"
   add_foreign_key "reading_progresses", "users"
+  add_foreign_key "reports", "episodes", on_delete: :cascade
+  add_foreign_key "reports", "users", column: "reporter_id", on_delete: :cascade
+  add_foreign_key "reports", "users", column: "resolved_by_id", on_delete: :nullify
   add_foreign_key "series", "language_pairs"
+  add_foreign_key "series", "users", column: "author_id"
   add_foreign_key "sessions", "users"
+  add_foreign_key "story_requests", "episodes", on_delete: :cascade
+  add_foreign_key "story_requests", "language_pairs"
+  add_foreign_key "story_requests", "series", on_delete: :cascade
+  add_foreign_key "story_requests", "users"
   add_foreign_key "tokens", "bubbles"
   add_foreign_key "tokens", "lexemes"
   add_foreign_key "user_words", "lexemes"
   add_foreign_key "user_words", "tokens", column: "source_token_id", on_delete: :nullify
   add_foreign_key "user_words", "users"
   add_foreign_key "users", "language_pairs"
+  add_foreign_key "users", "users", column: "referrer_id", on_delete: :nullify
   add_foreign_key "waitlist_entries", "language_pairs"
   add_foreign_key "waitlist_entries", "users"
   add_foreign_key "word_reviews", "user_words", on_delete: :cascade

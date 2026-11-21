@@ -7,6 +7,8 @@ class ReadingProgressesController < ApplicationController
   def update
     episode = Episode.published.find(params[:episode_id])
     progress = current_reader.reading_progresses.find_or_initialize_by(episode: episode)
+    # Progress starts when the reader page opens (after StoryAccess); a new one here needs the same check.
+    return head(:not_found) if progress.new_record? && !StoryAccess.new(episode, current_reader).readable?
 
     position = params[:last_panel_position].to_i
     progress.last_panel_position = position if position > progress.last_panel_position

@@ -1,0 +1,36 @@
+<% content_for :title, t("stories.index.title") %>
+<header class="mb-6 flex items-end justify-between gap-3">
+  <div>
+    <p class="label"><%= link_to "Storyloop", root_path, class: "hover:text-ink-strong" %></p>
+    <h1 class="font-serif text-4xl font-semibold text-ink-strong"><%= t("stories.index.title") %></h1>
+  </div>
+  <%= link_to t("stories.index.create"), new_story_path, class: "btn-primary shrink-0" %>
+</header>
+<p class="text-sm text-muted mb-4" id="generations-left">
+  <%= @left.infinite? ? t("stories.limit.unlimited") : t("stories.limit.left", count: @left) %>
+</p>
+
+<% if @stories.empty? %>
+  <section class="card p-6 text-center">
+    <p class="text-ink-strong font-semibold"><%= t("stories.index.empty") %></p>
+    <p class="text-sm text-muted mt-1"><%= t("stories.index.empty_hint") %></p>
+  </section>
+<% else %>
+  <ul class="grid gap-3" id="my-stories">
+    <% @stories.each do |story| %>
+      <% episode = story.episodes.first %>
+      <% status = story_status(story) %>
+      <li>
+        <%= link_to story_path(story), class: "card p-5 block hover:border-ink-strong transition-colors", id: dom_id(story) do %>
+          <p class="font-serif text-xl font-semibold text-ink-strong"><%= story.title %></p>
+          <p class="text-sm text-muted mt-0.5">
+            <%= pair_label(story.language_pair) %> · <%= story.cefr_level %> · <%= visibility_label(story) %>
+          </p>
+          <p class="mt-2"><span class="badge" data-status="<%= status %>"><%= t("stories.status.#{status}") %></span>
+            <% if episode&.published? %><span class="text-xs text-muted ml-2"><%= t("stories.index.reads", count: episode.reads_count) %></span><% end %>
+          </p>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>

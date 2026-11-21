@@ -8,6 +8,8 @@ class UserWord < ApplicationRecord
 
   attribute :due, default: -> { Time.current }
 
+  after_create_commit :count_save_on_episode
+
   scope :due_now, ->(at = Time.current) { where(due: ..at) }
   # What the review screen shows next: everything due, plus learning cards coming back within minutes.
   scope :review_queue, ->(at = Time.current) { where(due: ..(at + ReviewScheduler::LEARN_AHEAD)).order(:due, :id) }
@@ -20,4 +22,11 @@ class UserWord < ApplicationRecord
   end
 
   def new_card? = state.zero?
+
+  private
+    # Saved words feed the "popular" sort of the community feed (7.7).
+    def count_save_on_episode
+      episode_id = source_token&.bubble&.panel&.episode_id
+      Episode.update_counters(episode_id, saves_count: 1) if episode_id
+    end
 end

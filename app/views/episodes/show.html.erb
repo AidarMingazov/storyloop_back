@@ -1,5 +1,6 @@
 <% content_for :title, "#{@episode.title} · #{@episode.series.title}" %>
 <% pair = @episode.series.language_pair %>
+<%= render "episodes/og", episode: @episode %>
 <div class="reader" data-format="<%= @episode.format %>" data-controller="reader"
      data-reader-i18n-value="<%= t("reader.js").to_json %>"
      data-reader-progress-url-value="<%= episode_progress_path(@episode) %>"
@@ -19,6 +20,7 @@
         <p class="truncate text-sm font-semibold"><%= @episode.series.title %></p>
         <p class="truncate text-xs reader-muted"><%= t("reader.episode", number: @episode.number) %> · <%= @episode.title %> · <%= @episode.cefr_level %></p>
       </div>
+      <%= render "episodes/share_button", episode: @episode %>
       <button type="button" class="reader-icon-btn" data-action="reader#toggleSettings" aria-label="<%= t("reader.settings") %>"
               aria-expanded="false" aria-controls="reader-settings" data-reader-target="settingsButton">
         <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="16" cy="7" r="2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="10" cy="17" r="2" fill="none" stroke="currentColor" stroke-width="2"/></svg>
@@ -42,6 +44,8 @@
         data-action="click->reader#stageClick keydown->reader#stageKeydown"></main>
 
   <section class="reader-summary" data-reader-target="summary" hidden aria-live="polite"></section>
+
+  <%= render "episodes/story_footer", episode: @episode %>
 
   <p class="reader-ai-notice"><%= t("reader.ai_notice") %></p>
 

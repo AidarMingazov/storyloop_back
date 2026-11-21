@@ -1,0 +1,121 @@
+<% content_for :title, t("stories.new.title") %>
+<p class="label"><%= link_to t("stories.index.title"), stories_path, class: "hover:text-ink-strong" %></p>
+<h1 class="font-serif text-4xl font-semibold text-ink-strong"><%= t("stories.new.title") %></h1>
+<p class="mt-2 text-muted"><%= t("stories.new.lead") %></p>
+
+<%= form_with model: @form, url: stories_path, scope: :story, multipart: true, class: "mt-6 grid gap-6",
+              data: { controller: "story-form" }, id: "new-story" do |form| %>
+  <% if @form.errors.any? %>
+    <ul class="flash-alert list-disc pl-8" role="alert" id="story-errors">
+      <% @form.errors.each do |error| %><li><%= error.message %></li><% end %>
+    </ul>
+  <% end %>
+
+  <fieldset class="grid gap-2">
+    <legend class="label"><%= t("stories.new.mode") %></legend>
+    <div class="grid grid-cols-2 gap-2">
+      <% StoryRequest::MODES.each do |mode| %>
+        <label class="card p-4 cursor-pointer has-[:checked]:border-ink-strong has-[:checked]:border-2">
+          <%= form.radio_button :mode, mode, class: "sr-only", data: { action: "story-form#update" } %>
+          <span class="block font-semibold text-ink-strong"><%= t("stories.modes.#{mode}.title") %></span>
+          <span class="block text-xs text-muted mt-0.5"><%= t("stories.modes.#{mode}.hint") %></span>
+        </label>
+      <% end %>
+    </div>
+  </fieldset>
+
+  <fieldset class="grid gap-2" data-story-form-target="section" data-modes="theme">
+    <legend class="label"><%= t("stories.new.theme") %></legend>
+    <div class="grid grid-cols-2 gap-2">
+      <% Stories::Themes.keys.each do |key| %>
+        <label class="card px-4 py-3 cursor-pointer flex items-center gap-2 has-[:checked]:border-ink-strong has-[:checked]:border-2">
+          <%= form.radio_button :theme, key, class: "sr-only" %>
+          <span aria-hidden="true"><%= theme_icon(key) %></span>
+          <span class="text-sm font-medium text-ink-strong"><%= Stories::Themes.title(key) %></span>
+        </label>
+      <% end %>
+    </div>
+  </fieldset>
+
+  <div class="grid gap-2" data-story-form-target="section" data-modes="idea">
+    <%= form.label :prompt, t("stories.new.idea"), class: "label", for: "story_prompt_idea" %>
+    <%= form.text_area :prompt, id: "story_prompt_idea", rows: 4, maxlength: StoryRequest::PROMPT_LIMITS["idea"],
+                       placeholder: t("stories.new.idea_placeholder"), class: "input min-h-28 py-2",
+                       data: { story_form_target: "prompt" } %>
+    <button type="button" class="btn-secondary btn-sm w-fit" disabled title="<%= t("stories.new.soon") %>">
+      🎙 <%= t("stories.new.voice") %> · <%= t("stories.new.soon") %>
+    </button>
+  </div>
+
+  <div class="grid gap-2" data-story-form-target="section" data-modes="text">
+    <%= form.label :prompt, t("stories.new.text"), class: "label", for: "story_prompt_text" %>
+    <%= form.text_area :prompt, id: "story_prompt_text", rows: 8, maxlength: StoryRequest::PROMPT_LIMITS["text"],
+                       placeholder: t("stories.new.text_placeholder"), class: "input min-h-40 py-2",
+                       data: { story_form_target: "prompt" } %>
+    <p class="text-xs text-muted"><%= t("stories.new.text_hint", count: StoryRequest::PROMPT_LIMITS["text"]) %></p>
+    <%= form.file_field :text_file, accept: ".txt,text/plain", class: "text-sm" %>
+  </div>
+
+  <p class="card p-4 text-sm text-muted" data-story-form-target="section" data-modes="surprise">
+    <%= t("stories.new.surprise_hint") %>
+  </p>
+
+  <div class="card p-4 flex items-center justify-between gap-3 opacity-70" id="photos-soon">
+    <span class="text-sm"><span aria-hidden="true">📷</span> <%= t("stories.new.photos") %></span>
+    <span class="badge"><%= t("stories.new.soon") %></span>
+  </div>
+
+  <div class="grid grid-cols-2 gap-3">
+    <div>
+      <%= form.label :pair, t("stories.new.pair"), class: "label" %>
+      <%= form.select :pair, LanguagePair.active.order(:code).map { |pair| [ pair_label(pair), pair.code ] }, {}, class: "input" %>
+    </div>
+    <div>
+      <%= form.label :cefr_level, t("stories.new.level"), class: "label" %>
+      <%= form.select :cefr_level, StoryRequest::LEVELS, {}, class: "input" %>
+    </div>
+  </div>
+
+  <fieldset class="grid gap-2">
+    <legend class="label"><%= t("stories.new.format") %></legend>
+    <div class="flex gap-2">
+      <% StoryRequest::FORMATS.each do |format| %>
+        <label class="badge cursor-pointer px-4 py-2 text-sm has-[:checked]:bg-ink-strong has-[:checked]:text-white">
+          <%= form.radio_button :format, format, class: "sr-only" %> <%= t("stories.formats.#{format}") %>
+        </label>
+      <% end %>
+    </div>
+  </fieldset>
+
+  <fieldset class="grid gap-2">
+    <legend class="label"><%= t("stories.new.visibility") %></legend>
+    <% StoryForm::VISIBILITIES.each do |visibility| %>
+      <label class="flex items-start gap-3 cursor-pointer">
+        <%= form.radio_button :visibility, visibility, class: "mt-1 size-5 accent-ink-strong" %>
+        <span>
+          <span class="block font-medium text-ink-strong"><%= t("stories.visibility.#{visibility}.title") %></span>
+          <span class="block text-xs text-muted"><%= t("stories.visibility.#{visibility}.hint") %></span>
+        </span>
+      </label>
+    <% end %>
+  </fieldset>
+
+  <% if @reader.display_name.blank? %>
+    <div>
+      <%= form.label :display_name, t("stories.new.display_name"), class: "label" %>
+      <%= form.text_field :display_name, maxlength: 40, placeholder: @reader.author_name, class: "input" %>
+      <p class="text-xs text-muted mt-1"><%= t("stories.new.display_name_hint") %></p>
+    </div>
+  <% end %>
+
+  <label class="flex items-start gap-3 text-sm">
+    <%= form.check_box :rules_accepted, class: "mt-0.5 size-5 accent-ink-strong" %>
+    <span><%= t("stories.new.rules_html", terms: link_to(t("stories.new.rules_link"), terms_path(anchor: "ugc"), class: "underline", target: "_blank")) %></span>
+  </label>
+
+  <div class="flex items-center gap-3">
+    <%= form.submit t("stories.new.submit"), class: "btn-primary" %>
+    <% left = @reader.story_generations_left %>
+    <span class="text-xs text-muted" id="generations-left"><%= left.infinite? ? t("stories.limit.unlimited") : t("stories.limit.left", count: left) %></span>
+  </div>
+<% end %>

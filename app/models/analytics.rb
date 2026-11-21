@@ -4,6 +4,7 @@ module Analytics
   EVENTS = %w[
     landing_viewed onboarding_completed episode_started episode_completed token_tapped bubble_translated
     word_saved review_session_completed signup paywall_viewed checkout_clicked waitlist_email_submitted
+    story_created story_ready story_failed story_published story_shared share_opened story_reported author_hidden
   ].freeze
   UTM_KEYS = %w[utm_source utm_medium utm_campaign utm_content utm_term].freeze
 
@@ -25,7 +26,8 @@ module Analytics
       episode_number: episode&.number,
       episode_level: episode&.cefr_level,
       level: user&.self_level,
-      guest: user&.guest?
+      guest: user&.guest?,
+      ref: user&.referrer_id && user.referrer&.public_id # came through someone's share link (K-factor)
     }.merge((user&.utm.presence || utm || {}).slice(*UTM_KEYS).symbolize_keys).compact
   end
 
