@@ -7,32 +7,43 @@
     "genre": "slice of life",
     "cefr_level": "A1",
     "style_prompt": "Bright, clean Korean webtoon style with crisp line art and soft cel shading; modern Seoul streets, small red-brick apartment buildings, convenience stores, offices and subway stations; soft natural daylight, warm pastel palette, friendly expressive faces. No text, letters or speech bubbles in the image.",
+    "narrator_voice": "Korean_CalmLady",
     "characters": [
       {
         "key": "jisoo",
         "name": "Jisoo",
         "protagonist": true,
-        "appearance_prompt": "Korean woman, 28, shoulder-length straight black hair with soft see-through bangs, warm brown eyes, slim build; casual look: cream knit cardigan over a white T-shirt, light-blue jeans, white sneakers and a small tan crossbody bag; office look: navy blazer over a white blouse. Bright, slightly nervous smile."
+        "appearance_prompt": "Korean woman, 28, shoulder-length straight black hair with soft see-through bangs, warm brown eyes, slim build; casual look: cream knit cardigan over a white T-shirt, light-blue jeans, white sneakers and a small tan crossbody bag; office look: navy blazer over a white blouse. Bright, slightly nervous smile.",
+        "voice": "Korean_SweetGirl",
+        "sheet": "media/sheets/jisoo.jpg"
       },
       {
         "key": "minho",
         "name": "Minho",
-        "appearance_prompt": "Korean man, 28, tall, short tousled dark-brown hair, friendly crescent-shaped eyes and an easy grin; at home a gray hoodie, black joggers and slippers, outside a navy bomber jacket with earphones around his neck. Relaxed, helpful body language."
+        "appearance_prompt": "Korean man, 28, tall, short tousled dark-brown hair, friendly crescent-shaped eyes and an easy grin; at home a gray hoodie, black joggers and slippers, outside a navy bomber jacket with earphones around his neck. Relaxed, helpful body language.",
+        "voice": "Korean_CheerfulBoyfriend",
+        "sheet": "media/sheets/minho.jpg"
       },
       {
         "key": "yuna",
         "name": "Yuna",
-        "appearance_prompt": "Korean woman, 31, chin-length dark bob tucked behind one ear, small silver earrings, the same friendly crescent-shaped eyes as her younger brother Minho; office look: beige blouse, navy slacks, ID badge on a lanyard. Confident, warm, big-sister energy."
+        "appearance_prompt": "Korean woman, 31, chin-length dark bob tucked behind one ear, small silver earrings, the same friendly crescent-shaped eyes as her younger brother Minho; office look: beige blouse, navy slacks, ID badge on a lanyard. Confident, warm, big-sister energy.",
+        "voice": "Korean_FriendlyBigSister",
+        "sheet": "media/sheets/yuna.jpg"
       },
       {
         "key": "clerk",
         "name": "Clerk",
-        "appearance_prompt": "Young Korean convenience-store clerk, early 20s, short black hair, round glasses, green-and-white store uniform vest over a white shirt, polite cheerful expression."
+        "appearance_prompt": "Young Korean man, early 20s, convenience-store clerk, short neat black hair, round glasses, green-and-white store uniform vest over a white shirt with a plain blank name tag (no writing), polite cheerful expression.",
+        "voice": "Korean_OptimisticYouth",
+        "sheet": "media/sheets/clerk.jpg"
       },
       {
         "key": "team_leader",
         "name": "Team Leader Kim",
-        "appearance_prompt": "Korean man in his late 40s, neatly combed short black hair with a little gray at the temples, rectangular glasses, dark suit, white shirt and navy tie; calm, kind but serious expression."
+        "appearance_prompt": "Korean man in his late 40s, neatly combed short black hair with a little gray at the temples, rectangular glasses, dark suit, white shirt and navy tie; calm, kind but serious expression.",
+        "voice": "Korean_GentleBoss",
+        "sheet": "media/sheets/team_leader.jpg"
       }
     ]
   },
@@ -61,6 +72,7 @@
     "panels": [
       {
         "image_prompt": "Bright Saturday morning on a Seoul side street lined with small shops and a convenience store with a green-and-white storefront (no readable signs); Jisoo in a casual jacket walks out of her red-brick building, checking a map on her phone with a determined smile.",
+        "image": "media/03/panel-01.webp",
         "layout": {
           "aspect_ratio": 0.8
         },
@@ -76,6 +88,7 @@
               "w": 68,
               "h": 20
             },
+            "audio": "media/03/bubble-01-01.mp3",
             "tokens": [
               {
                 "surface": "토요일",
@@ -85,7 +98,8 @@
                 "lemma_translation": "Saturday",
                 "romanization": "toyoil",
                 "lemma_romanization": "toyoil",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/noun-4a8e1c20.mp3"
               },
               {
                 "surface": "아침",
@@ -95,7 +109,8 @@
                 "lemma_translation": "morning; breakfast",
                 "romanization": "achim",
                 "lemma_romanization": "achim",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/noun-fe335bdb.mp3"
               },
               {
                 "surface": "지수는",
@@ -116,7 +131,8 @@
                     "role": "particle",
                     "meaning": "topic marker"
                   }
-                ]
+                ],
+                "lemma_audio": "media/words/noun-841a9085.mp3"
               },
               {
                 "surface": "회사에",
@@ -138,7 +154,8 @@
                     "meaning": "to (destination)"
                   }
                 ],
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/noun-03d08edc.mp3"
               },
               {
                 "surface": "미리",
@@ -148,7 +165,8 @@
                 "lemma_translation": "in advance, beforehand",
                 "romanization": "miri",
                 "lemma_romanization": "miri",
-                "cefr": "A2"
+                "cefr": "A2",
+                "lemma_audio": "media/words/adverb-d7c9767a.mp3"
               },
               {
                 "surface": "가 봐요",
@@ -182,7 +200,8 @@
                 ],
                 "politeness": "polite",
                 "cefr": "A2",
-                "note": "V-아/어 보다 = try doing / do and see: 가 봐요 = goes to see for herself."
+                "note": "V-아/어 보다 = try doing / do and see: 가 봐요 = goes to see for herself.",
+                "lemma_audio": "media/words/phrase-e4ca72f5.mp3"
               }
             ]
           },
@@ -197,6 +216,7 @@
               "w": 49,
               "h": 16
             },
+            "audio": "media/03/bubble-01-02.mp3",
             "tokens": [
               {
                 "surface": "먼저",
@@ -206,7 +226,8 @@
                 "lemma_translation": "first, before anything else",
                 "romanization": "meonjeo",
                 "lemma_romanization": "meonjeo",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/adverb-ca06e051.mp3"
               },
               {
                 "surface": "편의점에",
@@ -229,7 +250,8 @@
                   }
                 ],
                 "cefr": "A1",
-                "note": "Target word: 편의점 = convenience store (CU, GS25, 7-Eleven), on almost every Seoul corner."
+                "note": "Target word: 편의점 = convenience store (CU, GS25, 7-Eleven), on almost every Seoul corner.",
+                "lemma_audio": "media/words/noun-066d5472.mp3"
               },
               {
                 "surface": "가야지",
@@ -253,7 +275,8 @@
                 ],
                 "politeness": "casual",
                 "cefr": "A1",
-                "note": "-아/어야지 = 'I should / I'd better', common when talking to yourself."
+                "note": "-아/어야지 = 'I should / I'd better', common when talking to yourself.",
+                "lemma_audio": "media/words/verb-668c0aed.mp3"
               }
             ]
           }
@@ -261,6 +284,7 @@
       },
       {
         "image_prompt": "Inside a bright, tidy Korean convenience store with shelves of snacks, instant noodles and drinks; a young clerk with round glasses behind the counter greets Jisoo with a cheerful smile as she walks in.",
+        "image": "media/03/panel-02.webp",
         "layout": {
           "aspect_ratio": 0.9
         },
@@ -276,6 +300,7 @@
               "w": 41,
               "h": 12
             },
+            "audio": "media/03/bubble-02-01.mp3",
             "tokens": [
               {
                 "surface": "어서 오세요",
@@ -304,7 +329,8 @@
                 ],
                 "politeness": "polite",
                 "cefr": "A1",
-                "note": "Set phrase staff say when you walk into a shop; you don't need to answer."
+                "note": "Set phrase staff say when you walk into a shop; you don't need to answer.",
+                "lemma_audio": "media/words/phrase-c672853c.mp3"
               }
             ]
           },
@@ -319,6 +345,7 @@
               "w": 44,
               "h": 12
             },
+            "audio": "media/03/bubble-02-02.mp3",
             "tokens": [
               {
                 "surface": "교통카드",
@@ -329,7 +356,8 @@
                 "romanization": "gyotongkadeu",
                 "lemma_romanization": "gyotongkadeu",
                 "cefr": "A2",
-                "note": "Target word: 교통카드 = rechargeable card for the subway and buses."
+                "note": "Target word: 교통카드 = rechargeable card for the subway and buses.",
+                "lemma_audio": "media/words/noun-376933d1.mp3"
               },
               {
                 "surface": "있어요",
@@ -353,7 +381,8 @@
                 ],
                 "politeness": "polite",
                 "cefr": "A1",
-                "note": "N 있어요? = 'Do you have N?' or 'Is there N?'"
+                "note": "N 있어요? = 'Do you have N?' or 'Is there N?'",
+                "lemma_audio": "media/words/verb-815f37bb.mp3"
               }
             ]
           }
@@ -361,6 +390,7 @@
       },
       {
         "image_prompt": "Close-up at the counter: the clerk holds up a colorful plain transit card with a cute character design (no text); Jisoo points at it happily.",
+        "image": "media/03/panel-03.webp",
         "layout": {
           "aspect_ratio": 0.85
         },
@@ -376,6 +406,7 @@
               "w": 57,
               "h": 16
             },
+            "audio": "media/03/bubble-03-01.mp3",
             "tokens": [
               {
                 "surface": "네",
@@ -385,7 +416,8 @@
                 "lemma_translation": "yes",
                 "romanization": "ne",
                 "lemma_romanization": "ne",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/interjection-8e732a9b.mp3"
               },
               {
                 "surface": "이",
@@ -395,7 +427,8 @@
                 "lemma_translation": "this",
                 "romanization": "i",
                 "lemma_romanization": "i",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/determiner-cf391bb3.mp3"
               },
               {
                 "surface": "카드는",
@@ -417,7 +450,8 @@
                     "meaning": "topic marker"
                   }
                 ],
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/noun-275765fb.mp3"
               },
               {
                 "surface": "삼천",
@@ -428,7 +462,8 @@
                 "romanization": "samcheon",
                 "lemma_romanization": "samcheon",
                 "cefr": "A2",
-                "note": "Prices use Sino-Korean numbers: 천 = 1,000, 삼천 = 3,000, 만 = 10,000."
+                "note": "Prices use Sino-Korean numbers: 천 = 1,000, 삼천 = 3,000, 만 = 10,000.",
+                "lemma_audio": "media/words/numeral-fa4a202f.mp3"
               },
               {
                 "surface": "원이에요",
@@ -451,7 +486,8 @@
                   }
                 ],
                 "politeness": "polite",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/noun-de198121.mp3"
               }
             ]
           },
@@ -466,6 +502,7 @@
               "w": 46,
               "h": 12
             },
+            "audio": "media/03/bubble-03-02.mp3",
             "tokens": [
               {
                 "surface": "이거",
@@ -475,7 +512,8 @@
                 "lemma_translation": "this thing",
                 "romanization": "igeo",
                 "lemma_romanization": "igeot",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/pronoun-a394c173.mp3"
               },
               {
                 "surface": "하나",
@@ -485,7 +523,8 @@
                 "lemma_translation": "one (native Korean)",
                 "romanization": "hana",
                 "lemma_romanization": "hana",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/numeral-b7e1d86a.mp3"
               },
               {
                 "surface": "주세요",
@@ -509,7 +548,8 @@
                 ],
                 "politeness": "polite",
                 "cefr": "A1",
-                "note": "Target word: N 주세요 = 'N, please', the #1 phrase for shopping and ordering."
+                "note": "Target word: N 주세요 = 'N, please', the #1 phrase for shopping and ordering.",
+                "lemma_audio": "media/words/verb-01f2d553.mp3"
               }
             ]
           }
@@ -517,6 +557,7 @@
       },
       {
         "image_prompt": "Jisoo hands a 10,000-won bill across the counter; the clerk taps the transit card on a small card reader next to the register.",
+        "image": "media/03/panel-04.webp",
         "layout": {
           "aspect_ratio": 0.8
         },
@@ -532,6 +573,7 @@
               "w": 56,
               "h": 16
             },
+            "audio": "media/03/bubble-04-01.mp3",
             "tokens": [
               {
                 "surface": "그리고",
@@ -541,7 +583,8 @@
                 "lemma_translation": "and, and then",
                 "romanization": "geurigo",
                 "lemma_romanization": "geurigo",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/conjunction-ab179d6b.mp3"
               },
               {
                 "surface": "만",
@@ -551,7 +594,8 @@
                 "lemma_translation": "ten thousand",
                 "romanization": "man",
                 "lemma_romanization": "man",
-                "cefr": "A2"
+                "cefr": "A2",
+                "lemma_audio": "media/words/numeral-585f13bb.mp3"
               },
               {
                 "surface": "원",
@@ -561,7 +605,8 @@
                 "lemma_translation": "won (Korean currency)",
                 "romanization": "won",
                 "lemma_romanization": "won",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/noun-de198121.mp3"
               },
               {
                 "surface": "충전해",
@@ -584,7 +629,8 @@
                   }
                 ],
                 "cefr": "A2",
-                "note": "Target word: 충전하다 = to top up a card or charge a phone."
+                "note": "Target word: 충전하다 = to top up a card or charge a phone.",
+                "lemma_audio": "media/words/verb-c837be72.mp3"
               },
               {
                 "surface": "주세요",
@@ -608,7 +654,8 @@
                 ],
                 "politeness": "polite",
                 "cefr": "A1",
-                "note": "V-아/어 주세요 = 'please do V for me'."
+                "note": "V-아/어 주세요 = 'please do V for me'.",
+                "lemma_audio": "media/words/verb-01f2d553.mp3"
               }
             ]
           },
@@ -623,6 +670,7 @@
               "w": 56,
               "h": 16
             },
+            "audio": "media/03/bubble-04-02.mp3",
             "tokens": [
               {
                 "surface": "네",
@@ -632,7 +680,8 @@
                 "lemma_translation": "yes",
                 "romanization": "ne",
                 "lemma_romanization": "ne",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/interjection-8e732a9b.mp3"
               },
               {
                 "surface": "잠깐만요",
@@ -661,7 +710,8 @@
                 ],
                 "politeness": "polite",
                 "cefr": "A1",
-                "note": "Set phrase: 잠깐만요 = 'Just a moment', also 'excuse me' to get past people."
+                "note": "Set phrase: 잠깐만요 = 'Just a moment', also 'excuse me' to get past people.",
+                "lemma_audio": "media/words/noun-47ae4043.mp3"
               },
               {
                 "surface": "여기 있어요",
@@ -690,7 +740,8 @@
                 ],
                 "politeness": "polite",
                 "cefr": "A1",
-                "note": "Set phrase: 'Here you are', said when handing something over."
+                "note": "Set phrase: 'Here you are', said when handing something over.",
+                "lemma_audio": "media/words/phrase-ccdd95fa.mp3"
               }
             ]
           }
@@ -698,6 +749,7 @@
       },
       {
         "image_prompt": "Jisoo leans in with a questioning look, phone in hand; the clerk smiles and points toward the store's glass door, gesturing to the left.",
+        "image": "media/03/panel-05.webp",
         "layout": {
           "aspect_ratio": 0.8
         },
@@ -713,6 +765,7 @@
               "w": 59,
               "h": 16
             },
+            "audio": "media/03/bubble-05-01.mp3",
             "tokens": [
               {
                 "surface": "저기",
@@ -723,7 +776,8 @@
                 "romanization": "jeogi",
                 "lemma_romanization": "jeogi",
                 "cefr": "A1",
-                "note": "저기 (lit. 'over there') is a soft 'excuse me…' to get someone's attention."
+                "note": "저기 (lit. 'over there') is a soft 'excuse me…' to get someone's attention.",
+                "lemma_audio": "media/words/interjection-c758330d.mp3"
               },
               {
                 "surface": "지하철역이",
@@ -751,7 +805,8 @@
                   }
                 ],
                 "cefr": "A1",
-                "note": "Target word: 지하철역 = subway station (지하철 subway + 역 station)."
+                "note": "Target word: 지하철역 = subway station (지하철 subway + 역 station).",
+                "lemma_audio": "media/words/noun-b8bcb35d.mp3"
               },
               {
                 "surface": "어디에",
@@ -774,7 +829,8 @@
                   }
                 ],
                 "cefr": "A1",
-                "note": "Target word: N이/가 어디에 있어요? = Where is N?"
+                "note": "Target word: N이/가 어디에 있어요? = Where is N?",
+                "lemma_audio": "media/words/pronoun-1687d6c2.mp3"
               },
               {
                 "surface": "있어요",
@@ -797,7 +853,8 @@
                   }
                 ],
                 "politeness": "polite",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/verb-815f37bb.mp3"
               }
             ]
           },
@@ -812,6 +869,7 @@
               "w": 54,
               "h": 16
             },
+            "audio": "media/03/bubble-05-02.mp3",
             "tokens": [
               {
                 "surface": "나가서",
@@ -834,7 +892,8 @@
                   }
                 ],
                 "cefr": "A1",
-                "note": "-아/어서 links steps in order: go out, and then…"
+                "note": "-아/어서 links steps in order: go out, and then…",
+                "lemma_audio": "media/words/verb-448f28ee.mp3"
               },
               {
                 "surface": "왼쪽으로",
@@ -857,7 +916,8 @@
                   }
                 ],
                 "cefr": "A1",
-                "note": "Target word: 왼쪽 = left (오른쪽 = right)."
+                "note": "Target word: 왼쪽 = left (오른쪽 = right).",
+                "lemma_audio": "media/words/noun-0b88db59.mp3"
               },
               {
                 "surface": "쭉",
@@ -867,7 +927,8 @@
                 "lemma_translation": "straight, all the way",
                 "romanization": "jjuk",
                 "lemma_romanization": "jjuk",
-                "cefr": "A2"
+                "cefr": "A2",
+                "lemma_audio": "media/words/adverb-6f4c4aa5.mp3"
               },
               {
                 "surface": "가세요",
@@ -890,7 +951,8 @@
                   }
                 ],
                 "politeness": "polite",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/verb-668c0aed.mp3"
               }
             ]
           }
@@ -898,6 +960,7 @@
       },
       {
         "image_prompt": "Jisoo bows politely at the counter with her new card in hand while the clerk bows back with a friendly little wave.",
+        "image": "media/03/panel-06.webp",
         "layout": {
           "aspect_ratio": 0.85
         },
@@ -913,6 +976,7 @@
               "w": 49,
               "h": 16
             },
+            "audio": "media/03/bubble-06-01.mp3",
             "tokens": [
               {
                 "surface": "걸어서",
@@ -935,7 +999,8 @@
                   }
                 ],
                 "cefr": "A1",
-                "note": "Target word: 걷다 is ㄷ-irregular: 걷 + 어서 → 걸어서 = on foot."
+                "note": "Target word: 걷다 is ㄷ-irregular: 걷 + 어서 → 걸어서 = on foot.",
+                "lemma_audio": "media/words/verb-58b8653e.mp3"
               },
               {
                 "surface": "오",
@@ -945,7 +1010,8 @@
                 "lemma_translation": "five (Sino-Korean)",
                 "romanization": "o",
                 "lemma_romanization": "o",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/numeral-b253b9cb.mp3"
               },
               {
                 "surface": "분",
@@ -955,7 +1021,8 @@
                 "lemma_translation": "minute",
                 "romanization": "bun",
                 "lemma_romanization": "bun",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/noun-9b8ece48.mp3"
               },
               {
                 "surface": "걸려요",
@@ -979,7 +1046,8 @@
                 ],
                 "politeness": "polite",
                 "cefr": "A2",
-                "note": "Target word: (time) 걸려요 = it takes (time)."
+                "note": "Target word: (time) 걸려요 = it takes (time).",
+                "lemma_audio": "media/words/verb-d7164b3e.mp3"
               }
             ]
           },
@@ -994,6 +1062,7 @@
               "w": 54,
               "h": 16
             },
+            "audio": "media/03/bubble-06-02.mp3",
             "tokens": [
               {
                 "surface": "감사합니다",
@@ -1016,7 +1085,8 @@
                   }
                 ],
                 "politeness": "formal",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/verb-92460ecc.mp3"
               },
               {
                 "surface": "안녕히 계세요",
@@ -1045,7 +1115,8 @@
                 ],
                 "politeness": "polite",
                 "cefr": "A1",
-                "note": "Set phrase: say 안녕히 계세요 when YOU leave; say 안녕히 가세요 to someone who leaves."
+                "note": "Set phrase: say 안녕히 계세요 when YOU leave; say 안녕히 가세요 to someone who leaves.",
+                "lemma_audio": "media/words/phrase-7ac2735a.mp3"
               }
             ]
           }
@@ -1053,6 +1124,7 @@
       },
       {
         "image_prompt": "Inside a busy Seoul subway station: Jisoo stands in front of a huge colorful subway map on the wall (only colored lines and dots, no readable text), eyes spinning in confusion, a sweat drop on her cheek, commuters rushing past behind her.",
+        "image": "media/03/panel-07.webp",
         "layout": {
           "aspect_ratio": 0.8
         },
@@ -1068,6 +1140,7 @@
               "w": 62,
               "h": 16
             },
+            "audio": "media/03/bubble-07-01.mp3",
             "tokens": [
               {
                 "surface": "어",
@@ -1077,7 +1150,8 @@
                 "lemma_translation": "uh, huh (hesitation or surprise)",
                 "romanization": "eo",
                 "lemma_romanization": "eo",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/interjection-1fe9f8dc.mp3"
               },
               {
                 "surface": "어느",
@@ -1087,7 +1161,8 @@
                 "lemma_translation": "which",
                 "romanization": "eoneu",
                 "lemma_romanization": "eoneu",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/determiner-858d5dd2.mp3"
               },
               {
                 "surface": "쪽이지",
@@ -1115,7 +1190,8 @@
                   }
                 ],
                 "politeness": "casual",
-                "cefr": "A2"
+                "cefr": "A2",
+                "lemma_audio": "media/words/noun-dc3fc72c.mp3"
               },
               {
                 "surface": "너무",
@@ -1125,7 +1201,8 @@
                 "lemma_translation": "too, very",
                 "romanization": "neomu",
                 "lemma_romanization": "neomu",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/adverb-599566ca.mp3"
               },
               {
                 "surface": "복잡해",
@@ -1148,7 +1225,8 @@
                   }
                 ],
                 "politeness": "casual",
-                "cefr": "A2"
+                "cefr": "A2",
+                "lemma_audio": "media/words/adjective-6de7bfd8.mp3"
               }
             ]
           }
@@ -1156,6 +1234,7 @@
       },
       {
         "image_prompt": "Minho, in a navy bomber jacket with earphones around his neck, appears behind Jisoo in the station and taps her shoulder; she turns around, surprised and relieved.",
+        "image": "media/03/panel-08.webp",
         "layout": {
           "aspect_ratio": 0.8
         },
@@ -1171,6 +1250,7 @@
               "w": 51,
               "h": 16
             },
+            "audio": "media/03/bubble-08-01.mp3",
             "tokens": [
               {
                 "surface": "지수야",
@@ -1191,7 +1271,8 @@
                     "role": "particle",
                     "meaning": "vocative (calling a friend)"
                   }
-                ]
+                ],
+                "lemma_audio": "media/words/noun-841a9085.mp3"
               },
               {
                 "surface": "여기서",
@@ -1213,7 +1294,8 @@
                     "meaning": "at (short for 에서)"
                   }
                 ],
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/pronoun-49fc91c7.mp3"
               },
               {
                 "surface": "뭐",
@@ -1223,7 +1305,8 @@
                 "lemma_translation": "what (spoken form of 무엇)",
                 "romanization": "mwo",
                 "lemma_romanization": "mwo",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/pronoun-fe10701b.mp3"
               },
               {
                 "surface": "해",
@@ -1247,7 +1330,8 @@
                 ],
                 "politeness": "casual",
                 "cefr": "A1",
-                "note": "Casual 반말: since episode 2, Minho and Jisoo talk as friends."
+                "note": "Casual 반말: since episode 2, Minho and Jisoo talk as friends.",
+                "lemma_audio": "media/words/verb-edcdf9de.mp3"
               }
             ]
           },
@@ -1262,6 +1346,7 @@
               "w": 64,
               "h": 20
             },
+            "audio": "media/03/bubble-08-02.mp3",
             "tokens": [
               {
                 "surface": "강남역에",
@@ -1282,7 +1367,8 @@
                     "role": "particle",
                     "meaning": "to (destination)"
                   }
-                ]
+                ],
+                "lemma_audio": "media/words/noun-5f4f66f7.mp3"
               },
               {
                 "surface": "가고",
@@ -1304,7 +1390,8 @@
                     "meaning": "connector (+ 싶다 = want to)"
                   }
                 ],
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/verb-668c0aed.mp3"
               },
               {
                 "surface": "싶어",
@@ -1327,7 +1414,8 @@
                   }
                 ],
                 "politeness": "casual",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/adjective-9bd749cb.mp3"
               },
               {
                 "surface": "근데",
@@ -1337,7 +1425,8 @@
                 "lemma_translation": "but; by the way (spoken 그런데)",
                 "romanization": "geunde",
                 "lemma_romanization": "geunde",
-                "cefr": "A2"
+                "cefr": "A2",
+                "lemma_audio": "media/words/conjunction-458ee258.mp3"
               },
               {
                 "surface": "길을",
@@ -1360,7 +1449,8 @@
                   }
                 ],
                 "cefr": "A1",
-                "note": "Target word: 길 = road, or the way somewhere: 길을 몰라요 = I don't know the way."
+                "note": "Target word: 길 = road, or the way somewhere: 길을 몰라요 = I don't know the way.",
+                "lemma_audio": "media/words/noun-32af6c98.mp3"
               },
               {
                 "surface": "몰라",
@@ -1384,7 +1474,8 @@
                 ],
                 "politeness": "casual",
                 "cefr": "A1",
-                "note": "Target word: 모르다 = not to know; 르-irregular: 모르 + 아 → 몰라."
+                "note": "Target word: 모르다 = not to know; 르-irregular: 모르 + 아 → 몰라.",
+                "lemma_audio": "media/words/verb-a5222be2.mp3"
               }
             ]
           }
@@ -1392,6 +1483,7 @@
       },
       {
         "image_prompt": "Minho points confidently toward green-colored signs and stairs leading down to a platform in the distance (only colors and arrows, no text); Jisoo follows his finger with a bright 'aha' expression.",
+        "image": "media/03/panel-09.webp",
         "layout": {
           "aspect_ratio": 0.85
         },
@@ -1407,6 +1499,7 @@
               "w": 59,
               "h": 16
             },
+            "audio": "media/03/bubble-09-01.mp3",
             "tokens": [
               {
                 "surface": "저기서",
@@ -1428,7 +1521,8 @@
                     "meaning": "at, from (short for 에서)"
                   }
                 ],
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/pronoun-fe6e6213.mp3"
               },
               {
                 "surface": "2호선을",
@@ -1451,7 +1545,8 @@
                   }
                 ],
                 "cefr": "A2",
-                "note": "Subway lines are 호선 with Sino-Korean numbers: 2호선 = 이호선."
+                "note": "Subway lines are 호선 with Sino-Korean numbers: 2호선 = 이호선.",
+                "lemma_audio": "media/words/2-f639d414.mp3"
               },
               {
                 "surface": "타",
@@ -1475,7 +1570,8 @@
                 ],
                 "politeness": "casual",
                 "cefr": "A1",
-                "note": "Target word: 타다 = to take a bus, subway or taxi; the vehicle gets 을/를."
+                "note": "Target word: 타다 = to take a bus, subway or taxi; the vehicle gets 을/를.",
+                "lemma_audio": "media/words/verb-280c13c3.mp3"
               },
               {
                 "surface": "초록색이야",
@@ -1498,7 +1594,8 @@
                   }
                 ],
                 "politeness": "casual",
-                "cefr": "A2"
+                "cefr": "A2",
+                "lemma_audio": "media/words/noun-c767f2ae.mp3"
               }
             ]
           },
@@ -1513,6 +1610,7 @@
               "w": 54,
               "h": 16
             },
+            "audio": "media/03/bubble-09-02.mp3",
             "tokens": [
               {
                 "surface": "아",
@@ -1522,7 +1620,8 @@
                 "lemma_translation": "ah, oh",
                 "romanization": "a",
                 "lemma_romanization": "a",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/interjection-45ff4c01.mp3"
               },
               {
                 "surface": "고마워",
@@ -1546,7 +1645,8 @@
                 ],
                 "politeness": "casual",
                 "cefr": "A1",
-                "note": "Casual 'thanks' between friends; polite: 고마워요."
+                "note": "Casual 'thanks' between friends; polite: 고마워요.",
+                "lemma_audio": "media/words/adjective-54806d7b.mp3"
               },
               {
                 "surface": "이제",
@@ -1556,7 +1656,8 @@
                 "lemma_translation": "now (from now on)",
                 "romanization": "ije",
                 "lemma_romanization": "ije",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/adverb-352cdd11.mp3"
               },
               {
                 "surface": "알겠어",
@@ -1584,7 +1685,8 @@
                   }
                 ],
                 "politeness": "casual",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/verb-3ef7bb2f.mp3"
               }
             ]
           }
@@ -1592,6 +1694,7 @@
       },
       {
         "image_prompt": "Jisoo sits on a clean, quiet Seoul subway train holding her new transit card, smiling at her reflection in the dark window; a soft, hopeful mood with a hint of nerves.",
+        "image": "media/03/panel-10.webp",
         "layout": {
           "aspect_ratio": 0.75
         },
@@ -1607,6 +1710,7 @@
               "w": 68,
               "h": 20
             },
+            "audio": "media/03/bubble-10-01.mp3",
             "tokens": [
               {
                 "surface": "월요일은",
@@ -1628,7 +1732,8 @@
                     "meaning": "topic marker"
                   }
                 ],
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/noun-f8aa8cef.mp3"
               },
               {
                 "surface": "첫",
@@ -1638,7 +1743,8 @@
                 "lemma_translation": "first",
                 "romanization": "cheot",
                 "lemma_romanization": "cheot",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/determiner-f7e3b276.mp3"
               },
               {
                 "surface": "출근이에요",
@@ -1661,7 +1767,8 @@
                   }
                 ],
                 "politeness": "polite",
-                "cefr": "A2"
+                "cefr": "A2",
+                "lemma_audio": "media/words/noun-fc1d508d.mp3"
               },
               {
                 "surface": "지수는",
@@ -1682,7 +1789,8 @@
                     "role": "particle",
                     "meaning": "topic marker"
                   }
-                ]
+                ],
+                "lemma_audio": "media/words/noun-841a9085.mp3"
               },
               {
                 "surface": "조금",
@@ -1692,7 +1800,8 @@
                 "lemma_translation": "a little, a bit",
                 "romanization": "jogeum",
                 "lemma_romanization": "jogeum",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/adverb-b09879cc.mp3"
               },
               {
                 "surface": "떨려요",
@@ -1715,7 +1824,8 @@
                   }
                 ],
                 "politeness": "polite",
-                "cefr": "A2"
+                "cefr": "A2",
+                "lemma_audio": "media/words/verb-42596b68.mp3"
               }
             ]
           }

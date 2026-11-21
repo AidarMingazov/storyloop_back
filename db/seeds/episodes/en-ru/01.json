@@ -7,27 +7,36 @@
     "genre": "romance",
     "cefr_level": "A2",
     "style_prompt": "Soft, warm Korean webtoon style with clean, thin line art and gentle cel shading. Pastel palette of peach, cream, mint and latte brown, cozy golden lighting, expressive but simple faces, slightly rounded proportions, uncluttered backgrounds with soft bokeh. Vertical-scroll comic panel composition. No text, letters, readable signs or speech bubbles in the image.",
+    "narrator_voice": "English_CaptivatingStoryteller",
     "characters": [
       {
         "key": "mia",
         "name": "Mia",
         "appearance_prompt": "24-year-old woman, petite, shoulder-length wavy auburn hair usually tied in a messy low bun with a few loose strands, warm brown eyes, light freckles across her nose and cheeks, small silver star earrings. At work she wears a mustard-yellow barista apron over a cream knit sweater with pushed-up sleeves, black jeans and white sneakers.",
-        "protagonist": true
+        "protagonist": true,
+        "voice": "English_SentimentalLady",
+        "sheet": "media/sheets/mia.jpg"
       },
       {
         "key": "leo",
         "name": "Leo",
-        "appearance_prompt": "26-year-old man, tall and slim, messy dark-brown hair falling over his forehead, round tortoiseshell glasses, soft green eyes, a small ink stain on his right hand. Wears an oversized olive-green corduroy jacket over a plain white T-shirt, beige chinos and worn white sneakers; usually carries a brown leather sketchbook."
+        "appearance_prompt": "26-year-old man, tall and slim, messy dark-brown hair falling over his forehead, round tortoiseshell glasses, soft green eyes, a small ink stain on his right hand. Wears an oversized olive-green corduroy jacket over a plain white T-shirt, beige chinos and worn white sneakers; usually carries a brown leather sketchbook.",
+        "voice": "English_DecentYoungMan",
+        "sheet": "media/sheets/leo.jpg"
       },
       {
         "key": "sam",
         "name": "Sam",
-        "appearance_prompt": "25-year-old woman, Mia's roommate, short bleached-blonde pixie cut, bright blue eyes, wide cheerful grin, several small silver ear piercings. Wears oversized lavender hoodies, patterned leggings and fuzzy socks; very expressive face, often has her phone in her hand."
+        "appearance_prompt": "25-year-old woman, Mia's roommate, short bleached-blonde pixie cut, bright blue eyes, wide cheerful grin, several small silver ear piercings. Wears oversized lavender hoodies, patterned leggings and fuzzy socks; very expressive face, often has her phone in her hand.",
+        "voice": "English_PlayfulGirl",
+        "sheet": "media/sheets/sam.jpg"
       },
       {
         "key": "nora",
         "name": "Nora",
-        "appearance_prompt": "28-year-old woman, tall and elegant, long glossy black hair in loose waves, soft green eyes exactly like Leo's, bright red lipstick, gold hoop earrings. Wears a fitted red dress under a cream trench coat and red heels; dramatic, confident gestures."
+        "appearance_prompt": "28-year-old woman, tall and elegant, long glossy black hair in loose waves, soft green eyes exactly like Leo's, bright red lipstick, gold hoop earrings. Wears a fitted red dress under a cream trench coat and red heels; dramatic, confident gestures.",
+        "voice": "English_ConfidentWoman",
+        "sheet": "media/sheets/nora.jpg"
       }
     ]
   },
@@ -54,6 +63,7 @@
     "panels": [
       {
         "image_prompt": "Interior of a small cozy café on an early Monday morning: warm wooden counter, hanging plants, big windows with soft morning light. A long line of sleepy customers in coats, some looking at their phones. Behind the counter, Mia in her mustard-yellow apron looks tired but keeps a polite smile, steam rising from a big chrome espresso machine.",
+        "image": "media/01/panel-01.webp",
         "layout": {
           "aspect_ratio": 0.75
         },
@@ -69,6 +79,7 @@
               "w": 52,
               "h": 15
             },
+            "audio": "media/01/bubble-01-01.mp3",
             "tokens": [
               {
                 "surface": "Monday",
@@ -76,21 +87,24 @@
                 "pos": "noun",
                 "translation": "понедельника",
                 "lemma_translation": "понедельник",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/monday-2eefa621.mp3"
               },
               {
                 "surface": "morning",
                 "lemma": "morning",
                 "pos": "noun",
                 "translation": "утро",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/morning-886ce6b5.mp3"
               },
               {
                 "surface": "Everyone",
                 "lemma": "everyone",
                 "pos": "pronoun",
                 "translation": "все",
-                "lemma_translation": "каждый, все"
+                "lemma_translation": "каждый, все",
+                "lemma_audio": "media/words/everyone-073b4f20.mp3"
               },
               {
                 "surface": "is",
@@ -98,7 +112,8 @@
                 "pos": "verb",
                 "translation": "есть (связка)",
                 "lemma_translation": "быть",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/be-f99e9dd9.mp3"
               },
               {
                 "surface": "in a hurry",
@@ -107,7 +122,8 @@
                 "translation": "спешат",
                 "lemma_translation": "в спешке; торопиться",
                 "cefr": "A2",
-                "note": "Be in a hurry — спешить, торопиться: так говорят, когда у человека мало времени."
+                "note": "Be in a hurry — спешить, торопиться: так говорят, когда у человека мало времени.",
+                "lemma_audio": "media/words/in-a-hurry-a04197ef.mp3"
               }
             ]
           },
@@ -122,20 +138,23 @@
               "w": 36,
               "h": 12
             },
+            "audio": "media/01/bubble-01-02.mp3",
             "tokens": [
               {
                 "surface": "Next",
                 "lemma": "next",
                 "pos": "adjective",
                 "translation": "следующий",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/next-2e955749.mp3"
               },
               {
                 "surface": "please",
                 "lemma": "please",
                 "pos": "adverb",
                 "translation": "пожалуйста",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/please-f89315ea.mp3"
               }
             ]
           }
@@ -143,6 +162,7 @@
       },
       {
         "image_prompt": "Leo, a tall young man with messy dark-brown hair, round tortoiseshell glasses and an olive-green corduroy jacket, steps up to the café counter with a leather sketchbook under his arm and smiles politely. Mia behind the counter holds a paper cup and a black marker, ready to write. Busy café in the soft-focus background.",
+        "image": "media/01/panel-02.webp",
         "layout": {
           "aspect_ratio": 0.8
         },
@@ -158,6 +178,7 @@
               "w": 52,
               "h": 15
             },
+            "audio": "media/01/bubble-02-01.mp3",
             "tokens": [
               {
                 "surface": "Hi",
@@ -165,13 +186,15 @@
                 "pos": "interjection",
                 "translation": "здравствуйте",
                 "lemma_translation": "привет",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/hi-e2e1961d.mp3"
               },
               {
                 "surface": "A",
                 "lemma": "a",
                 "pos": "determiner",
-                "translation": "неопределённый артикль"
+                "translation": "неопределённый артикль",
+                "lemma_audio": "media/words/a-8903b6ef.mp3"
               },
               {
                 "surface": "flat white",
@@ -179,14 +202,16 @@
                 "pos": "noun",
                 "translation": "флэт уайт",
                 "cefr": "B1",
-                "note": "Кофейный напиток: эспрессо с небольшим количеством молока и тонкой пенкой."
+                "note": "Кофейный напиток: эспрессо с небольшим количеством молока и тонкой пенкой.",
+                "lemma_audio": "media/words/flat-white-b2590f20.mp3"
               },
               {
                 "surface": "please",
                 "lemma": "please",
                 "pos": "adverb",
                 "translation": "пожалуйста",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/please-f89315ea.mp3"
               },
               {
                 "surface": "No",
@@ -194,7 +219,8 @@
                 "pos": "determiner",
                 "translation": "без",
                 "lemma_translation": "нет; никакой",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/no-e5a02382.mp3"
               },
               {
                 "surface": "sugar",
@@ -202,7 +228,8 @@
                 "pos": "noun",
                 "translation": "сахара",
                 "lemma_translation": "сахар",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/sugar-30c3ab6b.mp3"
               }
             ]
           },
@@ -217,20 +244,23 @@
               "w": 36,
               "h": 12
             },
+            "audio": "media/01/bubble-02-02.mp3",
             "tokens": [
               {
                 "surface": "Sure",
                 "lemma": "sure",
                 "pos": "adverb",
                 "translation": "конечно",
-                "cefr": "A2"
+                "cefr": "A2",
+                "lemma_audio": "media/words/sure-3190efed.mp3"
               },
               {
                 "surface": "Name",
                 "lemma": "name",
                 "pos": "noun",
                 "translation": "имя",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/name-a58917ec.mp3"
               }
             ]
           },
@@ -245,12 +275,14 @@
               "w": 36,
               "h": 12
             },
+            "audio": "media/01/bubble-02-03.mp3",
             "tokens": [
               {
                 "surface": "Leo",
                 "lemma": "Leo",
                 "pos": "noun",
-                "translation": "Лео"
+                "translation": "Лео",
+                "lemma_audio": "media/words/leo-c79cfd30.mp3"
               }
             ]
           }
@@ -258,6 +290,7 @@
       },
       {
         "image_prompt": "Close-up of Mia working fast at the espresso machine: two paper cups side by side on the counter, one plain, one topped with a tall swirl of whipped cream and caramel sauce. Mia looks focused and a little overconfident, a loose strand of auburn hair falling over her face.",
+        "image": "media/01/panel-03.webp",
         "layout": {
           "aspect_ratio": 0.9
         },
@@ -273,27 +306,31 @@
               "w": 60,
               "h": 18
             },
+            "audio": "media/01/bubble-03-01.mp3",
             "tokens": [
               {
                 "surface": "One",
                 "lemma": "one",
                 "pos": "numeral",
                 "translation": "один",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/one-671f4a44.mp3"
               },
               {
                 "surface": "flat white",
                 "lemma": "flat white",
                 "pos": "noun",
                 "translation": "флэт уайт",
-                "cefr": "B1"
+                "cefr": "B1",
+                "lemma_audio": "media/words/flat-white-b2590f20.mp3"
               },
               {
                 "surface": "one",
                 "lemma": "one",
                 "pos": "numeral",
                 "translation": "один",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/one-671f4a44.mp3"
               },
               {
                 "surface": "caramel",
@@ -301,20 +338,23 @@
                 "pos": "noun",
                 "translation": "карамельный",
                 "lemma_translation": "карамель",
-                "cefr": "B1"
+                "cefr": "B1",
+                "lemma_audio": "media/words/caramel-f788ae33.mp3"
               },
               {
                 "surface": "latte",
                 "lemma": "latte",
                 "pos": "noun",
                 "translation": "латте",
-                "cefr": "B1"
+                "cefr": "B1",
+                "lemma_audio": "media/words/latte-38a7f1a3.mp3"
               },
               {
                 "surface": "with",
                 "lemma": "with",
                 "pos": "preposition",
-                "translation": "с"
+                "translation": "с",
+                "lemma_audio": "media/words/with-80b81d1f.mp3"
               },
               {
                 "surface": "extra",
@@ -322,7 +362,8 @@
                 "pos": "adjective",
                 "translation": "дополнительными",
                 "lemma_translation": "дополнительный",
-                "cefr": "A2"
+                "cefr": "A2",
+                "lemma_audio": "media/words/extra-6d6d5356.mp3"
               },
               {
                 "surface": "cream",
@@ -330,7 +371,8 @@
                 "pos": "noun",
                 "translation": "сливками",
                 "lemma_translation": "сливки",
-                "cefr": "A2"
+                "cefr": "A2",
+                "lemma_audio": "media/words/cream-caffe545.mp3"
               },
               {
                 "surface": "Easy",
@@ -338,7 +380,8 @@
                 "pos": "adjective",
                 "translation": "легко",
                 "lemma_translation": "лёгкий",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/easy-24dcffaf.mp3"
               }
             ]
           }
@@ -346,6 +389,7 @@
       },
       {
         "image_prompt": "Leo takes a sip from his paper cup and makes a funny face, eyes squeezed shut, a small whipped-cream mustache on his upper lip. Behind the counter Mia freezes, holding the other cup, slowly realizing her mistake.",
+        "image": "media/01/panel-04.webp",
         "layout": {
           "aspect_ratio": 0.8
         },
@@ -361,18 +405,21 @@
               "w": 44,
               "h": 13
             },
+            "audio": "media/01/bubble-04-01.mp3",
             "tokens": [
               {
                 "surface": "Hmm",
                 "lemma": "hmm",
                 "pos": "interjection",
-                "translation": "хм"
+                "translation": "хм",
+                "lemma_audio": "media/words/hmm-d1bc70d9.mp3"
               },
               {
                 "surface": "This",
                 "lemma": "this",
                 "pos": "pronoun",
-                "translation": "это"
+                "translation": "это",
+                "lemma_audio": "media/words/this-8504606b.mp3"
               },
               {
                 "surface": "is",
@@ -380,14 +427,16 @@
                 "pos": "verb",
                 "translation": "есть (связка)",
                 "lemma_translation": "быть",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/be-f99e9dd9.mp3"
               },
               {
                 "surface": "very",
                 "lemma": "very",
                 "pos": "adverb",
                 "translation": "очень",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/very-c3dbf5e8.mp3"
               },
               {
                 "surface": "sweet",
@@ -395,7 +444,8 @@
                 "pos": "adjective",
                 "translation": "сладко",
                 "lemma_translation": "сладкий",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/sweet-0c6475a5.mp3"
               }
             ]
           },
@@ -410,18 +460,21 @@
               "w": 44,
               "h": 13
             },
+            "audio": "media/01/bubble-04-02.mp3",
             "tokens": [
               {
                 "surface": "Oh no",
                 "lemma": "oh no",
                 "pos": "interjection",
-                "translation": "о нет"
+                "translation": "о нет",
+                "lemma_audio": "media/words/oh-no-f79cf7f8.mp3"
               },
               {
                 "surface": "I",
                 "lemma": "I",
                 "pos": "pronoun",
-                "translation": "я"
+                "translation": "я",
+                "lemma_audio": "media/words/i-8bae2050.mp3"
               },
               {
                 "surface": "mixed up",
@@ -430,13 +483,15 @@
                 "translation": "перепутала",
                 "lemma_translation": "перепутать",
                 "cefr": "A2",
-                "note": "Mix up — перепутать одно с другим: mix up the orders — перепутать заказы."
+                "note": "Mix up — перепутать одно с другим: mix up the orders — перепутать заказы.",
+                "lemma_audio": "media/words/mix-up-6443c5b4.mp3"
               },
               {
                 "surface": "the",
                 "lemma": "the",
                 "pos": "determiner",
-                "translation": "определённый артикль"
+                "translation": "определённый артикль",
+                "lemma_audio": "media/words/the-ca7c5991.mp3"
               },
               {
                 "surface": "orders",
@@ -444,7 +499,8 @@
                 "pos": "noun",
                 "translation": "заказы",
                 "lemma_translation": "заказ",
-                "cefr": "A2"
+                "cefr": "A2",
+                "lemma_audio": "media/words/order-aaa1906c.mp3"
               }
             ]
           }
@@ -452,6 +508,7 @@
       },
       {
         "image_prompt": "Dynamic comedic action shot: Mia hurries around the end of the counter carrying a fresh cup of coffee, her foot catches on a backpack strap lying on the floor, she trips forward and the coffee flies out of the cup in a big splash. Motion lines, wide panicked eyes.",
+        "image": "media/01/panel-05.webp",
         "layout": {
           "aspect_ratio": 0.85
         },
@@ -467,6 +524,7 @@
               "w": 52,
               "h": 15
             },
+            "audio": "media/01/bubble-05-01.mp3",
             "tokens": [
               {
                 "surface": "Wait",
@@ -474,7 +532,8 @@
                 "pos": "verb",
                 "translation": "подождите",
                 "lemma_translation": "ждать",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/wait-4de176d8.mp3"
               },
               {
                 "surface": "I'll",
@@ -482,7 +541,8 @@
                 "pos": "pronoun",
                 "translation": "я",
                 "lemma_translation": "я буду",
-                "note": "I'll = I will: так образуется будущее время (I'll bring — я принесу)."
+                "note": "I'll = I will: так образуется будущее время (I'll bring — я принесу).",
+                "lemma_audio": "media/words/i-will-7225199a.mp3"
               },
               {
                 "surface": "bring",
@@ -490,27 +550,31 @@
                 "pos": "verb",
                 "translation": "принесу",
                 "lemma_translation": "приносить",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/bring-8c021d3a.mp3"
               },
               {
                 "surface": "you",
                 "lemma": "you",
                 "pos": "pronoun",
                 "translation": "вам",
-                "lemma_translation": "ты; вы"
+                "lemma_translation": "ты; вы",
+                "lemma_audio": "media/words/you-3b679ac2.mp3"
               },
               {
                 "surface": "the",
                 "lemma": "the",
                 "pos": "determiner",
-                "translation": "определённый артикль"
+                "translation": "определённый артикль",
+                "lemma_audio": "media/words/the-ca7c5991.mp3"
               },
               {
                 "surface": "right",
                 "lemma": "right",
                 "pos": "adjective",
                 "translation": "правильный",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/right-f8f620fe.mp3"
               },
               {
                 "surface": "one",
@@ -518,7 +582,8 @@
                 "pos": "pronoun",
                 "translation": "напиток",
                 "lemma_translation": "один",
-                "note": "Здесь one заменяет уже названное слово (coffee), чтобы не повторять его: the right one — правильный (кофе)."
+                "note": "Здесь one заменяет уже названное слово (coffee), чтобы не повторять его: the right one — правильный (кофе).",
+                "lemma_audio": "media/words/one-823f90d3.mp3"
               }
             ]
           }
@@ -526,6 +591,7 @@
       },
       {
         "image_prompt": "Coffee splashed all over Leo's open sketchbook on a small café table, brown drips running across pencil drawings. Mia stands next to the table with both hands over her mouth, horrified. Leo sits blinking in surprise, still holding the sweet latte.",
+        "image": "media/01/panel-06.webp",
         "layout": {
           "aspect_ratio": 1.0
         },
@@ -541,6 +607,7 @@
               "w": 52,
               "h": 15
             },
+            "audio": "media/01/bubble-06-01.mp3",
             "tokens": [
               {
                 "surface": "I'm",
@@ -548,14 +615,16 @@
                 "pos": "pronoun",
                 "translation": "мне",
                 "lemma_translation": "я",
-                "note": "I'm = I am. По-русски здесь «мне»: I'm sorry — мне жаль."
+                "note": "I'm = I am. По-русски здесь «мне»: I'm sorry — мне жаль.",
+                "lemma_audio": "media/words/i-am-f95a441b.mp3"
               },
               {
                 "surface": "so",
                 "lemma": "so",
                 "pos": "adverb",
                 "translation": "так",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/so-f23bf725.mp3"
               },
               {
                 "surface": "sorry",
@@ -563,13 +632,15 @@
                 "pos": "adjective",
                 "translation": "жаль",
                 "lemma_translation": "извините; сожалеющий",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/sorry-fd9fda18.mp3"
               },
               {
                 "surface": "I",
                 "lemma": "I",
                 "pos": "pronoun",
-                "translation": "я"
+                "translation": "я",
+                "lemma_audio": "media/words/i-8bae2050.mp3"
               },
               {
                 "surface": "spilled",
@@ -578,27 +649,31 @@
                 "translation": "пролила",
                 "lemma_translation": "проливать, разливать",
                 "cefr": "B1",
-                "note": "Spill — пролить жидкость: spill coffee on something — пролить кофе на что-то. Прошедшее время: spilled (или spilt)."
+                "note": "Spill — пролить жидкость: spill coffee on something — пролить кофе на что-то. Прошедшее время: spilled (или spilt).",
+                "lemma_audio": "media/words/spill-356b5f2c.mp3"
               },
               {
                 "surface": "coffee",
                 "lemma": "coffee",
                 "pos": "noun",
                 "translation": "кофе",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/coffee-9c123df5.mp3"
               },
               {
                 "surface": "on",
                 "lemma": "on",
                 "pos": "preposition",
-                "translation": "на"
+                "translation": "на",
+                "lemma_audio": "media/words/on-eb63c25a.mp3"
               },
               {
                 "surface": "your",
                 "lemma": "your",
                 "pos": "determiner",
                 "translation": "ваши",
-                "lemma_translation": "твой; ваш"
+                "lemma_translation": "твой; ваш",
+                "lemma_audio": "media/words/your-6eb0a4f2.mp3"
               },
               {
                 "surface": "drawings",
@@ -606,7 +681,8 @@
                 "pos": "noun",
                 "translation": "рисунки",
                 "lemma_translation": "рисунок",
-                "cefr": "A2"
+                "cefr": "A2",
+                "lemma_audio": "media/words/drawing-7c9642bd.mp3"
               }
             ]
           },
@@ -621,18 +697,21 @@
               "w": 44,
               "h": 13
             },
+            "audio": "media/01/bubble-06-02.mp3",
             "tokens": [
               {
                 "surface": "Oh",
                 "lemma": "oh",
                 "pos": "interjection",
-                "translation": "ох"
+                "translation": "ох",
+                "lemma_audio": "media/words/oh-39b5fe38.mp3"
               },
               {
                 "surface": "my",
                 "lemma": "my",
                 "pos": "determiner",
-                "translation": "мой"
+                "translation": "мой",
+                "lemma_audio": "media/words/my-b5e29c29.mp3"
               },
               {
                 "surface": "sketchbook",
@@ -640,7 +719,8 @@
                 "pos": "noun",
                 "translation": "альбом",
                 "lemma_translation": "альбом для рисования, скетчбук",
-                "cefr": "B1"
+                "cefr": "B1",
+                "lemma_audio": "media/words/sketchbook-8b6f3a35.mp3"
               }
             ]
           }
@@ -648,6 +728,7 @@
       },
       {
         "image_prompt": "Mia, flustered and blushing, wipes the table with a cloth and a pile of paper napkins. Leo holds his dripping sketchbook up in the air with two fingers. A fresh cup of coffee stands on the table in front of him.",
+        "image": "media/01/panel-07.webp",
         "layout": {
           "aspect_ratio": 0.8
         },
@@ -663,6 +744,7 @@
               "w": 60,
               "h": 18
             },
+            "audio": "media/01/bubble-07-01.mp3",
             "tokens": [
               {
                 "surface": "Let",
@@ -671,14 +753,16 @@
                 "translation": "давайте",
                 "lemma_translation": "позволять",
                 "cefr": "A1",
-                "note": "Let me + глагол — «давай(те) я…»: так предлагают сделать что-то самому."
+                "note": "Let me + глагол — «давай(те) я…»: так предлагают сделать что-то самому.",
+                "lemma_audio": "media/words/let-c90a5d12.mp3"
               },
               {
                 "surface": "me",
                 "lemma": "me",
                 "pos": "pronoun",
                 "translation": "я",
-                "lemma_translation": "меня; мне"
+                "lemma_translation": "меня; мне",
+                "lemma_audio": "media/words/me-2e1cbb8c.mp3"
               },
               {
                 "surface": "clean up",
@@ -687,13 +771,15 @@
                 "translation": "уберу",
                 "lemma_translation": "убирать, наводить порядок",
                 "cefr": "A2",
-                "note": "Clean up — убрать, навести порядок: clean up the mess — убрать беспорядок."
+                "note": "Clean up — убрать, навести порядок: clean up the mess — убрать беспорядок.",
+                "lemma_audio": "media/words/clean-up-d579b84e.mp3"
               },
               {
                 "surface": "this",
                 "lemma": "this",
                 "pos": "determiner",
-                "translation": "этот"
+                "translation": "этот",
+                "lemma_audio": "media/words/this-15cd5a93.mp3"
               },
               {
                 "surface": "mess",
@@ -702,28 +788,32 @@
                 "translation": "беспорядок",
                 "lemma_translation": "беспорядок, бардак",
                 "cefr": "B1",
-                "note": "Mess — беспорядок, грязь. What a mess! — Какой бардак!"
+                "note": "Mess — беспорядок, грязь. What a mess! — Какой бардак!",
+                "lemma_audio": "media/words/mess-fc9a7a93.mp3"
               },
               {
                 "surface": "Your",
                 "lemma": "your",
                 "pos": "determiner",
                 "translation": "ваш",
-                "lemma_translation": "твой; ваш"
+                "lemma_translation": "твой; ваш",
+                "lemma_audio": "media/words/your-6eb0a4f2.mp3"
               },
               {
                 "surface": "next",
                 "lemma": "next",
                 "pos": "adjective",
                 "translation": "следующий",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/next-2e955749.mp3"
               },
               {
                 "surface": "coffee",
                 "lemma": "coffee",
                 "pos": "noun",
                 "translation": "кофе",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/coffee-9c123df5.mp3"
               },
               {
                 "surface": "is",
@@ -731,7 +821,8 @@
                 "pos": "verb",
                 "translation": "есть (связка)",
                 "lemma_translation": "быть",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/be-f99e9dd9.mp3"
               },
               {
                 "surface": "on the house",
@@ -739,7 +830,8 @@
                 "pos": "idiom",
                 "translation": "за счёт заведения",
                 "cefr": "B1",
-                "note": "On the house — бесплатно, за счёт заведения. Так говорят в кафе, барах и ресторанах."
+                "note": "On the house — бесплатно, за счёт заведения. Так говорят в кафе, барах и ресторанах.",
+                "lemma_audio": "media/words/on-the-house-8426e546.mp3"
               }
             ]
           }
@@ -747,6 +839,7 @@
       },
       {
         "image_prompt": "Leo laughs warmly and turns his sketchbook toward Mia, showing a big brown coffee stain on the page that looks a bit like a sitting cat with pointy ears. Mia leans closer, confused and amused, still holding the wet cloth.",
+        "image": "media/01/panel-08.webp",
         "layout": {
           "aspect_ratio": 0.8
         },
@@ -762,6 +855,7 @@
               "w": 52,
               "h": 15
             },
+            "audio": "media/01/bubble-08-01.mp3",
             "tokens": [
               {
                 "surface": "Don't worry",
@@ -770,7 +864,8 @@
                 "translation": "не волнуйтесь",
                 "lemma_translation": "не волнуйся",
                 "cefr": "A1",
-                "note": "Don't worry — «не волнуйся, всё в порядке»: так успокаивают собеседника. Don't = do not."
+                "note": "Don't worry — «не волнуйся, всё в порядке»: так успокаивают собеседника. Don't = do not.",
+                "lemma_audio": "media/words/don-t-worry-01a7825c.mp3"
               },
               {
                 "surface": "Look",
@@ -778,21 +873,24 @@
                 "pos": "verb",
                 "translation": "смотрите",
                 "lemma_translation": "смотреть",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/look-e5656f50.mp3"
               },
               {
                 "surface": "this",
                 "lemma": "this",
                 "pos": "determiner",
                 "translation": "это",
-                "lemma_translation": "этот"
+                "lemma_translation": "этот",
+                "lemma_audio": "media/words/this-15cd5a93.mp3"
               },
               {
                 "surface": "stain",
                 "lemma": "stain",
                 "pos": "noun",
                 "translation": "пятно",
-                "cefr": "B1"
+                "cefr": "B1",
+                "lemma_audio": "media/words/stain-91b41c97.mp3"
               },
               {
                 "surface": "looks like",
@@ -801,13 +899,15 @@
                 "translation": "похоже на",
                 "lemma_translation": "быть похожим на",
                 "cefr": "A2",
-                "note": "Look like — быть похожим на кого-то или что-то: It looks like a cat — Это похоже на кота."
+                "note": "Look like — быть похожим на кого-то или что-то: It looks like a cat — Это похоже на кота.",
+                "lemma_audio": "media/words/look-like-762ade65.mp3"
               },
               {
                 "surface": "a",
                 "lemma": "a",
                 "pos": "determiner",
-                "translation": "неопределённый артикль"
+                "translation": "неопределённый артикль",
+                "lemma_audio": "media/words/a-8903b6ef.mp3"
               },
               {
                 "surface": "cat",
@@ -815,7 +915,8 @@
                 "pos": "noun",
                 "translation": "кота",
                 "lemma_translation": "кот",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/cat-9b3e3666.mp3"
               }
             ]
           },
@@ -830,12 +931,14 @@
               "w": 52,
               "h": 15
             },
+            "audio": "media/01/bubble-08-02.mp3",
             "tokens": [
               {
                 "surface": "A",
                 "lemma": "a",
                 "pos": "determiner",
-                "translation": "неопределённый артикль"
+                "translation": "неопределённый артикль",
+                "lemma_audio": "media/words/a-8903b6ef.mp3"
               },
               {
                 "surface": "cat",
@@ -843,7 +946,8 @@
                 "pos": "noun",
                 "translation": "кота",
                 "lemma_translation": "кот",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/cat-9b3e3666.mp3"
               },
               {
                 "surface": "You're",
@@ -851,34 +955,39 @@
                 "pos": "pronoun",
                 "translation": "вы",
                 "lemma_translation": "ты; вы",
-                "note": "You're = you are."
+                "note": "You're = you are.",
+                "lemma_audio": "media/words/you-are-d6f38152.mp3"
               },
               {
                 "surface": "very",
                 "lemma": "very",
                 "pos": "adverb",
                 "translation": "очень",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/very-c3dbf5e8.mp3"
               },
               {
                 "surface": "kind",
                 "lemma": "kind",
                 "pos": "adjective",
                 "translation": "добрый",
-                "cefr": "A2"
+                "cefr": "A2",
+                "lemma_audio": "media/words/kind-8d4d66f0.mp3"
               },
               {
                 "surface": "or",
                 "lemma": "or",
                 "pos": "conjunction",
-                "translation": "или"
+                "translation": "или",
+                "lemma_audio": "media/words/or-1e84aebd.mp3"
               },
               {
                 "surface": "very",
                 "lemma": "very",
                 "pos": "adverb",
                 "translation": "очень",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/very-c3dbf5e8.mp3"
               },
               {
                 "surface": "strange",
@@ -886,7 +995,8 @@
                 "pos": "adjective",
                 "translation": "странный",
                 "cefr": "A2",
-                "note": "Strange — странный, необычный. Синоним в разговорной речи — weird."
+                "note": "Strange — странный, необычный. Синоним в разговорной речи — weird.",
+                "lemma_audio": "media/words/strange-b002917c.mp3"
               }
             ]
           },
@@ -901,13 +1011,15 @@
               "w": 36,
               "h": 12
             },
+            "audio": "media/01/bubble-08-03.mp3",
             "tokens": [
               {
                 "surface": "Maybe",
                 "lemma": "maybe",
                 "pos": "adverb",
                 "translation": "может быть",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/maybe-4a1e39a2.mp3"
               },
               {
                 "surface": "both",
@@ -915,7 +1027,8 @@
                 "pos": "pronoun",
                 "translation": "и то и другое",
                 "lemma_translation": "оба",
-                "cefr": "A2"
+                "cefr": "A2",
+                "lemma_audio": "media/words/both-57535c2a.mp3"
               }
             ]
           }
@@ -923,6 +1036,7 @@
       },
       {
         "image_prompt": "Leo stands at the open café door holding a new cup of coffee, waving goodbye with a friendly smile, a small brass bell above the door. Behind the counter, Mia holds a white paper napkin with a small pencil sketch on it, looking at it in surprise.",
+        "image": "media/01/panel-09.webp",
         "layout": {
           "aspect_ratio": 0.75
         },
@@ -938,33 +1052,38 @@
               "w": 60,
               "h": 18
             },
+            "audio": "media/01/bubble-09-01.mp3",
             "tokens": [
               {
                 "surface": "Thanks",
                 "lemma": "thanks",
                 "pos": "interjection",
                 "translation": "спасибо",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/thanks-cf6006a7.mp3"
               },
               {
                 "surface": "for",
                 "lemma": "for",
                 "pos": "preposition",
                 "translation": "за",
-                "lemma_translation": "для; за"
+                "lemma_translation": "для; за",
+                "lemma_audio": "media/words/for-7e74f5f0.mp3"
               },
               {
                 "surface": "the",
                 "lemma": "the",
                 "pos": "determiner",
-                "translation": "определённый артикль"
+                "translation": "определённый артикль",
+                "lemma_audio": "media/words/the-ca7c5991.mp3"
               },
               {
                 "surface": "coffee",
                 "lemma": "coffee",
                 "pos": "noun",
                 "translation": "кофе",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/coffee-9c123df5.mp3"
               },
               {
                 "surface": "By the way",
@@ -972,13 +1091,15 @@
                 "pos": "phrase",
                 "translation": "кстати",
                 "cefr": "A2",
-                "note": "By the way — «кстати, между прочим»: так переходят к новой теме в разговоре."
+                "note": "By the way — «кстати, между прочим»: так переходят к новой теме в разговоре.",
+                "lemma_audio": "media/words/by-the-way-01ce690d.mp3"
               },
               {
                 "surface": "this",
                 "lemma": "this",
                 "pos": "pronoun",
-                "translation": "это"
+                "translation": "это",
+                "lemma_audio": "media/words/this-8504606b.mp3"
               },
               {
                 "surface": "is",
@@ -986,21 +1107,24 @@
                 "pos": "verb",
                 "translation": "есть (связка)",
                 "lemma_translation": "быть",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/be-f99e9dd9.mp3"
               },
               {
                 "surface": "for",
                 "lemma": "for",
                 "pos": "preposition",
                 "translation": "для",
-                "lemma_translation": "для; за"
+                "lemma_translation": "для; за",
+                "lemma_audio": "media/words/for-7e74f5f0.mp3"
               },
               {
                 "surface": "you",
                 "lemma": "you",
                 "pos": "pronoun",
                 "translation": "вас",
-                "lemma_translation": "ты; вы"
+                "lemma_translation": "ты; вы",
+                "lemma_audio": "media/words/you-3b679ac2.mp3"
               }
             ]
           },
@@ -1015,6 +1139,7 @@
               "w": 52,
               "h": 15
             },
+            "audio": "media/01/bubble-09-02.mp3",
             "tokens": [
               {
                 "surface": "There was",
@@ -1023,32 +1148,37 @@
                 "translation": "был",
                 "lemma_translation": "есть, имеется",
                 "cefr": "A1",
-                "note": "There is / there was — «есть / был»: так говорят, что что-то где-то находится."
+                "note": "There is / there was — «есть / был»: так говорят, что что-то где-то находится.",
+                "lemma_audio": "media/words/there-is-b633f757.mp3"
               },
               {
                 "surface": "a",
                 "lemma": "a",
                 "pos": "determiner",
-                "translation": "неопределённый артикль"
+                "translation": "неопределённый артикль",
+                "lemma_audio": "media/words/a-8903b6ef.mp3"
               },
               {
                 "surface": "drawing",
                 "lemma": "drawing",
                 "pos": "noun",
                 "translation": "рисунок",
-                "cefr": "A2"
+                "cefr": "A2",
+                "lemma_audio": "media/words/drawing-7c9642bd.mp3"
               },
               {
                 "surface": "on",
                 "lemma": "on",
                 "pos": "preposition",
-                "translation": "на"
+                "translation": "на",
+                "lemma_audio": "media/words/on-eb63c25a.mp3"
               },
               {
                 "surface": "the",
                 "lemma": "the",
                 "pos": "determiner",
-                "translation": "определённый артикль"
+                "translation": "определённый артикль",
+                "lemma_audio": "media/words/the-ca7c5991.mp3"
               },
               {
                 "surface": "napkin",
@@ -1056,14 +1186,16 @@
                 "pos": "noun",
                 "translation": "салфетке",
                 "lemma_translation": "салфетка",
-                "cefr": "B1"
+                "cefr": "B1",
+                "lemma_audio": "media/words/napkin-ab47cecb.mp3"
               },
               {
                 "surface": "It",
                 "lemma": "it",
                 "pos": "pronoun",
                 "translation": "это",
-                "lemma_translation": "оно; это"
+                "lemma_translation": "оно; это",
+                "lemma_audio": "media/words/it-3ebf42ab.mp3"
               },
               {
                 "surface": "was",
@@ -1071,7 +1203,8 @@
                 "pos": "verb",
                 "translation": "была",
                 "lemma_translation": "быть",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/be-f99e9dd9.mp3"
               },
               {
                 "surface": "me",
@@ -1079,7 +1212,8 @@
                 "pos": "pronoun",
                 "translation": "я",
                 "lemma_translation": "меня; мне",
-                "note": "После was в разговорной речи говорят me: It was me — Это была я."
+                "note": "После was в разговорной речи говорят me: It was me — Это была я.",
+                "lemma_audio": "media/words/me-2e1cbb8c.mp3"
               }
             ]
           }
@@ -1087,6 +1221,7 @@
       },
       {
         "image_prompt": "Close-up of Mia alone at the counter after the morning rush, holding the napkin sketch near her face. The sketch shows a cute pencil portrait of a barista girl with a messy bun. Mia's cheeks are pink, eyes wide; soft pastel sparkles around her.",
+        "image": "media/01/panel-10.webp",
         "layout": {
           "aspect_ratio": 0.8
         },
@@ -1102,12 +1237,14 @@
               "w": 36,
               "h": 12
             },
+            "audio": "media/01/bubble-10-01.mp3",
             "tokens": [
               {
                 "surface": "Who",
                 "lemma": "who",
                 "pos": "pronoun",
-                "translation": "кто"
+                "translation": "кто",
+                "lemma_audio": "media/words/who-4e002d2d.mp3"
               },
               {
                 "surface": "is",
@@ -1115,20 +1252,23 @@
                 "pos": "verb",
                 "translation": "есть (связка)",
                 "lemma_translation": "быть",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/be-f99e9dd9.mp3"
               },
               {
                 "surface": "this",
                 "lemma": "this",
                 "pos": "determiner",
-                "translation": "этот"
+                "translation": "этот",
+                "lemma_audio": "media/words/this-15cd5a93.mp3"
               },
               {
                 "surface": "guy",
                 "lemma": "guy",
                 "pos": "noun",
                 "translation": "парень",
-                "cefr": "B1"
+                "cefr": "B1",
+                "lemma_audio": "media/words/guy-5d9ecadd.mp3"
               }
             ]
           }

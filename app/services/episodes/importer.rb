@@ -2,6 +2,8 @@ module Episodes
   # Imports one episode JSON (config/schemas/episode.json) — hand-written seeds today,
   # output of pipeline step 1 later. Re-importing the same series slug + episode number
   # replaces the episode's panels, bubbles and tokens; lexemes are reused.
+  # Media files next to the JSON (Episodes::Exporter writes them): panel images, bubble recordings,
+  # character sheets and recorded dictionary forms; a sheet or a word recording that is already there is kept.
   class Importer
     SCHEMA_PATH = Rails.root.join("config/schemas/episode.json")
 
@@ -22,11 +24,11 @@ module Episodes
 
     # data   — parsed JSON Hash or a JSON string
     # status — status for the imported episode (pipeline output goes to review)
-    # base_dir — where relative panel image paths are resolved
+    # base_dir — where relative media paths (images, audio, sheets) are resolved
     def initialize(data, status: "review", base_dir: nil, placeholders: true)
       @data = data.is_a?(String) ? JSON.parse(data) : data.deep_stringify_keys
       @status = status
-      @base_dir = base_dir && Pathname(base_dir)
+      @media = Media.new(base_dir)
       @placeholders = placeholders
     rescue JSON::ParserError => e
       raise Invalid, "not JSON: #{e.message}"
@@ -58,7 +60,7 @@ module Episodes
       def upsert_series(pair)
         attrs = @data["series"]
         series = pair.series.find_or_initialize_by(slug: attrs["slug"])
-        series.update!(attrs.slice("title", "description", "genre", "cefr_level", "style_prompt"))
+        series.update!(attrs.slice("title", "description", "genre", "cefr_level", "style_prompt", "narrator_voice"))
         series.published! if @status == "published" && series.draft?
         series
       end
@@ -67,6 +69,7 @@ module Episodes
         @data["series"]["characters"].to_h do |attrs|
           character = series.characters.find_or_initialize_by(key: attrs["key"])
           character.update!(attrs.slice("name", "appearance_prompt", "voice").merge(protagonist: attrs["protagonist"] || false))
+          @media.attach(character.sheet, attrs["sheet"], "character #{character.key}: sheet") if attrs["sheet"]
           [ character.key, character ]
         end
       end
@@ -90,7 +93,7 @@ module Episodes
       end
 
       def import_panels(episode, characters, pair)
-        lexemes = LexemeCache.new(pair)
+        lexemes = LexemeCache.new(pair, @media)
 
         @data["episode"]["panels"].each_with_index do |panel_attrs, panel_index|
           panel = episode.panels.create!(
@@ -121,6 +124,7 @@ module Episodes
           translation: attrs["translation"],
           box: attrs["box"]
         )
+        bubble.audio.attach(@media.attachable(attrs["audio"], "#{where}: audio")) if attrs["audio"]
 
         cursor = 0
         (attrs["tokens"] || []).each do |token_attrs|
@@ -156,10 +160,7 @@ module Episodes
 
       def attach_image(panel, attrs, episode)
         if attrs["image"]
-          raise Invalid, "panel #{panel.position + 1}: image paths need base_dir" unless @base_dir
-          path = @base_dir.join(attrs["image"])
-          raise Invalid, "panel #{panel.position + 1}: image not found: #{path}" unless path.file?
-          panel.image.attach(io: path.open("rb"), filename: path.basename.to_s)
+          panel.image.attach(@media.attachable(attrs["image"], "panel #{panel.position + 1}: image"))
         elsif @placeholders && needs_picture?(episode, attrs)
           panel.image.attach(PlaceholderImage.for(panel))
         end
@@ -173,16 +174,46 @@ module Episodes
         true
       end
 
+      # Media paths from the JSON resolved against base_dir (Episodes::Exporter writes the files).
+      class Media
+        def initialize(base_dir)
+          @base_dir = base_dir && Pathname(base_dir)
+        end
+
+        def attachable(relative, what)
+          path = path(relative, what)
+          { io: StringIO.new(path.binread), filename: path.basename.to_s }
+        end
+
+        # Attaches unless the same bytes are there already (sheets and word recordings are shared between episodes).
+        def attach(attachment, relative, what)
+          path = path(relative, what)
+          return if attachment.attached? && attachment.blob.checksum == OpenSSL::Digest::MD5.file(path).base64digest
+          attachment.attach(io: StringIO.new(path.binread), filename: path.basename.to_s)
+        end
+
+        private
+          def path(relative, what)
+            raise Invalid, "#{what}: media paths need base_dir" unless @base_dir
+            path = @base_dir.join(relative)
+            raise Invalid, "#{what}: not found: #{path}" unless path.file?
+            path
+          end
+      end
+
       # Finds or creates lexemes by (language, lemma, pos) and fills in missing data.
       class LexemeCache
-        def initialize(pair)
+        def initialize(pair, media = Media.new(nil)) # Ai::Steps::Tokens has no media
           @pair = pair
+          @media = media
           @cache = {}
         end
 
         def fetch(attrs)
           key = [ attrs["lemma"], attrs["pos"] ]
-          @cache[key] ||= find_or_create(attrs)
+          @cache[key] ||= find_or_create(attrs).tap do |lexeme|
+            @media.attach(lexeme.audio, attrs["lemma_audio"], "word #{attrs["lemma"]}: audio") if attrs["lemma_audio"]
+          end
         end
 
         private

@@ -24,6 +24,7 @@
         "genre": { "type": "string" },
         "cefr_level": { "$ref": "#/$defs/cefr" },
         "style_prompt": { "type": "string", "description": "Visual style of the series for image generation" },
+        "narrator_voice": { "type": "string", "description": "TTS voice id for narration" },
         "characters": { "type": "array", "items": { "$ref": "#/$defs/character" } }
       }
     },
@@ -36,7 +37,8 @@
         "name": { "type": "string", "minLength": 1 },
         "appearance_prompt": { "type": "string" },
         "protagonist": { "type": "boolean", "description": "Chat format: protagonist's messages are on the right" },
-        "voice": { "type": "string", "description": "TTS voice id" }
+        "voice": { "type": "string", "description": "TTS voice id" },
+        "sheet": { "type": "string", "description": "Character sheet file path relative to the JSON file (reference for panel images)" }
       }
     },
     "episode": {
@@ -88,6 +90,7 @@
         "text": { "type": "string", "minLength": 1 },
         "translation": { "type": "string" },
         "box": { "$ref": "#/$defs/box" },
+        "audio": { "type": "string", "description": "Recorded line, file path relative to the JSON file. Missing → browser speech synthesis" },
         "tokens": { "type": "array", "items": { "$ref": "#/$defs/token" } }
       }
     },
@@ -122,6 +125,7 @@
         "cefr": { "$ref": "#/$defs/cefr" },
         "romanization": { "type": "string", "description": "Korean: romanization of the surface" },
         "lemma_romanization": { "type": "string", "description": "Korean: romanization of the lemma" },
+        "lemma_audio": { "type": "string", "description": "Recorded dictionary form, file path relative to the JSON file" },
         "breakdown": {
           "type": "array",
           "description": "Korean: stem + endings/particles",

@@ -35,6 +35,10 @@ JSON API для нативных клиентов: `docs/api.md`.
 - Импорт: `docker compose run --rm web bin/rails "episodes:import[path/to/episode.json]"` (`STATUS=published` чтобы сразу опубликовать) или форма `/admin/imports/new`.
 - Позиции токенов — в символах (codepoints). Если в JSON их нет, импортёр находит слова в тексте по порядку.
 - Без картинки у кадра генерируется плейсхолдер (WebP через libvips).
+- Медиа сидов лежат рядом с JSON в `media/`: кадры (`image`), озвучка реплик (`audio`), листы персонажей (`sheet`),
+  озвучка слов (`lemma_audio` у токена), плюс голоса (`voice`, `narrator_voice`). Так `db:seed` на чистой базе
+  получает AI-картинки и озвучку без новых трат. Выгрузить из базы то, что сделал конвейер
+  (`ai:sheets`, `ai:images`, `ai:audio`): `docker compose run --rm web bin/rails episodes:export SERIES=coffee-and-coincidences`.
 
 ## Воронка и аналитика
 

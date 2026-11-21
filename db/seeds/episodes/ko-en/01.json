@@ -7,32 +7,43 @@
     "genre": "slice of life",
     "cefr_level": "A1",
     "style_prompt": "Bright, clean Korean webtoon style with crisp line art and soft cel shading; modern Seoul streets, small red-brick apartment buildings, convenience stores, offices and subway stations; soft natural daylight, warm pastel palette, friendly expressive faces. No text, letters or speech bubbles in the image.",
+    "narrator_voice": "Korean_CalmLady",
     "characters": [
       {
         "key": "jisoo",
         "name": "Jisoo",
         "protagonist": true,
-        "appearance_prompt": "Korean woman, 28, shoulder-length straight black hair with soft see-through bangs, warm brown eyes, slim build; casual look: cream knit cardigan over a white T-shirt, light-blue jeans, white sneakers and a small tan crossbody bag; office look: navy blazer over a white blouse. Bright, slightly nervous smile."
+        "appearance_prompt": "Korean woman, 28, shoulder-length straight black hair with soft see-through bangs, warm brown eyes, slim build; casual look: cream knit cardigan over a white T-shirt, light-blue jeans, white sneakers and a small tan crossbody bag; office look: navy blazer over a white blouse. Bright, slightly nervous smile.",
+        "voice": "Korean_SweetGirl",
+        "sheet": "media/sheets/jisoo.jpg"
       },
       {
         "key": "minho",
         "name": "Minho",
-        "appearance_prompt": "Korean man, 28, tall, short tousled dark-brown hair, friendly crescent-shaped eyes and an easy grin; at home a gray hoodie, black joggers and slippers, outside a navy bomber jacket with earphones around his neck. Relaxed, helpful body language."
+        "appearance_prompt": "Korean man, 28, tall, short tousled dark-brown hair, friendly crescent-shaped eyes and an easy grin; at home a gray hoodie, black joggers and slippers, outside a navy bomber jacket with earphones around his neck. Relaxed, helpful body language.",
+        "voice": "Korean_CheerfulBoyfriend",
+        "sheet": "media/sheets/minho.jpg"
       },
       {
         "key": "yuna",
         "name": "Yuna",
-        "appearance_prompt": "Korean woman, 31, chin-length dark bob tucked behind one ear, small silver earrings, the same friendly crescent-shaped eyes as her younger brother Minho; office look: beige blouse, navy slacks, ID badge on a lanyard. Confident, warm, big-sister energy."
+        "appearance_prompt": "Korean woman, 31, chin-length dark bob tucked behind one ear, small silver earrings, the same friendly crescent-shaped eyes as her younger brother Minho; office look: beige blouse, navy slacks, ID badge on a lanyard. Confident, warm, big-sister energy.",
+        "voice": "Korean_FriendlyBigSister",
+        "sheet": "media/sheets/yuna.jpg"
       },
       {
         "key": "clerk",
         "name": "Clerk",
-        "appearance_prompt": "Young Korean convenience-store clerk, early 20s, short black hair, round glasses, green-and-white store uniform vest over a white shirt, polite cheerful expression."
+        "appearance_prompt": "Young Korean man, early 20s, convenience-store clerk, short neat black hair, round glasses, green-and-white store uniform vest over a white shirt with a plain blank name tag (no writing), polite cheerful expression.",
+        "voice": "Korean_OptimisticYouth",
+        "sheet": "media/sheets/clerk.jpg"
       },
       {
         "key": "team_leader",
         "name": "Team Leader Kim",
-        "appearance_prompt": "Korean man in his late 40s, neatly combed short black hair with a little gray at the temples, rectangular glasses, dark suit, white shirt and navy tie; calm, kind but serious expression."
+        "appearance_prompt": "Korean man in his late 40s, neatly combed short black hair with a little gray at the temples, rectangular glasses, dark suit, white shirt and navy tie; calm, kind but serious expression.",
+        "voice": "Korean_GentleBoss",
+        "sheet": "media/sheets/team_leader.jpg"
       }
     ]
   },
@@ -60,6 +71,7 @@
     "panels": [
       {
         "image_prompt": "Wide establishing shot of a quiet residential street in Seoul on a sunny spring morning: a four-story red-brick apartment building with small balconies, a small moving truck at the curb, Jisoo standing in front with a big suitcase and a stack of cardboard boxes, looking up at the building with excited, sparkling eyes. Cherry blossom petals in the air, soft daylight, no text.",
+        "image": "media/01/panel-01.webp",
         "layout": {
           "aspect_ratio": 1.0
         },
@@ -75,6 +87,7 @@
               "w": 56,
               "h": 16
             },
+            "audio": "media/01/bubble-01-01.mp3",
             "tokens": [
               {
                 "surface": "지수는",
@@ -96,7 +109,8 @@
                     "meaning": "topic marker"
                   }
                 ],
-                "note": "은/는 marks the topic, what the sentence is about."
+                "note": "은/는 marks the topic, what the sentence is about.",
+                "lemma_audio": "media/words/noun-841a9085.mp3"
               },
               {
                 "surface": "오늘",
@@ -106,7 +120,8 @@
                 "lemma_translation": "today",
                 "romanization": "oneul",
                 "lemma_romanization": "oneul",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/noun-7e47174b.mp3"
               },
               {
                 "surface": "서울로",
@@ -128,7 +143,8 @@
                     "meaning": "to, toward (direction)"
                   }
                 ],
-                "note": "(으)로 marks direction: 서울로 = to Seoul."
+                "note": "(으)로 marks direction: 서울로 = to Seoul.",
+                "lemma_audio": "media/words/noun-566a203d.mp3"
               },
               {
                 "surface": "이사해요",
@@ -152,7 +168,8 @@
                 ],
                 "politeness": "polite",
                 "cefr": "A1",
-                "note": "Target word: 이사하다 means moving to a new home, not 'move' in general."
+                "note": "Target word: 이사하다 means moving to a new home, not 'move' in general.",
+                "lemma_audio": "media/words/verb-13889e5d.mp3"
               }
             ]
           },
@@ -167,6 +184,7 @@
               "w": 43,
               "h": 12
             },
+            "audio": "media/01/bubble-01-02.mp3",
             "tokens": [
               {
                 "surface": "와",
@@ -176,7 +194,8 @@
                 "lemma_translation": "wow",
                 "romanization": "wa",
                 "lemma_romanization": "wa",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/interjection-e152a571.mp3"
               },
               {
                 "surface": "서울이다",
@@ -199,7 +218,8 @@
                   }
                 ],
                 "politeness": "casual",
-                "note": "The plain -다 form is used for exclamations and thoughts to yourself."
+                "note": "The plain -다 form is used for exclamations and thoughts to yourself.",
+                "lemma_audio": "media/words/noun-566a203d.mp3"
               }
             ]
           }
@@ -207,6 +227,7 @@
       },
       {
         "image_prompt": "Jisoo struggling to carry a big cardboard box up a narrow concrete staircase inside the building, cheeks puffed, a sweat drop on her forehead, more boxes piled at the bottom of the stairs. Warm light through a small stairwell window.",
+        "image": "media/01/panel-02.webp",
         "layout": {
           "aspect_ratio": 0.8
         },
@@ -222,6 +243,7 @@
               "w": 57,
               "h": 16
             },
+            "audio": "media/01/bubble-02-01.mp3",
             "tokens": [
               {
                 "surface": "아이고",
@@ -232,7 +254,8 @@
                 "romanization": "aigo",
                 "lemma_romanization": "aigo",
                 "cefr": "A2",
-                "note": "아이고 is the classic Korean sigh for effort, tiredness or surprise."
+                "note": "아이고 is the classic Korean sigh for effort, tiredness or surprise.",
+                "lemma_audio": "media/words/interjection-514bfc14.mp3"
               },
               {
                 "surface": "짐이",
@@ -255,7 +278,8 @@
                   }
                 ],
                 "cefr": "A2",
-                "note": "Target word: 짐 = bags, boxes, things you carry or move. 이/가 marks the subject."
+                "note": "Target word: 짐 = bags, boxes, things you carry or move. 이/가 marks the subject.",
+                "lemma_audio": "media/words/noun-7c8934c9.mp3"
               },
               {
                 "surface": "너무",
@@ -265,7 +289,8 @@
                 "lemma_translation": "too, very",
                 "romanization": "neomu",
                 "lemma_romanization": "neomu",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/adverb-599566ca.mp3"
               },
               {
                 "surface": "무거워",
@@ -289,7 +314,8 @@
                 ],
                 "politeness": "casual",
                 "cefr": "A1",
-                "note": "Target word: 무겁다 is ㅂ-irregular: 무겁 + 어 → 무거워. Casual because she's talking to herself."
+                "note": "Target word: 무겁다 is ㅂ-irregular: 무겁 + 어 → 무거워. Casual because she's talking to herself.",
+                "lemma_audio": "media/words/adjective-0f21403d.mp3"
               }
             ]
           }
@@ -297,6 +323,7 @@
       },
       {
         "image_prompt": "The apartment door next to Jisoo's on the same floor opens; Minho, a friendly young man in a gray hoodie and slippers, leans out with a curious, welcoming smile, looking toward Jisoo and her boxes in the hallway.",
+        "image": "media/01/panel-03.webp",
         "layout": {
           "aspect_ratio": 0.85
         },
@@ -312,6 +339,7 @@
               "w": 54,
               "h": 16
             },
+            "audio": "media/01/bubble-03-01.mp3",
             "tokens": [
               {
                 "surface": "안녕하세요",
@@ -335,7 +363,8 @@
                 ],
                 "politeness": "polite",
                 "cefr": "A1",
-                "note": "Target word: the everyday polite 'hello' (literally 'are you at peace?'), fine at any time of day."
+                "note": "Target word: the everyday polite 'hello' (literally 'are you at peace?'), fine at any time of day.",
+                "lemma_audio": "media/words/adjective-cb2d53ec.mp3"
               },
               {
                 "surface": "이사",
@@ -346,7 +375,8 @@
                 "romanization": "isa",
                 "lemma_romanization": "isa",
                 "cefr": "A1",
-                "note": "이사 오다 = to move in (here); 이사 가다 = to move away (there)."
+                "note": "이사 오다 = to move in (here); 이사 가다 = to move away (there).",
+                "lemma_audio": "media/words/noun-25ec833a.mp3"
               },
               {
                 "surface": "오셨어요",
@@ -380,7 +410,8 @@
                 ],
                 "politeness": "polite",
                 "cefr": "A1",
-                "note": "-시- adds respect for the person you're talking about, polite with a new neighbor."
+                "note": "-시- adds respect for the person you're talking about, polite with a new neighbor.",
+                "lemma_audio": "media/words/verb-137fc4b7.mp3"
               }
             ]
           }
@@ -388,6 +419,7 @@
       },
       {
         "image_prompt": "Jisoo, still hugging the box, turns toward Minho with a surprised but bright smile and gives a small polite nod of the head.",
+        "image": "media/01/panel-04.webp",
         "layout": {
           "aspect_ratio": 0.8
         },
@@ -403,6 +435,7 @@
               "w": 59,
               "h": 16
             },
+            "audio": "media/01/bubble-04-01.mp3",
             "tokens": [
               {
                 "surface": "네",
@@ -412,7 +445,8 @@
                 "lemma_translation": "yes",
                 "romanization": "ne",
                 "lemma_romanization": "ne",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/interjection-8e732a9b.mp3"
               },
               {
                 "surface": "안녕하세요",
@@ -435,7 +469,8 @@
                   }
                 ],
                 "politeness": "polite",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/adjective-cb2d53ec.mp3"
               },
               {
                 "surface": "저는",
@@ -458,7 +493,8 @@
                   }
                 ],
                 "cefr": "A1",
-                "note": "저 is the humble 'I' for people you speak politely to; the casual 'I' is 나."
+                "note": "저 is the humble 'I' for people you speak politely to; the casual 'I' is 나.",
+                "lemma_audio": "media/words/pronoun-58cd9ae5.mp3"
               },
               {
                 "surface": "지수예요",
@@ -481,7 +517,8 @@
                   }
                 ],
                 "politeness": "polite",
-                "note": "Name + 예요 (after a vowel) / 이에요 (after a consonant) = 'I am …'."
+                "note": "Name + 예요 (after a vowel) / 이에요 (after a consonant) = 'I am …'.",
+                "lemma_audio": "media/words/noun-841a9085.mp3"
               }
             ]
           }
@@ -489,6 +526,7 @@
       },
       {
         "image_prompt": "Minho steps into the hallway, rubbing the back of his head with a shy grin; Jisoo smiles back. A bright corridor with two apartment doors side by side.",
+        "image": "media/01/panel-05.webp",
         "layout": {
           "aspect_ratio": 0.8
         },
@@ -504,6 +542,7 @@
               "w": 64,
               "h": 20
             },
+            "audio": "media/01/bubble-05-01.mp3",
             "tokens": [
               {
                 "surface": "반가워요",
@@ -527,7 +566,8 @@
                 ],
                 "politeness": "polite",
                 "cefr": "A1",
-                "note": "Target word: 반가워요 = 'Nice to meet you', friendly and polite. ㅂ-irregular like 무겁다."
+                "note": "Target word: 반가워요 = 'Nice to meet you', friendly and polite. ㅂ-irregular like 무겁다.",
+                "lemma_audio": "media/words/adjective-4edb0a98.mp3"
               },
               {
                 "surface": "저는",
@@ -549,7 +589,8 @@
                     "meaning": "topic marker"
                   }
                 ],
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/pronoun-58cd9ae5.mp3"
               },
               {
                 "surface": "옆집에",
@@ -572,7 +613,8 @@
                   }
                 ],
                 "cefr": "A2",
-                "note": "에 marks where something is or where you live: 옆집에 살아요 = I live next door."
+                "note": "에 marks where something is or where you live: 옆집에 살아요 = I live next door.",
+                "lemma_audio": "media/words/noun-a5ea3563.mp3"
               },
               {
                 "surface": "사는",
@@ -594,7 +636,8 @@
                     "meaning": "present modifier (who …)"
                   }
                 ],
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/verb-607f54e4.mp3"
               },
               {
                 "surface": "민호예요",
@@ -616,7 +659,8 @@
                     "meaning": "am, is (polite copula)"
                   }
                 ],
-                "politeness": "polite"
+                "politeness": "polite",
+                "lemma_audio": "media/words/noun-a1f098a8.mp3"
               }
             ]
           },
@@ -631,6 +675,7 @@
               "w": 54,
               "h": 16
             },
+            "audio": "media/01/bubble-05-02.mp3",
             "tokens": [
               {
                 "surface": "아",
@@ -640,7 +685,8 @@
                 "lemma_translation": "ah, oh",
                 "romanization": "a",
                 "lemma_romanization": "a",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/interjection-45ff4c01.mp3"
               },
               {
                 "surface": "이웃이네요",
@@ -669,7 +715,8 @@
                 ],
                 "politeness": "polite",
                 "cefr": "A2",
-                "note": "Target word: 이웃 = neighbor. -네요 shows you've just realized something."
+                "note": "Target word: 이웃 = neighbor. -네요 shows you've just realized something.",
+                "lemma_audio": "media/words/noun-6c4da72c.mp3"
               },
               {
                 "surface": "반가워요",
@@ -692,7 +739,8 @@
                   }
                 ],
                 "politeness": "polite",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/adjective-4edb0a98.mp3"
               }
             ]
           }
@@ -700,6 +748,7 @@
       },
       {
         "image_prompt": "Minho looks at the pile of cardboard boxes by the stairs and rolls up his sleeves with a helpful expression; Jisoo waves both hands in front of her chest, politely refusing, a little embarrassed.",
+        "image": "media/01/panel-06.webp",
         "layout": {
           "aspect_ratio": 0.9
         },
@@ -715,6 +764,7 @@
               "w": 57,
               "h": 16
             },
+            "audio": "media/01/bubble-06-01.mp3",
             "tokens": [
               {
                 "surface": "짐이",
@@ -736,7 +786,8 @@
                     "meaning": "subject marker"
                   }
                 ],
-                "cefr": "A2"
+                "cefr": "A2",
+                "lemma_audio": "media/words/noun-7c8934c9.mp3"
               },
               {
                 "surface": "많네요",
@@ -759,7 +810,8 @@
                   }
                 ],
                 "politeness": "polite",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/adjective-7269059d.mp3"
               },
               {
                 "surface": "제가",
@@ -782,7 +834,8 @@
                   }
                 ],
                 "cefr": "A1",
-                "note": "저 + 가 becomes 제가: 'I' as the subject."
+                "note": "저 + 가 becomes 제가: 'I' as the subject.",
+                "lemma_audio": "media/words/pronoun-58cd9ae5.mp3"
               },
               {
                 "surface": "도와줄게요",
@@ -806,7 +859,8 @@
                 ],
                 "politeness": "polite",
                 "cefr": "A1",
-                "note": "Target word: 도와주다 = to help. -ㄹ게요 = 'I'll do it (for you)', an offer or promise."
+                "note": "Target word: 도와주다 = to help. -ㄹ게요 = 'I'll do it (for you)', an offer or promise.",
+                "lemma_audio": "media/words/verb-b72c1dc2.mp3"
               }
             ]
           },
@@ -821,6 +875,7 @@
               "w": 48,
               "h": 16
             },
+            "audio": "media/01/bubble-06-02.mp3",
             "tokens": [
               {
                 "surface": "아니에요",
@@ -844,7 +899,8 @@
                 ],
                 "politeness": "polite",
                 "cefr": "A1",
-                "note": "아니에요 is a polite 'Oh no, it's fine' when you turn down an offer."
+                "note": "아니에요 is a polite 'Oh no, it's fine' when you turn down an offer.",
+                "lemma_audio": "media/words/adjective-c63fbdf4.mp3"
               },
               {
                 "surface": "괜찮아요",
@@ -868,7 +924,8 @@
                 ],
                 "politeness": "polite",
                 "cefr": "A1",
-                "note": "Target word: 괜찮아요 = 'It's fine'. It also works as a polite 'No, thank you'."
+                "note": "Target word: 괜찮아요 = 'It's fine'. It also works as a polite 'No, thank you'.",
+                "lemma_audio": "media/words/adjective-cd565dea.mp3"
               }
             ]
           }
@@ -876,6 +933,7 @@
       },
       {
         "image_prompt": "Minho has already lifted the biggest box with a confident grin and heads toward Jisoo's door; Jisoo bows gratefully with her hands together.",
+        "image": "media/01/panel-07.webp",
         "layout": {
           "aspect_ratio": 0.8
         },
@@ -891,6 +949,7 @@
               "w": 51,
               "h": 16
             },
+            "audio": "media/01/bubble-07-01.mp3",
             "tokens": [
               {
                 "surface": "괜찮아요",
@@ -913,7 +972,8 @@
                   }
                 ],
                 "politeness": "polite",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/adjective-cd565dea.mp3"
               },
               {
                 "surface": "이웃이잖아요",
@@ -942,7 +1002,8 @@
                 ],
                 "politeness": "polite",
                 "cefr": "A2",
-                "note": "-잖아요 = 'you know… / after all', reminding someone of something obvious."
+                "note": "-잖아요 = 'you know… / after all', reminding someone of something obvious.",
+                "lemma_audio": "media/words/noun-6c4da72c.mp3"
               }
             ]
           },
@@ -957,6 +1018,7 @@
               "w": 44,
               "h": 12
             },
+            "audio": "media/01/bubble-07-02.mp3",
             "tokens": [
               {
                 "surface": "정말",
@@ -966,7 +1028,8 @@
                 "lemma_translation": "really, truly",
                 "romanization": "jeongmal",
                 "lemma_romanization": "jeongmal",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/adverb-5dd0a7d4.mp3"
               },
               {
                 "surface": "감사합니다",
@@ -990,7 +1053,8 @@
                 ],
                 "politeness": "formal",
                 "cefr": "A1",
-                "note": "Target word: 감사합니다 = 'thank you'. The ending is formal, but everyone uses it every day."
+                "note": "Target word: 감사합니다 = 'thank you'. The ending is formal, but everyone uses it every day.",
+                "lemma_audio": "media/words/verb-92460ecc.mp3"
               }
             ]
           }
@@ -998,6 +1062,7 @@
       },
       {
         "image_prompt": "Inside Jisoo's small, still-empty one-room studio: Minho sets down a heavy box with exaggerated effort and a sweat drop on his face; Jisoo, embarrassed, scratches her cheek next to a stack of boxes with books peeking out.",
+        "image": "media/01/panel-08.webp",
         "layout": {
           "aspect_ratio": 0.8
         },
@@ -1013,6 +1078,7 @@
               "w": 56,
               "h": 16
             },
+            "audio": "media/01/bubble-08-01.mp3",
             "tokens": [
               {
                 "surface": "와",
@@ -1022,7 +1088,8 @@
                 "lemma_translation": "wow",
                 "romanization": "wa",
                 "lemma_romanization": "wa",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/interjection-e152a571.mp3"
               },
               {
                 "surface": "이",
@@ -1032,7 +1099,8 @@
                 "lemma_translation": "this",
                 "romanization": "i",
                 "lemma_romanization": "i",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/determiner-cf391bb3.mp3"
               },
               {
                 "surface": "상자",
@@ -1042,7 +1110,8 @@
                 "lemma_translation": "box",
                 "romanization": "sangja",
                 "lemma_romanization": "sangja",
-                "cefr": "A2"
+                "cefr": "A2",
+                "lemma_audio": "media/words/noun-d0fed890.mp3"
               },
               {
                 "surface": "진짜",
@@ -1052,7 +1121,8 @@
                 "lemma_translation": "really; real",
                 "romanization": "jinjja",
                 "lemma_romanization": "jinjja",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/adverb-cc622341.mp3"
               },
               {
                 "surface": "무겁네요",
@@ -1075,7 +1145,8 @@
                   }
                 ],
                 "politeness": "polite",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/adjective-0f21403d.mp3"
               }
             ]
           },
@@ -1090,6 +1161,7 @@
               "w": 54,
               "h": 16
             },
+            "audio": "media/01/bubble-08-02.mp3",
             "tokens": [
               {
                 "surface": "죄송해요",
@@ -1112,7 +1184,8 @@
                   }
                 ],
                 "politeness": "polite",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/adjective-130611d6.mp3"
               },
               {
                 "surface": "책이",
@@ -1134,7 +1207,8 @@
                     "meaning": "subject marker"
                   }
                 ],
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/noun-bece207e.mp3"
               },
               {
                 "surface": "많아요",
@@ -1157,7 +1231,8 @@
                   }
                 ],
                 "politeness": "polite",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/adjective-7269059d.mp3"
               }
             ]
           }
@@ -1165,6 +1240,7 @@
       },
       {
         "image_prompt": "Evening at Jisoo's open apartment door: Minho stands in the hallway waving goodbye with a warm smile; Jisoo, tired but happy, bows slightly. Orange sunset light from the hallway window.",
+        "image": "media/01/panel-09.webp",
         "layout": {
           "aspect_ratio": 0.85
         },
@@ -1180,6 +1256,7 @@
               "w": 56,
               "h": 16
             },
+            "audio": "media/01/bubble-09-01.mp3",
             "tokens": [
               {
                 "surface": "피곤하죠",
@@ -1203,7 +1280,8 @@
                 ],
                 "politeness": "polite",
                 "cefr": "A1",
-                "note": "Target word: 피곤하다 = to be tired. -죠 asks for agreement: '…, right?'"
+                "note": "Target word: 피곤하다 = to be tired. -죠 asks for agreement: '…, right?'",
+                "lemma_audio": "media/words/adjective-ddf042cd.mp3"
               },
               {
                 "surface": "오늘은",
@@ -1225,7 +1303,8 @@
                     "meaning": "topic, contrast"
                   }
                 ],
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/noun-7e47174b.mp3"
               },
               {
                 "surface": "푹",
@@ -1236,7 +1315,8 @@
                 "romanization": "puk",
                 "lemma_romanization": "puk",
                 "cefr": "A2",
-                "note": "푹 쉬다 = to rest well; 푹 자다 = to sleep soundly."
+                "note": "푹 쉬다 = to rest well; 푹 자다 = to sleep soundly.",
+                "lemma_audio": "media/words/adverb-3c79428c.mp3"
               },
               {
                 "surface": "쉬세요",
@@ -1260,7 +1340,8 @@
                 ],
                 "politeness": "polite",
                 "cefr": "A1",
-                "note": "Target word: 쉬다 = to rest. -세요 makes a soft, polite request."
+                "note": "Target word: 쉬다 = to rest. -세요 makes a soft, polite request.",
+                "lemma_audio": "media/words/verb-f38fc0fe.mp3"
               }
             ]
           },
@@ -1275,6 +1356,7 @@
               "w": 62,
               "h": 16
             },
+            "audio": "media/01/bubble-09-02.mp3",
             "tokens": [
               {
                 "surface": "고마워요",
@@ -1298,7 +1380,8 @@
                 ],
                 "politeness": "polite",
                 "cefr": "A1",
-                "note": "고마워요 is a warm everyday 'thanks', softer than 감사합니다."
+                "note": "고마워요 is a warm everyday 'thanks', softer than 감사합니다.",
+                "lemma_audio": "media/words/adjective-54806d7b.mp3"
               },
               {
                 "surface": "민호",
@@ -1307,7 +1390,8 @@
                 "translation": "Minho",
                 "lemma_translation": "Minho (name)",
                 "romanization": "Minho",
-                "lemma_romanization": "Minho"
+                "lemma_romanization": "Minho",
+                "lemma_audio": "media/words/noun-a1f098a8.mp3"
               },
               {
                 "surface": "씨",
@@ -1318,7 +1402,8 @@
                 "romanization": "ssi",
                 "lemma_romanization": "ssi",
                 "cefr": "A1",
-                "note": "Name + 씨 is a polite way to address people your age; never use it with your own name."
+                "note": "Name + 씨 is a polite way to address people your age; never use it with your own name.",
+                "lemma_audio": "media/words/noun-410c11d6.mp3"
               },
               {
                 "surface": "잘 부탁드려요",
@@ -1347,7 +1432,8 @@
                 ],
                 "politeness": "polite",
                 "cefr": "A1",
-                "note": "Set phrase for the start of a new relationship: with a neighbor, coworker or classmate."
+                "note": "Set phrase for the start of a new relationship: with a neighbor, coworker or classmate.",
+                "lemma_audio": "media/words/phrase-070fa092.mp3"
               }
             ]
           }
@@ -1355,6 +1441,7 @@
       },
       {
         "image_prompt": "Night: Jisoo sits on the floor of her small studio among half-opened boxes, holding a warm mug, looking out of the window at the glowing Seoul city lights and N Seoul Tower in the distance, smiling softly.",
+        "image": "media/01/panel-10.webp",
         "layout": {
           "aspect_ratio": 0.75
         },
@@ -1370,6 +1457,7 @@
               "w": 62,
               "h": 16
             },
+            "audio": "media/01/bubble-10-01.mp3",
             "tokens": [
               {
                 "surface": "새",
@@ -1379,7 +1467,8 @@
                 "lemma_translation": "new",
                 "romanization": "sae",
                 "lemma_romanization": "sae",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/determiner-e851de56.mp3"
               },
               {
                 "surface": "집",
@@ -1389,7 +1478,8 @@
                 "lemma_translation": "house, home",
                 "romanization": "jip",
                 "lemma_romanization": "jip",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/noun-590bc778.mp3"
               },
               {
                 "surface": "새",
@@ -1399,7 +1489,8 @@
                 "lemma_translation": "new",
                 "romanization": "sae",
                 "lemma_romanization": "sae",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/determiner-e851de56.mp3"
               },
               {
                 "surface": "이웃",
@@ -1409,7 +1500,8 @@
                 "lemma_translation": "neighbor",
                 "romanization": "iut",
                 "lemma_romanization": "iut",
-                "cefr": "A2"
+                "cefr": "A2",
+                "lemma_audio": "media/words/noun-6c4da72c.mp3"
               },
               {
                 "surface": "서울",
@@ -1418,7 +1510,8 @@
                 "translation": "Seoul",
                 "lemma_translation": "Seoul",
                 "romanization": "Seoul",
-                "lemma_romanization": "Seoul"
+                "lemma_romanization": "Seoul",
+                "lemma_audio": "media/words/noun-566a203d.mp3"
               },
               {
                 "surface": "생활",
@@ -1428,7 +1521,8 @@
                 "lemma_translation": "life, everyday living",
                 "romanization": "saenghwal",
                 "lemma_romanization": "saenghwal",
-                "cefr": "A2"
+                "cefr": "A2",
+                "lemma_audio": "media/words/noun-08159e1a.mp3"
               },
               {
                 "surface": "시작",
@@ -1438,7 +1532,8 @@
                 "lemma_translation": "start, beginning",
                 "romanization": "sijak",
                 "lemma_romanization": "sijak",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/noun-b444b186.mp3"
               }
             ]
           }

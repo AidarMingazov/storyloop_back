@@ -19,4 +19,14 @@ namespace :episodes do
       Rake::Task["episodes:import"].invoke(file)
     end
   end
+
+  desc "Write a series' voices, character sheets, AI panel images and recordings into its seed JSON + media " \
+       "(db/seeds/episodes/<pair>), so db:seed brings them to a fresh database: SERIES=coffee-and-coincidences [DIR=…]"
+  task export: :environment do
+    series = Series.find_by!(slug: ENV.fetch("SERIES") { abort "SERIES=<slug> is required" })
+    summary = Episodes::Exporter.call(series, dir: ENV["DIR"])
+    puts "#{series.slug}: " + summary.map { |kind, count| "#{count} #{kind}" }.join(", ")
+  rescue Episodes::Exporter::Mismatch => e
+    abort "FAILED #{e.message}"
+  end
 end

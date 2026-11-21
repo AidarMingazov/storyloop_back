@@ -7,27 +7,36 @@
     "genre": "romance",
     "cefr_level": "A2",
     "style_prompt": "Soft, warm Korean webtoon style with clean, thin line art and gentle cel shading. Pastel palette of peach, cream, mint and latte brown, cozy golden lighting, expressive but simple faces, slightly rounded proportions, uncluttered backgrounds with soft bokeh. Vertical-scroll comic panel composition. No text, letters, readable signs or speech bubbles in the image.",
+    "narrator_voice": "English_CaptivatingStoryteller",
     "characters": [
       {
         "key": "mia",
         "name": "Mia",
         "appearance_prompt": "24-year-old woman, petite, shoulder-length wavy auburn hair usually tied in a messy low bun with a few loose strands, warm brown eyes, light freckles across her nose and cheeks, small silver star earrings. At work she wears a mustard-yellow barista apron over a cream knit sweater with pushed-up sleeves, black jeans and white sneakers.",
-        "protagonist": true
+        "protagonist": true,
+        "voice": "English_SentimentalLady",
+        "sheet": "media/sheets/mia.jpg"
       },
       {
         "key": "leo",
         "name": "Leo",
-        "appearance_prompt": "26-year-old man, tall and slim, messy dark-brown hair falling over his forehead, round tortoiseshell glasses, soft green eyes, a small ink stain on his right hand. Wears an oversized olive-green corduroy jacket over a plain white T-shirt, beige chinos and worn white sneakers; usually carries a brown leather sketchbook."
+        "appearance_prompt": "26-year-old man, tall and slim, messy dark-brown hair falling over his forehead, round tortoiseshell glasses, soft green eyes, a small ink stain on his right hand. Wears an oversized olive-green corduroy jacket over a plain white T-shirt, beige chinos and worn white sneakers; usually carries a brown leather sketchbook.",
+        "voice": "English_DecentYoungMan",
+        "sheet": "media/sheets/leo.jpg"
       },
       {
         "key": "sam",
         "name": "Sam",
-        "appearance_prompt": "25-year-old woman, Mia's roommate, short bleached-blonde pixie cut, bright blue eyes, wide cheerful grin, several small silver ear piercings. Wears oversized lavender hoodies, patterned leggings and fuzzy socks; very expressive face, often has her phone in her hand."
+        "appearance_prompt": "25-year-old woman, Mia's roommate, short bleached-blonde pixie cut, bright blue eyes, wide cheerful grin, several small silver ear piercings. Wears oversized lavender hoodies, patterned leggings and fuzzy socks; very expressive face, often has her phone in her hand.",
+        "voice": "English_PlayfulGirl",
+        "sheet": "media/sheets/sam.jpg"
       },
       {
         "key": "nora",
         "name": "Nora",
-        "appearance_prompt": "28-year-old woman, tall and elegant, long glossy black hair in loose waves, soft green eyes exactly like Leo's, bright red lipstick, gold hoop earrings. Wears a fitted red dress under a cream trench coat and red heels; dramatic, confident gestures."
+        "appearance_prompt": "28-year-old woman, tall and elegant, long glossy black hair in loose waves, soft green eyes exactly like Leo's, bright red lipstick, gold hoop earrings. Wears a fitted red dress under a cream trench coat and red heels; dramatic, confident gestures.",
+        "voice": "English_ConfidentWoman",
+        "sheet": "media/sheets/nora.jpg"
       }
     ]
   },
@@ -54,6 +63,7 @@
     "panels": [
       {
         "image_prompt": "Mia and Sam's small cozy apartment in the evening, fairy lights on the wall. Mia stands in front of a full-length mirror in a soft pink dress, her auburn hair down in loose waves, looking nervous. Sam sits cross-legged on the bed in a lavender hoodie, holding up two pairs of earrings and grinning.",
+        "image": "media/04/panel-01.webp",
         "layout": {
           "aspect_ratio": 0.8
         },
@@ -69,13 +79,15 @@
               "w": 52,
               "h": 15
             },
+            "audio": "media/04/bubble-01-01.mp3",
             "tokens": [
               {
                 "surface": "You",
                 "lemma": "you",
                 "pos": "pronoun",
                 "translation": "ты",
-                "lemma_translation": "ты; вы"
+                "lemma_translation": "ты; вы",
+                "lemma_audio": "media/words/you-3b679ac2.mp3"
               },
               {
                 "surface": "look",
@@ -83,7 +95,8 @@
                 "pos": "verb",
                 "translation": "выглядишь",
                 "lemma_translation": "выглядеть; смотреть",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/look-e5656f50.mp3"
               },
               {
                 "surface": "amazing",
@@ -91,20 +104,23 @@
                 "pos": "adjective",
                 "translation": "потрясающе",
                 "lemma_translation": "потрясающий",
-                "cefr": "A2"
+                "cefr": "A2",
+                "lemma_audio": "media/words/amazing-d105e642.mp3"
               },
               {
                 "surface": "Leo",
                 "lemma": "Leo",
                 "pos": "noun",
-                "translation": "Лео"
+                "translation": "Лео",
+                "lemma_audio": "media/words/leo-c79cfd30.mp3"
               },
               {
                 "surface": "won't",
                 "lemma": "will not",
                 "pos": "verb",
                 "translation": "не",
-                "note": "Won't = will not — отрицание в будущем времени."
+                "note": "Won't = will not — отрицание в будущем времени.",
+                "lemma_audio": "media/words/will-not-61579db0.mp3"
               },
               {
                 "surface": "believe his eyes",
@@ -113,7 +129,8 @@
                 "translation": "поверит своим глазам",
                 "lemma_translation": "поверить своим глазам",
                 "cefr": "B1",
-                "note": "Not believe your eyes — «не поверить своим глазам», очень сильно удивиться. Местоимение меняется: his, her, my."
+                "note": "Not believe your eyes — «не поверить своим глазам», очень сильно удивиться. Местоимение меняется: his, her, my.",
+                "lemma_audio": "media/words/believe-your-eyes-dc582155.mp3"
               }
             ]
           },
@@ -128,6 +145,7 @@
               "w": 52,
               "h": 15
             },
+            "audio": "media/04/bubble-01-02.mp3",
             "tokens": [
               {
                 "surface": "Stop it",
@@ -135,20 +153,23 @@
                 "pos": "phrase",
                 "translation": "перестань",
                 "cefr": "A2",
-                "note": "Stop it! — «перестань!»; часто говорят шутливо, когда смущают комплиментами."
+                "note": "Stop it! — «перестань!»; часто говорят шутливо, когда смущают комплиментами.",
+                "lemma_audio": "media/words/stop-it-e701ba4b.mp3"
               },
               {
                 "surface": "I'm",
                 "lemma": "I am",
                 "pos": "pronoun",
-                "translation": "я"
+                "translation": "я",
+                "lemma_audio": "media/words/i-am-f95a441b.mp3"
               },
               {
                 "surface": "already",
                 "lemma": "already",
                 "pos": "adverb",
                 "translation": "уже",
-                "cefr": "A2"
+                "cefr": "A2",
+                "lemma_audio": "media/words/already-bfdc7ae3.mp3"
               },
               {
                 "surface": "running late",
@@ -157,7 +178,8 @@
                 "translation": "опаздываю",
                 "lemma_translation": "опаздывать",
                 "cefr": "B1",
-                "note": "Be running late — «опаздывать, не успевать вовремя»: так говорят, пока ещё в пути."
+                "note": "Be running late — «опаздывать, не успевать вовремя»: так говорят, пока ещё в пути.",
+                "lemma_audio": "media/words/run-late-20d22173.mp3"
               }
             ]
           }
@@ -165,6 +187,7 @@
       },
       {
         "image_prompt": "A city street at dusk with warm streetlights coming on. Mia in her pink dress and a light denim jacket stares in panic at her phone; the screen is completely black. A bus drives away in the blurred background.",
+        "image": "media/04/panel-02.webp",
         "layout": {
           "aspect_ratio": 0.8
         },
@@ -180,25 +203,29 @@
               "w": 52,
               "h": 15
             },
+            "audio": "media/04/bubble-02-01.mp3",
             "tokens": [
               {
                 "surface": "Oh no",
                 "lemma": "oh no",
                 "pos": "interjection",
-                "translation": "о нет"
+                "translation": "о нет",
+                "lemma_audio": "media/words/oh-no-f79cf7f8.mp3"
               },
               {
                 "surface": "My",
                 "lemma": "my",
                 "pos": "determiner",
-                "translation": "мой"
+                "translation": "мой",
+                "lemma_audio": "media/words/my-b5e29c29.mp3"
               },
               {
                 "surface": "phone",
                 "lemma": "phone",
                 "pos": "noun",
                 "translation": "телефон",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/phone-38f84234.mp3"
               },
               {
                 "surface": "ran out of",
@@ -207,7 +234,8 @@
                 "translation": "села",
                 "lemma_translation": "заканчиваться (о запасе)",
                 "cefr": "B1",
-                "note": "Run out of something — «израсходовать, остаться без чего-то»: My phone ran out of battery — У телефона села батарейка."
+                "note": "Run out of something — «израсходовать, остаться без чего-то»: My phone ran out of battery — У телефона села батарейка.",
+                "lemma_audio": "media/words/run-out-of-df5570e2.mp3"
               },
               {
                 "surface": "battery",
@@ -215,7 +243,8 @@
                 "pos": "noun",
                 "translation": "батарейка",
                 "lemma_translation": "батарейка, аккумулятор",
-                "cefr": "A2"
+                "cefr": "A2",
+                "lemma_audio": "media/words/battery-d1d01c10.mp3"
               }
             ]
           },
@@ -230,26 +259,30 @@
               "w": 52,
               "h": 15
             },
+            "audio": "media/04/bubble-02-02.mp3",
             "tokens": [
               {
                 "surface": "Where's",
                 "lemma": "where is",
                 "pos": "adverb",
                 "translation": "где",
-                "note": "Where's = where is."
+                "note": "Where's = where is.",
+                "lemma_audio": "media/words/where-is-9ce1835f.mp3"
               },
               {
                 "surface": "the",
                 "lemma": "the",
                 "pos": "determiner",
-                "translation": "определённый артикль"
+                "translation": "определённый артикль",
+                "lemma_audio": "media/words/the-ca7c5991.mp3"
               },
               {
                 "surface": "gallery",
                 "lemma": "gallery",
                 "pos": "noun",
                 "translation": "галерея",
-                "cefr": "A2"
+                "cefr": "A2",
+                "lemma_audio": "media/words/gallery-c7e7ad9e.mp3"
               },
               {
                 "surface": "Blue",
@@ -257,14 +290,16 @@
                 "pos": "adjective",
                 "translation": "синяя",
                 "lemma_translation": "синий",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/blue-7496dffc.mp3"
               },
               {
                 "surface": "something",
                 "lemma": "something",
                 "pos": "pronoun",
                 "translation": "что-то там",
-                "lemma_translation": "что-то"
+                "lemma_translation": "что-то",
+                "lemma_audio": "media/words/something-1933146a.mp3"
               }
             ]
           }
@@ -272,6 +307,7 @@
       },
       {
         "image_prompt": "Mia stands in front of an elegant old stone building with tall columns and a large round silver moon emblem above the entrance (no letters). Through the tall windows, elderly visitors in formal clothes look at classical paintings. Mia looks hopeful but a little unsure.",
+        "image": "media/04/panel-03.webp",
         "layout": {
           "aspect_ratio": 0.85
         },
@@ -287,6 +323,7 @@
               "w": 52,
               "h": 15
             },
+            "audio": "media/04/bubble-03-01.mp3",
             "tokens": [
               {
                 "surface": "Blue",
@@ -294,21 +331,24 @@
                 "pos": "adjective",
                 "translation": "голубая",
                 "lemma_translation": "синий; голубой",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/blue-7496dffc.mp3"
               },
               {
                 "surface": "Moon",
                 "lemma": "moon",
                 "pos": "noun",
                 "translation": "луна",
-                "cefr": "A2"
+                "cefr": "A2",
+                "lemma_audio": "media/words/moon-7ebd397a.mp3"
               },
               {
                 "surface": "Gallery",
                 "lemma": "gallery",
                 "pos": "noun",
                 "translation": "галерея",
-                "cefr": "A2"
+                "cefr": "A2",
+                "lemma_audio": "media/words/gallery-c7e7ad9e.mp3"
               },
               {
                 "surface": "Close enough",
@@ -317,7 +357,8 @@
                 "translation": "почти то же самое",
                 "lemma_translation": "достаточно близко",
                 "cefr": "B1",
-                "note": "Close enough — «почти то, что нужно; сойдёт»."
+                "note": "Close enough — «почти то, что нужно; сойдёт».",
+                "lemma_audio": "media/words/close-enough-bcf0adbf.mp3"
               },
               {
                 "surface": "right",
@@ -326,7 +367,8 @@
                 "translation": "да",
                 "lemma_translation": "правильно; верно",
                 "cefr": "A1",
-                "note": "Right? в конце фразы — «да? правда?»: так просят согласиться."
+                "note": "Right? в конце фразы — «да? правда?»: так просят согласиться.",
+                "lemma_audio": "media/words/right-03db4178.mp3"
               }
             ]
           }
@@ -334,6 +376,7 @@
       },
       {
         "image_prompt": "Inside a quiet classical gallery with heavy golden frames: huge old landscape and portrait paintings on dark red walls. Mia stands in the middle of the room among elderly visitors, slowly realizing her mistake, a big comic sweat drop on her forehead.",
+        "image": "media/04/panel-04.webp",
         "layout": {
           "aspect_ratio": 0.8
         },
@@ -349,13 +392,15 @@
               "w": 60,
               "h": 18
             },
+            "audio": "media/04/bubble-04-01.mp3",
             "tokens": [
               {
                 "surface": "These",
                 "lemma": "this",
                 "pos": "determiner",
                 "translation": "эти",
-                "lemma_translation": "этот"
+                "lemma_translation": "этот",
+                "lemma_audio": "media/words/this-15cd5a93.mp3"
               },
               {
                 "surface": "paintings",
@@ -363,7 +408,8 @@
                 "pos": "noun",
                 "translation": "картины",
                 "lemma_translation": "картина",
-                "cefr": "A2"
+                "cefr": "A2",
+                "lemma_audio": "media/words/painting-f3db9157.mp3"
               },
               {
                 "surface": "are",
@@ -371,14 +417,16 @@
                 "pos": "verb",
                 "translation": "есть (связка)",
                 "lemma_translation": "быть",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/be-f99e9dd9.mp3"
               },
               {
                 "surface": "very",
                 "lemma": "very",
                 "pos": "adverb",
                 "translation": "очень",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/very-c3dbf5e8.mp3"
               },
               {
                 "surface": "old",
@@ -386,7 +434,8 @@
                 "pos": "adjective",
                 "translation": "старые",
                 "lemma_translation": "старый",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/old-3f92eba8.mp3"
               },
               {
                 "surface": "Wait",
@@ -394,13 +443,15 @@
                 "pos": "verb",
                 "translation": "стоп",
                 "lemma_translation": "ждать",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/wait-4de176d8.mp3"
               },
               {
                 "surface": "This",
                 "lemma": "this",
                 "pos": "pronoun",
-                "translation": "это"
+                "translation": "это",
+                "lemma_audio": "media/words/this-8504606b.mp3"
               },
               {
                 "surface": "is",
@@ -408,13 +459,15 @@
                 "pos": "verb",
                 "translation": "есть (связка)",
                 "lemma_translation": "быть",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/be-f99e9dd9.mp3"
               },
               {
                 "surface": "the",
                 "lemma": "the",
                 "pos": "determiner",
-                "translation": "определённый артикль"
+                "translation": "определённый артикль",
+                "lemma_audio": "media/words/the-ca7c5991.mp3"
               },
               {
                 "surface": "wrong",
@@ -423,14 +476,16 @@
                 "translation": "не то",
                 "lemma_translation": "неправильный, не тот",
                 "cefr": "A2",
-                "note": "Wrong — «не тот, неправильный»: the wrong place — не то место."
+                "note": "Wrong — «не тот, неправильный»: the wrong place — не то место.",
+                "lemma_audio": "media/words/wrong-05380669.mp3"
               },
               {
                 "surface": "place",
                 "lemma": "place",
                 "pos": "noun",
                 "translation": "место",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/place-98b121a1.mp3"
               }
             ]
           }
@@ -438,6 +493,7 @@
       },
       {
         "image_prompt": "Heavy rain at night. Mia runs down a wet street holding her denim jacket over her head, splashing through puddles, her dress and shoes getting soaked, streetlights reflecting in the water. Determined, slightly desperate expression.",
+        "image": "media/04/panel-05.webp",
         "layout": {
           "aspect_ratio": 0.75
         },
@@ -453,13 +509,15 @@
               "w": 52,
               "h": 15
             },
+            "audio": "media/04/bubble-05-01.mp3",
             "tokens": [
               {
                 "surface": "And",
                 "lemma": "and",
                 "pos": "conjunction",
                 "translation": "а",
-                "lemma_translation": "и"
+                "lemma_translation": "и",
+                "lemma_audio": "media/words/and-ea3916e7.mp3"
               },
               {
                 "surface": "then",
@@ -467,7 +525,8 @@
                 "pos": "adverb",
                 "translation": "потом",
                 "lemma_translation": "тогда; потом",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/then-c155787b.mp3"
               },
               {
                 "surface": "of course",
@@ -476,7 +535,8 @@
                 "translation": "конечно же",
                 "lemma_translation": "конечно",
                 "cefr": "A1",
-                "note": "Of course — «конечно». Здесь с иронией: «как же без этого»."
+                "note": "Of course — «конечно». Здесь с иронией: «как же без этого».",
+                "lemma_audio": "media/words/of-course-71395f0c.mp3"
               },
               {
                 "surface": "it",
@@ -484,7 +544,8 @@
                 "pos": "pronoun",
                 "translation": "(не переводится)",
                 "lemma_translation": "оно; это",
-                "note": "В предложениях о погоде it не переводится: it's raining — идёт дождь."
+                "note": "В предложениях о погоде it не переводится: it's raining — идёт дождь.",
+                "lemma_audio": "media/words/it-3ebf42ab.mp3"
               },
               {
                 "surface": "started",
@@ -492,13 +553,15 @@
                 "pos": "verb",
                 "translation": "пошёл",
                 "lemma_translation": "начинать(ся)",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/start-0c1a27a9.mp3"
               },
               {
                 "surface": "to",
                 "lemma": "to",
                 "pos": "particle",
-                "translation": "частица инфинитива"
+                "translation": "частица инфинитива",
+                "lemma_audio": "media/words/to-36ec9b2d.mp3"
               },
               {
                 "surface": "rain",
@@ -506,7 +569,8 @@
                 "pos": "verb",
                 "translation": "дождь",
                 "lemma_translation": "идти (о дожде)",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/rain-a7108109.mp3"
               }
             ]
           },
@@ -521,6 +585,7 @@
               "w": 52,
               "h": 15
             },
+            "audio": "media/04/bubble-05-02.mp3",
             "tokens": [
               {
                 "surface": "Blue",
@@ -528,20 +593,23 @@
                 "pos": "adjective",
                 "translation": "синяя",
                 "lemma_translation": "синий",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/blue-7496dffc.mp3"
               },
               {
                 "surface": "DOOR",
                 "lemma": "door",
                 "pos": "noun",
                 "translation": "дверь",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/door-9677e05e.mp3"
               },
               {
                 "surface": "Not",
                 "lemma": "not",
                 "pos": "adverb",
-                "translation": "не"
+                "translation": "не",
+                "lemma_audio": "media/words/not-8141cc37.mp3"
               },
               {
                 "surface": "Blue",
@@ -549,21 +617,24 @@
                 "pos": "adjective",
                 "translation": "голубая",
                 "lemma_translation": "синий; голубой",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/blue-7496dffc.mp3"
               },
               {
                 "surface": "Moon",
                 "lemma": "moon",
                 "pos": "noun",
                 "translation": "луна",
-                "cefr": "A2"
+                "cefr": "A2",
+                "lemma_audio": "media/words/moon-7ebd397a.mp3"
               },
               {
                 "surface": "Why",
                 "lemma": "why",
                 "pos": "adverb",
                 "translation": "почему",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/why-2b1dad6a.mp3"
               },
               {
                 "surface": "am",
@@ -571,13 +642,15 @@
                 "pos": "verb",
                 "translation": "есть (связка)",
                 "lemma_translation": "быть",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/be-f99e9dd9.mp3"
               },
               {
                 "surface": "I",
                 "lemma": "I",
                 "pos": "pronoun",
-                "translation": "я"
+                "translation": "я",
+                "lemma_audio": "media/words/i-8bae2050.mp3"
               },
               {
                 "surface": "like this",
@@ -586,7 +659,8 @@
                 "translation": "такая",
                 "lemma_translation": "такой; вот так",
                 "cefr": "A2",
-                "note": "Like this — «такой, вот так». Why am I like this? — шутливая жалоба на себя: «Ну почему я такая?»"
+                "note": "Like this — «такой, вот так». Why am I like this? — шутливая жалоба на себя: «Ну почему я такая?»",
+                "lemma_audio": "media/words/like-this-9b6a5771.mp3"
               }
             ]
           }
@@ -594,6 +668,7 @@
       },
       {
         "image_prompt": "Night. A small modern gallery with a bright blue wooden door and warm light inside. Mia, soaking wet with dripping hair, bumps right into Leo, who is stepping out of the doorway; both stumble and Leo catches her by the shoulders, shocked.",
+        "image": "media/04/panel-06.webp",
         "layout": {
           "aspect_ratio": 0.8
         },
@@ -609,19 +684,22 @@
               "w": 52,
               "h": 15
             },
+            "audio": "media/04/bubble-06-01.mp3",
             "tokens": [
               {
                 "surface": "At",
                 "lemma": "at",
                 "pos": "preposition",
                 "translation": "у",
-                "lemma_translation": "в; у"
+                "lemma_translation": "в; у",
+                "lemma_audio": "media/words/at-ffe610b7.mp3"
               },
               {
                 "surface": "the",
                 "lemma": "the",
                 "pos": "determiner",
-                "translation": "определённый артикль"
+                "translation": "определённый артикль",
+                "lemma_audio": "media/words/the-ca7c5991.mp3"
               },
               {
                 "surface": "door",
@@ -629,13 +707,15 @@
                 "pos": "noun",
                 "translation": "двери",
                 "lemma_translation": "дверь",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/door-9677e05e.mp3"
               },
               {
                 "surface": "I",
                 "lemma": "I",
                 "pos": "pronoun",
-                "translation": "я"
+                "translation": "я",
+                "lemma_audio": "media/words/i-8bae2050.mp3"
               },
               {
                 "surface": "ran into",
@@ -644,13 +724,15 @@
                 "translation": "столкнулась с",
                 "lemma_translation": "случайно встретить; врезаться",
                 "cefr": "A2",
-                "note": "Run into somebody — случайно встретить знакомого. А буквально — врезаться, столкнуться."
+                "note": "Run into somebody — случайно встретить знакомого. А буквально — врезаться, столкнуться.",
+                "lemma_audio": "media/words/run-into-29d52335.mp3"
               },
               {
                 "surface": "Leo",
                 "lemma": "Leo",
                 "pos": "noun",
-                "translation": "Лео"
+                "translation": "Лео",
+                "lemma_audio": "media/words/leo-c79cfd30.mp3"
               },
               {
                 "surface": "Literally",
@@ -659,7 +741,8 @@
                 "translation": "в буквальном смысле",
                 "lemma_translation": "буквально",
                 "cefr": "B1",
-                "note": "Literally — «буквально, в прямом смысле слова»."
+                "note": "Literally — «буквально, в прямом смысле слова».",
+                "lemma_audio": "media/words/literally-a7dda830.mp3"
               }
             ]
           },
@@ -674,19 +757,22 @@
               "w": 52,
               "h": 15
             },
+            "audio": "media/04/bubble-06-02.mp3",
             "tokens": [
               {
                 "surface": "Mia",
                 "lemma": "Mia",
                 "pos": "noun",
-                "translation": "Миа"
+                "translation": "Миа",
+                "lemma_audio": "media/words/mia-81ed5285.mp3"
               },
               {
                 "surface": "You",
                 "lemma": "you",
                 "pos": "pronoun",
                 "translation": "ты",
-                "lemma_translation": "ты; вы"
+                "lemma_translation": "ты; вы",
+                "lemma_audio": "media/words/you-3b679ac2.mp3"
               },
               {
                 "surface": "made it",
@@ -695,20 +781,23 @@
                 "translation": "пришла",
                 "lemma_translation": "успеть, добраться",
                 "cefr": "A2",
-                "note": "Make it — «успеть, добраться, прийти» (несмотря на трудности): You made it! — Ты пришла!"
+                "note": "Make it — «успеть, добраться, прийти» (несмотря на трудности): You made it! — Ты пришла!",
+                "lemma_audio": "media/words/make-it-d97b3372.mp3"
               },
               {
                 "surface": "But",
                 "lemma": "but",
                 "pos": "conjunction",
-                "translation": "но"
+                "translation": "но",
+                "lemma_audio": "media/words/but-2ba442ec.mp3"
               },
               {
                 "surface": "you're",
                 "lemma": "you are",
                 "pos": "pronoun",
                 "translation": "ты",
-                "lemma_translation": "ты; вы"
+                "lemma_translation": "ты; вы",
+                "lemma_audio": "media/words/you-are-d6f38152.mp3"
               },
               {
                 "surface": "soaking wet",
@@ -717,7 +806,8 @@
                 "translation": "насквозь промокла",
                 "lemma_translation": "промокший насквозь",
                 "cefr": "B1",
-                "note": "Soaking wet — «мокрый насквозь». Soaking усиливает слово wet."
+                "note": "Soaking wet — «мокрый насквозь». Soaking усиливает слово wet.",
+                "lemma_audio": "media/words/soaking-wet-9fbc24cf.mp3"
               }
             ]
           },
@@ -732,6 +822,7 @@
               "w": 44,
               "h": 13
             },
+            "audio": "media/04/bubble-06-03.mp3",
             "tokens": [
               {
                 "surface": "Sorry",
@@ -739,13 +830,15 @@
                 "pos": "adjective",
                 "translation": "прости",
                 "lemma_translation": "извини(те); сожалеющий",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/sorry-fd9fda18.mp3"
               },
               {
                 "surface": "I'm",
                 "lemma": "I am",
                 "pos": "pronoun",
-                "translation": "я"
+                "translation": "я",
+                "lemma_audio": "media/words/i-am-f95a441b.mp3"
               },
               {
                 "surface": "late",
@@ -753,13 +846,15 @@
                 "pos": "adjective",
                 "translation": "опоздала",
                 "lemma_translation": "поздний; опоздавший",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/late-e46771be.mp3"
               },
               {
                 "surface": "I",
                 "lemma": "I",
                 "pos": "pronoun",
-                "translation": "я"
+                "translation": "я",
+                "lemma_audio": "media/words/i-8bae2050.mp3"
               },
               {
                 "surface": "got lost",
@@ -768,7 +863,8 @@
                 "translation": "заблудилась",
                 "lemma_translation": "заблудиться",
                 "cefr": "A2",
-                "note": "Get lost — «заблудиться». (Грубое Get lost! — «Отвали!», но здесь не тот случай.)"
+                "note": "Get lost — «заблудиться». (Грубое Get lost! — «Отвали!», но здесь не тот случай.)",
+                "lemma_audio": "media/words/get-lost-c1864017.mp3"
               }
             ]
           }
@@ -776,6 +872,7 @@
       },
       {
         "image_prompt": "Leo gently puts his olive-green corduroy jacket over Mia's wet shoulders. He smiles warmly and gestures toward the bright gallery hall behind him. Mia holds the jacket close, shy.",
+        "image": "media/04/panel-07.webp",
         "layout": {
           "aspect_ratio": 0.85
         },
@@ -791,6 +888,7 @@
               "w": 60,
               "h": 18
             },
+            "audio": "media/04/bubble-07-01.mp3",
             "tokens": [
               {
                 "surface": "Here",
@@ -798,7 +896,8 @@
                 "pos": "adverb",
                 "translation": "вот",
                 "lemma_translation": "здесь; вот",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/here-e248ad3e.mp3"
               },
               {
                 "surface": "take",
@@ -806,14 +905,16 @@
                 "pos": "verb",
                 "translation": "возьми",
                 "lemma_translation": "брать",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/take-004aac6d.mp3"
               },
               {
                 "surface": "my",
                 "lemma": "my",
                 "pos": "determiner",
                 "translation": "мою",
-                "lemma_translation": "мой"
+                "lemma_translation": "мой",
+                "lemma_audio": "media/words/my-b5e29c29.mp3"
               },
               {
                 "surface": "jacket",
@@ -821,7 +922,8 @@
                 "pos": "noun",
                 "translation": "куртку",
                 "lemma_translation": "куртка; пиджак",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/jacket-07bdfac8.mp3"
               },
               {
                 "surface": "Come in",
@@ -830,13 +932,15 @@
                 "translation": "заходи",
                 "lemma_translation": "входить",
                 "cefr": "A1",
-                "note": "Come in — «входи, заходи»: так приглашают внутрь."
+                "note": "Come in — «входи, заходи»: так приглашают внутрь.",
+                "lemma_audio": "media/words/come-in-eb1d3aa0.mp3"
               },
               {
                 "surface": "I",
                 "lemma": "I",
                 "pos": "pronoun",
-                "translation": "я"
+                "translation": "я",
+                "lemma_audio": "media/words/i-8bae2050.mp3"
               },
               {
                 "surface": "want",
@@ -844,13 +948,15 @@
                 "pos": "verb",
                 "translation": "хочу",
                 "lemma_translation": "хотеть",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/want-5d79af4a.mp3"
               },
               {
                 "surface": "to",
                 "lemma": "to",
                 "pos": "particle",
-                "translation": "частица инфинитива"
+                "translation": "частица инфинитива",
+                "lemma_audio": "media/words/to-36ec9b2d.mp3"
               },
               {
                 "surface": "show",
@@ -858,21 +964,24 @@
                 "pos": "verb",
                 "translation": "показать",
                 "lemma_translation": "показывать",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/show-1b1738e8.mp3"
               },
               {
                 "surface": "you",
                 "lemma": "you",
                 "pos": "pronoun",
                 "translation": "тебе",
-                "lemma_translation": "ты; вы"
+                "lemma_translation": "ты; вы",
+                "lemma_audio": "media/words/you-3b679ac2.mp3"
               },
               {
                 "surface": "something",
                 "lemma": "something",
                 "pos": "pronoun",
                 "translation": "кое-что",
-                "lemma_translation": "что-то"
+                "lemma_translation": "что-то",
+                "lemma_audio": "media/words/something-1933146a.mp3"
               }
             ]
           }
@@ -880,6 +989,7 @@
       },
       {
         "image_prompt": "Wide shot inside the bright gallery: a large painting on a white wall shows a barista girl with auburn hair and a mustard apron, coffee splashing in the air around her like golden stars, in warm pastel colors. Mia, wrapped in Leo's jacket, stares at it with her mouth open. Leo stands next to her, rubbing the back of his neck shyly.",
+        "image": "media/04/panel-08.webp",
         "layout": {
           "aspect_ratio": 1.0
         },
@@ -895,12 +1005,14 @@
               "w": 44,
               "h": 13
             },
+            "audio": "media/04/bubble-08-01.mp3",
             "tokens": [
               {
                 "surface": "Leo",
                 "lemma": "Leo",
                 "pos": "noun",
-                "translation": "Лео"
+                "translation": "Лео",
+                "lemma_audio": "media/words/leo-c79cfd30.mp3"
               },
               {
                 "surface": "is",
@@ -908,21 +1020,24 @@
                 "pos": "verb",
                 "translation": "есть (связка)",
                 "lemma_translation": "быть",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/be-f99e9dd9.mp3"
               },
               {
                 "surface": "that",
                 "lemma": "that",
                 "pos": "pronoun",
                 "translation": "это",
-                "lemma_translation": "тот; то"
+                "lemma_translation": "тот; то",
+                "lemma_audio": "media/words/that-675dce33.mp3"
               },
               {
                 "surface": "me",
                 "lemma": "me",
                 "pos": "pronoun",
                 "translation": "я",
-                "lemma_translation": "меня; мне"
+                "lemma_translation": "меня; мне",
+                "lemma_audio": "media/words/me-2e1cbb8c.mp3"
               }
             ]
           },
@@ -937,12 +1052,14 @@
               "w": 60,
               "h": 18
             },
+            "audio": "media/04/bubble-08-02.mp3",
             "tokens": [
               {
                 "surface": "I",
                 "lemma": "I",
                 "pos": "pronoun",
-                "translation": "я"
+                "translation": "я",
+                "lemma_audio": "media/words/i-8bae2050.mp3"
               },
               {
                 "surface": "couldn't",
@@ -950,7 +1067,8 @@
                 "pos": "verb",
                 "translation": "не мог",
                 "lemma_translation": "не мочь",
-                "note": "Couldn't = could not — «не мог» (прошедшее время от can't)."
+                "note": "Couldn't = could not — «не мог» (прошедшее время от can't).",
+                "lemma_audio": "media/words/could-not-fcb26ac9.mp3"
               },
               {
                 "surface": "stop",
@@ -959,20 +1077,23 @@
                 "translation": "перестать",
                 "lemma_translation": "прекращать; останавливать(ся)",
                 "cefr": "A1",
-                "note": "Stop + -ing — перестать что-то делать: stop thinking — перестать думать."
+                "note": "Stop + -ing — перестать что-то делать: stop thinking — перестать думать.",
+                "lemma_audio": "media/words/stop-c4acf3a2.mp3"
               },
               {
                 "surface": "thinking",
                 "lemma": "think",
                 "pos": "verb",
                 "translation": "думать",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/think-8d6c8814.mp3"
               },
               {
                 "surface": "about",
                 "lemma": "about",
                 "pos": "preposition",
-                "translation": "о"
+                "translation": "о",
+                "lemma_audio": "media/words/about-faef4c8f.mp3"
               },
               {
                 "surface": "Monday",
@@ -980,7 +1101,8 @@
                 "pos": "noun",
                 "translation": "понедельнике",
                 "lemma_translation": "понедельник",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/monday-2eefa621.mp3"
               },
               {
                 "surface": "So",
@@ -988,13 +1110,15 @@
                 "pos": "conjunction",
                 "translation": "поэтому",
                 "lemma_translation": "так; поэтому",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/so-276703e3.mp3"
               },
               {
                 "surface": "I",
                 "lemma": "I",
                 "pos": "pronoun",
-                "translation": "я"
+                "translation": "я",
+                "lemma_audio": "media/words/i-8bae2050.mp3"
               },
               {
                 "surface": "painted",
@@ -1003,14 +1127,16 @@
                 "translation": "нарисовал",
                 "lemma_translation": "рисовать красками",
                 "cefr": "A1",
-                "note": "Paint — рисовать красками, а draw — карандашом или ручкой."
+                "note": "Paint — рисовать красками, а draw — карандашом или ручкой.",
+                "lemma_audio": "media/words/paint-039d1741.mp3"
               },
               {
                 "surface": "it",
                 "lemma": "it",
                 "pos": "pronoun",
                 "translation": "его",
-                "lemma_translation": "оно; это"
+                "lemma_translation": "оно; это",
+                "lemma_audio": "media/words/it-3ebf42ab.mp3"
               }
             ]
           }
@@ -1018,6 +1144,7 @@
       },
       {
         "image_prompt": "A glamorous young woman with long glossy black hair, bright red lipstick, a fitted red dress and a cream trench coat bursts into the gallery and throws her arms around Leo's neck from the side. Leo looks surprised. Mia, in the foreground and still wrapped in his jacket, turns with wide eyes.",
+        "image": "media/04/panel-09.webp",
         "layout": {
           "aspect_ratio": 0.8
         },
@@ -1033,26 +1160,30 @@
               "w": 44,
               "h": 13
             },
+            "audio": "media/04/bubble-09-01.mp3",
             "tokens": [
               {
                 "surface": "Leo",
                 "lemma": "Leo",
                 "pos": "noun",
-                "translation": "Лео"
+                "translation": "Лео",
+                "lemma_audio": "media/words/leo-c79cfd30.mp3"
               },
               {
                 "surface": "my",
                 "lemma": "my",
                 "pos": "determiner",
                 "translation": "моя",
-                "lemma_translation": "мой"
+                "lemma_translation": "мой",
+                "lemma_audio": "media/words/my-b5e29c29.mp3"
               },
               {
                 "surface": "love",
                 "lemma": "love",
                 "pos": "noun",
                 "translation": "любовь",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/love-932c0e67.mp3"
               },
               {
                 "surface": "There you are",
@@ -1060,7 +1191,8 @@
                 "pos": "phrase",
                 "translation": "вот ты где",
                 "cefr": "A2",
-                "note": "There you are! — «вот ты где!»: так говорят, когда наконец нашли человека."
+                "note": "There you are! — «вот ты где!»: так говорят, когда наконец нашли человека.",
+                "lemma_audio": "media/words/there-you-are-1ff94f68.mp3"
               }
             ]
           },
@@ -1075,32 +1207,37 @@
               "w": 44,
               "h": 13
             },
+            "audio": "media/04/bubble-09-02.mp3",
             "tokens": [
               {
                 "surface": "Nora",
                 "lemma": "Nora",
                 "pos": "noun",
-                "translation": "Нора"
+                "translation": "Нора",
+                "lemma_audio": "media/words/nora-5e126e4a.mp3"
               },
               {
                 "surface": "What",
                 "lemma": "what",
                 "pos": "pronoun",
-                "translation": "что"
+                "translation": "что",
+                "lemma_audio": "media/words/what-ca8202eb.mp3"
               },
               {
                 "surface": "are",
                 "lemma": "be",
                 "pos": "verb",
                 "translation": "вспомогательный глагол",
-                "lemma_translation": "быть"
+                "lemma_translation": "быть",
+                "lemma_audio": "media/words/be-f99e9dd9.mp3"
               },
               {
                 "surface": "you",
                 "lemma": "you",
                 "pos": "pronoun",
                 "translation": "ты",
-                "lemma_translation": "ты; вы"
+                "lemma_translation": "ты; вы",
+                "lemma_audio": "media/words/you-3b679ac2.mp3"
               },
               {
                 "surface": "doing",
@@ -1108,14 +1245,16 @@
                 "pos": "verb",
                 "translation": "делаешь",
                 "lemma_translation": "делать",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/do-927e3a02.mp3"
               },
               {
                 "surface": "here",
                 "lemma": "here",
                 "pos": "adverb",
                 "translation": "здесь",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/here-e248ad3e.mp3"
               }
             ]
           }
@@ -1123,6 +1262,7 @@
       },
       {
         "image_prompt": "Dramatic close-up of Mia's face, pale and frozen, gripping the edges of Leo's jacket. In the blurred background the woman in red is still hugging Leo. Cool blue tones around Mia, a single raindrop falling from her wet hair.",
+        "image": "media/04/panel-10.webp",
         "layout": {
           "aspect_ratio": 0.75
         },
@@ -1138,26 +1278,30 @@
               "w": 44,
               "h": 13
             },
+            "audio": "media/04/bubble-10-01.mp3",
             "tokens": [
               {
                 "surface": "My",
                 "lemma": "my",
                 "pos": "determiner",
                 "translation": "моя",
-                "lemma_translation": "мой"
+                "lemma_translation": "мой",
+                "lemma_audio": "media/words/my-b5e29c29.mp3"
               },
               {
                 "surface": "love",
                 "lemma": "love",
                 "pos": "noun",
                 "translation": "любовь",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/love-932c0e67.mp3"
               },
               {
                 "surface": "Who",
                 "lemma": "who",
                 "pos": "pronoun",
-                "translation": "кто"
+                "translation": "кто",
+                "lemma_audio": "media/words/who-4e002d2d.mp3"
               },
               {
                 "surface": "is",
@@ -1165,13 +1309,15 @@
                 "pos": "verb",
                 "translation": "есть (связка)",
                 "lemma_translation": "быть",
-                "cefr": "A1"
+                "cefr": "A1",
+                "lemma_audio": "media/words/be-f99e9dd9.mp3"
               },
               {
                 "surface": "she",
                 "lemma": "she",
                 "pos": "pronoun",
-                "translation": "она"
+                "translation": "она",
+                "lemma_audio": "media/words/she-e83724b7.mp3"
               }
             ]
           },
@@ -1186,6 +1332,7 @@
               "w": 36,
               "h": 12
             },
+            "audio": "media/04/bubble-10-02.mp3",
             "tokens": [
               {
                 "surface": "To be continued",
@@ -1193,7 +1340,8 @@
                 "pos": "phrase",
                 "translation": "продолжение следует",
                 "cefr": "B1",
-                "note": "To be continued — «продолжение следует»: так заканчивают серию."
+                "note": "To be continued — «продолжение следует»: так заканчивают серию.",
+                "lemma_audio": "media/words/to-be-continued-5ad95f02.mp3"
               }
             ]
           }
