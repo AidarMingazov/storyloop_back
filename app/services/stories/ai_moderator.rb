@@ -11,20 +11,19 @@ module Stories
     ATTEMPTS = 2
     MAX_TEXT = 12_000 # characters; a story is ~2–4K
 
-    def check(text, episode: nil)
+    # stage: "brief" (before generation) or "story" (the finished episode); episode: whose cost it is.
+    def check(text, episode: nil, stage: (episode ? "story" : "brief"))
       text = text.to_s.strip
       return Verdict.ok if text.blank?
 
-      GenerationLog.track(step: "moderation", episode:, metadata: { "stage" => stage(episode), "length" => text.length }) do |log|
-        verdict = classify(text, stage(episode))
+      GenerationLog.track(step: "moderation", episode:, metadata: { "stage" => stage, "length" => text.length }) do |log|
+        verdict = classify(text, stage)
         log.update!(metadata: log.metadata.merge("allowed" => verdict.ok?, "category" => verdict.category, "reason" => verdict.reason))
         verdict
       end
     end
 
     private
-      def stage(episode) = episode ? "story" : "brief"
-
       def classify(text, stage)
         messages = Ai::Prompt.messages("moderation", text: text.first(MAX_TEXT), stage:)
         ATTEMPTS.times do

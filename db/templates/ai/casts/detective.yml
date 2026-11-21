@@ -18,7 +18,7 @@ characters:
     voice: { ko: Korean_FriendlyBigSister, en: English_ConfidentWoman }
     sheet: casts/detective/detective.jpeg
     appearance_prompt: >-
-      Woman detective, about 32, short wavy dark hair, sharp observant eyes, a thin scar on the chin; long beige trench
+      Woman detective, about 32, short wavy dark hair, sharp observant eyes, a small silver ear cuff; long beige trench
       coat over a black turtleneck, dark jeans, ankle boots, a small notebook and pen. Calm, witty, notices everything.
   - key: assistant
     names: { ko: Taeho, en: Sam }

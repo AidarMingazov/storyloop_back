@@ -40,7 +40,7 @@ class Ai::ConfigTest < ActiveSupport::TestCase
   end
 
   test "missing key, unknown step and wrong kind are config errors" do
-    with_live_ai({ "DEEPSEEK_API_KEY" => nil }) do
+    with_live_ai({ "DEEPSEEK_API_KEY" => nil, "OPENROUTER_API_KEY" => nil }) do # .env may set real keys
       assert_raises(Ai::ConfigError) { Ai.llm(:script) }
       assert_raises(Ai::ConfigError) { Ai.llm(:nope) }
       assert_raises(Ai::ConfigError) { Ai.llm(:script, fallback: true) }

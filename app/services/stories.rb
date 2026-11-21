@@ -13,7 +13,7 @@ module Stories
     GENERATORS.fetch(config.generator).constantize.new
   end
 
-  # #check(text, episode: nil) → Stories::Verdict
+  # #check(text, episode: nil, stage: "brief" | "story") → Stories::Verdict
   def moderator
     MODERATORS.fetch(config.moderator).constantize.new
   end
@@ -34,7 +34,7 @@ module Stories
     end
   end
 
-  # #check(text, episode: nil) of a moderator → Verdict
+  # #check(text, episode:, stage:) of a moderator → Verdict
   Verdict = Data.define(:ok, :reason, :category) do
     def self.ok = new(ok: true, reason: nil, category: nil)
     def self.rejected(reason, category: "other") = new(ok: false, reason:, category:)

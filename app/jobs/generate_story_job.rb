@@ -15,7 +15,9 @@ class GenerateStoryJob < ApplicationJob
     return if request.succeeded? || request.failed? || request.confirming?
 
     request.start!
-    Stories.moderator.check(request.prompt).raise_if_rejected! if request.prompt.present? && request.confirmed_at.nil?
+    if request.prompt.present? && request.confirmed_at.nil?
+      Stories.moderator.check(request.prompt, episode: request.episode, stage: "brief").raise_if_rejected!
+    end
     if request.awaiting_confirmation?
       Stories.generator.cast_from_photos(request)
       return request.await_confirmation!

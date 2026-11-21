@@ -10,3 +10,4 @@ A cast is the characters and art style a user story is drawn with: the story's s
 - `sheet` — path under `db/templates/ai/`; casts reuse the sheets of series templates where they fit.
   Missing sheets: `bin/rails stories:casts:sheets` (Seedream, ~$0.04 each) writes `casts/<cast>/<character>.jpeg`.
 - `speech_level` — Korean only, as in series templates.
+- `creature: true` — an animal or a creature: its sheet is drawn without people.

@@ -32,6 +32,7 @@ characters:
       dark-red tunic, brown leather gloves, a round shield on his back and a sword at his side. Loyal, serious, bad at jokes.
   - key: pip
     names: { ko: Pip, en: Pip }
+    creature: true # the sheet must not add a person
     voice: { ko: Korean_CheerfulLittleSister, en: English_PlayfulGirl }
     speech_level: casual
     sheet: casts/fantasy/pip.jpeg

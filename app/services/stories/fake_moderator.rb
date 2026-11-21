@@ -4,7 +4,7 @@ module Stories
   class FakeModerator
     MARKER = "[[blocked]]"
 
-    def check(text, episode: nil)
+    def check(text, episode: nil, stage: nil)
       text.to_s.include?(MARKER) ? Verdict.rejected("fake moderator: marker found", category: "other") : Verdict.ok
     end
   end

@@ -53,6 +53,7 @@ class Stories::AiModeratorTest < ActiveSupport::TestCase
     GenerateStoryJob.perform_now(request)
 
     assert_equal [ "failed", "hate" ], request.reload.values_at(:status, :rejection)
+    assert_equal "brief", request.episode.generation_logs.find_by!(step: "moderation").metadata["stage"], "the check is the story's cost"
     assert_equal Stories.free_generations, users(:one).story_generations_left
   ensure
     Rails.configuration.x.stories.moderator = "fake"
