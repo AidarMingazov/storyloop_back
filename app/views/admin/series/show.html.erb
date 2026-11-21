@@ -17,6 +17,36 @@
       <h2 class="font-serif text-2xl font-semibold text-ink-strong">Эпизоды</h2>
       <%= link_to "Новый эпизод", new_admin_series_episode_path(@series), class: "btn-secondary btn-sm" %>
     </div>
+    <%= form_with scope: :generation, url: generate_admin_series_path(@series), id: "generate",
+          class: "card p-4 mb-4 grid gap-3",
+          data: { turbo_confirm: "Запустить генерацию? Около $0.6 и 4 минут на эпизод." } do |f| %>
+      <div class="grid grid-cols-3 gap-3">
+      <div>
+        <%= f.label :count, "Эпизодов", class: "label" %>
+        <%= f.number_field :count, value: 1, min: 1, max: Admin::SeriesController::GENERATE_LIMIT, class: "input tabular-nums" %>
+      </div>
+      <div>
+        <%= f.label :format, "Формат", class: "label" %>
+        <%= f.select :format, %w[webtoon chat], {}, class: "input" %>
+      </div>
+      <div>
+        <%= f.label :panels, "Кадров", class: "label" %>
+        <%= f.number_field :panels, placeholder: "10", min: 2, max: 20, class: "input tabular-nums" %>
+      </div>
+      </div>
+      <div>
+        <%= f.label :brief, "О чём первый эпизод (необязательно)", class: "label" %>
+        <%= f.text_field :brief, class: "input", placeholder: "Della sells her hair" %>
+      </div>
+      <div>
+        <%= f.label :target_words, "Целевые слова первого эпизода через запятую (необязательно)", class: "label" %>
+        <%= f.text_field :target_words, class: "input" %>
+      </div>
+      <div class="flex flex-wrap items-center gap-3">
+        <%= f.submit "Сгенерировать", class: "btn-primary" %>
+        <p class="text-xs text-muted">Эпизоды пишутся по очереди: каждый следующий помнит прошлые. Готовые попадают в статус «review».</p>
+      </div>
+    <% end %>
     <div class="card overflow-x-auto">
       <table class="table">
         <thead><tr><th>#</th><th>Название</th><th>Формат</th><th>Кадры</th><th>Доступ</th><th>Статус</th></tr></thead>

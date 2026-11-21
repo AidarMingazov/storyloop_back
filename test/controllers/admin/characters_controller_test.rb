@@ -117,3 +117,38 @@ class Admin::PipelineControllerTest < ActionDispatch::IntegrationTest
     assert_select "meta[http-equiv=refresh]"
   end
 end
+
+class Admin::GenerateEpisodesTest < ActionDispatch::IntegrationTest
+  include ActiveJob::TestHelper
+  include ScriptTestHelper
+
+  setup { sign_in_as users(:admin) }
+
+  test "series templates load from the series list" do
+    get admin_series_index_path
+    assert_select "#templates form[action='#{load_template_admin_series_index_path(name: 'folk-golden-axe')}']"
+
+    post load_template_admin_series_index_path(name: "folk-golden-axe")
+    series = Series.find_by!(slug: "golden-axe")
+    assert_redirected_to admin_series_path(series)
+    assert_equal 3, series.characters.count
+
+    post load_template_admin_series_index_path(name: "nope")
+    assert_redirected_to admin_series_index_path
+  end
+
+  test "the generate form enqueues the pipeline for N episodes" do
+    get admin_series_path(ko_series)
+    assert_select "form#generate"
+
+    assert_enqueued_with(job: GenerateEpisodeJob, args: [ ko_series, { "count" => 2, "format" => "chat", "panels" => 4,
+                                                                       "brief" => "A storm", "target_words" => %w[비 바람] } ]) do
+      post generate_admin_series_path(ko_series), params: { generation: { count: "2", format: "chat", panels: "4", brief: "A storm", target_words: "비, 바람" } }
+    end
+    assert_redirected_to admin_series_path(ko_series)
+
+    assert_no_enqueued_jobs do
+      post generate_admin_series_path(ko_series), params: { generation: { count: "9", format: "webtoon" } }
+    end
+  end
+end

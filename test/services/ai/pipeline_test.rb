@@ -106,3 +106,21 @@ class Ai::PipelineTest < ActiveSupport::TestCase
     assert_equal 2, episode.generation_logs.where(step: "layout").count
   end
 end
+
+class GenerateEpisodeJobTest < ActiveSupport::TestCase
+  include AiTestHelper
+  include ScriptTestHelper
+
+  test "count episodes one after another; the brief goes to the first, memory to the next" do
+    Ai::Llm::Fake.respond_with(ko_answer(panels: 2), { "bubbles" => [] }, { "bubbles" => [] }, { "bubbles" => [] },
+                               ko_answer(panels: 2, title: "둘 · Two"), { "bubbles" => [] }, { "bubbles" => [] }, { "bubbles" => [] })
+
+    episodes = GenerateEpisodeJob.perform_now(ko_series, { "count" => 2, "panels" => 2, "brief" => "The axe falls" })
+
+    assert_equal [ 1, 2 ], episodes.map(&:number)
+    scripts = Ai::Llm::Fake.calls.select { |c| c[:step] == "script" }.map { |c| c[:messages] }
+    assert_equal "Write episode 1. Brief: The axe falls", scripts[0].last[:content]
+    assert_equal "Write episode 2.", scripts[1].last[:content]
+    assert_includes scripts[1].first[:content], "Episode 1 «금도끼 · The Golden Axe»: An honest woodcutter loses his axe."
+  end
+end

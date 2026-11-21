@@ -10,6 +10,14 @@
   </div>
 </div>
 
+<section class="card p-4 mb-6 flex flex-wrap items-center gap-3" id="templates">
+  <h2 class="label mb-0">Шаблоны для AI-конвейера</h2>
+  <% @templates.each do |name| %>
+    <%= button_to name, load_template_admin_series_index_path(name:), class: "btn-secondary btn-sm",
+          form: { data: { turbo_confirm: "Загрузить шаблон #{name}? Серия и персонажи обновятся из файла." } } %>
+  <% end %>
+</section>
+
 <% if @series.empty? %>
   <div class="card p-8 text-center text-muted">
     Серий пока нет. Загрузите сиды: <code class="text-ink-strong">docker compose run --rm web bin/rails db:seed</code>

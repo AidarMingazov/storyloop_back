@@ -120,6 +120,21 @@ namespace :ai do
     summary["failed"].each { |name, error| puts "FAILED #{name}: #{error}" }
   end
 
+  desc "Whole pipeline for new episodes: SERIES=golden-axe [COUNT=1] [FORMAT=webtoon|chat] [PANELS=10] [BRIEF=\"…\"] " \
+       "[WORDS=\"a, b\"] — one after another, ~$0.6 and 3–5 min each; BRIEF and WORDS apply to the first"
+  task generate: :environment do
+    series = Series.find_by!(slug: ENV.fetch("SERIES") { abort "SERIES=<slug> is required" })
+    episodes = GenerateEpisodeJob.perform_now(series, {
+      count: ENV.fetch("COUNT", 1), format: ENV.fetch("FORMAT", "webtoon"), panels: ENV["PANELS"], brief: ENV["BRIEF"],
+      target_words: ENV.fetch("WORDS", "").split(",")
+    }.compact)
+    episodes.each do |episode|
+      status = Ai::PipelineStatus.new(episode)
+      puts "##{episode.number} «#{episode.title}» [#{episode.status}] $#{format('%.3f', status.total_usd)}"
+      status.rows.each { |row| puts format("  %-7s %-9s %s", row.step, row.status, row.notes) }
+    end
+  end
+
   desc "Generate character sheets with the image model (~$0.04 each): SERIES=golden-axe [CHARACTERS=woodcutter,spirit] " \
        "[FORCE=1 to redo existing sheets]"
   task sheets: :environment do

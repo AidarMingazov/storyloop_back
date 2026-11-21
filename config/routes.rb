@@ -40,6 +40,8 @@ Rails.application.routes.draw do
     root "series#index"
 
     resources :series do
+      post :generate, on: :member
+      post :load_template, on: :collection
       resources :characters, shallow: true, except: %i[index show] do
         post :generate_sheet, on: :member
       end
