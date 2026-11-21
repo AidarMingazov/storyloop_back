@@ -25,6 +25,13 @@ shared:
       voices: { ko: Korean_CalmLady, en: English_CalmWoman }
     stt: { provider: fake } # 7.12: provider not chosen yet
 
+  # admin "Сравнение разметки": the same bubbles marked up by each model
+  comparison_models:
+    - deepseek:deepseek-flash
+    - openrouter:anthropic/claude-haiku-5.5
+    - openrouter:anthropic/claude-sonnet-5.5
+    # not qwen/qwen3.8-flash: spends all 32K tokens on reasoning, cut off after 9 min (2026-11-21)
+
   providers:
     deepseek:
       kind: llm

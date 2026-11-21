@@ -62,6 +62,7 @@ Rails.application.routes.draw do
       resources :tokens, shallow: true, only: %i[new create edit update destroy]
     end
     resources :lexemes, only: %i[index edit update]
+    resources :markup_comparisons, only: %i[index create show]
     resources :imports, only: %i[new create]
 
     # User stories: list with cost, the report queue, moderation actions

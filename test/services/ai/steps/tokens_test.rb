@@ -51,6 +51,15 @@ class Ai::Steps::TokensTest < ActiveSupport::TestCase
     assert_equal 4, @bubbles[1].tokens.count
   end
 
+  test "a cut-off answer is asked again in smaller requests" do
+    Ai::Llm::Fake.respond_with(Ai::Llm::Fake::CutOff.new('{"bubbles": [{"id": "p1b1", "tokens": ['),
+                               *@bubbles.each_slice(3).map { |slice| markup_answer(slice) { |t| ko_tokens(t) } })
+
+    assert_empty Ai::Steps::Tokens.call(@episode)["unresolved"]
+    assert_equal [ 6, 3, 3 ], markup_calls.map { |call| call[:messages].last[:content].scan(/^p\d+b\d+ \[/).size }
+    assert_equal 24, @episode.tokens.count
+  end
+
   test "a bubble that never passes keeps its good tokens and is reported" do
     broken = ->(answer) { answer.tap { |a| a["bubbles"].find { |b| b["id"] == "p2b1" }["tokens"].pop } }
     Ai::Llm::Fake.respond_with(broken.call(markup_answer(@bubbles) { |t| ko_tokens(t) }),

@@ -1,0 +1,29 @@
+<% content_for :title, "Сравнение разметки" %>
+<h1 class="font-serif text-4xl font-semibold text-ink-strong mb-2">Сравнение разметки</h1>
+<p class="text-muted mb-6 max-w-2xl">Первые <%= Ai::MarkupComparison::BUBBLES %> реплик эпизода размечают несколько моделей тем же промптом и теми же проверками, что в конвейере. Токены эпизода не меняются.</p>
+
+<%= form_with url: admin_markup_comparisons_path, class: "card p-6 grid gap-5 max-w-2xl mb-8" do |f| %>
+  <div>
+    <%= f.label :episode_id, "Эпизод", class: "label" %>
+    <%= f.select :episode_id, @episodes.map { |e| [ "#{e.series.language_pair.code} · #{e.series.title} ##{e.number} #{e.title}", e.id ] }, {}, class: "input" %>
+  </div>
+  <fieldset>
+    <legend class="label">Модели</legend>
+    <% @models.each do |spec| %>
+      <label class="flex items-center gap-2 text-sm"><%= check_box_tag "models[]", spec, true, id: "model_#{spec.parameterize}", class: "size-4" %> <%= spec %></label>
+    <% end %>
+  </fieldset>
+  <div><%= f.submit "Сравнить", class: "btn-primary" %></div>
+<% end %>
+
+<% if @recent.any? %>
+  <h2 class="font-serif text-2xl font-semibold text-ink-strong mb-3">Прошлые сравнения</h2>
+  <ul class="grid gap-2">
+    <% @recent.each do |id, logs| %>
+      <li class="card p-3 text-sm">
+        <%= link_to logs.min_by(&:id).created_at.strftime("%d.%m %H:%M"), admin_markup_comparison_path(id), class: "font-semibold text-link hover:underline" %>
+        · <%= logs.map { |log| "#{log.metadata['label'].to_s.split(':').last} #{log.metadata['clean'] || '—'}/#{log.metadata.fetch('bubbles', {}).size}" }.join(", ") %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>

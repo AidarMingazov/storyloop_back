@@ -1,8 +1,9 @@
 module Ai
   module Steps
     # Pipeline step 4 "Word markup": every bubble's words → tokens (lemma, part of speech, meaning here and in the
-    # dictionary, CEFR, note; Korean adds romanization, breakdown and politeness). One request per CHUNK bubbles;
-    # bubbles that fail Ai::TokenCheck are asked again on their own with their problems (up to ATTEMPTS). A bubble
+    # dictionary, CEFR, note; Korean adds romanization, breakdown and politeness). One request per CHUNK bubbles
+    # (reasoning models spend 10K+ tokens thinking about 20 bubbles and cut the JSON off; a cut-off answer halves the
+    # requests of the next attempt); bubbles that fail Ai::TokenCheck are asked again with their problems. A bubble
     # that never passes keeps the tokens that were right and is listed in the log as "unresolved" for the review
     # screen. Lexemes are shared across episodes (find or create by language + lemma + pos).
     #
@@ -12,8 +13,8 @@ module Ai
       include FallbackChat
 
       ATTEMPTS = 3
-      CHUNK = 20
-      MAX_TOKENS = 16_000
+      CHUNK = 10
+      MAX_TOKENS = 32_000
 
       def self.call(episode, **) = new(episode, **).call
 
@@ -53,10 +54,16 @@ module Ai
           pending = chunk.index_by { |bubble| id_for(bubble) }
           best = {}
           problems = {}
+          size = pending.size
           ATTEMPTS.times do
             break if pending.empty?
 
-            answer = ask(pending.values, problems)
+            answer = {}
+            pending.values.each_slice(size) do |slice|
+              part, cut_off = ask(slice, problems.slice(*slice.map { |bubble| id_for(bubble) }))
+              answer.merge!(part)
+              size = [ slice.size / 2, 1 ].max if cut_off
+            end
             problems = {}
             pending.each do |id, bubble|
               check = TokenCheck.new(bubble.text, answer[id], target: @target, native: @native)
@@ -74,7 +81,8 @@ module Ai
         def ask(bubbles, problems)
           result = chat(:tokens, messages(bubbles, problems), json: true, max_tokens: MAX_TOKENS, temperature: 0.1)
           items = result.json.is_a?(Hash) ? Array(result.json["bubbles"]) : []
-          items.select { |item| item.is_a?(Hash) }.to_h { |item| [ item["id"].to_s, item["tokens"] ] }
+          [ items.select { |item| item.is_a?(Hash) }.to_h { |item| [ item["id"].to_s, item["tokens"] ] },
+            result.finish_reason == "length" ]
         end
 
         def save(located)

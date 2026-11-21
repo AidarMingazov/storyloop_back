@@ -13,6 +13,9 @@ module Ai
 
     def steps = @data.fetch("steps", {}).keys
 
+    # "provider:model" pairs for the admin markup comparison (6.10).
+    def comparison_models = @data.fetch("comparison_models", [])
+
     def provider(name)
       @data.dig("providers", name.to_s) || raise(ConfigError, "unknown AI provider #{name.inspect} (config/ai.yml)")
     end

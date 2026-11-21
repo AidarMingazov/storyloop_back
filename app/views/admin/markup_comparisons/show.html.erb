@@ -1,0 +1,54 @@
+<% content_for :title, "Сравнение разметки" %>
+<p class="text-sm text-muted"><%= link_to "Сравнение разметки", admin_markup_comparisons_path, class: "hover:underline" %> ·
+  <%= link_to "#{@episode.series.title} ##{@episode.number}", admin_episode_path(@episode), class: "hover:underline" %></p>
+<h1 class="font-serif text-4xl font-semibold text-ink-strong mt-1 mb-6"><%= @episode.title %></h1>
+<% if @logs.any?(&:running?) %>
+  <meta http-equiv="refresh" content="10">
+  <p class="flash-notice mb-4" role="status">Модели ещё работают — страница обновляется каждые 10 секунд.</p>
+<% end %>
+
+<div class="card overflow-x-auto">
+  <table class="table text-sm align-top">
+    <thead>
+      <tr>
+        <th>Реплика</th>
+        <% @logs.each do |log| %>
+          <th class="min-w-64">
+            <%= log.metadata["label"].to_s.split(":", 2).last %>
+            <div class="font-normal text-muted normal-case tracking-normal">
+              <% if log.running? %>работает…<% elsif log.failed? %>ошибка<% else %>
+                чисто <%= log.metadata["clean"] %>/<%= log.metadata.fetch("bubbles", {}).size %> · <%= (log.duration_ms / 1000.0).round %> с · $<%= format("%.4f", log.cost_usd) %>
+                <br>токенов: <%= log.output_tokens %>, из них рассуждения <%= log.metadata["reasoning_tokens"].to_i %>
+                <% if log.metadata["cut_off"] %><br><strong class="text-warm">ответ оборван лимитом токенов</strong><% end %>
+              <% end %>
+            </div>
+            <% if log.failed? %><div class="font-normal text-muted normal-case tracking-normal"><%= log.error.to_s.truncate(200) %></div><% end %>
+          </th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% @bubbles.each do |bubble| %>
+        <% id = Ai::MarkupComparison.bubble_id(bubble) %>
+        <tr>
+          <td class="min-w-48">
+            <div class="text-xs text-muted"><%= id %> · <%= bubble.character&.name || "—" %></div>
+            <div class="font-serif text-base text-ink-strong"><%= bubble.text %></div>
+            <div class="text-muted"><%= bubble.translation %></div>
+          </td>
+          <% @logs.each do |log| %>
+            <% result = log.metadata.dig("bubbles", id) %>
+            <td class="<%= "bg-marker-soft/40" if result && result["problems"].any? %>">
+              <% if result %>
+                <% result["tokens"].each do |t| %>
+                  <div><strong class="text-ink-strong"><%= t["surface"] %></strong> → <%= t["lemma"] %> <span class="text-muted">(<%= t["pos"] %>)</span> «<%= t["translation"] %>»<%= " · #{t['romanization']}" if t["romanization"] %><%= " · #{t['politeness']}" if t["politeness"] %></div>
+                <% end %>
+                <% result["problems"].each do |problem| %><div class="text-xs text-warm mt-1"><%= problem %></div><% end %>
+              <% end %>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
