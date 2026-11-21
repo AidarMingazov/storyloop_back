@@ -22,10 +22,19 @@
     <%= f.label :translation, "Перевод фразы", class: "label" %>
     <%= f.text_area :translation, rows: 2, class: "input" %>
   </div>
-  <div>
-    <%= f.label :box_json, "Позиция на картинке (JSON, проценты)", class: "label" %>
-    <%= f.text_field :box_json, value: @bubble.box&.to_json, class: "input font-mono text-sm", placeholder: '{"x":5,"y":5,"w":60,"h":18}' %>
-  </div>
+  <fieldset>
+    <legend class="label">Позиция на картинке, % от кадра</legend>
+    <div class="grid gap-3 grid-cols-4">
+      <% { "x" => "Слева", "y" => "Сверху", "w" => "Ширина", "h" => "Высота" }.each do |key, label| %>
+        <label class="text-sm">
+          <%= label %>
+          <%= number_field_tag "bubble[box][#{key}]", @bubble.box&.fetch(key, nil), min: 0, max: 100, step: 0.5,
+                class: "input tabular-nums", id: "bubble_box_#{key}" %>
+        </label>
+      <% end %>
+    </div>
+    <p class="text-xs text-muted mt-1">Все поля пустые — пузырь расставит шаг «Пузыри».</p>
+  </fieldset>
   <div>
     <%= f.label :audio, "Озвучка реплики", class: "label" %>
     <% if @bubble.audio.attached? %><audio controls preload="none" src="<%= url_for(@bubble.audio) %>" class="mb-2 w-full"></audio><% end %>

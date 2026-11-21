@@ -41,15 +41,21 @@ class Admin::EpisodesControllerTest < ActionDispatch::IntegrationTest
 
   test "editing bubble text warns about tokens that no longer match" do
     bubble = @en.bubbles.first
-    patch admin_bubble_path(bubble), params: { bubble: { kind: "speech", text: "Guess who I met today!", translation: "", box_json: bubble.box.to_json } }
+    patch admin_bubble_path(bubble), params: { bubble: { kind: "speech", text: "Guess who I met today!", translation: "", box: bubble.box } }
     follow_redirect!
     assert_select "#notice", /ran into/
   end
 
-  test "rejects a bubble box that is not JSON" do
+  test "bubble box is edited as four percent fields; empty fields clear it" do
     bubble = @en.bubbles.first
-    patch admin_bubble_path(bubble), params: { bubble: { kind: "speech", text: bubble.text, box_json: "{oops" } }
+    patch admin_bubble_path(bubble), params: { bubble: { kind: "speech", text: bubble.text, box: { x: "5", y: "3.5", w: "60", h: "18" } } }
+    assert_equal({ "x" => 5, "y" => 3.5, "w" => 60, "h" => 18 }, bubble.reload.box)
+
+    patch admin_bubble_path(bubble), params: { bubble: { kind: "speech", text: bubble.text, box: { x: "5", y: "", w: "abc", h: "18" } } }
     assert_response :unprocessable_entity
+
+    patch admin_bubble_path(bubble), params: { bubble: { kind: "speech", text: bubble.text, box: { x: "", y: "", w: "", h: "" } } }
+    assert_nil bubble.reload.box
   end
 
   test "token form creates the lexeme and finds the offsets" do

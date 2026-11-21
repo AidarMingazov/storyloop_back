@@ -91,6 +91,13 @@ namespace :ai do
     result.failed.each { |panel, error| puts "panel #{panel.position + 1}: FAILED #{error.message[0, 200]}" }
   end
 
+  desc "Step 3 \"Bubbles\": SERIES=golden-axe NUMBER=1 [FORCE=1 to redo boxes set by hand] — boxes at the top of each panel"
+  task layout: :environment do
+    series = Series.find_by!(slug: ENV.fetch("SERIES") { abort "SERIES=<slug> is required" })
+    episode = series.episodes.find_by!(number: ENV.fetch("NUMBER") { abort "NUMBER=<episode number> is required" })
+    puts "#{series.slug} ##{episode.number}: placed #{Ai::Steps::Layout.call(episode, force: ENV['FORCE'].present?)} bubbles"
+  end
+
   desc "Generate character sheets with the image model (~$0.04 each): SERIES=golden-axe [CHARACTERS=woodcutter,spirit] " \
        "[FORCE=1 to redo existing sheets]"
   task sheets: :environment do
