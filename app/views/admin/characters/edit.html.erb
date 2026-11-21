@@ -1,5 +1,31 @@
 <% content_for :title, @character.name %>
 <h1 class="font-serif text-4xl font-semibold text-ink-strong mb-6"><%= @character.name %> · <%= @character.series.title %></h1>
 <%= render "form", character: @character %>
+
+<section class="card p-6 mt-6 max-w-2xl" id="sheet">
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <div>
+      <h2 class="font-serif text-2xl font-semibold text-ink-strong">Лист персонажа</h2>
+      <p class="text-sm text-muted">Референс для каждого кадра с этим персонажем: стиль рисовки серии + внешность.</p>
+    </div>
+    <%= button_to @character.sheet.attached? ? "Перегенерировать" : "Сгенерировать", generate_sheet_admin_character_path(@character),
+          class: "btn-secondary btn-sm", form: { data: { turbo_confirm: "Сгенерировать лист? ≈ $0.04, ~30 секунд." } } %>
+  </div>
+  <% if @sheet_log %>
+    <p class="text-sm mt-3" id="sheet-log">
+      Последняя генерация: <%= @sheet_log.created_at.strftime("%d.%m %H:%M") %> ·
+      <%= { "running" => "идёт", "succeeded" => "готово", "failed" => "ошибка" }.fetch(@sheet_log.status) %>
+      <%= "· #{@sheet_log.model} · $#{format('%.3f', @sheet_log.cost_usd)}" if @sheet_log.succeeded? %>
+      <% if @sheet_log.failed? %><span class="block text-muted mt-1"><%= @sheet_log.error.to_s.truncate(300) %></span><% end %>
+    </p>
+  <% end %>
+  <% if @character.sheet.attached? %>
+    <%= link_to url_for(@character.sheet), target: "_blank", rel: "noopener" do %>
+      <%= image_tag url_for(@character.sheet), alt: "Лист персонажа #{@character.name}", class: "mt-4 w-full rounded-lg border border-edge" %>
+    <% end %>
+  <% else %>
+    <p class="text-sm text-muted mt-4">Листа пока нет.</p>
+  <% end %>
+</section>
 <%= button_to "Удалить персонажа", admin_character_path(@character), method: :delete, class: "btn-danger mt-6",
       form: { data: { turbo_confirm: "Удалить персонажа? Его реплики станут без говорящего." } } %>

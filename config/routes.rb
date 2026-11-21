@@ -40,7 +40,9 @@ Rails.application.routes.draw do
     root "series#index"
 
     resources :series do
-      resources :characters, shallow: true, except: %i[index show]
+      resources :characters, shallow: true, except: %i[index show] do
+        post :generate_sheet, on: :member
+      end
       resources :episodes, only: %i[new create]
     end
     resources :episodes, only: %i[show edit update destroy] do

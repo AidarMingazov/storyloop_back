@@ -1,6 +1,10 @@
-# Series template for the AI pipeline (wave 6 research draft, 2026-11-21).
-# Maps 1:1 to `series` in config/schemas/episode.json; `voice` ids are MiniMax system voices (see ../voices.yml).
-# `sheet` = character reference image produced once by Seedream and passed as reference to every panel.
+# Series template for the AI pipeline (wave 6). Load into the DB: bin/rails "ai:series:load[office-romance]".
+# `voice` / `narrator_voice` ids are MiniMax system voices (see ../voices.yml).
+# `sheet` = character reference image produced once by Seedream and passed as reference to every panel
+# (regenerate: bin/rails ai:sheets SERIES=office-crush FORCE=1).
+# `speech_level` = the character's one Korean speech level for the series: casual 반말 / polite 해요체 / formal 합쇼체;
+# empty = depends on who they talk to (Seoyeon is polite at work and casual with Mina).
+# tone, art_style, narrator_voice, speech_level and sheet are pipeline-only (not in config/schemas/episode.json).
 language_pair: ko-en
 series:
   slug: office-crush
@@ -23,6 +27,7 @@ series:
     light bloom and sparkles in emotional moments; contemporary Seoul office interiors, glass meeting rooms,
     cafés, rooftop at dusk. Vertical webtoon panel composition, cinematic framing.
     No text, letters, numbers, logos, signs with writing, captions or speech bubbles anywhere in the image.
+  narrator_voice: Korean_CalmLady
   characters:
     - key: seoyeon
       name: Seoyeon
@@ -37,6 +42,7 @@ series:
     - key: dohyun
       name: Dohyun
       voice: Korean_ColdYoungMan
+      speech_level: polite
       sheet: characters/dohyun.jpeg
       appearance_prompt: >-
         Korean man, 31, tall and slim, neat black hair with a soft side part and slightly long fringe,

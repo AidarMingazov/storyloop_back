@@ -1,5 +1,6 @@
 # Korean folk tale (public domain) retold for A1 learners — "starter" series idea: learners already know the plot.
 # One tale = one series of 1–2 episodes. Same format as office-romance.yml.
+# Load into the DB: bin/rails "ai:series:load[folk-golden-axe]".
 language_pair: ko-en
 series:
   slug: golden-axe
@@ -22,11 +23,13 @@ series:
     pine forests, misty mountains, a clear mountain pond, thatched-roof village houses; gentle morning light,
     magical glow around the mountain spirit. Vertical webtoon panel composition.
     No text, letters, numbers, signs, captions or speech bubbles anywhere in the image.
+  narrator_voice: Korean_CalmLady   # not the spirit's voice: the narrator must sound different from every character
   characters:
     - key: woodcutter
       name: Woodcutter
       protagonist: true
       voice: Korean_InnocentBoy
+      speech_level: polite          # 해요체 to the spirit
       sheet: characters/woodcutter.jpeg
       appearance_prompt: >-
         Young Korean woodcutter of the Joseon era, about 25, kind round face, tanned skin, short topknot
@@ -35,6 +38,7 @@ series:
     - key: spirit
       name: Mountain Spirit
       voice: Korean_WiseTeacher
+      speech_level: casual          # an old spirit talks 반말 to everyone (no mixing with 해요체)
       sheet: characters/spirit.jpeg
       appearance_prompt: >-
         Korean mountain spirit (sansillyeong): very old man with a long flowing white beard and white eyebrows,
@@ -43,6 +47,7 @@ series:
     - key: neighbor
       name: Neighbor
       voice: Korean_CockyGuy
+      speech_level: polite          # flatters the spirit in 해요체
       sheet: characters/neighbor.jpeg
       appearance_prompt: >-
         Greedy Korean villager of the Joseon era, about 40, plump, thin curled mustache, narrow sly eyes,

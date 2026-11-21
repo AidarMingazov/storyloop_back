@@ -47,4 +47,35 @@ namespace :ai do
       puts format("%-7s FAILED %s", step, e.message[0, 200])
     end
   end
+
+  namespace :series do
+    desc "Load series templates (db/templates/ai/series/*.yml) into the DB: bin/rails \"ai:series:load[folk-golden-axe]\" " \
+         "(no name = all). REPLACE_SHEETS=1 overwrites sheets already attached"
+    task :load, [ :name ] => :environment do |_, args|
+      names = args[:name].present? ? [ args[:name] ] : Ai::SeriesTemplate.names
+      names.each do |name|
+        series = Ai::SeriesTemplate.load(name, replace_sheets: ENV["REPLACE_SHEETS"].present?)
+        sheets = series.characters.order(:id).map { |c| "#{c.key}#{c.sheet.attached? ? '' : ' (no sheet)'}" }
+        puts "#{name} → #{series.language_pair.code}/#{series.slug} ##{series.id} [#{series.status}]: #{sheets.join(', ')}"
+      end
+    end
+  end
+
+  desc "Generate character sheets with the image model (~$0.04 each): SERIES=golden-axe [CHARACTERS=woodcutter,spirit] " \
+       "[FORCE=1 to redo existing sheets]"
+  task sheets: :environment do
+    series = Series.where(slug: ENV.fetch("SERIES") { abort "SERIES=<slug> is required" }).to_a
+    abort "no series #{ENV['SERIES']}" if series.empty?
+    only = ENV.fetch("CHARACTERS", "").split(",").map(&:strip)
+
+    series.flat_map { |s| s.characters.order(:id).to_a }.each do |character|
+      next if only.any? && !only.include?(character.key)
+      next puts("#{character.key}: sheet exists (FORCE=1 to redo)") if character.sheet.attached? && ENV["FORCE"].blank?
+
+      result = Ai::CharacterSheet.call(character)
+      puts format("%-12s %s %d ms $%.3f", character.key, result.model, result.duration_ms, result.cost_usd)
+    rescue Ai::Error, ArgumentError => e
+      puts "#{character.key}: FAILED #{e.message[0, 200]}"
+    end
+  end
 end

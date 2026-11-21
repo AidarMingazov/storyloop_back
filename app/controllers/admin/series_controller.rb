@@ -45,7 +45,8 @@ module Admin
       end
 
       def series_params
-        params.expect(series: %i[language_pair_id slug title description genre cefr_level style_prompt status position cover])
+        params.expect(series: %i[language_pair_id slug title description genre cefr_level tone art_style style_prompt
+                                 narrator_voice status position cover])
       end
   end
 end

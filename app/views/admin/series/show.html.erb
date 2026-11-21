@@ -48,14 +48,20 @@
             <span class="font-semibold text-ink-strong"><%= character.name %></span>
             <%= link_to "Изменить", edit_admin_character_path(character), class: "text-sm text-link hover:underline" %>
           </div>
-          <p class="text-xs text-muted mt-0.5"><%= character.key %><%= " · главный герой" if character.protagonist? %><%= " · голос #{character.voice}" if character.voice.present? %></p>
+          <p class="text-xs text-muted mt-0.5"><%= character.key %><%= " · главный герой" if character.protagonist? %><%= " · голос #{character.voice}" if character.voice.present? %><%= " · #{Character::SPEECH_LEVEL_NAMES[character.speech_level]}" if character.speech_level %></p>
+          <% if character.sheet.attached? %>
+            <%= image_tag url_for(character.sheet), alt: "Лист персонажа #{character.name}", class: "mt-2 w-full rounded border border-edge" %>
+          <% else %>
+            <p class="text-xs text-muted mt-2">нет листа персонажа</p>
+          <% end %>
           <p class="text-sm mt-2 line-clamp-3"><%= character.appearance_prompt %></p>
         </li>
       <% end %>
     </ul>
-    <% if @series.style_prompt.present? %>
-      <h3 class="label mt-6">Стиль картинок</h3>
-      <p class="text-sm"><%= @series.style_prompt %></p>
+    <% { "Тон историй" => @series.tone, "Стиль рисовки" => @series.art_style, "Стиль картинок" => @series.style_prompt,
+         "Голос рассказчика" => @series.narrator_voice }.compact_blank.each do |label, text| %>
+      <h3 class="label mt-6"><%= label %></h3>
+      <p class="text-sm"><%= text %></p>
     <% end %>
   </section>
 </div>

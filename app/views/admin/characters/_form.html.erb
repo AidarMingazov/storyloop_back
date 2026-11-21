@@ -19,10 +19,15 @@
       <%= f.label :voice, "Голос TTS", class: "label" %>
       <%= f.text_field :voice, class: "input" %>
     </div>
-    <label class="flex items-center gap-2 self-end pb-2">
-      <%= f.check_box :protagonist, class: "size-4" %> Главный герой (справа в чате)
-    </label>
+    <div>
+      <%= f.label :speech_level, "Уровень вежливости", class: "label" %>
+      <%= f.select :speech_level, Character::SPEECH_LEVEL_NAMES.map { |level, name| [ "#{name} · #{level}", level ] },
+            { include_blank: "по ситуации" }, class: "input" %>
+    </div>
   </div>
+  <label class="flex items-center gap-2">
+    <%= f.check_box :protagonist, class: "size-4" %> Главный герой (справа в чате)
+  </label>
   <div class="grid gap-5 sm:grid-cols-2">
     <div>
       <%= f.label :avatar, "Аватар", class: "label" %>
@@ -32,6 +37,10 @@
       <%= f.label :reference_images, "Референсы", class: "label" %>
       <%= f.file_field :reference_images, multiple: true, accept: "image/*", class: "input" %>
     </div>
+  </div>
+  <div>
+    <%= f.label :sheet, "Лист персонажа (свой файл вместо генерации)", class: "label" %>
+    <%= f.file_field :sheet, accept: "image/*", class: "input" %>
   </div>
   <div class="flex gap-2">
     <%= f.submit "Сохранить", class: "btn-primary" %>

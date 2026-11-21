@@ -15,6 +15,8 @@ class GenerationLog < ApplicationRecord
 
   validates :step, inclusion: { in: STEPS }
 
+  scope :for_character, ->(character) { where("metadata->>'character_id' = ?", character.id.to_s) }
+
   def self.track(step:, episode: nil, metadata: {})
     log = create!(step: step.to_s, episode:, metadata:)
     started = Process.clock_gettime(Process::CLOCK_MONOTONIC)
