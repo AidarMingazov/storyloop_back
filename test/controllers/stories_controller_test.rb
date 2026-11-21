@@ -28,6 +28,7 @@ class StoriesControllerTest < ActionDispatch::IntegrationTest
     follow_redirect!
     assert_select "#story-title", "Школа"
     assert_select "[data-status=queued]"
+    assert_equal StoryRequest::STEPS, css_select("[data-step]").map { |li| li["data-step"] } # not every GenerationLog step
     assert_select "turbo-cable-stream-source"
   end
 

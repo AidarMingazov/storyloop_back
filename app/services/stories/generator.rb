@@ -17,7 +17,7 @@ module Stories
   #   - set real titles on the series and the episode, and `free: true`;
   #   - leave the episode `published` (no human review for user stories; StoryAccess still applies);
   #   - write GenerationLog rows with episode_id (cost of user generations, 7.5);
-  #   - call request.progress!(step) when a step starts (GenerationLog::STEPS) — the status page shows it;
+  #   - call request.progress!(step) when a step starts (StoryRequest::STEPS) — the status page shows it;
   #   - be safe to run again for the same request (job retries);
   #   - return the episode; raise to fail (Stories::Rejected for moderation) — the request becomes
   #     failed and does not count toward the free limit.

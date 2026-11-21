@@ -6,6 +6,8 @@ class StoryRequest < ApplicationRecord
   PROMPT_LIMITS = { "idea" => 500, "text" => 3000 }.freeze
   LEVELS = Cefr::LEVELS.first(4)
   FORMATS = %w[webtoon chat].freeze
+  # Steps the status page shows, in order (a subset of GenerationLog::STEPS; a generator may skip some).
+  STEPS = %w[script images layout tokens audio].freeze
 
   belongs_to :user
   belongs_to :series

@@ -1,6 +1,9 @@
 require "test_helper"
+require "turbo/broadcastable/test_helper"
 
 class GenerateStoryJobTest < ActiveJob::TestCase
+  # turbo-rails adds it to test cases only once Action Cable has loaded, which depends on what ran before
+  include Turbo::Broadcastable::TestHelper
   def submit(**attrs)
     StoryForm.new(user: users(:one), mode: "idea", prompt: "A cat detective looks for a lost cake", pair: "en-ru",
                   cefr_level: "A2", rules_accepted: "1", **attrs).submit

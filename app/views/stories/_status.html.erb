@@ -13,7 +13,7 @@
   <% else %>
     <p class="font-semibold text-ink-strong"><%= t("stories.status_page.generating") %></p>
     <ol class="mt-3 grid gap-1 text-sm">
-      <% steps = GenerationLog::STEPS %>
+      <% steps = StoryRequest::STEPS %>
       <% current = steps.index(story_request.step) %>
       <% steps.each_with_index do |step, index| %>
         <% state = current.nil? ? :todo : (index < current ? :done : (index == current ? :now : :todo)) %>
