@@ -3,13 +3,6 @@ require "application_system_test_case"
 class FormatsTest < ApplicationSystemTestCase
   def import(name) = Episodes::Importer.call(file_fixture(name).read, status: "published")
 
-  # A real click at a point of the element, given as fractions of its box (Selenium offsets from the centre).
-  def tap_at(element, x:, y:)
-    rect = element.rect
-    page.driver.browser.action
-        .move_to(element.native, ((x - 0.5) * rect.width).round, ((y - 0.5) * rect.height).round).click.perform
-  end
-
   # A horizontal touch swipe across the manga pager, as fractions of its width.
   def swipe(from:, to:)
     execute_script(<<~JS, find(".manga-pager"), from, to)
@@ -31,6 +24,7 @@ class FormatsTest < ApplicationSystemTestCase
     assert_selector ".manga-page[data-page='1'] .manga-panel--1", count: 2, visible: :all
     find(".tok", text: "ran into").click
     assert_selector ".word-sheet.is-open", text: "случайно встретила"
+    find("body").send_keys(:escape) # the card covers the page arrows
 
     find("[aria-label='Следующая страница']").click
     assert_selector ".manga-counter", text: "2 / 2"
@@ -67,14 +61,18 @@ class FormatsTest < ApplicationSystemTestCase
     visit episode_path(episode)
 
     find("[aria-label='Настройки']").click
-    select "Без анимации", from: "pref_page_turn"
+    click_on "Без анимации"
+    find("body").send_keys(:escape) # the settings sheet covers the page arrows
+    assert_no_selector "#reader-settings.is-open"
     find("[aria-label='Следующая страница']").click
     assert_selector ".manga-counter", text: "2 / 2"
 
     visit episode_path(episode)
     find("[aria-label='Настройки']").click
-    assert_field "pref_page_turn", with: "none"
-    select "Загиб страницы", from: "pref_page_turn"
+    assert_selector "#pref_page_turn_none[aria-pressed=true]"
+    click_on "Загиб страницы"
+    assert_selector "#pref_page_turn_curl[aria-pressed=true]"
+    find("body").send_keys(:escape)
     swipe from: 0.8, to: 0.2
     assert_selector ".manga-counter", text: "2 / 2"
   end
@@ -89,20 +87,28 @@ class FormatsTest < ApplicationSystemTestCase
     find(".tok", text: "By the way").click
     assert_selector ".word-sheet.is-open", text: "Так переходят к новой теме."
 
+    find("body").send_keys(:escape)
+    assert_no_selector ".ill-p .bubble-tr" # hidden until asked for
     first(".ill-p [data-translate-bubble]").click
-    assert_selector ".word-sheet.is-open", text: "Угадай, кого я сегодня встретила!"
+    assert_selector ".ill-p.is-translated .bubble-tr", text: "Угадай, кого я сегодня встретила!"
+    assert_no_selector ".word-sheet.is-open"
+    first(".ill-p [data-translate-bubble]").click
+    assert_no_selector ".ill-p .bubble-tr"
 
     execute_script "window.scrollTo(0, document.body.scrollHeight)"
     assert_text "Эпизод прочитан"
   end
 
-  test "a bubble with recorded audio gets a listen button" do
+  test "a line is played from its bubble, next to its translation" do
     episode = import("reader_webtoon.json")
     episode.bubbles.first.audio.attach(io: file_fixture("line.wav").open, filename: "line.wav", content_type: "audio/wav")
     visit episode_path(episode)
 
-    assert_selector ".bubble-audio", count: 1
-    find(".bubble-audio").click # plays without opening the sheet
+    assert_no_selector ".bubble-play" # nothing sits over the art until the bubble is tapped
+    bubble = first(".wt-bubble")
+    tap_padding bubble
+    within(bubble) { find(".bubble-play").click } # plays without opening the card
     assert_no_selector ".word-sheet.is-open"
+    assert_selector ".wt-bubble.is-translated", count: 1
   end
 end

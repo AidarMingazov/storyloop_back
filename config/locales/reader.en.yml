@@ -3,6 +3,26 @@ en:
     back: Back
     episode: "Episode %{number}"
     settings: Settings
+    settings_sheet:
+      title: Reading settings
+      story_language: Story language
+      translations: Translation under every line
+      text_size: Text size
+      size_s: Small
+      size_m: Medium
+      size_l: Large
+      appearance: Appearance
+      theme_auto: Auto
+      theme_light: Paper
+      theme_night: Midnight
+    languages:
+      en: English
+      ko: Korean
+      ru: Russian
+      ja: Japanese
+      zh: Chinese
+      es: Spanish
+      pt: Portuguese
     ai_notice: Illustrations created with AI
     locked:
       title: This episode needs a subscription
@@ -15,7 +35,6 @@ en:
     js:
       romanization: Romanization
       highlight_saved: Highlight saved words
-      night_mode: Night mode
       page_turn: Page turn
       page_turn_slide: Slide
       page_turn_curl: Page curl
@@ -25,6 +44,14 @@ en:
       listen: Listen
       translate_phrase: Translate phrase
       close: Close
+      dictionary_form: Dictionary form
+      in_this_sentence: In this sentence
+      how_built: How it's built
+      show_line: Show the line's translation
+      play_line: Play line
+      listen_line: Listen to the whole line
+      key_save: save
+      key_listen: listen
       previous_page: Previous page
       next_page: Next page
       next_message: Next

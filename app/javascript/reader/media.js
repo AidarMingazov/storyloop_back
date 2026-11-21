@@ -1,5 +1,6 @@
 import { h } from "reader/dom"
 import { icon } from "reader/icons"
+import { canSpeak } from "reader/speech"
 
 // Panel image with WebP srcset (800w / 1200w); `sizes` says how wide it is drawn.
 export function panelImage(panel, { sizes = "(max-width: 640px) 100vw, 640px", eager = false } = {}) {
@@ -8,12 +9,13 @@ export function panelImage(panel, { sizes = "(max-width: 640px) 100vw, 640px", e
                     loading: eager ? "eager" : "lazy" })
 }
 
-// Small round buttons in the bubble corner: translate always, listen when the line has recorded audio.
-export function bubbleButtons(bubble, t) {
-  return [
-    bubble.audio_url ? h("button", { type: "button", class: "bubble-audio", "data-speak-bubble": bubble.id,
-                                     "aria-label": t.listen, title: t.listen }, icon("sound")) : null,
-    h("button", { type: "button", class: "bubble-translate", "data-translate-bubble": bubble.id,
-                  "aria-label": t.translate_phrase, title: t.translate_phrase }, icon("translate"))
-  ]
+// The line's translation with a play button, inside the bubble under its text. Hidden until the reader taps
+// the bubble outside the words (or turns on "translation under every line"), so nothing sits over the art.
+export function lineTranslation(bubble, t, nativeLang) {
+  const playable = bubble.audio_url || canSpeak()
+  if (!bubble.translation && !playable) return null
+  return h("span", { class: "bubble-tr" },
+    playable ? h("button", { type: "button", class: "bubble-play", "data-speak-bubble": bubble.id,
+                             "aria-label": t.listen, title: t.listen }, icon("play")) : null,
+    bubble.translation ? h("span", { class: "bubble-tr-text", lang: nativeLang }, bubble.translation) : null)
 }

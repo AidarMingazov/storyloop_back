@@ -1,12 +1,13 @@
 import { h } from "reader/dom"
 import { tokenizedText } from "reader/text"
-import { panelImage } from "reader/media"
+import { panelImage, lineTranslation } from "reader/media"
 import { icon } from "reader/icons"
 
 // A short illustrated book: each panel is a section with an optional picture and paragraphs.
 // Narration is a paragraph, dialogue lines carry the speaker's name.
 export function renderIllustrated(stage, episode, t) {
   const characters = new Map(episode.characters.map((c) => [ c.id, c ]))
+  const nativeLang = episode.language_pair.native_lang
   const article = h("article", { class: "ill" })
 
   for (const panel of episode.panels) {
@@ -19,10 +20,11 @@ export function renderIllustrated(stage, episode, t) {
       const paragraph = h("div", { class: `ill-p ill-p--${bubble.kind}`, "data-bubble-id": bubble.id },
         bubble.kind !== "narration" && speaker ? h("span", { class: "ill-speaker" }, speaker.name) : null,
         tokenizedText(bubble, { tag: "span", className: "story-text" }),
-        bubble.audio_url ? h("button", { type: "button", class: "ill-action", "data-speak-bubble": bubble.id,
-                                         "aria-label": t.listen, title: t.listen }, icon("sound")) : null,
-        h("button", { type: "button", class: "ill-action", "data-translate-bubble": bubble.id,
-                      "aria-label": t.translate_phrase, title: t.translate_phrase }, icon("translate")))
+        // Running text is all words, so a paragraph keeps a visible button for its translation.
+        bubble.translation ? h("button", { type: "button", class: "ill-action", "data-translate-bubble": bubble.id,
+                                           "aria-label": t.translate_phrase, title: t.translate_phrase, "aria-expanded": "false" },
+          icon("translate")) : null,
+        lineTranslation(bubble, t, nativeLang))
       section.append(paragraph)
     }
     article.append(section)

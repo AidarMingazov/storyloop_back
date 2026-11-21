@@ -1,21 +1,24 @@
 import { h } from "reader/dom"
 import { tokenizedText } from "reader/text"
-import { panelImage, bubbleButtons } from "reader/media"
+import { panelImage, lineTranslation } from "reader/media"
 
 // Panels stacked vertically; bubbles are HTML laid over the image at box {x,y,w,h} (percent).
-// Font size follows the panel width via container query units (see .wt-bubble).
+// Font size follows the panel width via container query units (see .wt-bubble). A tap on a word opens its
+// card; a tap on the bubble outside the words shows the line's translation inside the bubble.
 export function renderWebtoon(stage, episode, t) {
   const fragment = document.createDocumentFragment()
 
+  const nativeLang = episode.language_pair.native_lang
   for (const panel of episode.panels) {
     const figure = h("figure", { class: "wt-panel", "data-position": panel.position,
                                  style: `aspect-ratio: ${panel.aspect_ratio}` })
-    const loose = appendPanel(figure, panel, t, { eager: panel.position < 2 })
+    const loose = appendPanel(figure, panel, t, { eager: panel.position < 2, nativeLang })
     fragment.append(figure)
 
     // Bubbles without a box (should not happen for webtoon) are shown as a caption under the panel.
     for (const bubble of loose) {
-      fragment.append(h("div", { class: "wt-caption", "data-bubble-id": bubble.id }, tokenizedText(bubble)))
+      fragment.append(h("div", { class: "wt-caption", "data-bubble-id": bubble.id },
+        tokenizedText(bubble), lineTranslation(bubble, t, nativeLang)))
     }
   }
 
@@ -25,7 +28,7 @@ export function renderWebtoon(stage, episode, t) {
 }
 
 // Image plus bubbles laid over it; returns bubbles without a box (shown as captions by the caller).
-export function appendPanel(figure, panel, t, { sizes, eager = false } = {}) {
+export function appendPanel(figure, panel, t, { sizes, eager = false, nativeLang } = {}) {
   figure.append(panelImage(panel, { sizes, eager }) || "")
   const loose = []
   for (const bubble of panel.bubbles) {
@@ -34,7 +37,7 @@ export function appendPanel(figure, panel, t, { sizes, eager = false } = {}) {
     figure.append(h("div", { class: `wt-bubble wt-bubble--${bubble.kind}`, "data-bubble-id": bubble.id,
                              style: `left:${x}%;top:${y}%;width:${w}%;min-height:${height}%` },
       tokenizedText(bubble),
-      bubbleButtons(bubble, t)))
+      lineTranslation(bubble, t, nativeLang)))
   }
   return loose
 }

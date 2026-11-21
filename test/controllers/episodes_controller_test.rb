@@ -19,6 +19,39 @@ class EpisodesControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test "the settings offer the story's other languages once it is translated" do
+    get episode_path(@episode)
+    assert_select "#reader-settings #story-editions", false, "one language: nothing to switch to"
+
+    korean = Episodes::Importer.call(file_fixture("episode_ko.json").read, status: "published")
+    korean.update!(origin_episode: @episode)
+
+    get episode_path(@episode)
+    assert_select "#story-editions a.chip", 2
+    assert_select "#story-editions a.chip.is-on[aria-current=true]", "Английский"
+    assert_select "#story-editions a.chip[href='#{episode_path(korean)}']", "Корейский"
+
+    get episode_path(korean) # and back from the translation, in its own interface language
+    assert_select "#story-editions a.chip[href='#{episode_path(@episode)}']", "English"
+
+    korean.review! # not published: readers do not see it
+    get episode_path(@episode)
+    assert_select "#story-editions", false
+  end
+
+  test "the header carries the language pill and the settings are a sheet of switches and choices" do
+    get episode_path(@episode)
+    assert_select ".reader-header .reader-pill[aria-controls=reader-settings]", /EN · A2/
+    assert_select "#reader-settings.sheet[inert]" do
+      assert_select "button.switch[role=switch]#pref_translations"
+      assert_select "button.switch#pref_highlight"
+      assert_select "button.switch#pref_romanization", false, "romanization is for Korean"
+      assert_select "button.chip[data-pref=size]", 3
+      assert_select "button.chip[data-pref=theme]", 3
+      assert_select "button.chip[data-pref=page_turn]", false, "page turns are for manga"
+    end
+  end
+
   test "Korean pair renders the English interface" do
     ko = Episodes::Importer.call(file_fixture("episode_ko.json").read, status: "published")
     get episode_path(ko)

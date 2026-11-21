@@ -3,6 +3,26 @@ ru:
     back: Назад
     episode: "Эпизод %{number}"
     settings: Настройки
+    settings_sheet:
+      title: Настройки чтения
+      story_language: Язык истории
+      translations: Перевод под каждой репликой
+      text_size: Размер текста
+      size_s: Мелкий
+      size_m: Обычный
+      size_l: Крупный
+      appearance: Оформление
+      theme_auto: Авто
+      theme_light: Бумага
+      theme_night: Полночь
+    languages:
+      en: Английский
+      ko: Корейский
+      ru: Русский
+      ja: Японский
+      zh: Китайский
+      es: Испанский
+      pt: Португальский
     ai_notice: Иллюстрации созданы с помощью AI
     locked:
       title: Этот эпизод — по подписке
@@ -15,7 +35,6 @@ ru:
     js:
       romanization: Романизация
       highlight_saved: Подсвечивать сохранённые слова
-      night_mode: Ночной режим
       page_turn: Листание
       page_turn_slide: Сдвиг
       page_turn_curl: Загиб страницы
@@ -25,6 +44,14 @@ ru:
       listen: Слушать
       translate_phrase: Перевод фразы
       close: Закрыть
+      dictionary_form: Словарная форма
+      in_this_sentence: В этой фразе
+      how_built: Как устроено
+      show_line: Показать перевод реплики
+      play_line: Реплика
+      listen_line: Слушать реплику целиком
+      key_save: сохранить
+      key_listen: слушать
       previous_page: Предыдущая страница
       next_page: Следующая страница
       next_message: Дальше

@@ -1,5 +1,6 @@
 import { h } from "reader/dom"
 import { appendPanel } from "reader/webtoon"
+import { icon } from "reader/icons"
 
 const AUTO_PANELS_PER_PAGE = 3
 
@@ -17,7 +18,8 @@ export function renderManga(stage, episode, t) {
       const cols = panel.layout?.cols === 1 ? 1 : 2
       const figure = h("figure", { class: `wt-panel manga-panel manga-panel--${cols}`, "data-position": panel.position,
                                    style: `aspect-ratio: ${panel.aspect_ratio}` })
-      appendPanel(figure, panel, t, { sizes: cols === 1 ? "(max-width: 640px) 50vw, 320px" : undefined, eager: index === 0 })
+      appendPanel(figure, panel, t, { sizes: cols === 1 ? "(max-width: 640px) 50vw, 320px" : undefined, eager: index === 0,
+                                      nativeLang: episode.language_pair.native_lang })
       page.append(figure)
     }
     pager.append(page)
@@ -26,10 +28,10 @@ export function renderManga(stage, episode, t) {
   const counter = h("span", { class: "manga-counter", "aria-live": "polite" }, `1 / ${pages.length}`)
   const nav = h("div", { class: "manga-nav" },
     h("button", { type: "button", class: "reader-btn reader-btn--ghost reader-btn--icon", "data-action": "reader#previousPage",
-                  "aria-label": t.previous_page }, "‹"),
+                  "aria-label": t.previous_page }, icon("back")),
     counter,
     h("button", { type: "button", class: "reader-btn reader-btn--icon", "data-action": "reader#nextPage",
-                  "aria-label": t.next_page }, "›"))
+                  "aria-label": t.next_page }, icon("chevron-right")))
 
   stage.replaceChildren(pager, nav)
   return { pager, pages: [ ...pager.querySelectorAll(".manga-page") ], counter }

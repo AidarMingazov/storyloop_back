@@ -2,9 +2,16 @@
 <html lang="<%= I18n.locale %>">
   <head>
     <title><%= content_for(:title) || "Storyloop" %></title>
-    <%# Apply the night theme before first paint; reader_controller keeps it in sync. %>
+    <%# Apply the reader's theme before first paint; reader_controller keeps it in sync (same rule as its applyTheme:
+        "auto" follows the system, and the pre-Р2 night switch is read as an explicit choice). %>
     <script>
-      try { if (localStorage.getItem("storyloop:night") === "1") document.documentElement.dataset.theme = "night" } catch (e) {}
+      try {
+        var theme = localStorage.getItem("storyloop:theme"), legacy = localStorage.getItem("storyloop:night")
+        if (theme !== "auto" && theme !== "light" && theme !== "night") theme = legacy === "1" ? "night" : legacy === "0" ? "light" : "auto"
+        if (theme === "night" || (theme === "auto" && matchMedia("(prefers-color-scheme: dark)").matches)) {
+          document.documentElement.dataset.theme = "night"
+        }
+      } catch (e) {}
     </script>
     <%= render "layouts/head" %>
     <%= render "layouts/analytics" %>

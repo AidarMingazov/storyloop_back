@@ -5,7 +5,7 @@ import { renderChat } from "reader/chat"
 import { renderManga } from "reader/manga"
 import { Pager, PAGE_TURN_EFFECTS } from "reader/pager"
 import { renderIllustrated } from "reader/illustrated"
-import { WordSheet } from "reader/sheet"
+import { WordCard } from "reader/word_card"
 import { renderSummary, updateSummary } from "reader/summary"
 import { speak, stopSpeaking } from "reader/speech"
 import { request } from "reader/api"
@@ -13,16 +13,20 @@ import { readPref, writePref, readChoice, writeChoice } from "reader/prefs"
 import { icon } from "reader/icons"
 
 const THEME_COLORS = { light: "#fbf9f4", night: "#0e0f13" }
+const THEMES = [ "auto", "light", "night" ]
+const TEXT_SIZES = [ "s", "m", "l" ]
+const onOff = (value) => value ? "on" : "off"
 
 // The reader renders the whole interactive layer from the episode JSON embedded in the page
-// (the same shape API v1 will serve). Tapping a word opens the sheet instantly; only saving
-// words and progress talk to the server.
+// (the same shape API v1 will serve). Tapping a word opens its card instantly; a tap on a line outside
+// the words shows its translation in place; only saving words and progress talk to the server.
+// The header hides while the reader scrolls down a webtoon or a book and comes back on the way up.
 //
 // Progress position: panel index for webtoon, manga and illustrated; index of the last revealed
 // message for chat.
 export default class extends Controller {
-  static targets = [ "payload", "stage", "summary", "sheet", "progressBar", "settings", "settingsButton",
-                     "romanizationToggle", "highlightToggle", "nightToggle", "pageTurnSelect" ]
+  static targets = [ "payload", "stage", "summary", "sheet", "progressBar", "header", "settings", "settingsButton",
+                     "prefSwitch", "prefChoice" ]
   static values = { i18n: Object, progressUrl: String, saveUrl: String, reviewUrl: String, libraryUrl: String,
                     episodeUrl: String, signupUrl: String }
 
@@ -30,16 +34,21 @@ export default class extends Controller {
     this.episode = JSON.parse(this.payloadTarget.textContent)
     this.t = this.i18nValue
     this.lang = this.episode.language_pair.target_lang
+    this.nativeLang = this.episode.language_pair.native_lang
+    this.systemDark = window.matchMedia("(prefers-color-scheme: dark)")
+    this.programmaticUntil = 0
+    this.ownScrollTo = null
     this.indexEpisode()
 
     this.saved = new Set(this.episode.user?.saved_lexeme_ids ?? [])
     this.furthest = this.episode.user?.last_panel_position ?? 0
     this.completed = this.episode.user?.completed ?? false
 
-    this.sheet = new WordSheet(this.sheetTarget, this.t, {
+    this.sheet = new WordCard(this.sheetTarget, this.t, {
       onSave: () => this.toggleSave(this.current?.lexeme.id, this.current?.token.id),
       onSpeak: () => this.speakCurrent(),
-      onClose: () => this.clearActive()
+      onSpeakLine: () => this.speakLine(this.current?.bubble),
+      onClose: () => this.cardClosed()
     })
     this.loadPrefs()
 
@@ -53,19 +62,22 @@ export default class extends Controller {
     this.paintSaved()
     this.updateProgressBar()
 
-    this.onResize = () => fitBubbles(this.stageTarget)
+    this.onResize = () => {
+      fitBubbles(this.stageTarget)
+      if (this.sheet.isPopover) this.sheet.close() // its word has moved
+    }
     this.onResize()
-    document.fonts?.ready.then(this.onResize)
+    document.fonts?.ready.then(() => fitBubbles(this.stageTarget)) // not onResize: a late font must not close a card
     window.addEventListener("resize", this.onResize)
 
     this.onDocumentClick = (event) => this.documentClick(event)
     this.onKeydown = (event) => this.keydown(event)
     this.onPageHide = () => this.flushProgress()
-    // Scrolling on with the sheet open means the reader moved on: get the sheet out of the way.
-    this.onScroll = () => {
-      if (this.sheet.isOpen && Math.abs(window.scrollY - this.sheetOpenedAt) > 160) this.sheet.close()
-    }
+    this.lastScrollY = window.scrollY
+    this.onScroll = () => this.scrolled()
+    this.onSystemTheme = () => this.applyTheme()
     window.addEventListener("scroll", this.onScroll, { passive: true })
+    this.systemDark.addEventListener("change", this.onSystemTheme)
     document.addEventListener("click", this.onDocumentClick)
     document.addEventListener("keydown", this.onKeydown)
     window.addEventListener("pagehide", this.onPageHide)
@@ -81,17 +93,19 @@ export default class extends Controller {
     this.flushProgress()
     stopSpeaking()
     window.removeEventListener("scroll", this.onScroll)
+    this.systemDark.removeEventListener("change", this.onSystemTheme)
     window.removeEventListener("resize", this.onResize)
     document.removeEventListener("click", this.onDocumentClick)
     document.removeEventListener("keydown", this.onKeydown)
     window.removeEventListener("pagehide", this.onPageHide)
-    this.setTheme(false) // other pages use the light theme
+    this.paintTheme(false) // other pages use the light theme
   }
 
   // ── Webtoon and illustrated: vertical scrolling ──────────
 
   setupScrolling(panels) {
     this.total = panels.length
+    this.autoHideChrome = true
 
     // A panel counts as read when it crosses the middle band of the screen.
     this.observer = new IntersectionObserver((entries) => {
@@ -107,7 +121,10 @@ export default class extends Controller {
     if (this.completed) {
       this.showSummary()
     } else if (this.furthest > 0) {
-      requestAnimationFrame(() => panels[this.furthest]?.scrollIntoView({ block: "start" }))
+      requestAnimationFrame(() => {
+        this.programmaticUntil = performance.now() + 300 // coming back to the place is not "scrolling on"
+        panels[this.furthest]?.scrollIntoView({ block: "start" })
+      })
     }
   }
 
@@ -122,10 +139,10 @@ export default class extends Controller {
     const resume = this.completed ? 0 : this.pages.findIndex((page) => Number(page.dataset.lastPosition) >= this.furthest)
     this.pager = new Pager(pager, pages, {
       index: Math.max(0, resume),
-      effect: this.prefs.pageTurn,
+      effect: this.prefs.page_turn,
       tapIgnore: "[data-token-id], [data-bubble-id], [data-translate-bubble], [data-speak-bubble]",
       // With the word sheet open, a tap on the page only closes it.
-      canTap: () => !this.sheet.isOpen,
+      canTap: () => !this.sheet.isOpen && !this.settingsOpen,
       onTurnStart: () => this.sheet.close(),
       onReveal: (page) => fitBubbles(page),
       onChange: (index, previous) => this.pageChanged(index, previous)
@@ -158,8 +175,17 @@ export default class extends Controller {
   }
 
   keydown(event) {
-    if (event.key === "Escape") return this.sheet.close()
-    if (!this.pager || event.target.closest("input, textarea, select")) return
+    if (event.key === "Escape") {
+      this.closeSettings()
+      return this.sheet.close()
+    }
+    if (event.target.closest("input, textarea, select") || event.metaKey || event.ctrlKey || event.altKey) return
+    // With a word's card open: S saves it, L says it (key codes, so they work on any keyboard layout).
+    if (this.sheet.isOpen && this.current) {
+      if (event.code === "KeyS") return this.toggleSave(this.current.lexeme.id, this.current.token.id)
+      if (event.code === "KeyL") return this.speakCurrent()
+    }
+    if (!this.pager) return
     if (event.key === "ArrowRight") { event.preventDefault(); this.nextPage() }
     if (event.key === "ArrowLeft") { event.preventDefault(); this.previousPage() }
   }
@@ -205,15 +231,18 @@ export default class extends Controller {
     const token = event.target.closest("[data-token-id]")
     const bubble = event.target.closest("[data-bubble-id]")
 
-    if (listen) {
-      const line = this.bubbles.get(Number(listen.dataset.speakBubble))
-      speak(line.text, this.lang, line.audio_url)
-    } else if (translate) this.openPhrase(Number(translate.dataset.translateBubble))
+    if (listen) this.speakLine(this.bubbles.get(Number(listen.dataset.speakBubble)))
     else if (token) this.openToken(token)
-    else if (bubble) this.openPhrase(Number(bubble.dataset.bubbleId)) // tap on the bubble outside words
-    else return
+    else if (translate) this.toggleTranslation(Number(translate.dataset.translateBubble))
+    // A tap on the line outside its words. With a card open it only closes the card (documentClick).
+    else if (bubble && !this.sheet.isOpen && !this.settingsOpen) this.toggleTranslation(Number(bubble.dataset.bubbleId))
+    else {
+      // A tap on the picture shows or hides the header — unless it is closing a card or the settings.
+      if (!bubble && this.autoHideChrome && !this.sheet.isOpen && !this.settingsOpen) this.showChrome(!this.chromeVisible)
+      return
+    }
 
-    event.stopPropagation() // keep the document handler from closing the sheet we just opened
+    event.stopPropagation() // keep the document handler from closing the card we just opened
   }
 
   stageKeydown(event) {
@@ -226,36 +255,106 @@ export default class extends Controller {
   }
 
   documentClick(event) {
-    if (!this.sheet.isOpen) return
-    if (!event.target.isConnected) return // re-rendered by our own click handler, so it was inside
-    if (this.sheetTarget.contains(event.target)) return
-    this.sheet.close()
+    const target = event.target
+    if (!target.isConnected) return // re-rendered by our own click handler, so it was inside
+    if (this.settingsOpen && !this.settingsTarget.contains(target) && !this.settingsButtonTarget.contains(target)) this.closeSettings()
+    if (this.sheet.isOpen && !this.sheetTarget.contains(target)) this.sheet.close()
   }
 
   openToken(element) {
     const token = this.tokens.get(Number(element.dataset.tokenId))
     const lexeme = this.lexeme(token.lexeme_id)
-    this.current = { token, lexeme }
+    const bubble = this.tokenBubbles.get(token.id)
+    this.closeSettings()
+    this.current = { token, lexeme, bubble }
     this.setActive(element)
-    this.sheetOpenedAt = window.scrollY
-    this.sheet.showToken({ token, lexeme, saved: this.saved.has(lexeme.id), lang: this.lang })
+    this.sheet.show({ token, lexeme, bubble, saved: this.saved.has(lexeme.id), lang: this.lang, nativeLang: this.nativeLang }, element)
+    this.keepLineVisible(element)
     this.dispatch("token-tapped", { detail: { ...this.eventDetail(), tokenId: token.id, lexemeId: lexeme.id } })
   }
 
-  openPhrase(bubbleId) {
-    const bubble = this.bubbles.get(bubbleId)
-    this.current = null
-    this.currentBubble = bubble
-    this.clearActive()
+  // On a phone the sheet covers the bottom of the screen: scroll just enough to keep the tapped line above it.
+  keepLineVisible(element) {
+    const covered = this.sheet.coveredHeight
+    this.element.style.setProperty("--sheet-space", `${covered}px`) // room to bring the last lines above the sheet
     this.sheetOpenedAt = window.scrollY
-    this.sheet.showPhrase({ bubble, lang: this.lang })
-    this.dispatch("bubble-translated", { detail: { ...this.eventDetail(), bubbleId } })
+    if (!covered) return
+
+    const line = (element.closest("[data-bubble-id]") || element).getBoundingClientRect()
+    const top = (this.chromeVisible ? this.headerTarget.offsetHeight : 0) + 8
+    const bottom = window.innerHeight - covered - 12
+    let delta = 0
+    if (line.bottom > bottom) delta = Math.min(line.bottom - bottom, line.top - top)
+    else if (line.top < top) delta = line.top - top
+    if (Math.abs(delta) < 2) return
+
+    this.sheetOpenedAt += delta
+    this.ownScrollTo = this.sheetOpenedAt               // in flight until the page gets there…
+    this.programmaticUntil = performance.now() + 1500   // …or we stop waiting (the reader took over, a slow device)
+    window.scrollBy({ top: delta, behavior: prefersReducedMotion() ? "auto" : "smooth" })
+  }
+
+  cardClosed() {
+    this.clearActive()
+    this.ownScrollTo = null
+    this.element.style.removeProperty("--sheet-space")
+  }
+
+  // The line's translation, shown inside its bubble (see lineTranslation in reader/media.js).
+  toggleTranslation(bubbleId) {
+    const element = this.stageTarget.querySelector(`[data-bubble-id="${bubbleId}"]`)
+    if (!element?.querySelector(".bubble-tr")) return
+
+    const shown = element.classList.toggle("is-translated")
+    element.querySelector("[data-translate-bubble]")?.setAttribute("aria-expanded", String(shown))
+    fitBubbles(this.stageTarget) // the bubble grew or shrank
+    if (shown) this.dispatch("bubble-translated", { detail: { ...this.eventDetail(), bubbleId } })
   }
 
   speakCurrent() {
     // Recorded audio of the dictionary form when we have it, otherwise the word as written.
     if (this.current) speak(this.current.token.surface, this.lang, this.current.lexeme.audio_url)
-    else if (this.currentBubble) speak(this.currentBubble.text, this.lang, this.currentBubble.audio_url)
+  }
+
+  speakLine(bubble) {
+    if (bubble) speak(bubble.text, this.lang, bubble.audio_url)
+  }
+
+  // ── Header ───────────────────────────────────────────────
+
+  get chromeVisible() {
+    return !this.element.classList.contains("chrome-off")
+  }
+
+  showChrome(visible) {
+    this.element.classList.toggle("chrome-off", !visible)
+  }
+
+  revealChrome() { this.showChrome(true) } // keyboard focus moved into the hidden header
+
+  scrolled() {
+    const y = window.scrollY
+    const delta = y - this.lastScrollY
+    this.lastScrollY = y
+    // Our own scrolls (coming back to the place, keeping a line above the sheet) are not the reader scrolling on.
+    if (this.ownScrollTo != null && Math.abs(y - this.ownScrollTo) < 2) { // arrived
+      this.ownScrollTo = null
+      this.programmaticUntil = 0
+      return
+    }
+    if (performance.now() < this.programmaticUntil) return
+    if (this.ownScrollTo != null) { // never arrived: measure "scrolled on" from here
+      this.ownScrollTo = null
+      this.sheetOpenedAt = y
+    }
+
+    if (this.autoHideChrome && !this.settingsOpen) {
+      if (delta > 6 && y > 120) this.showChrome(false)
+      else if (delta < -6 || y < 60) this.showChrome(true)
+    }
+    // Scrolling on with the sheet open means the reader moved on: get the sheet out of the way.
+    // A popover stays: it scrolls with its word.
+    if (this.sheet.isOpen && !this.sheet.isPopover && Math.abs(y - this.sheetOpenedAt) > 160) this.sheet.close()
   }
 
   setActive(element) {
@@ -383,46 +482,85 @@ export default class extends Controller {
 
   // ── Settings ─────────────────────────────────────────────
 
+  // The settings are a bottom sheet opened from the language pill; like the word card it does not dim the page.
+
+  get settingsOpen() {
+    return this.settingsTarget.classList.contains("is-open")
+  }
+
   toggleSettings() {
-    const open = this.settingsTarget.hidden
-    this.settingsTarget.hidden = !open
+    this.settingsOpen ? this.closeSettings() : this.openSettings()
+  }
+
+  openSettings() {
+    this.sheet.close()
+    this.showChrome(true)
+    this.setSettingsOpen(true)
+    this.settingsTarget.focus({ preventScroll: true })
+  }
+
+  closeSettings() {
+    if (!this.settingsOpen) return
+    const hadFocus = this.settingsTarget.contains(document.activeElement)
+    this.setSettingsOpen(false)
+    if (hadFocus) this.settingsButtonTarget.focus({ preventScroll: true })
+  }
+
+  setSettingsOpen(open) {
+    this.settingsTarget.classList.toggle("is-open", open)
+    this.settingsTarget.inert = !open
+    this.settingsTarget.setAttribute("aria-hidden", String(!open))
     this.settingsButtonTarget.setAttribute("aria-expanded", String(open))
   }
 
+  // Prefs live on the device. Switches are booleans, choices take one value of a fixed set;
+  // the key in this.prefs is the storage key and the control's data-pref.
   loadPrefs() {
+    const legacyNight = readPref("night", null) // before wave Р2 the theme was a night-mode switch
     this.prefs = {
       romanization: readPref("romanization", false),
       highlight: readPref("highlight", true),
-      night: readPref("night", false),
-      pageTurn: readChoice("page_turn", PAGE_TURN_EFFECTS, "slide")
+      translations: readPref("translations", false),
+      theme: readChoice("theme", THEMES, legacyNight === null ? "auto" : legacyNight ? "night" : "light"),
+      size: readChoice("size", TEXT_SIZES, "m"),
+      page_turn: readChoice("page_turn", PAGE_TURN_EFFECTS, "slide")
     }
-    if (this.hasRomanizationToggleTarget) this.romanizationToggleTarget.checked = this.prefs.romanization
-    this.highlightToggleTarget.checked = this.prefs.highlight
-    this.nightToggleTarget.checked = this.prefs.night
-    if (this.hasPageTurnSelectTarget) this.pageTurnSelectTarget.value = this.prefs.pageTurn
     this.applyPrefs()
   }
 
-  setPref(event) {
-    const name = event.target.dataset.pref
-    this.prefs[name] = event.target.checked
-    writePref(name, event.target.checked)
+  togglePref(event) {
+    const name = event.currentTarget.dataset.pref
+    this.prefs[name] = !this.prefs[name]
+    writePref(name, this.prefs[name])
     this.applyPrefs()
   }
 
-  setPageTurn(event) {
-    this.prefs.pageTurn = event.target.value
-    writeChoice("page_turn", event.target.value)
-    this.pager?.setEffect(event.target.value)
+  choosePref(event) {
+    const { pref, value } = event.currentTarget.dataset
+    this.prefs[pref] = value
+    writeChoice(pref, value)
+    if (pref === "page_turn") this.pager?.setEffect(value)
+    this.applyPrefs()
   }
 
   applyPrefs() {
-    this.element.dataset.romanization = this.prefs.romanization ? "on" : "off"
-    this.element.dataset.highlight = this.prefs.highlight ? "on" : "off"
-    this.setTheme(this.prefs.night)
+    const { romanization, highlight, translations, size } = this.prefs
+    Object.assign(this.element.dataset, { romanization: onOff(romanization), highlight: onOff(highlight),
+                                          translations: onOff(translations), size })
+    for (const control of this.prefSwitchTargets) control.setAttribute("aria-checked", String(Boolean(this.prefs[control.dataset.pref])))
+    for (const control of this.prefChoiceTargets) {
+      control.setAttribute("aria-pressed", String(this.prefs[control.dataset.pref] === control.dataset.value))
+    }
+    this.applyTheme()
+    fitBubbles(this.stageTarget) // text size, romanization and translations change the bubbles' height
   }
 
-  setTheme(night) {
+  // "auto" follows the system; the layout's inline script does the same before first paint.
+  applyTheme() {
+    this.paintTheme(this.prefs.theme === "night" || (this.prefs.theme === "auto" && this.systemDark.matches))
+  }
+
+  paintTheme(night) {
     const root = document.documentElement
     if (night) root.dataset.theme = "night"
     else delete root.dataset.theme
@@ -434,10 +572,14 @@ export default class extends Controller {
   indexEpisode() {
     this.tokens = new Map()
     this.bubbles = new Map()
+    this.tokenBubbles = new Map() // token id → its line
     for (const panel of this.episode.panels) {
       for (const bubble of panel.bubbles) {
         this.bubbles.set(bubble.id, bubble)
-        for (const token of bubble.tokens) this.tokens.set(token.id, token)
+        for (const token of bubble.tokens) {
+          this.tokens.set(token.id, token)
+          this.tokenBubbles.set(token.id, bubble)
+        }
       }
     }
   }

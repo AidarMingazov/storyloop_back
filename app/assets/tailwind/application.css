@@ -177,9 +177,10 @@
            rounded-t-3xl bg-raised px-5 pt-2 text-fg;
     padding-bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
     box-shadow: 0 -12px 40px rgb(0 0 0 / 0.18);
-    transform: translateY(104%); transition: transform 0.32s var(--ease-soft);
+    transform: translateY(104%); visibility: hidden;
+    transition: transform 0.32s var(--ease-soft), visibility 0s 0.32s;
   }
-  .sheet.is-open { transform: none; }
+  .sheet.is-open { transform: none; visibility: visible; transition-delay: 0s; }
   .sheet-handle { @apply mx-auto mb-3 block h-1 w-9 rounded-full bg-fg-2 opacity-35; }
   .popover {
     @apply absolute z-30 w-80 rounded-2xl border border-line bg-raised px-4 pt-3.5 pb-4 text-fg;
@@ -261,7 +262,8 @@
 /* ───────────── Reader ─────────────
    Built on the semantic tokens, so Paper and Midnight come from the theme, not from reader-only colours.
    Story text uses the serif face for English and the script's sans face for KO/JA/ZH (webtoon convention).
-   Wave Р2 moves the reader chrome onto the shared components above. */
+   Chrome (wave Р2): a header that hides on the way down, the language pill, settings as a sheet,
+   the word card as a sheet on phones and a popover from 1024px, translations inside the bubbles. */
 @layer components {
   .reader {
     --r-bg: var(--color-bg);
@@ -278,37 +280,47 @@
     --r-me-bg: var(--color-accent);
     --r-me-fg: var(--color-on-accent);
     --r-them-bg: var(--color-surface);
+    --r-size: 1; /* text size of the story: settings → S / M / L */
+    position: relative; /* the word popover is placed against the reader */
     min-height: 100dvh;
+    padding-bottom: var(--sheet-space, 0px); /* room to scroll the last lines above an open word sheet */
     background: var(--r-bg);
     color: var(--r-fg);
   }
+  .reader[data-size="s"] { --r-size: 0.9; }
+  .reader[data-size="l"] { --r-size: 1.15; }
   .reader-muted { color: var(--r-muted); }
 
   .reader-header {
     position: sticky; top: 0; z-index: 20;
-    background: color-mix(in srgb, var(--r-bg) 92%, transparent);
-    backdrop-filter: blur(8px);
+    background: color-mix(in srgb, var(--r-bg) 88%, transparent);
+    backdrop-filter: saturate(1.4) blur(14px);
     padding-top: env(safe-area-inset-top, 0px);
+    transition: transform .32s var(--ease-soft);
   }
-  .reader-header-row { @apply mx-auto flex max-w-[640px] items-center gap-2 px-2 py-1.5; }
+  /* Scrolling down a webtoon or a book hides the header; scrolling up, a tap on the picture or focus brings it back. */
+  .reader.chrome-off .reader-header { transform: translateY(-100%); }
+  .reader-header-row { @apply mx-auto flex max-w-[640px] items-center gap-1.5 py-1.5 pr-3 pl-1.5; }
   .reader-icon-btn {
     @apply inline-flex size-11 shrink-0 items-center justify-center rounded-full;
     color: var(--r-fg);
   }
   .reader-icon-btn:hover { background: var(--r-chip); }
-  .reader-progress { height: 3px; background: var(--r-edge); }
+  .reader-pill {
+    @apply relative inline-flex h-9 shrink-0 cursor-pointer items-center gap-1 rounded-full border border-line-2 pr-2 pl-3
+           text-xs font-semibold tracking-wide text-fg-strong transition-colors hover:bg-bg-2;
+  }
+  .reader-pill::after { content: ""; position: absolute; inset: -4px; } /* 44px touch target */
+  .reader-pill .icon { width: 14px; height: 14px; opacity: .7; }
+  .reader-progress { height: 2px; background: var(--r-edge); }
   .reader-progress i { display: block; height: 100%; width: 0; background: var(--r-accent); transition: width .3s ease; }
 
-  .reader-settings {
-    @apply mx-auto grid max-w-[640px] gap-1 px-4 pb-3 pt-1;
-    border-bottom: 1px solid var(--r-edge);
-  }
-  .reader-switch { @apply flex min-h-11 cursor-pointer items-center justify-between gap-4 text-sm; }
-  .reader-switch input { @apply size-5; accent-color: var(--r-accent); }
-  .reader-select {
-    @apply rounded-lg px-2 py-1.5 text-sm;
-    background: var(--r-chip); color: var(--r-fg); border: 1px solid var(--r-edge);
-  }
+  /* settings sheet (on top of .sheet) */
+  .reader-settings { @apply grid gap-4; }
+  .reader-set-title { @apply font-serif text-xl font-semibold text-fg-strong; }
+  .reader-set-row { @apply grid gap-2; }
+  .reader-set-label { @apply text-[11px] font-semibold uppercase tracking-[.1em] text-fg-2; }
+  .reader-settings:focus, .word-sheet:focus { outline: none; } /* focus is moved here for context, not as a control */
 
   .reader-stage { @apply mx-auto max-w-[640px]; }
   .reader-ai-notice { @apply mx-auto max-w-[640px] px-4 pt-6 pb-[calc(2rem+env(safe-area-inset-bottom))] text-center text-xs; color: var(--r-muted); }
@@ -332,8 +344,9 @@
   /* Bubbles are paper in both themes, so they use the bubble constants and a stronger saved stroke. */
   .wt-bubble {
     position: absolute; background: var(--color-bubble); color: var(--color-bubble-ink); border: 1px solid var(--color-bubble-line);
-    border-radius: 1.1em; padding: .55em .8em; font-size: clamp(14px, 4.3cqw, 22px);
-    box-shadow: 0 1px 0 rgb(0 0 0 / .04);
+    border-radius: 1.1em; padding: .55em .8em; font-size: calc(clamp(14px, 4.3cqw, 22px) * var(--r-size));
+    box-shadow: 0 1px 1px rgb(20 16 8 / .08), 0 8px 20px -10px rgb(20 16 8 / .35);
+    cursor: pointer; /* outside the words: the line's translation */
     --r-hl-saved: var(--color-bubble-hl);
     --r-tap-bg: var(--color-bubble-hl);
     --r-tap-fg: var(--color-bubble-ink);
@@ -344,18 +357,23 @@
   .wt-bubble--thought:is(:lang(ko), :lang(ja), :lang(zh)) { font-style: normal; } /* no fake italics for CJK */
   .wt-bubble--narration { background: #f5f1e8; border-radius: .35em; }
   .wt-bubble--narration .story-text { font-family: var(--font-sans); font-size: .92em; }
-  .bubble-translate {
-    position: absolute; right: -.55em; top: -.55em; width: 1.7em; height: 1.7em; border-radius: 999px;
-    display: inline-flex; align-items: center; justify-content: center; font-size: .72em; font-weight: 700;
-    background: var(--color-bubble-ink); color: var(--color-bubble); font-family: var(--font-sans); font-style: normal;
+  /* The line's translation inside its bubble: shown by a tap on the bubble outside the words, or always
+     with "translation under every line". Nothing floats over the art. */
+  .bubble-tr {
+    display: none; gap: .45em; align-items: flex-start; margin-top: .45em; padding-top: .45em;
+    border-top: 1px solid rgb(23 22 20 / .12); color: var(--color-bubble-2);
+    font-family: var(--font-sans); font-size: .8em; font-style: normal; font-weight: 500; line-height: 1.4;
+    text-align: left; word-break: normal;
   }
-  .bubble-translate::after, .bubble-audio::after { content: ""; position: absolute; inset: -10px; } /* 44px touch target */
-  .bubble-audio {
-    position: absolute; right: 1.5em; top: -.55em; width: 1.7em; height: 1.7em; border-radius: 999px;
-    display: inline-flex; align-items: center; justify-content: center; font-size: .72em;
-    background: var(--color-bubble); color: var(--color-bubble-ink); border: 1px solid var(--color-bubble-line); font-style: normal;
+  .is-translated > .bubble-tr, .reader[data-translations="on"] .bubble-tr { display: flex; }
+  .wt-bubble.is-translated { z-index: 1; } /* a bubble that grew lies over its neighbours */
+  .bubble-play {
+    position: relative; flex-shrink: 0; width: 1.7em; height: 1.7em; margin-top: -.12em; border-radius: 999px;
+    display: inline-grid; place-items: center; cursor: pointer;
+    background: var(--color-bubble-accent); color: #fff;
   }
-  .bubble-translate .icon, .bubble-audio .icon { width: 1.1em; height: 1.1em; vertical-align: 0; }
+  .bubble-play::after { content: ""; position: absolute; inset: -9px; } /* 44px touch target */
+  .bubble-play .icon { width: .85em; height: .85em; vertical-align: 0; }
   .wt-caption { padding: .75rem 1rem; }
 
   /* manga: one page at a time, each a 2-column grid of panels; reader/pager.js lays out the pages and draws the turns */
@@ -371,7 +389,7 @@
   .manga-panel--2 { grid-column: span 2; }
   .manga-panel .wt-bubble {
     border: 1.5px solid #161616; border-radius: 1.4em; padding: .45em .75em; text-align: center;
-    font-size: clamp(12.5px, 3.7cqw, 18px);
+    font-size: calc(clamp(12.5px, 3.7cqw, 18px) * var(--r-size));
   }
   .manga-panel .wt-bubble--narration { border-radius: 2px; text-align: left; }
   .manga-nav {
@@ -390,7 +408,7 @@
   .ill-section { display: grid; gap: 1rem; scroll-margin-top: 64px; }
   .ill-figure { margin: 0 -.25rem; border-radius: 1rem; overflow: hidden; background: var(--r-chip); }
   .ill-figure img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .ill-p { font-size: 1.22rem; line-height: 1.6; }
+  .ill-p { font-size: calc(1.22rem * var(--r-size)); line-height: 1.6; }
   .ill-p .story-text { line-height: 1.6; }
   .ill-p--speech, .ill-p--thought { padding-left: .9rem; border-left: 3px solid var(--r-edge); }
   .ill-p--thought .story-text { font-style: italic; }
@@ -401,12 +419,16 @@
     vertical-align: middle; border-radius: 999px; font-size: .8rem; font-weight: 700; color: var(--r-muted);
   }
   .ill-action:hover { background: var(--r-chip); }
+  .ill-action[aria-expanded="true"] { color: var(--r-accent); }
+  .ill-p .bubble-tr { margin-top: .4rem; padding-top: 0; border-top: 0; color: var(--r-muted); font-size: .78em; }
+  .ill-p .bubble-play, .chat .bubble-play { background: var(--r-accent); color: var(--r-on-accent); }
 
   /* chat */
   .chat { @apply grid gap-2 px-3 pt-4 pb-28; }
   .chat-msg { display: flex; gap: .5rem; align-items: flex-end; max-width: 86%; animation: chat-in .22s ease-out; }
   .chat-msg--me { margin-left: auto; flex-direction: row-reverse; }
-  .chat-msg--narration { max-width: 100%; justify-content: center; font-size: .85rem; color: var(--r-muted); text-align: center; }
+  .chat-msg--narration { max-width: 100%; flex-direction: column; align-items: center; font-size: .85rem; color: var(--r-muted); text-align: center; cursor: pointer; }
+  .chat-msg--narration .bubble-tr { margin-top: .2rem; padding-top: 0; border-top: 0; color: var(--r-muted); font-size: .92em; }
   .chat-avatar {
     width: 2rem; height: 2rem; border-radius: 999px; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center;
     font-size: .8rem; font-weight: 700; color: #fff; background: var(--avatar-bg, #7b7a79);
@@ -414,9 +436,13 @@
   .chat-avatar--hidden { visibility: hidden; }
   .chat-name { font-size: .75rem; color: var(--r-muted); margin: 0 0 .15rem .25rem; }
   .chat-bubble {
-    position: relative; padding: .6rem .85rem; border-radius: 1.1rem; font-size: 1.08rem;
+    position: relative; padding: .6rem .85rem; border-radius: 1.1rem; font-size: calc(1.08rem * var(--r-size));
     background: var(--r-them-bg); border: 1px solid var(--r-edge); border-bottom-left-radius: .35rem;
+    cursor: pointer; /* outside the words: the message's translation */
   }
+  .chat-bubble .bubble-tr { color: var(--r-muted); border-top-color: var(--r-edge); }
+  .chat-msg--me .bubble-tr { color: color-mix(in srgb, var(--r-me-fg) 84%, transparent); border-top-color: color-mix(in srgb, var(--r-me-fg) 28%, transparent); }
+  .chat-msg--me .bubble-play { background: var(--r-me-fg); color: var(--r-me-bg); }
   .chat-msg--me .chat-bubble { background: var(--r-me-bg); color: var(--r-me-fg); border-color: transparent; border-bottom-left-radius: 1.1rem; border-bottom-right-radius: .35rem; }
   .chat-msg--me .tok-rt { color: color-mix(in srgb, var(--r-me-fg) 70%, transparent); }
   /* a marker stroke under accent-coloured text is unreadable: saved words in my bubbles get a marker underline */
@@ -424,9 +450,6 @@
     background-image: none; text-decoration: underline 2px var(--color-marker); text-underline-offset: .2em;
   }
   .tok.is-active .tok-rt, .reader[data-highlight="on"] .tok.is-saved .tok-rt { color: currentColor; opacity: .7; }
-  .chat-actions { align-self: center; display: flex; flex-direction: column; }
-  .chat-translate { align-self: center; flex-shrink: 0; width: 2.75rem; height: 2.75rem; border-radius: 999px; color: var(--r-muted); font-size: .75rem; font-weight: 700; }
-  .chat-translate:hover { background: var(--r-chip); }
   .chat-image { border-radius: 1rem; overflow: hidden; max-width: 70%; }
   .chat-next-bar {
     position: fixed; left: 0; right: 0; bottom: 0; z-index: 15; display: flex; justify-content: center;
@@ -439,7 +462,7 @@
   }
   .reader-btn--ghost { background: var(--r-chip); color: var(--r-fg); }
   .reader-btn .icon { width: 18px; height: 18px; }
-  .reader-icon-btn .icon, .chat-translate .icon, .ill-action .icon { width: 20px; height: 20px; vertical-align: 0; }
+  .reader-icon-btn .icon, .ill-action .icon { width: 20px; height: 20px; vertical-align: 0; }
 
   /* summary */
   .reader-summary { @apply mx-auto grid max-w-[640px] gap-5 px-4 pt-8; }
@@ -462,43 +485,83 @@
   .summary-signup { padding: 1rem; border-radius: 1rem; background: var(--r-tap-bg); color: var(--r-tap-fg); }
   .summary-signup .reader-muted { color: inherit; opacity: .8; }
 
-  /* bottom sheet */
+  /* Word card: a bottom sheet on phones, a popover at the word from 1024px (reader/word_card.js). Neither dims the page. */
   .word-sheet {
     position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; margin: 0 auto; max-width: 640px;
-    background: var(--r-sheet); color: var(--r-fg); border-top: 1px solid var(--r-edge);
-    border-radius: 22px 22px 0 0; box-shadow: 0 -8px 30px rgb(0 0 0 / .14);
-    padding: .6rem 1.1rem calc(1.1rem + env(safe-area-inset-bottom));
-    transform: translateY(105%); transition: transform .24s cubic-bezier(.2,.8,.2,1);
-    max-height: 70dvh; overflow-y: auto; overscroll-behavior: contain;
+    display: grid; gap: .75rem;
+    background: var(--color-raised); color: var(--color-fg);
+    border-radius: 24px 24px 0 0; box-shadow: 0 -12px 40px rgb(0 0 0 / .18);
+    padding: .5rem 1.25rem calc(1.25rem + env(safe-area-inset-bottom));
+    max-height: 66dvh; overflow-y: auto; overscroll-behavior: contain;
+    transform: translateY(104%); visibility: hidden;
+    transition: transform .32s var(--ease-soft), visibility 0s .32s;
   }
-  .word-sheet.is-open { transform: translateY(0); }
-  .sheet-grab { width: 2.25rem; height: 4px; border-radius: 4px; background: currentColor; opacity: .2; margin: 0 auto .6rem; }
-  .sheet-head { display: flex; align-items: baseline; flex-wrap: wrap; gap: .25rem .6rem; }
-  .sheet-word { font-family: var(--font-serif); font-size: 1.75rem; font-weight: 600; line-height: 1.15; }
-  .sheet-word:lang(ko) { font-family: var(--font-ko); font-weight: 700; }
-  .sheet-word:lang(ja) { font-family: var(--font-ja); font-weight: 700; }
-  .sheet-word:lang(zh) { font-family: var(--font-zh); font-weight: 700; }
-  .sheet-lemma { font-size: .85rem; color: var(--r-muted); }
-  .sheet-roman { font-size: .9rem; color: var(--r-muted); margin-top: .1rem; }
-  .sheet-translation { font-size: 1.15rem; font-weight: 600; margin-top: .5rem; }
-  .sheet-note { font-size: .92rem; color: var(--r-muted); margin-top: .35rem; line-height: 1.45; }
-  .sheet-chips { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .6rem; }
-  .sheet-chip { font-size: .8rem; padding: .2rem .55rem; border-radius: 999px; background: var(--r-chip); }
-  .sheet-chip b { font-weight: 700; }
-  .sheet-phrase { font-family: var(--font-serif); font-size: 1.25rem; line-height: 1.4; }
-  .sheet-phrase:lang(ko) { font-family: var(--font-ko); }
-  .sheet-phrase:lang(ja) { font-family: var(--font-ja); }
-  .sheet-phrase:lang(zh) { font-family: var(--font-zh); }
-  .sheet-actions { display: flex; gap: .6rem; margin-top: 1rem; }
-  .sheet-actions .reader-btn { flex: 1; }
-  .sheet-actions .reader-btn[aria-pressed="true"] { background: var(--color-marker); color: var(--color-marker-ink); }
-  .sheet-actions .reader-btn--icon { flex: 0 0 3rem; padding: 0; }
-  .sheet-close { position: absolute; right: .5rem; top: .35rem; }
+  .word-sheet.is-open { transform: none; visibility: visible; transition-delay: 0s; }
+  .word-sheet .sheet-handle { margin-bottom: 0; }
+  .word-sheet.is-popover {
+    position: absolute; right: auto; bottom: auto; margin: 0; width: 340px; max-width: calc(100% - 24px);
+    max-height: none; overflow: visible; gap: .65rem;
+    border: 1px solid var(--color-line); border-radius: 16px; padding: .9rem 1.05rem 1rem;
+    box-shadow: 0 1px 2px rgb(0 0 0 / .06), 0 12px 32px -8px rgb(0 0 0 / .22);
+    transform: translateY(-4px) scale(.98); transform-origin: var(--arrow-x, 50%) 0; opacity: 0;
+    transition: opacity .2s, transform .2s var(--ease-soft), visibility 0s .2s;
+  }
+  .word-sheet.is-popover.is-above { transform-origin: var(--arrow-x, 50%) 100%; }
+  .word-sheet.is-popover.is-open { transform: none; opacity: 1; transition-delay: 0s; }
+  .word-sheet.is-popover .sheet-handle { display: none; }
+  .word-sheet.is-popover::before {
+    content: ""; position: absolute; top: -7px; left: calc(var(--arrow-x, 50%) - 6px); width: 12px; height: 12px;
+    background: var(--color-raised); border-left: 1px solid var(--color-line); border-top: 1px solid var(--color-line);
+    transform: rotate(45deg);
+  }
+  .word-sheet.is-popover.is-above::before { top: auto; bottom: -7px; transform: rotate(225deg); }
+
+  .wc-head { display: flex; align-items: flex-start; justify-content: space-between; gap: .75rem; }
+  .wc-head-actions { display: flex; flex-shrink: 0; gap: .25rem; margin-right: -.4rem; }
+  .wc-word { font-family: var(--font-serif); font-size: 1.85rem; font-weight: 600; line-height: 1.15; color: var(--color-fg-strong); overflow-wrap: anywhere; }
+  .wc-word:lang(ko) { font-family: var(--font-ko); font-weight: 700; }
+  .wc-word:lang(ja) { font-family: var(--font-ja); font-weight: 700; }
+  .wc-word:lang(zh) { font-family: var(--font-zh); font-weight: 700; }
+  .wc-rom { margin-top: .15rem; font-size: .9rem; color: var(--color-fg-2); }
+  .wc-tags { display: flex; flex-wrap: wrap; gap: .375rem; }
+  .wc-tr { font-size: 1.25rem; font-weight: 600; line-height: 1.3; color: var(--color-fg-strong); }
+  .wc-k { display: block; margin-bottom: .3rem; font-size: 10.5px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--color-fg-2); }
+  .wc-dict { font-size: .95rem; line-height: 1.45; }
+  .wc-dict b { font-size: 1rem; font-weight: 600; color: var(--color-fg-strong); }
+  .wc-dict b:lang(ko), .wc-gram b:lang(ko) { font-family: var(--font-ko); }
+  .wc-dict b:lang(ja), .wc-gram b:lang(ja) { font-family: var(--font-ja); }
+  .wc-dict b:lang(zh), .wc-gram b:lang(zh) { font-family: var(--font-zh); }
+  .wc-lr { font-size: .82rem; color: var(--color-fg-2); }
+  .wc-note p { font-size: .92rem; line-height: 1.5; }
+  /* rows share their columns (subgrid), so parts, roles and meanings line up */
+  .wc-gram ul { display: grid; grid-template-columns: auto auto minmax(0, 1fr); gap: .25rem .6rem; }
+  .wc-gram li {
+    display: grid; grid-column: 1 / -1; grid-template-columns: subgrid; align-items: baseline;
+    padding: .45rem .65rem; border-radius: .5rem; background: var(--color-bg-2); font-size: .88rem; line-height: 1.35;
+  }
+  .wc-gram b { font-size: .95rem; font-weight: 600; color: var(--color-fg-strong); }
+  .wc-role { font-size: 10.5px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--color-fg-2); }
+  /* the whole line's translation, behind a tap */
+  .wc-line {
+    display: flex; align-items: center; gap: .5rem; width: 100%; padding: .5rem .65rem; border-radius: .6rem;
+    border: 1px dashed var(--color-line-2); color: var(--color-fg-2); font-size: .9rem; line-height: 1.4; text-align: left; cursor: pointer;
+  }
+  .wc-line .icon { width: 16px; height: 16px; }
+  .wc-line-text { display: none; }
+  .wc-line[aria-expanded="true"] { border-color: transparent; background: var(--color-bg-2); color: var(--color-fg); }
+  .wc-line[aria-expanded="true"] .wc-line-text { display: inline; }
+  .wc-line[aria-expanded="true"] .wc-line-hint, .wc-line[aria-expanded="true"] .icon { display: none; }
+  .wc-acts { display: flex; gap: .5rem; margin-top: .1rem; }
+  .wc-acts > button { height: 44px; padding-inline: 1rem; white-space: nowrap; }
+  .wc-acts > :first-child { flex: 1; }
+  .wc-acts .icon { width: 18px; height: 18px; }
+  .wc-error { font-size: .88rem; color: var(--color-error); }
+  .wc-keys { display: flex; align-items: center; gap: .4rem; font-size: 12px; color: var(--color-fg-2); }
 }
 
 @keyframes chat-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) {
-  .word-sheet, .reader-progress i, .sheet, .switch-knob::after, .progress > i { transition: none; }
+  .word-sheet, .word-sheet.is-popover, .reader-header, .reader-progress i, .sheet, .switch-knob::after, .progress > i { transition: none; }
   .chat-msg, .skeleton { animation: none; }
 }
 
