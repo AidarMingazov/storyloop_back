@@ -5,9 +5,10 @@ module Admin
     before_action :set_story, except: :index
 
     def index
-      @stories = Series.source_user.includes(:author, :language_pair, :story_requests, episodes: :generation_logs)
+      @stories = Series.source_user.includes(:author, :language_pair, :story_requests, episodes: %i[generation_logs translations])
                        .order(created_at: :desc).limit(200)
       @open_reports = Report.open.joins(:episode).group("episodes.series_id").count
+      @translation_votes = TranslationRequest.group(:episode_id).count
     end
 
     def hide

@@ -17,6 +17,23 @@
     <% end %>
   </div>
 
+  <% if series.user_story? && episode.published? %>
+    <div class="flex flex-wrap items-center gap-2 text-sm" id="story-translations">
+      <% if notice %><p class="w-full reader-muted" role="status" id="story-notice"><%= notice %></p><% end %>
+      <% LanguagePair.active.where.not(id: series.language_pair_id).order(:code).each do |pair| %>
+        <% translated = Stories::Translation.existing(episode, pair) %>
+        <% if translated&.published? %>
+          <%= link_to t("stories.translation.read", pair: pair_label(pair)), read_path(translated), class: "reader-btn reader-btn--ghost" %>
+        <% elsif !@author %>
+          <% asked = @reader && episode.translation_requests.exists?(user: @reader, language_pair: pair) %>
+          <%= button_to (asked ? t("stories.translation.asked", pair: pair_label(pair)) : t("stories.translation.ask", pair: pair_label(pair))),
+                        episode_translation_requests_path(episode, pair: pair.code), disabled: asked,
+                        class: "reader-btn reader-btn--ghost", form: { data: { turbo: false } } %>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+
   <% if series.user_story? %>
     <% author = series.author %>
     <% if @author %>

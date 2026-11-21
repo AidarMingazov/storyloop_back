@@ -1,6 +1,6 @@
 module Admin
   class EpisodesController < BaseController
-    before_action :set_episode, only: %i[show edit update destroy publish unpublish rerun]
+    before_action :set_episode, only: %i[show edit update destroy publish unpublish rerun translate]
 
     def show
       @panels = @episode.panels.includes(image_attachment: :blob,
@@ -56,6 +56,20 @@ module Admin
       else
         RerunPipelineStepJob.perform_later(@episode, step)
         redirect_to admin_episode_path(@episode), notice: "Шаг «#{Ai::PipelineStatus::NAMES[step]}» запущен заново"
+      end
+    end
+
+    # A copy in another language pair with the same pictures (7.8), in the background.
+    def translate
+      pair = LanguagePair.where.not(id: @episode.series.language_pair_id).find_by(code: params[:pair])
+      existing = pair && Stories::Translation.existing(@episode, pair)
+      if pair.nil?
+        redirect_to admin_episode_path(@episode), alert: "Неизвестная пара #{params[:pair]}"
+      elsif existing
+        redirect_to admin_episode_path(existing), notice: "Перевод на #{pair.code} уже есть"
+      else
+        TranslateEpisodeJob.perform_later(@episode, pair.code)
+        redirect_back_or_to admin_episode_path(@episode), notice: "Перевод на #{pair.code} запущен — через пару минут он появится в серии"
       end
     end
 

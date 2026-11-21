@@ -5,7 +5,7 @@
   · <%= link_to "Очередь жалоб (#{@open_reports.values.sum})", admin_reports_path, class: "underline" %>
 </p>
 <table class="table" id="admin-stories">
-  <thead><tr><th>История</th><th>Автор</th><th>Пара</th><th>Видимость</th><th>Модерация</th><th>Статус</th><th>Прочт.</th><th>Жалобы</th><th>$</th><th></th></tr></thead>
+  <thead><tr><th>История</th><th>Автор</th><th>Пара</th><th>Видимость</th><th>Модерация</th><th>Статус</th><th>Прочт.</th><th>Хотят перевод</th><th>Жалобы</th><th>$</th><th></th></tr></thead>
   <tbody>
     <% @stories.each do |story| %>
       <% episode = story.episodes.first %>
@@ -20,6 +20,7 @@
         <td><span class="badge"><%= story.moderation_state %></span></td>
         <td><%= episode ? status_badge(episode) : "—" %></td>
         <td class="tabular-nums"><%= episode&.reads_count %></td>
+        <td class="tabular-nums" data-translation-votes><%= @translation_votes[episode&.id] || 0 %><%= " · есть перевод" if episode&.translations&.any? %></td>
         <td class="tabular-nums"><%= @open_reports[story.id] || 0 %></td>
         <td class="tabular-nums"><%= number_with_precision(episode&.generation_logs&.sum(&:cost_usd) || 0, precision: 4) %></td>
         <td><%= render "admin/stories/actions", story: story %></td>

@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   resources :episodes, only: [] do
     resources :shares, only: :create   # story_shared { channel }
     resources :reports, only: :create  # "Report"
+    resources :translation_requests, only: :create # "I want it in …" (7.8)
   end
   post "stories/transcription", to: "story_transcriptions#create", as: :story_transcription # "story by voice" (7.12)
   resources :stories, only: %i[index new create show update destroy] do
@@ -57,6 +58,7 @@ Rails.application.routes.draw do
         post :publish
         post :unpublish
         post :rerun
+        post :translate # into another language pair (7.8)
       end
     end
     resources :panels, only: %i[edit update] do

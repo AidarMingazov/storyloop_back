@@ -192,6 +192,11 @@ en:
       thanks: Thanks! The story is hidden for you, and a moderator will review it.
       invalid: Please choose a reason.
       rate_limited: Too many reports in a row. Please try later.
+    translation:
+      ask: "I want this story in %{pair}"
+      asked: "You asked for %{pair}"
+      read: "Read in %{pair}"
+      thanks: "Thanks! Your vote counts — once the %{pair} version is out, this button leads to it."
     hide_author:
       button: Hide author
       done: "You won't see stories by %{name} any more."

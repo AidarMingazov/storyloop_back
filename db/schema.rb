@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_21_222000) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_21_223000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -273,6 +273,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_21_222000) do
     t.index ["lexeme_id"], name: "index_tokens_on_lexeme_id"
   end
 
+  create_table "translation_requests", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "episode_id", null: false
+    t.bigint "language_pair_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["episode_id"], name: "index_translation_requests_on_episode_id"
+    t.index ["language_pair_id"], name: "index_translation_requests_on_language_pair_id"
+    t.index ["user_id", "episode_id", "language_pair_id"], name: "index_translation_requests_uniqueness", unique: true
+    t.index ["user_id"], name: "index_translation_requests_on_user_id"
+  end
+
   create_table "user_words", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "lexeme_id", null: false
@@ -376,6 +388,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_21_222000) do
   add_foreign_key "story_requests", "users"
   add_foreign_key "tokens", "bubbles"
   add_foreign_key "tokens", "lexemes"
+  add_foreign_key "translation_requests", "episodes", on_delete: :cascade
+  add_foreign_key "translation_requests", "language_pairs"
+  add_foreign_key "translation_requests", "users", on_delete: :cascade
   add_foreign_key "user_words", "lexemes"
   add_foreign_key "user_words", "tokens", column: "source_token_id", on_delete: :nullify
   add_foreign_key "user_words", "users"

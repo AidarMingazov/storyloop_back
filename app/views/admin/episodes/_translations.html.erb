@@ -1,0 +1,20 @@
+<%# Translations into the other language pairs (7.8): the existing copy, or a button with the readers' votes. %>
+<% others = LanguagePair.active.where.not(id: episode.series.language_pair_id).order(:code) %>
+<% if others.any? %>
+  <div class="card p-4 mb-6 flex flex-wrap items-center gap-3 text-sm" id="episode-translations">
+    <% if episode.origin_episode %>
+      <span>Перевод эпизода <%= link_to "#{episode.origin_episode.series.language_pair.code} ##{episode.origin_episode.number}", admin_episode_path(episode.origin_episode), class: "underline" %></span>
+    <% end %>
+    <% others.each do |pair| %>
+      <% translated = Stories::Translation.existing(episode, pair) %>
+      <% votes = episode.translation_requests.where(language_pair: pair).count %>
+      <% if translated %>
+        <%= link_to "Перевод на #{pair.code} →", admin_episode_path(translated), class: "underline" %>
+      <% else %>
+        <%= button_to "Перевести на #{pair.code}", translate_admin_episode_path(episode, pair: pair.code), class: "btn-secondary btn-sm",
+                      form: { class: "inline" } %>
+      <% end %>
+      <span class="text-muted">хотят: <%= votes %></span>
+    <% end %>
+  </div>
+<% end %>

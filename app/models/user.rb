@@ -12,6 +12,7 @@ class User < ApplicationRecord
   has_many :story_requests, dependent: :destroy
   has_many :reports, foreign_key: :reporter_id, dependent: :delete_all, inverse_of: :reporter
   has_many :author_blocks, dependent: :delete_all
+  has_many :translation_requests, dependent: :delete_all
   has_many :hidden_authors, through: :author_blocks, source: :author
 
   normalizes :email_address, with: ->(e) { e.strip.downcase }
@@ -102,6 +103,7 @@ class User < ApplicationRecord
       self.utm = guest.utm if utm.blank?
       self.referrer_id ||= guest.referrer_id
       guest.author_blocks.where.not(author_id: author_blocks.select(:author_id)).update_all(user_id: id)
+      guest.translation_requests.where.not(episode_id: translation_requests.select(:episode_id)).update_all(user_id: id)
       guest.reports.where.not(episode_id: reports.select(:episode_id)).update_all(reporter_id: id)
       save!
       guest.reload.destroy!

@@ -26,6 +26,7 @@
   </div>
 </div>
 
+<%= render "admin/episodes/translations", episode: @episode %>
 <%= render "pipeline", episode: @episode, pipeline: @pipeline %>
 <% unresolved = @pipeline.unresolved_bubbles %>
 <% failed_panels = @pipeline.failed_panels %>

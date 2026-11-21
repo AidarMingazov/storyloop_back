@@ -11,6 +11,8 @@ class Episode < ApplicationRecord
   has_many :reading_progresses, dependent: :destroy
   has_many :generation_logs, dependent: :nullify
   has_many :reports, dependent: :delete_all
+  has_many :translation_requests, dependent: :delete_all
+  has_many :translations, class_name: "Episode", foreign_key: :origin_episode_id, inverse_of: :origin_episode, dependent: :nullify
 
   enum :format, FORMATS.index_by(&:itself), validate: true, prefix: :format
   # failed — a user story whose generation did not finish (wave 7).
