@@ -2,7 +2,8 @@ import { h } from "reader/dom"
 
 // End-of-episode screen: the episode's target words (savable right here), counts and next steps.
 export function renderSummary(container, { t, words, saved, savedInEpisode, lang, reviewUrl, libraryUrl, next, signupUrl }) {
-  container.replaceChildren(
+  // replaceChildren prints null as the text "null", so optional blocks are filtered out (h() skips them itself).
+  container.replaceChildren(...[
     h("h2", { class: "summary-title" }, t.summary_title),
     h("div", { class: "summary-stats" },
       h("p", { class: "summary-stat" }, h("b", { "data-summary-new": "" }, String(words.length)), h("span", {}, t.new_words)),
@@ -17,7 +18,7 @@ export function renderSummary(container, { t, words, saved, savedInEpisode, lang
       next ? h("a", { class: "reader-btn", href: next.url }, next.locked ? `🔒 ${t.next_locked}` : `${t.next_episode} →`) : null,
       h("a", { class: "reader-btn reader-btn--ghost", href: reviewUrl }, t.review_words),
       h("a", { class: "reader-btn reader-btn--ghost", href: libraryUrl }, t.back_to_library))
-  )
+  ].filter(Boolean))
 }
 
 export function updateSummary(container, { saved, savedInEpisode, t }) {

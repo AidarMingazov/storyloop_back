@@ -73,6 +73,23 @@ class ReaderTest < ApplicationSystemTestCase
     assert_no_button "Next ↓"
   end
 
+  test "a registered reader's summary has no signup block and no stray text" do
+    episode = import("reader_webtoon.json")
+    visit new_session_path
+    fill_in "email_address", with: users(:one).email_address # the browser asks for English before sign-in
+    fill_in "password", with: "password"
+    find("form input[type=submit]").click
+    assert_no_current_path new_session_path
+
+    visit episode_path(episode)
+    execute_script "window.scrollTo(0, document.body.scrollHeight)"
+    within ".reader-summary" do
+      assert_selector "[data-summary-new]", text: "2"
+      assert_no_selector "[data-summary-signup]"
+      assert_no_text "null"
+    end
+  end
+
   test "progress is restored when coming back to a chat" do
     episode = import("reader_chat.json")
     visit episode_path(episode)
