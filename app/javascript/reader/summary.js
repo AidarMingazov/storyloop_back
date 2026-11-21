@@ -1,4 +1,5 @@
 import { h } from "reader/dom"
+import { icon, setIcon } from "reader/icons"
 
 // End-of-episode screen: the episode's target words (savable right here), counts and next steps.
 export function renderSummary(container, { t, words, saved, savedInEpisode, lang, reviewUrl, libraryUrl, next, signupUrl }) {
@@ -15,7 +16,8 @@ export function renderSummary(container, { t, words, saved, savedInEpisode, lang
       h("a", { class: "reader-btn mt-3 w-full", href: signupUrl }, t.signup_cta)) : null,
     words.length ? h("div", { class: "summary-words" }, words.map((word) => wordRow(word, saved.has(word.lexeme.id), t, lang))) : null,
     h("div", { class: "summary-actions" },
-      next ? h("a", { class: "reader-btn", href: next.url }, next.locked ? `🔒 ${t.next_locked}` : `${t.next_episode} →`) : null,
+      next ? h("a", { class: "reader-btn", href: next.url },
+        next.locked ? [ icon("lock"), t.next_locked ] : [ t.next_episode, icon("arrow-right") ]) : null,
       h("a", { class: "reader-btn reader-btn--ghost", href: reviewUrl }, t.review_words),
       h("a", { class: "reader-btn reader-btn--ghost", href: libraryUrl }, t.back_to_library))
   ].filter(Boolean))
@@ -28,7 +30,7 @@ export function updateSummary(container, { saved, savedInEpisode, t }) {
     const isSaved = saved.has(Number(row.dataset.summaryLexeme))
     row.classList.toggle("is-saved", isSaved)
     const button = row.querySelector("button")
-    button.textContent = isSaved ? "✓" : "+"
+    setIcon(button.querySelector("svg"), isSaved ? "bookmark-fill" : "bookmark")
     button.setAttribute("aria-pressed", String(isSaved))
     button.setAttribute("aria-label", isSaved ? t.saved : t.save_word)
   }
@@ -42,5 +44,5 @@ function wordRow({ lexeme, token }, isSaved, t, lang) {
     h("button", { type: "button", class: "reader-btn reader-btn--ghost reader-btn--icon", "aria-pressed": String(isSaved),
                   "aria-label": isSaved ? t.saved : t.save_word,
                   "data-action": "reader#saveFromSummary", "data-lexeme-id": lexeme.id, "data-token-id": token.id },
-      isSaved ? "✓" : "+"))
+      icon(isSaved ? "bookmark-fill" : "bookmark")))
 }

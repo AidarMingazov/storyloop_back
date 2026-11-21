@@ -10,8 +10,9 @@ import { renderSummary, updateSummary } from "reader/summary"
 import { speak, stopSpeaking } from "reader/speech"
 import { request } from "reader/api"
 import { readPref, writePref, readChoice, writeChoice } from "reader/prefs"
+import { icon } from "reader/icons"
 
-const THEME_COLORS = { light: "#fbf9f3", night: "#0e0e12" }
+const THEME_COLORS = { light: "#fbf9f4", night: "#0e0f13" }
 
 // The reader renders the whole interactive layer from the episode JSON embedded in the page
 // (the same shape API v1 will serve). Tapping a word opens the sheet instantly; only saving
@@ -169,7 +170,7 @@ export default class extends Controller {
     this.items = renderChat(this.stageTarget, this.episode, this.t)
     this.total = this.items.length
     this.nextBar = h("div", { class: "chat-next-bar" },
-      h("button", { type: "button", class: "reader-btn", "data-action": "reader#revealNext" }, `${this.t.next_message} ↓`))
+      h("button", { type: "button", class: "reader-btn", "data-action": "reader#revealNext" }, this.t.next_message, icon("arrow-down")))
     this.element.append(this.nextBar)
 
     this.revealed = this.completed ? this.total : Math.min(this.total, Math.max(1, this.furthest + 1))
@@ -226,6 +227,7 @@ export default class extends Controller {
 
   documentClick(event) {
     if (!this.sheet.isOpen) return
+    if (!event.target.isConnected) return // re-rendered by our own click handler, so it was inside
     if (this.sheetTarget.contains(event.target)) return
     this.sheet.close()
   }

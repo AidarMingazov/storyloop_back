@@ -1,5 +1,6 @@
 import { h } from "reader/dom"
 import { canSpeak } from "reader/speech"
+import { icon, setIcon } from "reader/icons"
 
 // Bottom sheet with the tapped word (or a whole phrase). Content is rebuilt on every open;
 // all data comes from the episode JSON, so it opens without a server round trip.
@@ -42,7 +43,7 @@ export class WordSheet {
       h("div", { class: "sheet-actions" },
         this.speakButton(),
         h("button", { type: "button", class: "reader-btn", "data-sheet-action": "save", "aria-pressed": String(saved) },
-          saved ? `✓ ${t.saved}` : t.save_word)),
+          saveLabel(saved, t))),
       h("p", { class: "sheet-note", "data-sheet-error": "", role: "alert", hidden: true })
     )
     this.open()
@@ -61,7 +62,8 @@ export class WordSheet {
   setSaved(saved) {
     const button = this.element.querySelector("[data-sheet-action=save]")
     if (!button) return
-    button.textContent = saved ? `✓ ${this.t.saved}` : this.t.save_word
+    setIcon(button.querySelector("svg"), saved ? "bookmark-fill" : "bookmark")
+    button.lastChild.textContent = saved ? this.t.saved : this.t.save_word
     button.setAttribute("aria-pressed", String(saved))
   }
 
@@ -91,7 +93,7 @@ export class WordSheet {
     this.element.replaceChildren(
       h("div", { class: "sheet-grab", "aria-hidden": "true" }),
       h("button", { type: "button", class: "reader-icon-btn sheet-close", "data-sheet-action": "close",
-                    "aria-label": this.t.close }, "✕"),
+                    "aria-label": this.t.close }, icon("close")),
       ...children.filter(Boolean)
     )
     this.element.scrollTop = 0
@@ -100,7 +102,7 @@ export class WordSheet {
   speakButton() {
     if (!canSpeak()) return null
     return h("button", { type: "button", class: "reader-btn reader-btn--ghost reader-btn--icon",
-                         "data-sheet-action": "speak", "aria-label": this.t.listen, title: this.t.listen }, "🔊")
+                         "data-sheet-action": "speak", "aria-label": this.t.listen, title: this.t.listen }, icon("sound"))
   }
 
   click(event) {
@@ -110,3 +112,6 @@ export class WordSheet {
     if (action === "close") this.close()
   }
 }
+
+// Icon and text as separate nodes, so setSaved can update both in place.
+const saveLabel = (saved, t) => [ icon(saved ? "bookmark-fill" : "bookmark"), document.createTextNode(saved ? t.saved : t.save_word) ]

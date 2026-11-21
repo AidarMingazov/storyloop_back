@@ -1,5 +1,6 @@
 <% content_for :title, "#{@episode.title} · #{@episode.series.title}" %>
 <% pair = @episode.series.language_pair %>
+<% use_fonts_for pair.target_lang %>
 <%= render "episodes/og", episode: @episode %>
 <div class="reader" data-format="<%= @episode.format %>" data-controller="reader"
      data-reader-i18n-value="<%= t("reader.js").to_json %>"

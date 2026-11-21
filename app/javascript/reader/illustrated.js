@@ -1,6 +1,7 @@
 import { h } from "reader/dom"
 import { tokenizedText } from "reader/text"
 import { panelImage } from "reader/media"
+import { icon } from "reader/icons"
 
 // A short illustrated book: each panel is a section with an optional picture and paragraphs.
 // Narration is a paragraph, dialogue lines carry the speaker's name.
@@ -19,9 +20,9 @@ export function renderIllustrated(stage, episode, t) {
         bubble.kind !== "narration" && speaker ? h("span", { class: "ill-speaker" }, speaker.name) : null,
         tokenizedText(bubble, { tag: "span", className: "story-text" }),
         bubble.audio_url ? h("button", { type: "button", class: "ill-action", "data-speak-bubble": bubble.id,
-                                         "aria-label": t.listen, title: t.listen }, "🔊") : null,
+                                         "aria-label": t.listen, title: t.listen }, icon("sound")) : null,
         h("button", { type: "button", class: "ill-action", "data-translate-bubble": bubble.id,
-                      "aria-label": t.translate_phrase, title: t.translate_phrase }, "⇄"))
+                      "aria-label": t.translate_phrase, title: t.translate_phrase }, icon("translate")))
       section.append(paragraph)
     }
     article.append(section)

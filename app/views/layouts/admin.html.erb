@@ -6,6 +6,7 @@
   </head>
 
   <body class="min-h-dvh">
+    <%= render "shared/icons" %>
     <header class="sticky top-0 z-10 border-b border-edge bg-paper/95 backdrop-blur">
       <nav class="mx-auto flex max-w-6xl flex-wrap items-center gap-x-5 gap-y-2 px-4 py-3 text-sm">
         <%= link_to "Storyloop", admin_root_path, class: "font-serif text-lg font-semibold text-ink-strong" %>
@@ -15,6 +16,7 @@
         <%= link_to "Импорт JSON", new_admin_import_path, class: "hover:text-ink-strong" %>
         <%= link_to "Истории пользователей", admin_stories_path, class: "hover:text-ink-strong" %>
         <%= link_to "Жалобы", admin_reports_path, class: "hover:text-ink-strong" %>
+        <%= link_to "Дизайн-система", admin_styleguide_path, class: "hover:text-ink-strong" %>
         <span class="ml-auto text-muted"><%= Current.user.email_address %></span>
         <%= button_to "Выйти", session_path, method: :delete, class: "text-muted hover:text-ink-strong" %>
       </nav>

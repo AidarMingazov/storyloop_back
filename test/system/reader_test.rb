@@ -15,7 +15,8 @@ class ReaderTest < ApplicationSystemTestCase
       assert_text "случайно встретила"
       assert_text "Неожиданная встреча со знакомым."
       click_on "Сохранить слово"
-      assert_button "✓ Сохранено"
+      assert_button "Сохранено"
+      assert_selector "[data-sheet-action=save] use[href='#i-bookmark-fill']", visible: :all
     end
     assert_selector ".tok.is-saved", text: "ran into"
     assert_equal [ "run into" ], User.last.saved_lexemes.pluck(:lemma)
@@ -49,7 +50,7 @@ class ReaderTest < ApplicationSystemTestCase
 
     assert_selector ".chat-msg", count: 1
     assert_selector ".chat-msg--them", text: "지수 씨, 안녕하세요!"
-    click_on "Next ↓"
+    click_on "Next"
     assert_selector ".chat-msg--me", text: "오늘 너무 피곤해요!"
 
     find(".tok", text: "피곤해요").click
@@ -68,9 +69,9 @@ class ReaderTest < ApplicationSystemTestCase
     check "Night mode"
     assert_selector "html[data-theme=night]"
 
-    click_on "Next ↓"
+    click_on "Next"
     assert_text "Episode complete"
-    assert_no_button "Next ↓"
+    assert_no_button "Next"
   end
 
   test "a registered reader's summary has no signup block and no stray text" do
@@ -93,7 +94,7 @@ class ReaderTest < ApplicationSystemTestCase
   test "progress is restored when coming back to a chat" do
     episode = import("reader_chat.json")
     visit episode_path(episode)
-    click_on "Next ↓"
+    click_on "Next"
     assert_selector ".chat-msg", count: 2
 
     visit root_path # leaving the page flushes progress

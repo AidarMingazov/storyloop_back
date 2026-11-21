@@ -11,3 +11,4 @@ en:
     panel_progress: "%{done} of %{total}"
     my_words: My words
     completed: read
+    locked: Subscribers only

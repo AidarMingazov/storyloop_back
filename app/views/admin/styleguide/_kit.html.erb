@@ -1,0 +1,154 @@
+<%# One theme's worth of the design system; show.html.erb renders it twice (Paper, Midnight). %>
+<% heading = ->(text) { tag.h2(text, class: "mt-10 mb-3 border-t border-line pt-5 text-xs font-semibold uppercase tracking-[.1em] text-fg-2 first:mt-2 first:border-0 first:pt-0") } %>
+
+<div class="grid">
+  <%= heading.("Цвета") %>
+  <div class="grid grid-cols-3 gap-3 sm:grid-cols-4" data-section="colors">
+    <% %w[bg bg-2 surface raised chip fg-strong fg fg-2 line line-2 accent accent-soft marker hl-saved success error].each do |token| %>
+      <div class="min-w-0">
+        <div class="h-11 rounded-lg border border-line-2" style="background: var(--color-<%= token %>)"></div>
+        <code class="mt-1 block truncate text-[11.5px] text-fg-2"><%= token %></code>
+      </div>
+    <% end %>
+  </div>
+
+  <%= heading.("Шрифты") %>
+  <div class="grid gap-4" data-section="type">
+    <p class="font-serif text-[40px] leading-[1.1] font-semibold tracking-tight text-fg-strong">Two Cups</p>
+    <p class="font-serif text-[28px] leading-tight font-semibold text-fg-strong">Corner Café</p>
+    <p class="font-serif text-xl font-semibold text-fg-strong">Words in this scene</p>
+    <p class="max-w-[36em] font-serif text-[19px] leading-[1.6] text-fg-strong">Mila writes a name on each cup and wonders who the second one is for.</p>
+    <p class="text-[15px] font-medium text-fg">Save word · Play line <span class="text-fg-2">— Inter 15/20</span></p>
+    <p class="text-[13px] text-fg-2">Scene 3 of 6 · 8 lines left — caption 13/18</p>
+    <p class="text-[11px] font-semibold uppercase tracking-[.1em] text-fg-2">In this sentence — label</p>
+  </div>
+
+  <%= heading.("Письменности") %>
+  <div class="grid gap-3 sm:grid-cols-2" data-section="scripts">
+    <% [
+         [ "ko", "Noto Sans KR · keep-all", "<ruby>오늘은<rt>oneureun</rt></ruby> <ruby>두<rt>du</rt></ruby> <ruby>잔<rt>jan</rt></ruby> <ruby>주세요<rt>juseyo</rt></ruby>." ],
+         [ "ja", "Noto Sans JP · line-break: strict", "<ruby>今日<rt>きょう</rt></ruby>は<ruby>二杯<rt>にはい</rt></ruby>ください。" ],
+         [ "zh-Hans", "Noto Sans SC · pinyin", "<ruby>今天<rt>jīntiān</rt></ruby><ruby>要<rt>yào</rt></ruby><ruby>两<rt>liǎng</rt></ruby><ruby>杯<rt>bēi</rt></ruby>。" ],
+         [ "en", "Source Serif 4", "Two cups today, please." ]
+       ].each do |lang, note, sample| %>
+      <div class="rounded-2xl border border-line bg-surface p-4">
+        <p class="script text-[22px] leading-[1.9] text-fg-strong <%= "font-serif" if lang == "en" %>" lang="<%= lang %>"><%= sample.html_safe %></p>
+        <p class="mt-1 text-xs text-fg-2"><%= note %></p>
+      </div>
+    <% end %>
+  </div>
+
+  <%= heading.("Кнопки") %>
+  <div class="flex flex-wrap items-center gap-2" data-section="buttons">
+    <button type="button" class="btn-primary">Primary</button>
+    <button type="button" class="btn-accent"><%= icon(:play) %>Start reading</button>
+    <button type="button" class="btn-secondary">Secondary</button>
+    <button type="button" class="btn-ghost">Ghost</button>
+    <button type="button" class="btn-saved"><%= icon(:bookmark_fill) %>Saved</button>
+    <button type="button" class="btn-danger">Delete</button>
+  </div>
+  <div class="mt-3 flex flex-wrap items-center gap-2">
+    <button type="button" class="btn-accent btn-lg">Large</button>
+    <button type="button" class="btn-secondary btn-sm">Small</button>
+    <button type="button" class="btn-accent" disabled>Disabled</button>
+    <button type="button" class="btn-icon" aria-label="Back"><%= icon(:back) %></button>
+    <button type="button" class="btn-icon-soft" aria-label="Listen"><%= icon(:sound) %></button>
+    <button type="button" class="btn-icon btn-sm" aria-label="Close"><%= icon(:close) %></button>
+  </div>
+
+  <%= heading.("Иконки") %>
+  <div class="grid grid-cols-4 gap-2 sm:grid-cols-6" data-section="icons">
+    <% DesignHelper::ICONS.each do |name| %>
+      <div class="grid justify-items-center gap-1 rounded-xl bg-bg-2 px-1 py-3 text-fg-strong" data-icon="<%= name %>">
+        <%= icon(name, class: "size-6") %>
+        <code class="max-w-full truncate text-[10.5px] text-fg-2"><%= name %></code>
+      </div>
+    <% end %>
+  </div>
+
+  <%= heading.("Чипы и теги") %>
+  <div class="flex flex-wrap items-center gap-2" data-section="chips">
+    <button type="button" class="chip" aria-pressed="true">Slice of life</button>
+    <button type="button" class="chip" aria-pressed="false">Romance</button>
+    <button type="button" class="chip" aria-pressed="false">Mystery</button>
+    <button type="button" class="chip" aria-pressed="false">Japanese <span class="chip-note">soon</span></button>
+  </div>
+  <div class="mt-3 flex flex-wrap items-center gap-2">
+    <span class="tag">verb</span><span class="tag">A2</span><span class="tag">polite</span>
+    <span class="badge-published">published</span><span class="badge-review">review</span><span class="badge-draft">draft</span>
+  </div>
+
+  <%= heading.("Переключатели") %>
+  <div class="grid gap-3" data-section="controls">
+    <div class="seg" role="group" aria-label="Reading mode">
+      <button type="button" aria-pressed="true">Read</button><button type="button" aria-pressed="false">Motion</button><button type="button" aria-pressed="false">Practice</button>
+    </div>
+    <div class="seg" role="group" aria-label="Level">
+      <button type="button" aria-pressed="false">A1</button><button type="button" aria-pressed="true">A2</button><button type="button" aria-pressed="false">B1</button>
+    </div>
+    <div class="max-w-sm">
+      <button type="button" class="switch" role="switch" aria-checked="true"><span>Romanization above words</span><i class="switch-knob"></i></button>
+      <button type="button" class="switch" role="switch" aria-checked="false"><span>Translation under every bubble</span><i class="switch-knob"></i></button>
+    </div>
+    <div class="progress max-w-sm" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"><i style="width: 40%"></i></div>
+  </div>
+
+  <%= heading.("Слово") %>
+  <div class="grid gap-3" data-section="words">
+    <p class="bubble script w-fit text-[19px]" lang="ko">
+      <span>오늘은</span> <span class="word-saved">두</span> <span class="word-open">잔</span> <span class="word-speaking">주세요</span>
+    </p>
+    <p class="script text-[19px] text-fg-strong" lang="ko">
+      <span>오늘은</span> <span class="word-saved">두</span> <span class="word-open">잔</span> <span class="word-speaking">주세요</span>
+    </p>
+    <p class="text-xs text-fg-2">обычное · сохранённое · открыто в карточке · звучит. Пузырь всегда бумажный.</p>
+  </div>
+
+  <%= heading.("Шторка и поповер") %>
+  <div class="grid gap-4" data-section="overlays">
+    <div class="sheet is-open" style="position: relative; z-index: 0; transform: none; max-height: none; padding-bottom: 1.5rem">
+      <i class="sheet-handle"></i>
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <p class="script text-[30px] leading-tight font-bold text-fg-strong" lang="ko">왔네요</p>
+          <p class="text-sm text-fg-2">wanneyo</p>
+        </div>
+        <button type="button" class="btn-icon-soft" aria-label="Listen"><%= icon(:sound) %></button>
+      </div>
+      <div class="mt-3 flex gap-1.5"><span class="tag">verb</span><span class="tag">A2</span><span class="tag">polite</span></div>
+      <p class="mt-3 text-xl font-semibold text-fg-strong">you came (I see!)</p>
+      <div class="mt-4 flex gap-2">
+        <button type="button" class="btn-accent flex-1"><%= icon(:bookmark) %>Save word</button>
+        <button type="button" class="btn-secondary"><%= icon(:play) %>Play line</button>
+      </div>
+    </div>
+    <div class="pt-2">
+      <div class="popover" style="position: relative; --arrow-x: 56px">
+        <p class="script text-2xl font-bold text-fg-strong" lang="ko">여동생이에요</p>
+        <p class="mt-1 text-[17px] font-semibold text-fg-strong">is my younger sister</p>
+        <p class="mt-2 text-sm text-fg-2">여 means female: 여동생 is a younger sister.</p>
+        <p class="mt-3 flex items-center gap-1.5 text-xs text-fg-2"><span class="kbd">S</span>save <span class="kbd">L</span>listen <span class="kbd">Esc</span>close</p>
+      </div>
+    </div>
+  </div>
+
+  <%= heading.("Состояния") %>
+  <div class="grid gap-4" data-section="states">
+    <div><span class="toast" role="status"><%= icon(:check) %>Saved · 4 words in your vocabulary</span></div>
+    <div class="empty-state rounded-2xl border border-dashed border-line-2">
+      <%= icon(:bookmark) %>
+      <p class="empty-state-title">Nothing saved yet</p>
+      <p>Tap a word in the story, then Save.</p>
+    </div>
+    <div class="grid gap-2" aria-busy="true" aria-label="Loading">
+      <div class="skeleton aspect-[3/4] w-32"></div>
+      <div class="skeleton h-4 w-3/4"></div>
+      <div class="skeleton h-4 w-1/2"></div>
+    </div>
+    <div class="modal" style="margin: 0">
+      <p class="font-serif text-xl font-semibold text-fg-strong">Switch to the A1 edition?</p>
+      <p class="mt-2 text-sm text-fg-2">Same art, simpler lines. Your place in the episode is kept.</p>
+      <div class="mt-5 flex justify-end gap-2"><button type="button" class="btn-ghost">Cancel</button><button type="button" class="btn-accent">Switch</button></div>
+    </div>
+  </div>
+</div>

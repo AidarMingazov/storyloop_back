@@ -1,0 +1,1642 @@
+<title>Storyloop Reader Design</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@600&family=Noto+Sans+JP:wght@400;500&family=Noto+Sans+SC:wght@400;500&display=swap">
+<style>
+/* Layout: a working spec sheet. Prose column ~68ch, device frames break out to full width.
+   The product's own tokens (style A "paper + marker", evolved) drive both the page and the prototypes. */
+:root{
+  /* Paper — light */
+  --bg:#FBF9F4; --bg-2:#F2EEE5; --surface:#FFFFFF; --raised:#FFFFFF;
+  --fg:#2A2824; --fg-strong:#121110; --fg-2:#6B675F; --line:#E5E0D5; --line-2:#D4CEC1;
+  --accent:#5546D6; --on-accent:#FFFFFF; --accent-soft:#ECE9FD;
+  --marker:#F7E36B; --marker-ink:#1E1A05; --hl-saved:rgba(247,227,107,.85);
+  --success:#2E7D4F; --error:#C2412D;
+  --shadow:0 1px 2px rgba(40,32,16,.06),0 12px 32px -8px rgba(40,32,16,.18);
+  --scrim:rgba(251,249,244,.86);
+  /* constants: bubbles stay paper in every theme, hardware stays black */
+  --bubble:#FFFEFB; --bubble-ink:#171614; --bubble-2:#6A665D; --bubble-accent:#5546D6;
+  --bubble-marker:#F7E36B; --bubble-hl:rgba(247,227,107,.9); --knob:#FFFFFF;
+  --device:#141416; --island:#000000; --dot-r:#FF5F57; --dot-y:#FEBC2E; --dot-g:#28C840;
+  /* type */
+  --f-display:"Source Serif 4","Noto Serif KR",Georgia,serif;
+  --f-ui:"Inter","Noto Sans KR",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-ko:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --f-ko-serif:"Noto Serif KR","Source Serif 4",serif;
+  --f-ja:"Noto Sans JP","Hiragino Sans","Yu Gothic",sans-serif;
+  --f-zh:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+  --f-mono:ui-monospace,SFMono-Regular,Menlo,monospace;
+  /* motion */
+  --ease:cubic-bezier(.2,.8,.2,1); --d1:120ms; --d2:200ms; --d3:320ms;
+  color-scheme:light;
+}
+.rd[data-look="light"]{
+  --bg:#FBF9F4; --bg-2:#F2EEE5; --surface:#FFFFFF; --raised:#FFFFFF;
+  --fg:#2A2824; --fg-strong:#121110; --fg-2:#6B675F; --line:#E5E0D5; --line-2:#D4CEC1;
+  --accent:#5546D6; --on-accent:#FFFFFF; --accent-soft:#ECE9FD;
+  --marker:#F7E36B; --marker-ink:#1E1A05; --hl-saved:rgba(247,227,107,.85);
+  --success:#2E7D4F; --error:#C2412D;
+  --shadow:0 1px 2px rgba(40,32,16,.06),0 12px 32px -8px rgba(40,32,16,.18);
+  --scrim:rgba(251,249,244,.86);
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E0F13; --bg-2:#17181E; --surface:#1B1C23; --raised:#262731;
+    --fg:#DEDCD6; --fg-strong:#F6F4EF; --fg-2:#9A98A3; --line:#2A2B34; --line-2:#3A3B46;
+    --accent:#A499FF; --on-accent:#16123A; --accent-soft:rgba(164,153,255,.16);
+    --marker:#EBCB55; --marker-ink:#1A1503; --hl-saved:rgba(235,203,85,.36);
+    --success:#5DC38C; --error:#FF8270;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 16px 40px -8px rgba(0,0,0,.6);
+    --scrim:rgba(14,15,19,.82);
+    color-scheme:dark;
+  }
+}
+/* Midnight — explicit page choice, a reader set to Midnight, Motion mode and the lock-screen demo */
+:root[data-theme="dark"], .rd[data-look="dark"], .rd[data-mode="motion"], .lock{
+  --bg:#0E0F13; --bg-2:#17181E; --surface:#1B1C23; --raised:#262731;
+  --fg:#DEDCD6; --fg-strong:#F6F4EF; --fg-2:#9A98A3; --line:#2A2B34; --line-2:#3A3B46;
+  --accent:#A499FF; --on-accent:#16123A; --accent-soft:rgba(164,153,255,.16);
+  --marker:#EBCB55; --marker-ink:#1A1503; --hl-saved:rgba(235,203,85,.36);
+  --success:#5DC38C; --error:#FF8270;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 16px 40px -8px rgba(0,0,0,.6);
+  --scrim:rgba(14,15,19,.82);
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:16px/1.6 var(--f-ui);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+[lang="ko"]{word-break:keep-all}
+.wrap{max-width:1200px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+code{font:500 .86em/1 var(--f-mono);padding:.16em .38em;border-radius:5px;background:var(--bg-2);color:var(--fg-strong);white-space:nowrap}
+kbd{display:inline-block;min-width:22px;padding:3px 6px;border-radius:6px;border:1px solid var(--line-2);border-bottom-width:2px;font:600 11.5px/1.2 var(--f-ui);text-align:center;color:var(--fg-strong);background:var(--surface)}
+p{margin:0 0 12px}
+a{color:var(--accent)}
+
+/* page chrome */
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-block:18px;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.brand b{font:600 20px/1 var(--f-display);color:var(--fg-strong)}
+.brand span{font-size:13px;color:var(--fg-2)}
+.theme{display:inline-flex;padding:3px;border-radius:999px;background:var(--bg-2);gap:2px}
+.theme button{border:0;background:transparent;color:var(--fg-2);font:600 13px/1 var(--f-ui);padding:8px 12px;border-radius:999px;cursor:pointer}
+.theme button[aria-pressed="true"]{background:var(--raised);color:var(--fg-strong);box-shadow:0 1px 2px rgba(0,0,0,.1)}
+.eyebrow{display:block;font:600 12px/1 var(--f-ui);letter-spacing:.1em;text-transform:uppercase;color:var(--fg-2)}
+h1{font:600 clamp(38px,5.6vw,66px)/1.02 var(--f-display);letter-spacing:-.022em;color:var(--fg-strong);margin:14px 0 18px;text-wrap:balance}
+h2{font:600 clamp(28px,3.4vw,40px)/1.08 var(--f-display);letter-spacing:-.012em;color:var(--fg-strong);margin:12px 0 14px;text-wrap:balance}
+h3{font:600 21px/1.25 var(--f-display);color:var(--fg-strong);margin:0 0 6px;text-wrap:balance}
+.lead{font-size:clamp(17px,1.6vw,19.5px);line-height:1.55;max-width:56ch;color:var(--fg)}
+.prose{max-width:68ch}
+.muted{color:var(--fg-2)}
+.sec{padding-block:72px;border-bottom:1px solid var(--line)}
+.sec:last-of-type{border-bottom:0}
+
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,380px);gap:clamp(32px,6vw,88px);align-items:center;padding-block:48px 72px;border-bottom:1px solid var(--line)}
+.try{list-style:none;margin:22px 0 0;padding:0;display:grid;gap:10px;max-width:54ch;font-size:15.5px}
+.try li{position:relative;padding-left:22px}
+.try li::before{content:"";position:absolute;left:2px;top:.72em;width:10px;height:2px;border-radius:2px;background:var(--accent)}
+.note{font-size:14px;color:var(--fg-2);max-width:62ch;margin-top:22px;padding-top:16px;border-top:1px solid var(--line)}
+.cap{font-size:13px;color:var(--fg-2);text-align:center;margin:14px auto 0;max-width:36ch}
+
+/* ───────── device frames ───────── */
+.phone{position:relative;width:min(100%,380px);aspect-ratio:380/800;border-radius:54px;background:var(--device);box-shadow:0 0 0 1px rgba(255,255,255,.06) inset,0 40px 70px -30px rgba(0,0,0,.45);margin-inline:auto;flex-shrink:0}
+.phone > .rd{position:absolute;inset:9px;border-radius:45px}
+.desk-scale{position:relative;margin-top:28px;width:100%}
+.desk-win{position:absolute;left:0;top:0;width:1200px;height:780px;transform-origin:0 0;border-radius:14px;overflow:hidden;border:1px solid var(--line-2);box-shadow:var(--shadow);background:var(--bg)}
+.desk-bar{height:38px;display:flex;align-items:center;gap:8px;padding:0 14px;background:var(--bg-2);border-bottom:1px solid var(--line)}
+.desk-bar i{width:11px;height:11px;border-radius:50%}
+.desk-bar i:nth-child(1){background:var(--dot-r)} .desk-bar i:nth-child(2){background:var(--dot-y)} .desk-bar i:nth-child(3){background:var(--dot-g)}
+.desk-url{margin-left:18px;flex:0 1 460px;height:24px;border-radius:7px;background:var(--surface);border:1px solid var(--line);font:500 12px/22px var(--f-ui);color:var(--fg-2);padding:0 10px;white-space:nowrap;overflow:hidden}
+.desk-win > .rd{position:absolute;inset:38px 0 0 0;border-radius:0}
+
+/* ───────── reader ───────── */
+.rd{position:relative;overflow:hidden;background:var(--bg);color:var(--fg);font-family:var(--f-ui);isolation:isolate;-webkit-user-select:none;user-select:none;--rd-size:1}
+.rd:focus-visible{outline-offset:-2px}
+.rd button{font-family:inherit}
+.rd-status{position:absolute;inset:0 0 auto;height:46px;z-index:8;display:flex;align-items:center;justify-content:space-between;padding:6px 26px 0 32px;font:600 15px/1 var(--f-ui);color:var(--fg-strong);background:var(--bg)}
+.rd-island{position:absolute;left:50%;top:10px;width:108px;height:31px;border-radius:20px;background:var(--island);transform:translateX(-50%)}
+.rd-sys{display:flex;gap:5px;align-items:center}
+.rd[data-mode="motion"] .rd-status{background:transparent}
+
+.rd-head{position:absolute;left:0;right:0;top:46px;z-index:7;height:50px;display:grid;grid-template-columns:40px minmax(0,1fr) auto;align-items:center;gap:6px;padding:0 10px 0 6px;background:var(--scrim);-webkit-backdrop-filter:saturate(1.4) blur(14px);backdrop-filter:saturate(1.4) blur(14px);transition:transform var(--d3) var(--ease),opacity var(--d3)}
+.rd.chrome-off .rd-head{transform:translateY(-100%);opacity:0;pointer-events:none}
+.rd[data-mode="motion"] .rd-head{background:transparent;-webkit-backdrop-filter:none;backdrop-filter:none}
+.rd-prog{position:absolute;left:0;bottom:0;height:2px;width:0;background:var(--accent);transition:width .25s linear}
+.rd[data-mode="motion"] .rd-prog{display:none}
+.head-right{display:flex;align-items:center;gap:6px;justify-self:end}
+.head-left{display:flex;align-items:center;gap:4px;min-width:0}
+.head-title{display:grid;line-height:1.25;min-width:0}
+.head-title b{font:600 14px var(--f-ui);color:var(--fg-strong)}
+.head-title span{font-size:12px;color:var(--fg-2);white-space:nowrap}
+
+.seg{display:inline-flex;justify-self:center;padding:3px;border-radius:999px;background:var(--bg-2);gap:2px}
+.seg button{border:0;background:transparent;color:var(--fg-2);font:600 12.5px/1 var(--f-ui);padding:8px 11px;border-radius:999px;cursor:pointer;transition:background var(--d1),color var(--d1)}
+.seg button[aria-pressed="true"]{background:var(--raised);color:var(--fg-strong);box-shadow:0 1px 2px rgba(0,0,0,.12)}
+.rd[data-mode="motion"] .seg{background:rgba(255,255,255,.1)}
+.pill{display:inline-flex;align-items:center;gap:4px;height:32px;padding:0 8px 0 11px;border-radius:999px;border:1px solid var(--line-2);background:transparent;color:var(--fg-strong);font:600 12px/1 var(--f-ui);letter-spacing:.02em;cursor:pointer}
+.pill svg{width:14px;height:14px;opacity:.7}
+
+.ib{width:40px;height:40px;display:inline-grid;place-items:center;border:0;border-radius:999px;background:transparent;color:var(--fg-strong);cursor:pointer;flex-shrink:0;padding:0;transition:background var(--d1)}
+.ib:hover{background:var(--bg-2)}
+.ib:disabled{opacity:.3;cursor:default;background:transparent}
+.ib--sm{width:34px;height:34px}
+.ib--soft{background:var(--bg-2)}
+.ib svg{width:20px;height:20px}
+.ib[aria-pressed="false"]{opacity:.45}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:44px;padding:0 18px;border-radius:999px;border:0;font:600 15px/1 var(--f-ui);cursor:pointer;transition:background var(--d1),transform var(--d1),color var(--d1);white-space:nowrap}
+.btn:active{transform:scale(.98)}
+.btn svg{width:18px;height:18px}
+.btn-accent{background:var(--accent);color:var(--on-accent)}
+.btn-ghost{background:var(--bg-2);color:var(--fg-strong)}
+.btn-saved{background:var(--marker);color:var(--marker-ink)}
+.btn-block{width:100%}
+
+.rd-main{position:absolute;inset:0}
+.rd-scroll{position:absolute;inset:0;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:none;padding:96px 0 124px}
+.rd-scroll::-webkit-scrollbar{display:none}
+.rd-col{position:relative}
+
+/* episode card */
+.ep{padding:22px 22px 26px}
+.ep-k{display:block;margin:0;font:600 11px/1.3 var(--f-ui);letter-spacing:.1em;text-transform:uppercase;color:var(--fg-2)}
+.ep-t{margin:10px 0 0;font:600 42px/1.05 var(--f-ko-serif);color:var(--fg-strong);letter-spacing:-.01em}
+.ep-s{margin:4px 0 0;font:italic 400 22px/1.2 var(--f-display);color:var(--fg-2)}
+.ep-m{margin:14px 0 0;font-size:13px;color:var(--fg-2);font-variant-numeric:tabular-nums}
+.ep-end{padding:36px 22px 8px;display:grid;gap:12px}
+.ep-end-t{margin:0;font:600 24px/1.25 var(--f-display);color:var(--fg-strong);text-wrap:balance}
+.ep-end-a{display:grid;gap:8px;margin-top:6px}
+
+/* panels + bubbles */
+.pnl{position:relative;margin:0 0 6px;aspect-ratio:900/1211;container-type:inline-size;background:var(--bg-2);overflow:hidden}
+.pnl img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.bb{position:absolute;background:var(--bubble);color:var(--bubble-ink);font:400 calc(clamp(12.5px,4.1cqw,19px)*var(--rd-size))/1.45 var(--f-ko);padding:.5em .8em .55em;border-radius:1.15em;box-shadow:0 1px 1px rgba(20,16,8,.10),0 8px 20px -8px rgba(20,16,8,.35);cursor:pointer;word-break:keep-all;transition:box-shadow var(--d2);
+  --hl-saved:var(--bubble-hl); --k:var(--bubble-accent); --marker:var(--bubble-marker); --w-hover:rgba(85,70,214,.10)}
+.bb--narration{border-radius:.3em;font-size:calc(clamp(12px,3.8cqw,18px)*var(--rd-size))}
+.bb--thought{border-radius:1.7em;outline:1.5px dashed rgba(23,22,20,.32);outline-offset:-5px;padding-inline:1em}
+.bb.is-speaking{box-shadow:0 0 0 2.5px var(--bubble-accent),0 8px 22px -8px rgba(20,16,8,.45)}
+.bb-tr{display:none;gap:.45em;align-items:flex-start;margin-top:.45em;padding-top:.45em;border-top:1px solid rgba(23,22,20,.12);font:500 .8em/1.4 var(--f-ui);color:var(--bubble-2)}
+.bb.show-tr .bb-tr, .rd.tr-all .bb .bb-tr{display:flex}
+.bb-play{flex-shrink:0;width:1.7em;height:1.7em;margin-top:-.15em;border:0;border-radius:999px;display:grid;place-items:center;background:var(--bubble-accent);color:#FFFFFF;cursor:pointer;padding:0}
+.bb-play svg{width:.85em;height:.85em}
+.bb--static{position:relative;display:inline-block;font-size:21px;cursor:default}
+
+/* words */
+.w{border-radius:.22em;cursor:pointer;transition:background-color var(--d1),color var(--d1),box-shadow var(--d1);-webkit-box-decoration-break:clone;box-decoration-break:clone;--w-hover:color-mix(in srgb,var(--accent) 14%,transparent)}
+.bb .w{--w-hover:rgba(85,70,214,.10)}
+.w:hover{background-color:var(--w-hover)}
+.w.saved{background-image:linear-gradient(transparent 58%,var(--hl-saved) 58%)}
+.w.is-active, .w.is-active:hover{background:var(--marker);color:var(--marker-ink);box-shadow:0 0 0 .14em var(--marker)}
+.w.k-on{text-decoration:underline 2px var(--k,var(--accent));text-underline-offset:.26em}
+.w:focus-visible{outline:2px solid var(--k,var(--accent));outline-offset:1px}
+.wr{display:none}
+.rd.roman .bb .w{display:inline-flex;flex-direction:column;align-items:center;vertical-align:top;line-height:1.25}
+.rd.roman .bb .wr{display:block;font:500 .52em/1.15 var(--f-ui);color:var(--bubble-2);letter-spacing:.01em}
+.rd.roman .mo-ko .w{display:inline-flex;flex-direction:column;align-items:center;vertical-align:top;line-height:1.3}
+.rd.roman .mo-ko .wr{display:block;font:500 .5em/1.2 var(--f-ui);color:var(--fg-2)}
+
+/* player */
+.rd-player{position:absolute;left:10px;right:10px;bottom:26px;z-index:6;display:grid;grid-template-columns:36px minmax(0,1fr) auto;align-items:center;gap:10px;padding:8px 6px 11px 10px;border-radius:20px;background:color-mix(in srgb,var(--raised) 90%,transparent);-webkit-backdrop-filter:blur(18px) saturate(1.4);backdrop-filter:blur(18px) saturate(1.4);border:1px solid var(--line);box-shadow:var(--shadow)}
+.rd:not([data-mode="read"]) .rd-player{display:none}
+.pl-av{width:36px;height:36px;border-radius:999px;object-fit:cover;display:block;background:var(--bg-2)}
+.pl-meta{min-width:0}
+.pl-who{margin:0;font:600 10.5px/1.2 var(--f-ui);letter-spacing:.08em;text-transform:uppercase;color:var(--fg-2)}
+.pl-txt{margin:3px 0 0;font:500 14px/1.3 var(--f-ko);color:var(--fg-strong);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pl-ctl{display:flex;align-items:center;gap:1px}
+.pl-play{width:40px;height:40px;border-radius:999px;border:0;display:grid;place-items:center;background:var(--accent);color:var(--on-accent);cursor:pointer;padding:0;transition:transform var(--d1)}
+.pl-play:active{transform:scale(.94)}
+.pl-play svg{width:18px;height:18px}
+.pl-speed{min-width:38px;height:32px;border:0;background:transparent;color:var(--fg-strong);font:600 13px/32px var(--f-ui);font-variant-numeric:tabular-nums;cursor:pointer;border-radius:8px;text-align:center}
+.pl-bar{position:absolute;left:18px;right:18px;bottom:4px;height:2px;border-radius:2px;background:var(--line);overflow:hidden}
+.pl-bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .4s var(--ease)}
+.pl-menu{position:absolute;right:6px;bottom:calc(100% + 8px);display:flex;gap:2px;padding:4px;border-radius:12px;background:var(--raised);border:1px solid var(--line);box-shadow:var(--shadow)}
+.pl-mi{padding:7px 9px;border-radius:8px;font:600 13px/1 var(--f-ui);color:var(--fg);font-variant-numeric:tabular-nums}
+.pl-mi.on{background:var(--accent-soft);color:var(--accent)}
+.rd-player.is-demo{position:relative;left:auto;right:auto;bottom:auto;max-width:400px}
+.rd-follow{position:absolute;left:50%;bottom:104px;z-index:6;transform:translateX(-50%);height:34px;padding:0 14px;border-radius:999px;border:0;background:var(--accent);color:var(--on-accent);font:600 13px var(--f-ui);box-shadow:var(--shadow);cursor:pointer;white-space:nowrap}
+
+/* sheet + popover + word card */
+.rd-sheet{position:absolute;left:0;right:0;bottom:0;z-index:9;max-height:66%;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:none;background:var(--raised);color:var(--fg);border-radius:24px 24px 0 0;box-shadow:0 -12px 40px rgba(0,0,0,.2);padding:8px 20px 34px;transform:translateY(104%);transition:transform var(--d3) var(--ease);-webkit-user-select:text;user-select:text}
+.rd-sheet.open{transform:none}
+.grab{display:block;width:36px;height:4px;border-radius:4px;background:var(--fg-2);opacity:.35;margin:0 auto 14px}
+.rd-pop{position:absolute;z-index:5;left:0;top:0;width:320px;background:var(--raised);color:var(--fg);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:14px 16px 16px;opacity:0;transform:translateY(-4px) scale(.98);transform-origin:var(--ax,50%) 0;transition:opacity var(--d2),transform var(--d2) var(--ease);pointer-events:none;visibility:hidden;-webkit-user-select:text;user-select:text}
+.rd-pop.open{opacity:1;transform:none;pointer-events:auto;visibility:visible}
+.rd-pop.above{transform-origin:var(--ax,50%) 100%}
+.rd-pop::before{content:"";position:absolute;top:-7px;left:calc(var(--ax,50%) - 6px);width:12px;height:12px;background:var(--raised);border-left:1px solid var(--line);border-top:1px solid var(--line);transform:rotate(45deg)}
+.rd-pop.above::before{top:auto;bottom:-7px;transform:rotate(225deg)}
+.wc{display:grid;gap:12px}
+.wc-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.wc-word{margin:0;font:700 30px/1.15 var(--f-ko);color:var(--fg-strong);letter-spacing:-.01em}
+.wc-rom{margin:3px 0 0;font:500 14px/1.3 var(--f-ui);color:var(--fg-2)}
+.wc-tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font:600 11.5px/1 var(--f-ui);padding:5px 8px;border-radius:6px;background:var(--bg-2);color:var(--fg-2)}
+.wc-tr{margin:0;font:600 20px/1.3 var(--f-ui);color:var(--fg-strong)}
+.wc-k{display:block;font:600 10.5px/1.2 var(--f-ui);letter-spacing:.1em;text-transform:uppercase;color:var(--fg-2);margin:0 0 5px}
+.wc-dict{margin:0;font-size:15px;line-height:1.45}
+.wc-dict b{font:600 16px var(--f-ko);color:var(--fg-strong)}
+.wc-lr{color:var(--fg-2);font-size:13px}
+.wc-note p{margin:0;font-size:14.5px;line-height:1.5;color:var(--fg)}
+.wc-gram ul{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.wc-gram li{display:grid;grid-template-columns:auto 62px minmax(0,1fr);gap:10px;align-items:baseline;font-size:14px;line-height:1.35;padding:7px 10px;border-radius:8px;background:var(--bg-2)}
+.wc-gram b{font:600 15px var(--f-ko);color:var(--fg-strong)}
+.wc-role{font:600 10.5px var(--f-ui);text-transform:uppercase;letter-spacing:.06em;color:var(--fg-2)}
+.wc-acts{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:2px}
+.wc-acts .btn-accent, .wc-acts .btn-saved{flex:1}
+.wc-kbd{width:100%;font-size:12px;color:var(--fg-2);display:flex;gap:6px;align-items:center}
+.wc--compact{gap:10px}
+.wc--compact .wc-word{font-size:24px}
+.wc--compact .wc-tr{font-size:17px}
+.wc--compact .wc-note p, .wc--compact .wc-dict{font-size:13.5px}
+.wc--compact .wc-gram li{padding:5px 8px;font-size:13px}
+.wc--compact .btn{height:38px;font-size:14px}
+
+/* settings */
+.set{display:grid;gap:18px}
+.set-t{margin:0;font:600 21px var(--f-display);color:var(--fg-strong)}
+.opts{display:flex;flex-wrap:wrap;gap:6px}
+.opt{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 12px;border-radius:999px;border:1px solid var(--line-2);background:transparent;color:var(--fg);font:500 13.5px var(--f-ui);cursor:pointer}
+.opt[aria-pressed="true"]{background:var(--fg-strong);border-color:var(--fg-strong);color:var(--bg)}
+.opt-x{font-size:11px;color:var(--fg-2)}
+.opt[aria-pressed="true"] .opt-x{color:inherit;opacity:.7}
+.sw-row{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:44px;border:0;background:transparent;color:var(--fg);font:500 14.5px var(--f-ui);cursor:pointer;padding:0;text-align:left}
+.sw-k{width:42px;height:26px;border-radius:999px;background:var(--line-2);position:relative;flex-shrink:0;transition:background var(--d2)}
+.sw-k::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:999px;background:var(--knob);box-shadow:0 1px 2px rgba(0,0,0,.25);transition:transform var(--d2) var(--ease)}
+.sw-row[aria-checked="true"] .sw-k{background:var(--accent)}
+.sw-row[aria-checked="true"] .sw-k::after{transform:translateX(16px)}
+
+.rd-toast{position:absolute;left:50%;top:106px;z-index:11;transform:translate(-50%,-6px);opacity:0;pointer-events:none;padding:9px 14px;border-radius:999px;background:var(--fg-strong);color:var(--bg);font:600 13px/1.2 var(--f-ui);white-space:nowrap;max-width:calc(100% - 32px);overflow:hidden;text-overflow:ellipsis;transition:opacity var(--d2),transform var(--d2) var(--ease)}
+.rd-toast.show{opacity:1;transform:translate(-50%,0)}
+.rd-home{position:absolute;bottom:8px;left:50%;z-index:12;width:126px;height:5px;border-radius:3px;background:var(--fg-strong);opacity:.8;transform:translateX(-50%);pointer-events:none}
+
+/* practice */
+.pr{padding:4px 0 8px}
+.pr-top{display:flex;align-items:center;justify-content:space-between;padding:6px 10px 10px 16px}
+.pr-nav{display:flex;gap:2px}
+.pr-art{margin:0 16px;aspect-ratio:4/3;border-radius:12px;overflow:hidden;background:var(--bg-2)}
+.pr-art img{width:100%;height:100%;object-fit:cover;display:block}
+.pr-lines{list-style:none;margin:14px 0 0;padding:0 8px;display:grid;gap:2px}
+.pr-line{display:grid;grid-template-columns:36px minmax(0,1fr);gap:12px;padding:12px 10px;border-radius:14px;transition:background var(--d2)}
+.pr-line.is-speaking{background:var(--accent-soft)}
+.av{width:36px;height:36px;border-radius:999px;object-fit:cover;display:grid;place-items:center;background:var(--bg-2);color:var(--fg-2);font:600 13px var(--f-display);font-style:italic}
+.av--lg{width:48px;height:48px;font-size:16px}
+.pr-who{margin:2px 0 0;font:600 13px/1.2 var(--f-ui);color:var(--fg-strong);display:flex;gap:6px;align-items:baseline}
+.pr-kind{font-weight:500;color:var(--fg-2)}
+.pr-ko{margin:5px 0 0;font:400 calc(21px*var(--rd-size))/1.55 var(--f-ko);color:var(--fg-strong)}
+.pr-rom{margin:1px 0 0;font:400 13px/1.4 var(--f-ui);color:var(--fg-2)}
+.pr-tr{display:flex;gap:8px;align-items:center;margin:9px 0 0;padding:7px 10px;border-radius:9px;border:1px dashed var(--line-2);background:transparent;color:var(--fg-2);font:500 14px/1.4 var(--f-ui);cursor:pointer;text-align:left;width:100%}
+.pr-tr svg{width:16px;height:16px;flex-shrink:0}
+.pr-tr-t{display:none}
+.pr-tr[aria-expanded="true"]{border-color:transparent;background:var(--bg-2);color:var(--fg)}
+.pr-tr[aria-expanded="true"] .pr-tr-t{display:inline}
+.pr-tr[aria-expanded="true"] .pr-tr-hint, .pr-tr[aria-expanded="true"] svg{display:none}
+.pr-acts{display:flex;gap:6px;margin-top:8px}
+.chipbtn{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 12px;border-radius:999px;border:1px solid var(--line-2);background:transparent;color:var(--fg-strong);font:600 12.5px var(--f-ui);cursor:pointer;font-variant-numeric:tabular-nums}
+.chipbtn svg{width:13px;height:13px}
+.pr-words{padding:20px 16px 0}
+.pr-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.pr-chip{display:inline-flex;gap:7px;align-items:baseline;padding:7px 11px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer;font:500 12.5px var(--f-ui)}
+.pr-chip-l{font:600 15px var(--f-ko);color:var(--fg-strong);border-radius:3px}
+.pr-chip.saved .pr-chip-l{background-image:linear-gradient(transparent 58%,var(--hl-saved) 58%)}
+.pr-chip-t{color:var(--fg-2)}
+.pr-foot{display:flex;gap:8px;padding:22px 16px 0}
+.pr-foot .btn{flex:1;height:42px;font-size:14px}
+
+/* motion */
+.mo{position:absolute;inset:0;display:none;flex-direction:column;overflow:hidden;background:var(--bg)}
+.rd[data-mode="motion"] .mo{display:flex}
+.rd[data-mode="motion"] .rd-scroll{display:none}
+.mo-back{position:absolute;left:-60px;top:-60px;width:calc(100% + 120px);height:calc(100% + 120px);object-fit:cover;filter:blur(40px) brightness(.36) saturate(1.3);pointer-events:none}
+.mo-segs{position:relative;display:flex;gap:4px;margin:104px 18px 12px}
+.mo-seg{flex:1;height:3px;border-radius:3px;background:rgba(255,255,255,.2);overflow:hidden}
+.mo-seg i{display:block;height:100%;width:0;background:var(--fg-strong);transition:width .35s var(--ease)}
+.mo-frame{position:relative;margin:0 18px;aspect-ratio:4/5;border-radius:14px;overflow:hidden;background:var(--bg-2);box-shadow:0 24px 60px -16px rgba(0,0,0,.7);transition:filter var(--d3);cursor:pointer}
+.mo-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;animation:kb 14s ease-out both}
+@keyframes kb{from{transform:scale(1)}to{transform:scale(1.08)}}
+.rd.word-open .mo-frame{filter:brightness(.4)}
+.mo-dlg{position:relative;z-index:2;display:grid;grid-template-columns:48px minmax(0,1fr);gap:12px;margin:16px 18px 0;transition:transform var(--d3) var(--ease)}
+.mo-dlg .av--lg{transition:box-shadow var(--d2)}
+.mo-dlg.is-speaking .av--lg{box-shadow:0 0 0 2px var(--bg),0 0 0 4px var(--accent)}
+.mo-who{margin:3px 0 0;font:600 11px/1.2 var(--f-ui);letter-spacing:.1em;text-transform:uppercase;color:var(--fg-2)}
+.mo-ko{margin:5px 0 0;font:500 calc(21px*var(--rd-size))/1.45 var(--f-ko);color:var(--fg-strong)}
+.mo-en{margin:6px 0 0;font:400 14px/1.4 var(--f-ui);color:var(--fg-2)}
+.mo-ctrl{position:absolute;left:0;right:0;bottom:30px;z-index:2;display:flex;align-items:center;justify-content:center;gap:12px}
+.mo-play{width:56px;height:56px;border-radius:999px;border:0;display:grid;place-items:center;background:var(--fg-strong);color:var(--bg);cursor:pointer;padding:0}
+.mo-play svg{width:24px;height:24px}
+.mo-sp{min-width:44px;height:36px;border-radius:999px;border:1px solid var(--line-2);background:transparent;color:var(--fg-strong);font:600 13px var(--f-ui);cursor:pointer;font-variant-numeric:tabular-nums}
+
+/* desktop layout */
+.rd.is-desk{display:grid;grid-template-columns:224px minmax(0,1fr) 300px;grid-template-rows:56px minmax(0,1fr)}
+.is-desk .rd-head{position:relative;top:auto;grid-column:1/-1;height:56px;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);padding:0 14px 0 8px;border-bottom:1px solid var(--line);background:var(--bg)}
+.is-desk.rd[data-mode="motion"] .rd-head{background:var(--bg)}
+.is-desk .rd-main{position:relative;inset:auto;grid-row:2;grid-column:2;min-height:0}
+.is-desk .rd-scroll{padding:0 0 110px}
+.is-desk .rd-col{max-width:540px;margin:0 auto;padding-top:20px}
+.is-desk .ep{padding:8px 0 22px}
+.is-desk .pnl{border-radius:3px}
+.is-desk .ep-end{padding-inline:0}
+.is-desk .rd-player{left:50%;right:auto;width:min(500px,calc(100% - 32px));transform:translateX(-50%);bottom:18px}
+.is-desk .rd-follow{bottom:92px}
+.is-desk .rd-toast{top:68px}
+.is-desk .rd-sheet{left:auto;right:14px;top:62px;bottom:auto;width:350px;max-height:620px;border-radius:16px;border:1px solid var(--line);box-shadow:var(--shadow);padding:18px 18px 20px;transform:translateY(-8px);opacity:0;pointer-events:none;visibility:hidden;transition:opacity var(--d2),transform var(--d2) var(--ease)}
+.is-desk .rd-sheet.open{transform:none;opacity:1;pointer-events:auto;visibility:visible}
+.is-desk .rd-sheet .grab{display:none}
+.is-desk .mo-segs{margin:18px auto 12px;width:min(340px,calc(100% - 32px))}
+.is-desk .mo-frame{margin:0 auto;width:min(340px,calc(100% - 32px))}
+.is-desk .mo-dlg{margin:14px auto 0;width:min(340px,calc(100% - 32px))}
+.is-desk .mo-ctrl{bottom:16px}
+.is-desk .pr-top{padding-inline:0 0}
+.is-desk .pr-art, .is-desk .pr-words, .is-desk .pr-foot{margin-inline:0;padding-inline:0}
+.is-desk .pr-lines{padding:0}
+.rd-rail{grid-row:2;grid-column:1;border-right:1px solid var(--line);overflow-y:auto;padding:18px 12px 18px 14px;scrollbar-width:thin}
+.rail-ep{padding:0 4px 14px;border-bottom:1px solid var(--line);margin-bottom:10px}
+.rail-t{margin:6px 0 0;font:600 21px/1.2 var(--f-ko-serif);color:var(--fg-strong)}
+.rail-t em{font:italic 400 16px var(--f-display);color:var(--fg-2)}
+.rail-list{list-style:none;margin:0;padding:0;display:grid;gap:3px}
+.rail-it{display:grid;grid-template-columns:44px minmax(0,1fr);column-gap:10px;align-items:center;width:100%;padding:6px;border:0;border-radius:10px;background:transparent;color:var(--fg);text-align:left;cursor:pointer}
+.rail-it:hover{background:var(--bg-2)}
+.rail-it img{grid-row:1/3;width:44px;height:58px;object-fit:cover;border-radius:6px;outline:2px solid transparent;outline-offset:1px}
+.rail-it[aria-current="true"]{background:var(--bg-2)}
+.rail-it[aria-current="true"] img{outline-color:var(--accent)}
+.rail-n{font:600 12px/1.3 var(--f-ui);color:var(--fg-strong);align-self:end}
+.rail-x{font:400 12.5px/1.35 var(--f-ko);color:var(--fg-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;align-self:start}
+.rd-side{grid-row:2;grid-column:3;border-left:1px solid var(--line);display:flex;flex-direction:column;min-height:0}
+.side-head{padding:18px 16px 10px}
+.side-t{margin:0 0 12px;font:600 21px/1.2 var(--f-display);color:var(--fg-strong)}
+.tabs{display:flex;gap:3px;padding:3px;border-radius:10px;background:var(--bg-2)}
+.tab{flex:1;height:30px;border:0;border-radius:8px;background:transparent;color:var(--fg-2);font:600 12.5px var(--f-ui);cursor:pointer;font-variant-numeric:tabular-nums}
+.tab[aria-selected="true"]{background:var(--raised);color:var(--fg-strong);box-shadow:0 1px 2px rgba(0,0,0,.1)}
+.side-list{list-style:none;margin:0;padding:4px 8px;overflow-y:auto;flex:1;min-height:0;scrollbar-width:thin}
+.vli{display:flex;align-items:center;gap:2px;border-radius:10px}
+.vli[aria-current="true"]{background:var(--accent-soft)}
+.vrow{flex:1;min-width:0;display:grid;gap:1px;padding:7px 8px;border:0;background:transparent;text-align:left;color:var(--fg);cursor:pointer;border-radius:10px}
+.vrow:hover{background:var(--bg-2)}
+.vrow-l{display:flex;gap:8px;align-items:baseline;min-width:0}
+.vl{font:600 16px var(--f-ko);color:var(--fg-strong);border-radius:3px}
+.vrow.saved .vl{background-image:linear-gradient(transparent 58%,var(--hl-saved) 58%)}
+.vrow-r{font-size:12px;color:var(--fg-2)}
+.vrow-t{font-size:13px;color:var(--fg-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.side-foot{padding:12px 16px 16px;border-top:1px solid var(--line);display:grid;gap:10px}
+.side-kbd{margin:0;font-size:12px;color:var(--fg-2);display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.empty{padding:32px 14px;text-align:center;color:var(--fg-2);font-size:14px}
+.empty b{display:block;color:var(--fg-strong);font:600 17px var(--f-display);margin-bottom:4px}
+
+/* ───────── doc blocks ───────── */
+.audit{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:32px 44px;margin-top:32px}
+.audit h3{font:600 12px/1.2 var(--f-ui);letter-spacing:.1em;text-transform:uppercase;color:var(--fg-2);margin:0 0 14px;padding-bottom:12px;border-bottom:1px solid var(--line-2)}
+.audit ul{margin:0;padding-left:18px;display:grid;gap:10px;font-size:15px;line-height:1.5}
+.audit li::marker{color:var(--fg-2)}
+.callout{margin-top:36px;padding:20px 22px;border-radius:16px;background:var(--bg-2);display:grid;gap:8px;max-width:820px}
+.callout b{color:var(--fg-strong)}
+.callout p{margin:0;font-size:15px}
+.modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr));gap:48px 28px;margin-top:40px}
+.mode{display:grid;gap:18px;align-content:start}
+.mode p{font-size:15px;line-height:1.55;margin:0}
+.mode-name{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.mode-name span{font:600 12px var(--f-ui);letter-spacing:.06em;color:var(--fg-2)}
+.states{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr));gap:12px;margin:30px 0 40px}
+.states figure{margin:0;padding:26px 14px 16px;border-radius:14px;background:var(--bg-2);display:grid;justify-items:center;gap:14px}
+.states figcaption{font-size:13px;color:var(--fg-2);text-align:center;line-height:1.4}
+.states figcaption b{display:block;color:var(--fg-strong);font-weight:600}
+.anat{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:28px}
+.stage{padding:28px 20px 0;border-radius:18px;background:var(--bg-2);display:grid;justify-items:center;overflow:hidden}
+.stage--pop{padding-bottom:28px}
+.anat-sheet{width:min(100%,380px);background:var(--raised);border-radius:24px 24px 0 0;box-shadow:0 -10px 30px rgba(0,0,0,.12);padding:8px 20px 26px;border:1px solid var(--line);border-bottom:0}
+.anat-pop{position:relative;width:min(100%,320px);background:var(--raised);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:14px 16px 16px;margin-top:14px;--ax:96px}
+.anat-pop::before{content:"";position:absolute;top:-7px;left:calc(var(--ax) - 6px);width:12px;height:12px;background:var(--raised);border-left:1px solid var(--line);border-top:1px solid var(--line);transform:rotate(45deg)}
+.anat-txt{margin-top:16px}
+.anat-txt p{font-size:15px}
+.order{margin:28px 0 0;padding-left:22px;display:grid;gap:8px;font-size:15px;max-width:820px}
+.order li::marker{font-weight:600;color:var(--fg-2)}
+.audio{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:40px;align-items:start;margin-top:32px}
+.pl-demos{display:grid;gap:26px}
+.pl-demo{display:grid;gap:10px}
+.pl-demo .eyebrow{font-size:11px}
+.pl-demo--menu{padding-top:52px}
+.lock{position:relative;width:min(100%,300px);height:440px;border-radius:34px;overflow:hidden;padding:30px 14px 18px;background:var(--bg);color:var(--fg-strong);display:flex;flex-direction:column;align-items:center;margin-inline:auto}
+.lock-bg{position:absolute;left:-40px;top:-40px;width:calc(100% + 80px);height:calc(100% + 80px);object-fit:cover;filter:blur(26px) brightness(.42)}
+.lock > :not(.lock-bg){position:relative}
+.lock-date{margin:0;font:500 14px var(--f-ui);color:var(--fg)}
+.lock-time{margin:0;font:600 66px/1 var(--f-ui);letter-spacing:-.03em}
+.lock-w{margin-top:auto;width:100%;display:grid;grid-template-columns:50px minmax(0,1fr);gap:4px 12px;align-items:center;padding:14px;border-radius:22px;background:color-mix(in srgb,var(--surface) 60%,transparent);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px)}
+.lock-w img{width:50px;height:50px;border-radius:10px;object-fit:cover}
+.lock-t{margin:0;font:600 14px/1.3 var(--f-ui)}
+.lock-a{margin:2px 0 0;font:400 12.5px/1.3 var(--f-ko);color:var(--fg-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lock-bar{grid-column:1/-1;height:4px;margin-top:10px;border-radius:4px;background:rgba(255,255,255,.22);overflow:hidden}
+.lock-bar i{display:block;height:100%;width:42%;background:var(--fg-strong)}
+.lock-c{grid-column:1/-1;display:flex;justify-content:center;gap:36px;margin-top:8px;color:var(--fg-strong)}
+.lock-c svg{width:28px;height:28px}
+.bul{margin:22px 0 0;padding-left:18px;display:grid;gap:10px;font-size:15px;max-width:68ch}
+.keys{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:10px 24px;margin-top:24px;font-size:14px}
+.keys div{display:flex;gap:10px;align-items:center}
+.keys span{display:flex;gap:4px}
+.tw{overflow-x:auto;margin-top:24px;border:1px solid var(--line);border-radius:14px}
+.t{width:100%;border-collapse:collapse;font-size:14px;min-width:620px}
+.t th{text-align:left;font:600 11px/1.2 var(--f-ui);letter-spacing:.08em;text-transform:uppercase;color:var(--fg-2);padding:12px 14px;border-bottom:1px solid var(--line);background:var(--bg-2)}
+.t td{padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.45}
+.t tr:last-child td{border-bottom:0}
+.t td:first-child{white-space:nowrap}
+.sw{display:inline-flex;align-items:center;gap:8px;font-variant-numeric:tabular-nums}
+.sw i{width:26px;height:26px;border-radius:7px;border:1px solid var(--line-2);flex-shrink:0}
+.sw code{background:transparent;padding:0}
+.sub{margin-top:52px}
+.ts{margin-top:18px;border-top:1px solid var(--line)}
+.ts-row{display:grid;grid-template-columns:minmax(0,240px) minmax(0,1fr);gap:8px 24px;padding:16px 0;border-bottom:1px solid var(--line);align-items:baseline}
+.ts-meta b{display:block;font:600 14px var(--f-ui);color:var(--fg-strong)}
+.ts-meta span{font-size:12.5px;color:var(--fg-2)}
+.ts-s{margin:0;color:var(--fg-strong);min-width:0}
+.scripts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:14px;margin-top:22px}
+.scr{padding:18px 18px 16px;border-radius:14px;border:1px solid var(--line);background:var(--surface);display:grid;gap:10px;align-content:start}
+.scr-s{margin:0;color:var(--fg-strong);font-size:24px}
+.scr-s rt{font:500 .42em/1 var(--f-ui);color:var(--fg-2);letter-spacing:.01em}
+.scr ul{margin:0;padding-left:16px;font-size:13.5px;color:var(--fg);display:grid;gap:4px;line-height:1.45}
+.scr .eyebrow{font-size:11px}
+.misc{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:28px;margin-top:22px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.chips span{font:500 12.5px/1 var(--f-mono);padding:7px 9px;border-radius:8px;background:var(--bg-2);color:var(--fg-strong)}
+.misc p{font-size:14px;margin:10px 0 0;color:var(--fg)}
+.ask{margin-top:36px;display:grid;gap:12px;max-width:820px}
+.ask div{padding:16px 18px;border-radius:14px;border:1px solid var(--line);background:var(--surface)}
+.ask b{display:block;color:var(--fg-strong);margin-bottom:2px}
+.ask p{margin:0;font-size:14.5px}
+footer.wrap{padding-block:28px 48px;font-size:13px;color:var(--fg-2)}
+
+@media (max-width: 900px){
+  .hero{grid-template-columns:1fr}
+  .audio{grid-template-columns:1fr}
+}
+@media (max-width: 600px){
+  .ts-row{grid-template-columns:1fr}
+  .sec{padding-block:56px}
+}
+@media (prefers-reduced-motion: reduce){
+  .mo-frame img{animation:none}
+  .rd-sheet,.rd-head,.rd-pop,.rd-toast,.mo-dlg,.pl-bar i,.mo-seg i,.rd-prog,.bb,.w{transition-duration:1ms}
+}
+</style>
+
+<header class="wrap topbar">
+  <div class="brand"><b>Storyloop</b><span>Читалка · дизайн-макет v1 · 21 ноября 2026</span></div>
+  <div class="theme" role="group" aria-label="Тема страницы">
+    <button type="button" data-theme-set="auto" aria-pressed="true">Авто</button>
+    <button type="button" data-theme-set="light" aria-pressed="false">Бумага</button>
+    <button type="button" data-theme-set="dark" aria-pressed="false">Полночь</button>
+  </div>
+</header>
+
+<main>
+  <section class="wrap hero" id="top">
+    <div>
+      <span class="eyebrow">Читалка · режимы, слово, голос</span>
+      <h1>История на весь экран, язык по касанию</h1>
+      <p class="lead">Три режима над одним эпизодом. «Чтение» — вертикальный комикс. «Движение» — сцена с голосом. «Практика» — реплики по одной. Перевод слова выезжает снизу и не закрывает пузырь, в котором слово сказано.</p>
+      <ul class="try">
+        <li>Нажмите на любое слово в пузыре.</li>
+        <li>Нажмите на пузырь мимо слов: появится перевод всей реплики и кнопка голоса.</li>
+        <li>Кнопка ▶ внизу включает озвучку с подсветкой реплики и слова. Голос — синтез браузера, если в системе есть корейский; иначе подсветка идёт без звука.</li>
+        <li><b>KO · A2</b> открывает язык, уровень, романизацию, размер текста и тему.</li>
+        <li>Переключатель вверху меняет режим и сохраняет место в эпизоде.</li>
+      </ul>
+      <p class="note">Кадры настоящие: их нарисовал AI-конвейер волны 6. Сюжет «Two Cups», корейские реплики и разметка слов написаны для макета в формате <code>episode.json</code>, поэтому карточка слова собирается из тех же полей, что и сейчас.</p>
+    </div>
+    <div>
+      <div class="phone" data-reader="hero"></div>
+      <p class="cap">«Чтение», открыта карточка слова <span lang="ko">왔네요</span></p>
+    </div>
+  </section>
+
+  <section class="wrap sec" id="audit">
+    <span class="eyebrow">Аудит</span>
+    <h2>Что есть в <code>storyloop_back</code> сейчас</h2>
+    <p class="prose">Rails 8.1, Stimulus и importmap без сборщика, Tailwind v4 с токенами в <code>@theme</code>. Читалка — ванильные модули <code>app/javascript/reader/*</code>: страница встраивает JSON эпизода (<code>EpisodePayload</code>), клиент рисует четыре формата — webtoon, manga, illustrated, chat.</p>
+    <div class="audit">
+      <div>
+        <h3>Оставляем</h3>
+        <ul>
+          <li>Один JSON на эпизод, тот же в API v1. Новые режимы — это новые рендереры, бэкенд не меняется.</li>
+          <li>Пузыри — HTML поверх кадра по <code>box</code> в процентах, шрифт от ширины кадра (<code>cqw</code>), <code>fitBubbles</code> возвращает вылезшие.</li>
+          <li>У токена есть всё для карточки: перевод в контексте, заметка, романизация, разбор, вежливость, CEFR. Открывается без запроса к серверу.</li>
+          <li>Стиль A «Бумага и маркер», ночная тема до первой отрисовки, safe-area, цели 44px, <code>prefers-reduced-motion</code>.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Мешает премиальному виду</h3>
+        <ul>
+          <li>Эмодзи вместо иконок: 🔊 ⇄ ✍️ 🔒.</li>
+          <li>Кружки ⇄ и 🔊 висят на каждом пузыре поверх рисунка.</li>
+          <li>Шапка не прячется и вмещает пять вещей; настройки — чекбоксы под ней.</li>
+          <li>В ночной теме два акцента (коралл для тапа, фиолетовый для сохранённого), в светлой акцент чёрный: у тем разная логика цвета.</li>
+          <li>Главная — текстовые карточки со списком эпизодов, без обложек.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Нет под бриф</h3>
+        <ul>
+          <li>Переключателя режимов и режима «Практика».</li>
+          <li>Плеера: озвучка по одному пузырю, без очереди, скорости, подсветки и Media Session.</li>
+          <li>Десктопа: колонка 640px, без боковой панели; клавиши есть только у манги.</li>
+          <li>Японского и китайского: шрифты Latin + KR, руби только для романизации.</li>
+          <li>Экранов Discover, Story Details, Library и генератора в новом виде.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout">
+      <b>Уже решается в соседних волнах</b>
+      <p>Движение — волна M (<code>docs/motion-research.md</code>, её пишет параллельная сессия): <code>panels.motion</code>, камера, эффекты, звук, выборы. Макет следует её решениям: по умолчанию «Чтение», в «Движении» реплика идёт блоком под кадром, а не пузырём.</p>
+      <p>Смена языка истории — перевод эпизода из 7.8 (<code>origin_episode_id</code>): пилюля «KO · A2» показывает, в каких языках и уровнях есть этот эпизод.</p>
+    </div>
+  </section>
+
+  <section class="wrap sec" id="modes">
+    <span class="eyebrow">Режимы</span>
+    <h2>Одно место в эпизоде, три способа читать</h2>
+    <p class="prose">Режим — отдельный рендерер того же <code>EpisodePayload</code>. Переключение сохраняет сцену и реплику, плеер продолжает с того же места. Каждый телефон ниже живой.</p>
+    <div class="modes">
+      <div class="mode">
+        <div class="phone" data-reader="read"></div>
+        <div>
+          <div class="mode-name"><h3>Чтение</h3><span>Read · по умолчанию</span></div>
+          <p>Кадры во всю ширину, пузыри поверх рисунка. Шапка уходит при прокрутке вниз и возвращается при прокрутке вверх или тапе по кадру. Плеер ведёт по репликам и докручивает к говорящему. Если читатель листает сам, докрутка выключается и появляется «Back to the voice».</p>
+        </div>
+      </div>
+      <div class="mode">
+        <div class="phone" data-reader="motion"></div>
+        <div>
+          <div class="mode-name"><h3>Движение</h3><span>Motion · всегда тёмный</span></div>
+          <p>Кадр 4:5 с медленным наездом камеры, сверху — сегменты сцен. Реплика блоком под кадром: портрет, имя, текст, субтитр. Тап по кадру — пауза, тап по слову — пауза и карточка; реплика поднимается над шторкой, кадр гаснет. Движок, эффекты и звук — волна M.</p>
+        </div>
+      </div>
+      <div class="mode">
+        <div class="phone" data-reader="practice"></div>
+        <div>
+          <div class="mode-name"><h3>Практика</h3><span>Interactive</span></div>
+          <p>Сцена сверху, реплики списком: оригинал, романизация, перевод скрыт до нажатия, «0.7×» для медленного повтора. Внизу слова сцены с отметкой сохранённых. Сюда же лягут выборы сюжета из волны M (M.7) и запись своего голоса.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap sec" id="word">
+    <span class="eyebrow">Слово</span>
+    <h2>Перевод не перекрывает реплику</h2>
+    <p class="prose">На телефоне — шторка снизу без затемнения: читалка докручивает так, чтобы пузырь со словом остался над ней, а прокрутка дальше закрывает шторку. На десктопе — поповер у слова и клавиши <kbd>S</kbd> и <kbd>L</kbd>. Содержимое одно, собирается из полей токена.</p>
+    <div class="states" id="states"></div>
+    <div class="anat">
+      <div>
+        <div class="stage"><div class="anat-sheet" id="anat-sheet" inert></div></div>
+        <div class="anat-txt"><h3>Телефон: шторка</h3><p>До 66% высоты, листается внутри. Пузырь со словом остаётся видимым над шторкой. Закрывается тапом по кадру, свайпом вниз или прокруткой больше 160px.</p></div>
+      </div>
+      <div>
+        <div class="stage stage--pop" id="anat-pop-stage" inert></div>
+        <div class="anat-txt"><h3>Десктоп: поповер</h3><p>320px, открывается под словом, у нижнего края — над ним. Не модальный: читать и прокручивать можно с открытым поповером. <kbd>Esc</kbd> закрывает.</p></div>
+      </div>
+    </div>
+    <ol class="order">
+      <li>Слово как в тексте и романизация — <code>token.surface</code>, <code>token.romanization</code>; рядом голос слова.</li>
+      <li>Часть речи, уровень, вежливость — <code>lexeme.pos</code>, <code>lexeme.cefr_level</code>, <code>token.politeness</code>.</li>
+      <li>Перевод в этом контексте, крупно — <code>token.translation</code>.</li>
+      <li>Словарная форма — <code>lexeme.lemma</code>, <code>lexeme.translation</code>; только если отличается от слова в тексте.</li>
+      <li>«In this sentence» — <code>token.note</code>.</li>
+      <li>«How it’s built» — <code>token.breakdown</code>: основа, суффиксы, окончание.</li>
+      <li>Сохранить и прослушать реплику — <code>user_words</code>, <code>bubble.audio_url</code>.</li>
+    </ol>
+  </section>
+
+  <section class="wrap sec" id="audio">
+    <span class="eyebrow">Аудио</span>
+    <h2>Плеер знает, кто говорит</h2>
+    <p class="prose">Мини-плеер живёт в режиме «Чтение»: портрет говорящего, реплика, назад и вперёд по репликам, пауза, скорость. Озвучка — файлы MiniMax через <code>&lt;audio&gt;</code>, поэтому играет и при выключенном экране; синтез браузера остаётся запасным.</p>
+    <div class="audio">
+      <div class="pl-demos" id="pl-demos"></div>
+      <div id="lock-demo"></div>
+    </div>
+    <ul class="bul">
+      <li>Подсветка слова сначала считается по длине слова. В волне M появляется <code>audio_ms</code> у реплик; если TTS отдаст тайминги слов, подсветка станет точной.</li>
+      <li>Ручная прокрутка во время озвучки выключает докрутку до нажатия «Back to the voice».</li>
+      <li>Экран блокировки и наушники — Media Session API: обложка-кадр, название сцены, кнопки «реплика назад / вперёд».</li>
+      <li>Скорость: 0.75×, 1×, 1.25×, 1.5×. В «Практике» отдельная кнопка 0.7× на каждой реплике.</li>
+    </ul>
+  </section>
+
+  <section class="wrap sec" id="desktop">
+    <span class="eyebrow">Десктоп</span>
+    <h2>Колонка в центре, словарь сбоку</h2>
+    <p class="prose">От 1024px: слева сцены эпизода, в центре колонка комикса до 540px, справа словарь эпизода и сохранённые слова. Клавиши работают, когда фокус внутри читалки: кликните по макету.</p>
+    <div class="desk-scale" id="desk-scale">
+      <div class="desk-win">
+        <div class="desk-bar" aria-hidden="true"><i></i><i></i><i></i><span class="desk-url">storyloop.app/read/corner-cafe/3</span></div>
+        <div class="desk-host" data-reader="desk"></div>
+      </div>
+    </div>
+    <div class="keys">
+      <div><span><kbd>Space</kbd></span>пауза и продолжение</div>
+      <div><span><kbd>←</kbd><kbd>→</kbd></span>реплика назад, вперёд</div>
+      <div><span><kbd>J</kbd><kbd>K</kbd></span>следующая, прошлая сцена</div>
+      <div><span><kbd>1</kbd><kbd>2</kbd><kbd>3</kbd></span>режимы</div>
+      <div><span><kbd>T</kbd></span>перевод текущей реплики</div>
+      <div><span><kbd>S</kbd><kbd>L</kbd></span>сохранить, прослушать слово</div>
+      <div><span><kbd>Esc</kbd></span>закрыть карточку</div>
+    </div>
+  </section>
+
+  <section class="wrap sec" id="system">
+    <span class="eyebrow">Система</span>
+    <h2>Бумага днём, полночь вечером</h2>
+    <p class="prose">Развитие текущего стиля A и ночной темы D: те же шрифты и маркер. Меняется логика цвета. Один акцент на обе темы — фиолетовые чернила для действий, голоса и прогресса. Маркер — единственный «учебный» цвет. Пузыри всегда бумажные. «Движение» всегда тёмное.</p>
+    <div class="tw"><table class="t"><thead><tr><th>Токен</th><th>Роль</th><th>Бумага</th><th>Полночь</th></tr></thead><tbody id="colors"></tbody></table></div>
+
+    <div class="sub">
+      <h3>Шрифты и шкала</h3>
+      <p class="prose muted">Source Serif 4 с оптическими размерами даёт и редакционные заголовки, и текст для чтения. Inter — интерфейс. Текст на языке читается шрифтом своей письменности.</p>
+      <div class="ts" id="typescale"></div>
+    </div>
+
+    <div class="sub">
+      <h3>Письменности</h3>
+      <p class="prose muted">Шрифт, межстрочный интервал и перенос выбираются по <code>lang</code> текста, а не по языку интерфейса. Над словом — романизация, фуригана или пиньинь; механизм руби в читалке уже есть.</p>
+      <div class="scripts">
+        <div class="scr">
+          <span class="eyebrow">English · Latin</span>
+          <p class="scr-s" style="font-family:var(--f-display);font-size:23px;line-height:1.6">Two cups today, please.</p>
+          <ul><li>Source Serif 4, 19/1.6</li><li>Колонка 36em, около 66 знаков</li><li>Курсив для мыслей</li></ul>
+        </div>
+        <div class="scr">
+          <span class="eyebrow">한국어 · Hangul</span>
+          <p class="scr-s" lang="ko" style="font-family:var(--f-ko);line-height:1.9"><ruby>오늘은<rt>oneureun</rt></ruby> <ruby>두<rt>du</rt></ruby> <ruby>잔<rt>jan</rt></ruby> <ruby>주세요<rt>juseyo</rt></ruby>.</p>
+          <ul><li>Noto Sans KR, 18/1.7</li><li><code>word-break: keep-all</code></li><li>Мысли — пунктирный пузырь, без курсива</li></ul>
+        </div>
+        <div class="scr">
+          <span class="eyebrow">日本語 · Kana, kanji</span>
+          <p class="scr-s" lang="ja" style="font-family:var(--f-ja);line-height:1.9"><ruby>今日<rt>きょう</rt></ruby>は<ruby>二杯<rt>にはい</rt></ruby>ください。</p>
+          <ul><li>Noto Sans JP, 17/1.8</li><li><code>line-break: strict</code></li><li>Фуригана над кандзи по уровню</li></ul>
+        </div>
+        <div class="scr">
+          <span class="eyebrow">中文 · Hanzi</span>
+          <p class="scr-s" lang="zh-Hans" style="font-family:var(--f-zh);line-height:1.9"><ruby>今天<rt>jīntiān</rt></ruby><ruby>要<rt>yào</rt></ruby><ruby>两<rt>liǎng</rt></ruby><ruby>杯<rt>bēi</rt></ruby>。</p>
+          <ul><li>Noto Sans SC, 17/1.8</li><li>Пиньинь с тонами над словом</li><li>Без курсива и разрядки</li></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub misc">
+      <div>
+        <h3>Отступы</h3>
+        <div class="chips"><span>4</span><span>8</span><span>12</span><span>16</span><span>24</span><span>32</span><span>48</span><span>72</span></div>
+        <p>Между кадрами 6px, кадры без скругления на телефоне: рисунок до края экрана.</p>
+      </div>
+      <div>
+        <h3>Скругления</h3>
+        <div class="chips"><span>6 · тег</span><span>10 · чип</span><span>14 · поповер</span><span>24 · шторка</span><span>999 · кнопка</span></div>
+        <p>Скругление по роли, а не везде: у текста и кадров его нет.</p>
+      </div>
+      <div>
+        <h3>Движение</h3>
+        <div class="chips"><span>120ms · тап</span><span>200ms · поповер</span><span>320ms · шторка</span><span>14s · наезд</span></div>
+        <p>Кривая <code>cubic-bezier(.2,.8,.2,1)</code>. При reduced motion нет наезда и плавной прокрутки, шторки появляются без сдвига.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap sec" id="plan">
+    <span class="eyebrow">План</span>
+    <h2>Четыре волны до новой читалки</h2>
+    <p class="prose">Бэкенд, JSON эпизода и API не меняются. Компоненты — CSS-классы в <code>@layer components</code>, ERB-партиалы для серверных частей и JS-сборщики в <code>reader/</code> для клиентских; без ViewComponent и новых библиотек. В каждой волне — системные тесты на 375×812 и 1280×800.</p>
+    <div class="tw"><table class="t">
+      <thead><tr><th>Волна</th><th>Что получаем</th><th>Где</th><th>Дни</th></tr></thead>
+      <tbody>
+        <tr><td><b>Р1</b> Система</td><td>Токены «Бумага / Полночь» с одним акцентом и маркером, шрифты KO/JA/ZH по <code>lang</code>, SVG-иконки вместо эмодзи, классы кнопок, чипов, шторки, поповера, переключателя</td><td><code>tailwind/application.css</code>, <code>layouts/_head</code>, <code>shared/_icon</code></td><td>1.5</td></tr>
+        <tr><td><b>Р2</b> Чтение</td><td>Шапка, которая прячется; переключатель режимов; пилюля языка; пузыри без постоянных кнопок; перевод реплики по тапу; карточка слова v2 — шторка и поповер от 1024px; лист настроек</td><td><code>episodes/show</code>, <code>reader_controller.js</code>, <code>reader/word_card.js</code>, <code>webtoon.js</code>, <code>illustrated.js</code></td><td>2.5</td></tr>
+        <tr><td><b>Р3</b> Плеер</td><td>Очередь реплик, пауза, ±реплика, скорость, подсветка пузыря и слова, докрутка и «Back to the voice», Media Session</td><td><code>reader/player.js</code>, <code>speech.js</code></td><td>2</td></tr>
+        <tr><td><b>Р4</b> Практика и десктоп</td><td>Режим «Практика», рельса сцен и панель словаря, клавиши, общая позиция между режимами</td><td><code>reader/practice.js</code>, <code>reader/desk.js</code></td><td>2.5</td></tr>
+        <tr><td><b>M</b> Движение</td><td>Движок, эффекты, звук и данные — волна M. От Р ей нужны переключатель (Р2), карточка слова (Р2) и плеер (Р3)</td><td><code>reader/motion/*</code></td><td>—</td></tr>
+        <tr><td><b>Р5</b> Витрина</td><td>Discover, Story Details, Library, генератор в этой системе — отдельный макет после Р2</td><td><code>home</code>, <code>stories</code>, <code>community</code></td><td>—</td></tr>
+      </tbody>
+    </table></div>
+    <div class="ask">
+      <div><b>1. Акцент</b><p>Фиолетовый в обеих темах, как в макете и ваших референсах, или в светлой оставить чёрные кнопки?</p></div>
+      <div><b>2. Тема читалки по умолчанию</b><p>«Авто» по системе или всегда «Полночь»: кадры на тёмном выглядят богаче, но днём читать на бумаге легче.</p></div>
+      <div><b>3. Название третьего режима</b><p>Practice, Study или Interactive.</p></div>
+    </div>
+  </section>
+</main>
+<footer class="wrap">Файл: <code>docs/reader-design/index.html</code>, кадры в <code>docs/reader-design/img/</code>. Система из волны Р1 — <code>docs/design-system.md</code> и <code>/admin/styleguide</code>.</footer>
+
+<script>
+(() => {
+"use strict";
+const RM = matchMedia("(prefers-reduced-motion: reduce)");
+const ICON = {
+  back:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  play:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.6v12.8a1 1 0 0 0 1.53.85l10.1-6.4a1 1 0 0 0 0-1.7L9.53 4.75A1 1 0 0 0 8 5.6z" fill="currentColor"/></svg>',
+  pause:'<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6.5" y="5" width="4" height="14" rx="1.2" fill="currentColor"/><rect x="13.5" y="5" width="4" height="14" rx="1.2" fill="currentColor"/></svg>',
+  prev:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5.5v13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M18.5 6.4v11.2a.9.9 0 0 1-1.42.74L9.2 12.74a.9.9 0 0 1 0-1.48l7.88-5.6a.9.9 0 0 1 1.42.74z" fill="currentColor"/></svg>',
+  next:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 5.5v13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M5.5 6.4v11.2a.9.9 0 0 0 1.42.74l7.88-5.6a.9.9 0 0 0 0-1.48L6.92 5.66a.9.9 0 0 0-1.42.74z" fill="currentColor"/></svg>',
+  save:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h10a1 1 0 0 1 1 1v15l-6-4.2L6 20V5a1 1 0 0 1 1-1z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg>',
+  saved:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h10a1 1 0 0 1 1 1v15l-6-4.2L6 20V5a1 1 0 0 1 1-1z" fill="currentColor" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg>',
+  sound:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5v5h3.4l4.6 4V5.5l-4.6 4H4z" fill="currentColor"/><path d="M15.5 9a4.2 4.2 0 0 1 0 6M18 6.5a7.6 7.6 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
+  chevD:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  chevL:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  chevR:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  cc:'<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5.5" width="18" height="13" rx="2.6" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M10.6 10.3a2.1 2.1 0 1 0 0 3.4M16.4 10.3a2.1 2.1 0 1 0 0 3.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
+  eye:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12s3.5-6.5 9.5-6.5S21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="2.6" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>',
+  status:'<svg viewBox="0 0 68 13" width="68" height="13" aria-hidden="true"><g fill="currentColor"><rect x="0" y="8" width="3" height="4.5" rx="1"/><rect x="4.6" y="5.6" width="3" height="6.9" rx="1"/><rect x="9.2" y="3.2" width="3" height="9.3" rx="1"/><rect x="13.8" y=".8" width="3" height="11.7" rx="1"/><path d="M30 3.4a10 10 0 0 1 7 2.9l1.3-1.3a11.9 11.9 0 0 0-16.6 0L23 6.3a10 10 0 0 1 7-2.9zm0 3.6a6.3 6.3 0 0 1 4.4 1.8l1.3-1.3a8.2 8.2 0 0 0-11.4 0l1.3 1.3A6.3 6.3 0 0 1 30 7zm0 3.5a2.6 2.6 0 0 1 1.8.7L30 13l-1.8-1.8a2.6 2.6 0 0 1 1.8-.7z"/><rect x="43" y=".5" width="22" height="12" rx="3.5" fill="none" stroke="currentColor" opacity=".4"/><rect x="45" y="2.5" width="16" height="8" rx="2"/><rect x="66" y="4.5" width="1.6" height="4" rx=".8" opacity=".4"/></g></svg>'
+};
+const MODES = [{id:"read",label:"Read"},{id:"motion",label:"Motion"},{id:"practice",label:"Practice"}];
+const POS = {noun:"noun",verb:"verb",adjective:"adjective",adverb:"adverb",pronoun:"pronoun",numeral:"number",counter:"counter",determiner:"determiner",interjection:"interjection",name:"name"};
+const CAST = {mila:{name:"Mila",img:"img/mila.webp"},denis:{name:"Denis",img:"img/denis.webp"}};
+
+// Lexicon keyed by surface form, same fields as EpisodePayload tokens + lexemes.
+const LEX = {
+  "아침":{l:"아침",pos:"noun",r:"achim",t:"morning",lt:"morning; breakfast",cefr:"A1"},
+  "여덟":{l:"여덟",pos:"numeral",r:"yeodeol",t:"eight",lt:"eight (native Korean)",cefr:"A1",note:"Hours use native Korean numbers: 여덟 시 is 8 o’clock. Minutes use Sino-Korean ones."},
+  "시":{l:"시",pos:"counter",r:"si",t:"o’clock",lt:"hour, o’clock",cefr:"A1"},
+  "카페는":{l:"카페",pos:"noun",r:"kapeneun",lr:"kape",t:"the café (topic)",lt:"café",cefr:"A1",br:[["카페","stem","café"],["는","particle","topic marker"]]},
+  "벌써":{l:"벌써",pos:"adverb",r:"beolsseo",t:"already",lt:"already, so soon",cefr:"A2",note:"벌써 sounds a little surprised: sooner than you expected."},
+  "바빠요":{l:"바쁘다",pos:"adjective",r:"bappayo",lr:"bappeuda",t:"is busy",lt:"to be busy",cefr:"A1",pol:"polite",br:[["바쁘","stem","be busy"],["-아요","ending","polite present"]],note:"ㅡ drops before -아요: 바쁘 + 아요 → 바빠요."},
+  "밀라":{l:"밀라",pos:"name",r:"Milla",t:"Mila",lt:"Mila (name)"},
+  "씨":{l:"씨",pos:"noun",r:"ssi",t:"Ms. / Mr.",lt:"polite title after a name",cefr:"A1",note:"Name + 씨 is polite between adults. Never use it with your own name."},
+  "안녕하세요":{l:"안녕하다",pos:"adjective",r:"annyeonghaseyo",lr:"annyeonghada",t:"hello",lt:"to be well, at peace",cefr:"A1",pol:"polite",br:[["안녕하","stem","be well"],["-세요","ending","polite, honorific"]],note:"The everyday polite hello, fine at any time of day."},
+  "데니스":{l:"데니스",pos:"name",r:"Deniseu",t:"Denis",lt:"Denis (name)"},
+  "오늘도":{l:"오늘",pos:"noun",r:"oneuldo",lr:"oneul",t:"today too",lt:"today",cefr:"A1",br:[["오늘","stem","today"],["도","particle","also, too"]]},
+  "일찍":{l:"일찍",pos:"adverb",r:"iljjik",t:"early",lt:"early",cefr:"A1"},
+  "왔네요":{l:"오다",pos:"verb",r:"wanneyo",lr:"oda",t:"you came (I see!)",lt:"to come",cefr:"A2",pol:"polite",br:[["오","stem","come"],["-았-","suffix","past"],["-네요","ending","noticing something"]],note:"-네요 shows you have just noticed something: “Oh, you’re early again!”"},
+  "여기":{l:"여기",pos:"pronoun",r:"yeogi",t:"here",lt:"here",cefr:"A1"},
+  "있어요":{l:"있다",pos:"verb",r:"isseoyo",lr:"itda",t:"is (here)",lt:"to be, to exist; to have",cefr:"A1",pol:"polite",note:"여기 있어요 is “here you are” when you hand something over."},
+  "따뜻한":{l:"따뜻하다",pos:"adjective",r:"ttatteutan",lr:"ttatteutada",t:"warm",lt:"to be warm",cefr:"A1",br:[["따뜻하","stem","be warm"],["-ㄴ","ending","describes a noun"]]},
+  "라테요":{l:"라테",pos:"noun",r:"rateyo",lr:"rate",t:"(a) latte",lt:"latte",cefr:"A1",pol:"polite",br:[["라테","stem","latte"],["요","particle","keeps a short answer polite"]]},
+  "고마워요":{l:"고맙다",pos:"adjective",r:"gomawoyo",lr:"gomapda",t:"thank you",lt:"to be thankful",cefr:"A1",pol:"polite",br:[["고맙","stem","be thankful (ㅂ → 우)"],["-어요","ending","polite present"]],note:"Warmer and less formal than 감사합니다."},
+  "오늘은":{l:"오늘",pos:"noun",r:"oneureun",lr:"oneul",t:"today (unlike other days)",lt:"today",cefr:"A1",br:[["오늘","stem","today"],["은","particle","topic, contrast"]],note:"은 adds contrast: today is different."},
+  "두":{l:"둘",pos:"numeral",r:"du",lr:"dul",t:"two",lt:"two (native Korean)",cefr:"A1",note:"둘 becomes 두 before a counter: 두 잔."},
+  "잔":{l:"잔",pos:"counter",r:"jan",t:"cups",lt:"counter for cups and glasses",cefr:"A1"},
+  "주세요":{l:"주다",pos:"verb",r:"juseyo",lr:"juda",t:"please give",lt:"to give",cefr:"A1",pol:"polite",br:[["주","stem","give"],["-세요","ending","polite request"]]},
+  "밀라는":{l:"밀라",pos:"name",r:"Millaneun",t:"Mila (topic)",lt:"Mila (name)",br:[["밀라","stem","Mila"],["는","particle","topic marker"]]},
+  "컵에":{l:"컵",pos:"noun",r:"keobe",lr:"keop",t:"on the cup",lt:"cup",cefr:"A1",br:[["컵","stem","cup"],["에","particle","at, on"]]},
+  "이름을":{l:"이름",pos:"noun",r:"ireumeul",lr:"ireum",t:"a name (object)",lt:"name",cefr:"A1",br:[["이름","stem","name"],["을","particle","object marker"]]},
+  "써요":{l:"쓰다",pos:"verb",r:"sseoyo",lr:"sseuda",t:"writes",lt:"to write; to use",cefr:"A1",pol:"polite",br:[["쓰","stem","write"],["-어요","ending","polite present"]],note:"ㅡ drops: 쓰 + 어요 → 써요."},
+  "누구":{l:"누구",pos:"pronoun",r:"nugu",t:"who, whose",lt:"who",cefr:"A1"},
+  "거지":{l:"것",pos:"noun",r:"geoji",lr:"geot",t:"is it (whose thing)?",lt:"thing; someone’s",cefr:"A2",pol:"casual",br:[["거","stem","thing (spoken 것)"],["-지","ending","wondering to yourself"]],note:"누구 거 means “whose”. -지? is how you wonder aloud."},
+  "이":{l:"이",pos:"determiner",r:"i",t:"this",lt:"this",cefr:"A1"},
+  "컵은":{l:"컵",pos:"noun",r:"keobeun",lr:"keop",t:"this cup (topic)",lt:"cup",cefr:"A1",br:[["컵","stem","cup"],["은","particle","topic marker"]]},
+  "거예요":{l:"것",pos:"noun",r:"geoyeyo",lr:"geot",t:"is (someone’s)",lt:"thing; someone’s",cefr:"A2",pol:"polite",br:[["거","stem","thing (spoken 것)"],["예요","ending","is (polite)"]]},
+  "안나":{l:"안나",pos:"name",r:"Anna",t:"Anna",lt:"Anna (name)"},
+  "제":{l:"저",pos:"pronoun",r:"je",lr:"jeo",t:"my (humble)",lt:"I, me (humble)",cefr:"A1",note:"제 is 저 + 의: the polite “my”."},
+  "여동생이에요":{l:"여동생",pos:"noun",r:"yeodongsaengieyo",lr:"yeodongsaeng",t:"is my younger sister",lt:"younger sister",cefr:"A1",pol:"polite",br:[["여동생","stem","younger sister"],["이에요","ending","is (polite, after a consonant)"]],note:"여 means female: 여동생 is a younger sister, 남동생 a younger brother."},
+  "아":{l:"아",pos:"interjection",r:"a",t:"ah",lt:"ah, oh"},
+  "다행이다":{l:"다행",pos:"noun",r:"dahaengida",lr:"dahaeng",t:"what a relief",lt:"relief, good luck",cefr:"A2",pol:"casual",br:[["다행","stem","relief"],["이다","ending","is (plain)"]],note:"Said when something turns out fine. Plain form: she is talking to herself."}
+};
+
+const SCENES = [
+  {img:"img/s1.webp",focus:"50% 45%",lines:[
+    {who:null,kind:"narration",box:[4,3,54],text:"{아침} {여덟} {시}. {카페는} {벌써} {바빠요}.",en:"Eight in the morning. The café is already busy."}]},
+  {img:"img/s2.webp",focus:"55% 30%",lines:[
+    {who:"denis",kind:"speech",box:[3,2,44],text:"{밀라} {씨}, {안녕하세요}!",en:"Morning, Mila!"},
+    {who:"mila",kind:"speech",box:[4,64,50],text:"{데니스} {씨}! {오늘도} {일찍} {왔네요}.",en:"Denis! You’re early again today."}]},
+  {img:"img/s3.webp",focus:"50% 28%",lines:[
+    {who:"mila",kind:"speech",box:[3,74,46],text:"{여기} {있어요}, {따뜻한} {라테요}.",en:"Here you go, a warm latte."},
+    {who:"denis",kind:"speech",box:[51,84,46],text:"{고마워요}. {오늘은} {두} {잔} {주세요}.",en:"Thanks. Two cups today, please."}]},
+  {img:"img/s4.webp",focus:"50% 60%",lines:[
+    {who:null,kind:"narration",box:[3,2,40],text:"{밀라는} {컵에} {이름을} {써요}.",en:"Mila writes a name on each cup."},
+    {who:"mila",kind:"thought",box:[57,39,40],text:"{두} {잔}? {누구} {거지}?",en:"Two cups? Who’s the other one for?"}]},
+  {img:"img/s5.webp",focus:"50% 35%",lines:[
+    {who:"mila",kind:"speech",box:[4,2,52],text:"{이} {컵은}… {누구} {거예요}?",en:"This cup… whose is it?"},
+    {who:"denis",kind:"speech",box:[57,16,38],text:"{안나} {거예요}.",en:"It’s Anna’s."}]},
+  {img:"img/s6.webp",focus:"50% 32%",lines:[
+    {who:"denis",kind:"speech",box:[3,2,46],text:"{제} {여동생이에요}!",en:"She’s my little sister!"},
+    {who:"mila",kind:"thought",box:[54,2,43],text:"{아}, {다행이다}!",en:"Oh, thank goodness!"}]}
+];
+const LINES = [];
+SCENES.forEach((sc, si) => sc.lines.forEach((ln, k) => {
+  ln.scene = si; ln.k = k; ln.i = LINES.length; ln.plain = ln.text.replace(/[{}]/g, ""); LINES.push(ln);
+}));
+const firstLine = (si) => SCENES[si].lines[0].i;
+function wordsOf(lines){
+  const seen = new Map();
+  lines.forEach(ln => ln.text.replace(/\{([^}]+)\}/g, (_, s) => { const d = LEX[s]; if (d.pos !== "name" && !seen.has(d.l)) seen.set(d.l, [s, d]); return _; }));
+  return [...seen.values()];
+}
+const WORDS = wordsOf(LINES);
+const SAVED = new Set(["바쁘다", "주다", "이름"]);
+const READERS = [];
+
+function h(tag, attrs, ...kids){
+  const el = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs || {})){
+    if (v == null || v === false) continue;
+    if (k === "class") el.className = v;
+    else if (k === "html") el.innerHTML = v;
+    else el.setAttribute(k, v === true ? "" : v);
+  }
+  for (const kid of kids.flat(3)){
+    if (kid == null || kid === false) continue;
+    el.append(kid.nodeType ? kid : document.createTextNode(String(kid)));
+  }
+  return el;
+}
+function lineText(ln, o = {}){
+  const frag = document.createDocumentFragment();
+  ln.text.split(/(\{[^}]+\})/).forEach(part => {
+    if (!part) return;
+    const m = part.match(/^\{(.+)\}$/);
+    if (!m){ frag.append(part); return; }
+    const s = m[1], d = LEX[s];
+    frag.append(h("span", {class:"w", "data-s":s, "data-lemma":d.l, role:"button", tabindex:o.tab ? "0" : null},
+      h("span", {class:"wt"}, s), o.ruby !== false ? h("span", {class:"wr", "aria-hidden":"true"}, d.r) : null));
+  });
+  return frag;
+}
+const romLine = (ln) => ln.text.replace(/\{([^}]+)\}/g, (_, s) => LEX[s].r);
+
+// Speech: browser synthesis only when a Korean voice exists; the product plays recorded MiniMax audio.
+function koVoice(){ try { return speechSynthesis.getVoices().find(v => /^ko([-_]|$)/i.test(v.lang)); } catch (e) { return null; } }
+function speak(text, rate = 1){
+  try {
+    const v = koVoice(); if (!v) return false;
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text); u.voice = v; u.lang = v.lang; u.rate = Math.max(.5, Math.min(1.6, .92 * rate));
+    speechSynthesis.speak(u); return true;
+  } catch (e) { return false; }
+}
+function stopSpeech(){ try { speechSynthesis.cancel(); } catch (e) {} }
+function speaking(){ try { return speechSynthesis.speaking; } catch (e) { return false; } }
+try { speechSynthesis.getVoices(); } catch (e) {}
+
+function wordCard(s, d, o = {}){
+  const tags = [POS[d.pos] || d.pos, d.cefr, d.pol].filter(Boolean);
+  const showDict = d.l !== s || d.lt !== d.t;
+  return h("div", {class:"wc" + (o.compact ? " wc--compact" : "")},
+    h("div", {class:"wc-head"},
+      h("div", {}, h("p", {class:"wc-word", lang:"ko"}, s), h("p", {class:"wc-rom"}, d.r)),
+      h("button", {type:"button", class:"ib ib--soft", "data-act":"listen", "aria-label":"Listen to the word", html:ICON.sound})),
+    h("div", {class:"wc-tags"}, tags.map(t => h("span", {class:"tag"}, t))),
+    h("p", {class:"wc-tr"}, d.t),
+    showDict ? h("p", {class:"wc-dict"}, h("span", {class:"wc-k"}, "Dictionary form"), h("b", {lang:"ko"}, d.l), d.lr ? h("span", {class:"wc-lr"}, " " + d.lr) : null, " — ", d.lt) : null,
+    d.note ? h("div", {class:"wc-note"}, h("span", {class:"wc-k"}, "In this sentence"), h("p", {}, d.note)) : null,
+    d.br ? h("div", {class:"wc-gram"}, h("span", {class:"wc-k"}, "How it’s built"),
+      h("ul", {}, d.br.map(([p, role, m]) => h("li", {}, h("b", {lang:"ko"}, p), h("span", {class:"wc-role"}, role), h("span", {}, m))))) : null,
+    h("div", {class:"wc-acts"},
+      saveBtn(o.saved),
+      o.line != null ? h("button", {type:"button", class:"btn btn-ghost", "data-act":"line"}, h("span", {html:ICON.play, style:"display:inline-grid"}), "Play line") : null,
+      o.compact ? h("span", {class:"wc-kbd"}, h("kbd", {}, "S"), "save", h("kbd", {}, "L"), "listen", h("kbd", {}, "Esc"), "close") : null)
+  );
+}
+function saveBtn(saved){
+  return h("button", {type:"button", class:"btn " + (saved ? "btn-saved" : "btn-accent"), "data-act":"save", "aria-pressed":String(!!saved)},
+    h("span", {html:saved ? ICON.saved : ICON.save, style:"display:inline-grid"}), saved ? "Saved" : "Save word");
+}
+
+class Reader {
+  constructor(root, o = {}){
+    this.root = root; this.desk = !!o.desk; this.scale = 1;
+    this.s = {mode:o.mode || "read", scene:o.scene || 0, line:-1, playing:false, speed:1, cc:true, roman:false, size:1, look:null, follow:true, tab:"all"};
+    this.timers = []; this.active = null; this.sheetKind = null; this.lastST = 0; this.userScroll = 0;
+    READERS.push(this);
+    this.build();
+    this.render(true);
+  }
+  build(){
+    const r = this.el = h("div", {class:"rd" + (this.desk ? " is-desk" : ""), "data-mode":this.s.mode, tabindex:this.desk ? "0" : null, role:"region", "aria-label":"Reader prototype"});
+    r.__reader = this;
+    if (!this.desk) r.append(h("div", {class:"rd-status", "aria-hidden":"true"}, h("span", {}, "9:41"), h("span", {class:"rd-island"}), h("span", {class:"rd-sys", html:ICON.status})));
+    this.seg = h("div", {class:"seg", role:"group", "aria-label":"Reading mode"},
+      MODES.map(m => h("button", {type:"button", "data-act":"mode", "data-v":m.id, "aria-pressed":String(m.id === this.s.mode)}, m.label)));
+    this.pill = h("button", {type:"button", class:"pill", "data-act":"settings", "aria-haspopup":"dialog", "aria-label":"Language, level and display"}, "KO · A2", h("span", {html:ICON.chevD, style:"display:inline-grid"}));
+    const back = h("button", {type:"button", class:"ib", "aria-label":"Back to library", html:ICON.back});
+    const left = this.desk ? h("div", {class:"head-left"}, back, h("div", {class:"head-title"}, h("b", {}, "Corner Café"), h("span", {}, "Episode 3 · ", h("span", {lang:"ko"}, "두 잔"), " · Two Cups"))) : back;
+    this.prog = h("i", {class:"rd-prog"});
+    this.head = h("div", {class:"rd-head"}, left, this.seg, h("div", {class:"head-right"}, this.pill), this.prog);
+    r.append(this.head);
+    if (this.desk) r.append(this.rail = h("nav", {class:"rd-rail", "aria-label":"Scenes"}));
+    this.main = h("div", {class:"rd-main"});
+    this.scroll = h("div", {class:"rd-scroll"});
+    this.mo = h("div", {class:"mo"});
+    this.player = this.buildPlayer();
+    this.followBtn = h("button", {type:"button", class:"rd-follow", "data-act":"follow", hidden:true}, "Back to the voice");
+    this.pop = h("div", {class:"rd-pop", role:"dialog", "aria-label":"Word"});
+    this.main.append(this.scroll, this.mo, this.followBtn, this.player);
+    r.append(this.main);
+    if (this.desk) r.append(this.side = h("aside", {class:"rd-side", "aria-label":"Vocabulary"}));
+    this.sheet = h("div", {class:"rd-sheet", role:"dialog", "aria-modal":"false", "aria-hidden":"true"});
+    this.toastEl = h("div", {class:"rd-toast", role:"status"});
+    r.append(this.sheet, this.toastEl);
+    if (!this.desk) r.append(h("i", {class:"rd-home", "aria-hidden":"true"}));
+    this.root.append(r);
+    r.addEventListener("click", (e) => this.click(e));
+    this.scroll.addEventListener("scroll", () => this.onScroll(), {passive:true});
+    ["wheel", "touchmove"].forEach(ev => this.scroll.addEventListener(ev, () => { this.userScroll = performance.now(); }, {passive:true}));
+    if (this.desk) r.addEventListener("keydown", (e) => this.key(e));
+  }
+  buildPlayer(){
+    return h("div", {class:"rd-player"},
+      h("img", {class:"pl-av", src:SCENES[0].img, alt:""}),
+      h("div", {class:"pl-meta"}, h("p", {class:"pl-who"}), h("p", {class:"pl-txt", lang:"ko"})),
+      h("div", {class:"pl-ctl"},
+        h("button", {type:"button", class:"ib ib--sm", "data-act":"prev", "aria-label":"Previous line", html:ICON.prev}),
+        h("button", {type:"button", class:"pl-play", "data-act":"play", "aria-label":"Play", html:ICON.play}),
+        h("button", {type:"button", class:"ib ib--sm", "data-act":"next", "aria-label":"Next line", html:ICON.next}),
+        h("button", {type:"button", class:"pl-speed", "data-act":"speed", "aria-label":"Playback speed"}, "1×")),
+      h("span", {class:"pl-bar", "aria-hidden":"true"}, h("i")));
+  }
+
+  // ── rendering ──
+  render(first){
+    this.stop(true);
+    this.closeWord();
+    if (this.sheetKind) this.closeSheet();
+    this.el.dataset.mode = this.s.mode;
+    this.seg.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.v === this.s.mode)));
+    this.el.classList.remove("chrome-off");
+    this.followBtn.hidden = true;
+    this.moDlg = null; this.moSegs = null; this.col = null;
+    if (this.s.mode === "read") this.renderRead();
+    else if (this.s.mode === "practice") this.renderPractice();
+    else this.renderMotion();
+    if (this.desk){ this.renderRail(); this.renderSide(); }
+    this.paintSaved(); this.updatePlayer(); this.updateProg();
+    if (!first && !RM.matches) this.main.animate([{opacity:0}, {opacity:1}], {duration:220, easing:"ease-out"});
+  }
+  renderRead(){
+    this.mo.replaceChildren();
+    const col = this.col = h("div", {class:"rd-col"});
+    col.append(h("header", {class:"ep"},
+      h("span", {class:"ep-k"}, "Corner Café · Episode 3"),
+      h("p", {class:"ep-t", lang:"ko"}, "두 잔"),
+      h("p", {class:"ep-s"}, "Two Cups"),
+      h("p", {class:"ep-m"}, `A2 · 6 min · ${LINES.length} lines · ${WORDS.length} words`)));
+    SCENES.forEach((sc, si) => {
+      const fig = h("figure", {class:"pnl", "data-scene":si}, h("img", {src:sc.img, alt:"", loading:si < 3 ? "eager" : "lazy", decoding:"async"}));
+      sc.lines.forEach(ln => {
+        const [x, y, w] = ln.box;
+        fig.append(h("div", {class:`bb bb--${ln.kind}`, "data-line":ln.i, style:`left:${x}%;top:${y}%;width:${w}%`},
+          h("span", {class:"bb-text", lang:"ko"}, lineText(ln, {tab:this.desk})),
+          h("span", {class:"bb-tr"}, h("button", {type:"button", class:"bb-play", "data-play-line":ln.i, "aria-label":"Play this line", html:ICON.play}), h("span", {}, ln.en))));
+      });
+      col.append(fig);
+    });
+    col.append(h("section", {class:"ep-end"},
+      h("span", {class:"ep-k"}, "End of episode 3"),
+      h("p", {class:"ep-end-t"}, `You met ${WORDS.length} words and saved `, h("span", {class:"saved-count"}, SAVED.size), "."),
+      h("div", {class:"ep-end-a"},
+        h("button", {type:"button", class:"btn btn-accent", "data-act":"review"}, "Review saved words"),
+        h("button", {type:"button", class:"btn btn-ghost", "data-act":"next-ep"}, "Next: Episode 4 · ", h("span", {lang:"ko"}, "비 오는 날")))));
+    col.append(this.pop);
+    this.scroll.replaceChildren(col);
+    this.scroll.scrollTop = 0;
+    requestAnimationFrame(() => { this.fit(); if (this.s.scene > 0) this.setScene(this.s.scene, true, true); });
+  }
+  renderPractice(){
+    this.mo.replaceChildren();
+    this.col = h("div", {class:"rd-col pr"});
+    this.scroll.replaceChildren(this.col);
+    this.drawPractice();
+  }
+  drawPractice(){
+    const si = this.s.scene, sc = SCENES[si], N = SCENES.length;
+    this.col.replaceChildren(
+      h("div", {class:"pr-top"},
+        h("span", {class:"ep-k"}, `Scene ${si + 1} of ${N}`),
+        h("div", {class:"pr-nav"},
+          h("button", {type:"button", class:"ib ib--sm", "data-act":"scene-prev", "aria-label":"Previous scene", disabled:si === 0, html:ICON.chevL}),
+          h("button", {type:"button", class:"ib ib--sm", "data-act":"scene-next", "aria-label":"Next scene", disabled:si === N - 1, html:ICON.chevR}))),
+      h("div", {class:"pr-art"}, h("img", {src:sc.img, alt:"", style:`object-position:${sc.focus}`})),
+      h("ol", {class:"pr-lines"}, sc.lines.map(ln => this.practiceLine(ln))),
+      h("div", {class:"pr-words"},
+        h("span", {class:"ep-k"}, "Words in this scene"),
+        h("div", {class:"pr-chips"}, wordsOf(sc.lines).map(([s, d]) => h("button", {type:"button", class:"pr-chip", "data-s":s, "data-lemma":d.l},
+          h("span", {class:"pr-chip-l", lang:"ko"}, d.l), h("span", {class:"pr-chip-t"}, d.lt))))),
+      h("div", {class:"pr-foot"},
+        h("button", {type:"button", class:"btn btn-ghost", "data-act":"scene-prev", disabled:si === 0}, "Previous"),
+        h("button", {type:"button", class:"btn btn-accent", "data-act":"scene-next", disabled:si === N - 1}, si === N - 1 ? "Last scene" : "Next scene")),
+      this.pop);
+    this.scroll.scrollTop = 0;
+    this.paintSaved(); this.updateProg();
+  }
+  practiceLine(ln){
+    const c = ln.who ? CAST[ln.who] : null;
+    return h("li", {class:"pr-line", "data-line":ln.i},
+      c ? h("img", {class:"av", src:c.img, alt:""}) : h("span", {class:"av", "aria-hidden":"true"}, "N"),
+      h("div", {class:"pr-body"},
+        h("p", {class:"pr-who"}, c ? c.name : "Narrator", ln.kind === "thought" ? h("span", {class:"pr-kind"}, "thinking") : null),
+        h("p", {class:"pr-ko", lang:"ko"}, lineText(ln, {ruby:false, tab:this.desk})),
+        h("p", {class:"pr-rom"}, romLine(ln)),
+        h("button", {type:"button", class:"pr-tr", "aria-expanded":"false", "data-reveal":""},
+          h("span", {html:ICON.eye, style:"display:inline-grid"}), h("span", {class:"pr-tr-hint"}, "Show translation"), h("span", {class:"pr-tr-t"}, ln.en)),
+        h("div", {class:"pr-acts"},
+          h("button", {type:"button", class:"chipbtn", "data-play-line":ln.i}, h("span", {html:ICON.play, style:"display:inline-grid"}), "Listen"),
+          h("button", {type:"button", class:"chipbtn", "data-play-line":ln.i, "data-slow":""}, "0.7×"))));
+  }
+  renderMotion(){
+    this.scroll.replaceChildren();
+    this.moBack = h("img", {class:"mo-back", alt:"", "aria-hidden":"true"});
+    this.moSegs = h("div", {class:"mo-segs", "aria-hidden":"true"}, SCENES.map(() => h("span", {class:"mo-seg"}, h("i"))));
+    this.moFrame = h("div", {class:"mo-frame", "aria-label":"Scene, tap to play or pause"});
+    this.moDlg = h("div", {class:"mo-dlg", "aria-live":"polite"});
+    this.mo.replaceChildren(this.moBack, this.moSegs, this.moFrame, this.moDlg,
+      h("div", {class:"mo-ctrl"},
+        h("button", {type:"button", class:"mo-sp", "data-act":"speed", "aria-label":"Playback speed"}, this.fmtSpeed()),
+        h("button", {type:"button", class:"ib", "data-act":"prev", "aria-label":"Previous line", html:ICON.prev}),
+        h("button", {type:"button", class:"mo-play", "data-act":"play", "aria-label":"Play", html:ICON.play}),
+        h("button", {type:"button", class:"ib", "data-act":"next", "aria-label":"Next line", html:ICON.next}),
+        h("button", {type:"button", class:"ib", "data-act":"cc", "aria-label":"Subtitles", "aria-pressed":String(this.s.cc), html:ICON.cc})),
+      this.pop);
+    const l = this.s.line;
+    const k = l >= 0 && LINES[l].scene === this.s.scene ? LINES[l].k : 0;
+    this.showMotionScene(this.s.scene, k);
+  }
+  showMotionScene(si, k = 0){
+    const sc = SCENES[si]; this.s.scene = si;
+    this.moBack.src = sc.img;
+    this.moFrame.replaceChildren(h("img", {src:sc.img, alt:"", style:`object-position:${sc.focus};transform-origin:${sc.focus}`}));
+    this.showMotionLine(sc.lines[k]);
+    this.markRail();
+  }
+  showMotionLine(ln){
+    const c = ln.who ? CAST[ln.who] : null;
+    this.moDlg.replaceChildren(
+      c ? h("img", {class:"av av--lg", src:c.img, alt:""}) : h("span", {class:"av av--lg", "aria-hidden":"true"}, "N"),
+      h("div", {},
+        h("p", {class:"mo-who"}, c ? c.name : "Narrator", ln.kind === "thought" ? " · thinking" : ""),
+        h("p", {class:"mo-ko", lang:"ko", "data-line":ln.i}, lineText(ln, {tab:this.desk})),
+        this.s.cc ? h("p", {class:"mo-en"}, ln.en) : null));
+    this.moDlg.style.transform = "";
+    if (!RM.matches) this.moDlg.animate([{opacity:0, transform:"translateY(6px)"}, {opacity:1, transform:"none"}], {duration:240, easing:"cubic-bezier(.2,.8,.2,1)"});
+    this.paintSaved();
+  }
+  segProgress(){
+    if (!this.moSegs) return;
+    const ln = LINES[this.s.line];
+    const n = SCENES[this.s.scene].lines.length;
+    const k = ln && ln.scene === this.s.scene ? ln.k + 1 : 0;
+    [...this.moSegs.children].forEach((seg, i) => {
+      seg.firstChild.style.width = (i < this.s.scene ? 100 : i > this.s.scene ? 0 : Math.max(6, k / n * 100)) + "%";
+    });
+  }
+  renderRail(){
+    this.rail.replaceChildren(
+      h("div", {class:"rail-ep"}, h("span", {class:"ep-k"}, "Episode 3 · A2"), h("p", {class:"rail-t"}, h("span", {lang:"ko"}, "두 잔"), " ", h("em", {}, "Two Cups"))),
+      h("ol", {class:"rail-list"}, SCENES.map((sc, si) => h("li", {},
+        h("button", {type:"button", class:"rail-it", "data-act":"goto", "data-v":si, "aria-current":si === this.s.scene ? "true" : null},
+          h("img", {src:sc.img, alt:""}), h("span", {class:"rail-n"}, `Scene ${si + 1}`), h("span", {class:"rail-x", lang:"ko"}, sc.lines[0].plain))))));
+  }
+  markRail(){
+    if (!this.rail) return;
+    this.rail.querySelectorAll(".rail-it").forEach((b, i) => { if (i === this.s.scene) b.setAttribute("aria-current", "true"); else b.removeAttribute("aria-current"); });
+  }
+  renderSide(){
+    const saved = WORDS.filter(([, d]) => SAVED.has(d.l));
+    const list = this.s.tab === "saved" ? saved : WORDS;
+    const tab = (id, label) => h("button", {type:"button", class:"tab", role:"tab", "aria-selected":String(this.s.tab === id), "data-act":"tab", "data-v":id}, label);
+    this.side.replaceChildren(
+      h("div", {class:"side-head"}, h("p", {class:"side-t"}, "Vocabulary"),
+        h("div", {class:"tabs", role:"tablist"}, tab("all", `This episode · ${WORDS.length}`), tab("saved", `Saved · ${saved.length}`))),
+      list.length ? h("ul", {class:"side-list"}, list.map(([s, d]) => h("li", {class:"vli", "data-l":d.l},
+        h("button", {type:"button", class:"vrow" + (SAVED.has(d.l) ? " saved" : ""), "data-act":"find", "data-v":s},
+          h("span", {class:"vrow-l"}, h("span", {class:"vl", lang:"ko"}, d.l), h("span", {class:"vrow-r"}, d.lr || d.r)),
+          h("span", {class:"vrow-t"}, d.lt)),
+        h("button", {type:"button", class:"ib ib--sm", "data-act":"save-lemma", "data-v":d.l, "aria-label":SAVED.has(d.l) ? "Remove from saved" : "Save", "aria-pressed":String(SAVED.has(d.l)), html:SAVED.has(d.l) ? ICON.saved : ICON.save}))))
+        : h("div", {class:"side-list"}, h("div", {class:"empty"}, h("b", {}, "Nothing saved yet"), "Tap a word in the story, then Save.")),
+      h("div", {class:"side-foot"},
+        h("button", {type:"button", class:"btn btn-ghost btn-block", "data-act":"review", disabled:saved.length === 0}, `Review ${saved.length} saved words`),
+        h("p", {class:"side-kbd"}, h("kbd", {}, "Space"), "play", h("kbd", {}, "←"), h("kbd", {}, "→"), "line", h("kbd", {}, "J"), h("kbd", {}, "K"), "scene")));
+    if (this.active) this.markSide(LEX[this.active.dataset.s].l);
+  }
+  markSide(lemma){
+    if (!this.side) return;
+    this.side.querySelectorAll(".vli").forEach(li => { if (lemma && li.dataset.l === lemma) li.setAttribute("aria-current", "true"); else li.removeAttribute("aria-current"); });
+  }
+  paintSaved(){
+    this.el.querySelectorAll(".w[data-lemma], .pr-chip[data-lemma]").forEach(n => n.classList.toggle("saved", SAVED.has(n.dataset.lemma)));
+    this.el.querySelectorAll(".saved-count").forEach(n => { n.textContent = SAVED.size; });
+  }
+  fit(){
+    this.el.querySelectorAll(".pnl").forEach(fig => {
+      const H = fig.clientHeight, W = fig.clientWidth; if (!W) return;
+      fig.querySelectorAll(".bb").forEach(b => {
+        b.style.translate = "";
+        const oy = b.offsetTop + b.offsetHeight - (H - 6), ox = b.offsetLeft + b.offsetWidth - (W - 6);
+        const dy = oy > 0 ? -Math.min(oy, b.offsetTop - 4) : 0, dx = ox > 0 ? -Math.min(ox, b.offsetLeft - 4) : 0;
+        if (dx || dy) b.style.translate = `${dx}px ${dy}px`;
+      });
+    });
+  }
+
+  // ── navigation ──
+  setMode(m){
+    if (m === this.s.mode) return;
+    const wasPlaying = this.s.playing;
+    // The open word, then the current line, pins the place better than the scroll position.
+    const host = this.active && this.active.closest("[data-line]");
+    if (host) this.s.scene = LINES[+host.dataset.line].scene;
+    else if (this.s.line >= 0) this.s.scene = LINES[this.s.line].scene;
+    this.s.mode = m;
+    this.render();
+    if (wasPlaying) this.play(this.s.line >= 0 ? this.s.line : firstLine(this.s.scene));
+  }
+  setScene(si, instant, keepLine){
+    si = Math.max(0, Math.min(SCENES.length - 1, si));
+    const wasPlaying = this.s.playing;
+    this.s.scene = si;
+    this.closeWord();
+    if (this.s.mode === "read"){
+      const p = this.scroll.querySelector(`.pnl[data-scene="${si}"]`);
+      if (p){
+        const vr = this.scroll.getBoundingClientRect(), pr = p.getBoundingClientRect();
+        this.scrollTo(this.scroll.scrollTop + (pr.top - vr.top) / this.scale - (this.desk ? 16 : 100), instant);
+      }
+    } else if (this.s.mode === "practice") this.drawPractice();
+    else this.showMotionScene(si, 0);
+    if (keepLine) { this.markRail(); return; }
+    if (wasPlaying) this.runLine(firstLine(si));
+    else {
+      this.s.line = this.s.mode === "motion" ? firstLine(si) : -1;
+      this.markSpeaking(this.s.mode === "motion" ? this.s.line : -1);
+      this.segProgress(); this.updatePlayer();
+    }
+    this.markRail(); this.updateProg();
+  }
+  sceneAtTop(){
+    const st = this.scroll.scrollTop + this.scroll.clientHeight * .42;
+    let cur = 0;
+    this.scroll.querySelectorAll(".pnl").forEach((p, i) => { if (p.offsetTop <= st) cur = i; });
+    return cur;
+  }
+  onScroll(){
+    const st = this.scroll.scrollTop, dy = st - this.lastST; this.lastST = st;
+    const programmatic = performance.now() < (this.progScrollUntil || 0);
+    if (this.s.mode === "read"){
+      if (!this.desk && !programmatic){
+        if (dy > 6 && st > 140) this.el.classList.add("chrome-off");
+        else if (dy < -6 || st < 60) this.el.classList.remove("chrome-off");
+      }
+      const sc = this.sceneAtTop();
+      if (sc !== this.s.scene){ this.s.scene = sc; this.markRail(); }
+      if (!this.s.playing && this.s.line < 0) this.updatePlayer();
+    }
+    this.updateProg();
+    if (programmatic) return;
+    if (this.sheetKind === "word" && Math.abs(st - this.sheetAt) > 160) this.closeWord();
+    if (this.s.playing && performance.now() - this.userScroll < 250 && this.s.follow && this.s.mode === "read"){
+      this.s.follow = false; this.followBtn.hidden = false;
+    }
+  }
+  updateProg(){
+    let p = 0;
+    if (this.s.mode === "read"){ const max = this.scroll.scrollHeight - this.scroll.clientHeight; p = max > 0 ? this.scroll.scrollTop / max : 0; }
+    else if (this.s.mode === "practice") p = (this.s.scene + 1) / SCENES.length;
+    this.prog.style.width = (p * 100).toFixed(1) + "%";
+  }
+  scrollTo(top, instant){
+    // Programmatic scrolls must not count as the reader moving on (closing the sheet, dropping "follow").
+    this.progScrollUntil = performance.now() + (instant || RM.matches ? 120 : 700);
+    this.scroll.scrollTo({top, behavior:(instant || RM.matches) ? "auto" : "smooth"});
+  }
+  lineEl(i){ return this.el.querySelector(`[data-line="${i}"]`); }
+  markSpeaking(i){
+    this.el.querySelectorAll(".is-speaking").forEach(n => n.classList.remove("is-speaking"));
+    if (i < 0) return;
+    if (this.s.mode === "motion"){ this.moDlg && this.moDlg.classList.add("is-speaking"); return; }
+    const el = this.lineEl(i); if (el) el.classList.add("is-speaking");
+  }
+  reveal(i, force){
+    if ((!force && !this.s.follow) || this.s.mode === "motion") return;
+    const el = this.lineEl(i); if (!el) return;
+    const vr = this.scroll.getBoundingClientRect(), er = el.getBoundingClientRect();
+    const top = (er.top - vr.top) / this.scale, bottom = (er.bottom - vr.top) / this.scale, H = this.scroll.clientHeight;
+    const upper = this.desk ? 20 : 108, lower = H - (this.s.mode === "read" ? 124 : 40);
+    if (top < upper || bottom > lower){
+      this.scrollTo(this.scroll.scrollTop + top - H * .36);
+    }
+  }
+
+  // ── playback ──
+  later(fn, ms){ this.timers.push(setTimeout(fn, ms)); }
+  clear(){ this.timers.forEach(clearTimeout); this.timers = []; }
+  fmtSpeed(){ return (this.s.speed === 1 ? "1" : String(this.s.speed)) + "×"; }
+  pauseOthers(){ READERS.forEach(r => { if (r !== this && r.s.playing) r.pause(); }); }
+  play(from){
+    this.pauseOthers();
+    if (from == null){
+      const l = this.s.line;
+      from = (l >= 0 && l < LINES.length - 1 && LINES[l].scene === this.s.scene) ? l : firstLine(this.s.scene);
+    }
+    this.s.playing = true; this.s.follow = true; this.followBtn.hidden = true;
+    this.runLine(from);
+  }
+  playLine(i, rate){
+    this.pauseOthers();
+    this.s.playing = true; this.s.follow = true;
+    this.runLine(i, {once:true, rate});
+  }
+  pause(){
+    this.s.playing = false; this.clear(); stopSpeech();
+    this.el.querySelectorAll(".w.k-on").forEach(w => w.classList.remove("k-on"));
+    this.updatePlayer();
+  }
+  stop(silent){ this.s.playing = false; this.clear(); stopSpeech(); if (!silent) this.updatePlayer(); }
+  toggle(){ this.s.playing ? this.pause() : this.play(); }
+  runLine(i, o = {}){
+    this.clear(); stopSpeech();
+    const ln = LINES[i]; if (!ln) return;
+    this.s.line = i;
+    if (this.s.mode === "motion"){
+      if (ln.scene !== this.s.scene) this.showMotionScene(ln.scene, ln.k); else this.showMotionLine(ln);
+      this.segProgress();
+    } else if (this.s.mode === "practice" && ln.scene !== this.s.scene){ this.s.scene = ln.scene; this.drawPractice(); }
+    else if (this.s.mode === "read"){ this.s.scene = ln.scene; }
+    this.markSpeaking(i); this.reveal(i); this.updatePlayer(); this.markRail();
+    const lineNode = this.lineEl(i);
+    const words = lineNode ? [...lineNode.querySelectorAll(".w")] : [];
+    const sp = this.s.speed * (o.rate || 1);
+    const voiced = speak(ln.plain, sp);
+    let t = 220 / sp;
+    words.forEach(w => {
+      this.later(() => { words.forEach(x => x.classList.remove("k-on")); w.classList.add("k-on"); }, t);
+      t += (150 + 95 * [...w.dataset.s].length) / sp;
+    });
+    this.later(() => {
+      words.forEach(x => x.classList.remove("k-on"));
+      const next = () => {
+        if (o.once || !this.s.playing || i + 1 >= LINES.length){ this.s.playing = false; this.updatePlayer(); return; }
+        this.runLine(i + 1);
+      };
+      const wait = (n) => { if (voiced && speaking() && n < 30) this.later(() => wait(n + 1), 120); else this.later(next, 380 / sp); };
+      wait(0);
+    }, t);
+  }
+  step(d){
+    let i = this.s.line;
+    if (i < 0) i = firstLine(this.s.scene) - (d > 0 ? 1 : 0);
+    const n = Math.max(0, Math.min(LINES.length - 1, i + d));
+    if (this.s.playing){ this.runLine(n); return; }
+    this.s.line = n; const ln = LINES[n];
+    if (this.s.mode === "motion"){ if (ln.scene !== this.s.scene) this.showMotionScene(ln.scene, ln.k); else this.showMotionLine(ln); this.segProgress(); }
+    else if (this.s.mode === "practice" && ln.scene !== this.s.scene){ this.s.scene = ln.scene; this.drawPractice(); }
+    else if (this.s.mode === "read") this.s.scene = ln.scene;
+    this.markSpeaking(n); this.s.follow = true; this.followBtn.hidden = true; this.reveal(n, true); this.updatePlayer(); this.markRail();
+  }
+  updatePlayer(){
+    const i = this.s.line, ln = LINES[i];
+    const p = this.player;
+    const icon = this.s.playing ? ICON.pause : ICON.play, label = this.s.playing ? "Pause" : "Play";
+    this.el.querySelectorAll('.pl-play[data-act="play"], .mo-play').forEach(b => { b.innerHTML = icon; b.setAttribute("aria-label", label); });
+    this.el.querySelectorAll('[data-act="speed"]').forEach(b => { b.textContent = this.fmtSpeed(); });
+    const who = p.querySelector(".pl-who"), txt = p.querySelector(".pl-txt"), av = p.querySelector(".pl-av");
+    if (ln){
+      const c = ln.who ? CAST[ln.who] : null;
+      who.textContent = c ? c.name : "Narrator"; txt.textContent = ln.plain;
+      av.src = c ? c.img : SCENES[ln.scene].img;
+    } else {
+      who.textContent = `Scene ${this.s.scene + 1} of ${SCENES.length}`;
+      txt.textContent = "Listen from here"; av.src = SCENES[this.s.scene].img;
+    }
+    p.querySelector(".pl-bar i").style.width = (ln ? (i + 1) / LINES.length * 100 : 0) + "%";
+  }
+
+  // ── word card / sheet ──
+  openWord(w, instant){
+    if (this.active === w){ this.closeWord(); return; }
+    if (this.s.mode === "motion" && this.s.playing){ this.pause(); this.resumeAfterWord = true; }
+    if (this.sheetKind === "settings") this.closeSheet();
+    if (this.active) this.active.classList.remove("is-active");
+    this.active = w; w.classList.add("is-active");
+    const s = w.dataset.s, d = LEX[s];
+    const host = w.closest("[data-line]");
+    const card = wordCard(s, d, {saved:SAVED.has(d.l), compact:this.desk, line:host ? +host.dataset.line : null});
+    if (this.desk){
+      this.pop.replaceChildren(card);
+      this.placePop(w);
+      this.pop.classList.add("open");
+      this.markSide(d.l);
+    } else {
+      this.sheetKind = "word";
+      this.sheet.replaceChildren(h("i", {class:"grab", "aria-hidden":"true"}), card);
+      this.sheet.scrollTop = 0;
+      this.openSheet();
+      this.sheetAt = this.scroll.scrollTop;
+      this.keepVisible(w, instant);
+    }
+  }
+  closeWord(){
+    if (this.active){ this.active.classList.remove("is-active"); this.active = null; }
+    this.resumeAfterWord = false;
+    this.pop.classList.remove("open");
+    if (this.sheetKind === "word") this.closeSheet();
+    if (this.moDlg) this.moDlg.style.transform = "";
+    this.el.classList.remove("word-open");
+    this.markSide(null);
+  }
+  openSheet(){ this.sheet.classList.add("open"); this.sheet.setAttribute("aria-hidden", "false"); }
+  closeSheet(){ this.sheet.classList.remove("open"); this.sheet.setAttribute("aria-hidden", "true"); this.sheetKind = null; }
+  keepVisible(w, instant){
+    requestAnimationFrame(() => {
+      const sh = this.sheet.offsetHeight, H = this.el.clientHeight;
+      const target = w.closest("[data-line]") || w;
+      if (this.s.mode === "motion"){
+        const dr = this.moDlg.getBoundingClientRect(), rr = this.el.getBoundingClientRect();
+        const lift = Math.max(0, (dr.bottom - rr.top) - (H - sh - 14));
+        this.moDlg.style.transform = `translateY(${-lift}px)`;
+        this.el.classList.add("word-open");
+        return;
+      }
+      const vr = this.scroll.getBoundingClientRect(), wr = target.getBoundingClientRect();
+      const top = wr.top - vr.top, bottom = wr.bottom - vr.top, limit = H - sh - 16;
+      let d = 0;
+      if (bottom > limit) d = Math.min(bottom - limit, top - 104);
+      else if (top < 104) d = top - 104;
+      if (d){
+        const to = this.scroll.scrollTop + d;
+        this.sheetAt = to;
+        this.scrollTo(to, instant);
+      }
+    });
+  }
+  placePop(w){
+    const box = this.pop.parentElement; if (!box) return;
+    const sc = this.scale;
+    const br = box.getBoundingClientRect(), wr = w.getBoundingClientRect(), mr = this.main.getBoundingClientRect();
+    const x = (wr.left + wr.width / 2 - br.left) / sc, yT = (wr.top - br.top) / sc, yB = (wr.bottom - br.top) / sc;
+    const pw = this.pop.offsetWidth || 320, cw = box.clientWidth, ph = this.pop.offsetHeight;
+    const left = Math.min(Math.max(8, x - pw / 2), Math.max(8, cw - pw - 8));
+    const visBottom = (mr.bottom - br.top) / sc - (this.s.mode === "read" ? 96 : 20);
+    const below = yB + 12 + ph <= visBottom;
+    this.pop.style.left = left + "px";
+    this.pop.style.top = (below ? yB + 12 : Math.max(8, yT - ph - 12)) + "px";
+    this.pop.style.setProperty("--ax", Math.max(18, Math.min(pw - 18, x - left)) + "px");
+    this.pop.classList.toggle("above", !below);
+  }
+  toggleSave(lemma){
+    if (!lemma && this.active) lemma = LEX[this.active.dataset.s].l;
+    if (!lemma) return;
+    const on = !SAVED.has(lemma);
+    on ? SAVED.add(lemma) : SAVED.delete(lemma);
+    READERS.forEach(r => { r.paintSaved(); if (r.desk) r.renderSide(); });
+    const holder = this.desk ? this.pop : this.sheet;
+    const b = holder.querySelector('[data-act="save"]');
+    if (b && this.active && LEX[this.active.dataset.s].l === lemma) b.replaceWith(saveBtn(on));
+    this.toast(on ? `Saved · ${SAVED.size} words in your vocabulary` : "Removed from your vocabulary");
+  }
+  toast(msg){
+    this.toastEl.textContent = msg; this.toastEl.classList.add("show");
+    clearTimeout(this.tt); this.tt = setTimeout(() => this.toastEl.classList.remove("show"), 2000);
+  }
+  openSettings(){
+    if (this.sheetKind === "settings"){ this.closeSheet(); return; }
+    this.closeWord();
+    this.sheetKind = "settings";
+    const opt = (act, v, label, on, extra) => h("button", {type:"button", class:"opt", "data-act":act, "data-v":v, "aria-pressed":String(!!on)}, label, extra ? h("span", {class:"opt-x"}, extra) : null);
+    const sw = (act, label, on) => h("button", {type:"button", class:"sw-row", role:"switch", "aria-checked":String(!!on), "data-act":act}, h("span", {}, label), h("i", {class:"sw-k", "aria-hidden":"true"}));
+    const row = (label, ...kids) => h("div", {}, h("span", {class:"wc-k"}, label), ...kids);
+    this.sheet.replaceChildren(h("i", {class:"grab", "aria-hidden":"true"}),
+      h("div", {class:"set"},
+        h("p", {class:"set-t"}, "Reading settings"),
+        row("I’m learning", h("div", {class:"opts"}, opt("lang", "ko", "Korean", true), opt("lang", "en", "English", false, "edition"), opt("lang", "ja", "Japanese", false, "soon"))),
+        row("Translate into", h("div", {class:"opts"}, opt("native", "en", "English", true), opt("native", "ru", "Русский", false))),
+        row("Level of this story", h("div", {class:"opts"}, ["A1", "A2", "B1"].map(v => opt("level", v, v, v === "A2")))),
+        h("div", {}, sw("roman", "Romanization above words", this.s.roman), sw("tr-all", "Translation under every bubble", this.el.classList.contains("tr-all"))),
+        row("Text size", h("div", {class:"opts"}, opt("size", "0.9", "A−", this.s.size === .9), opt("size", "1", "A", this.s.size === 1), opt("size", "1.15", "A+", this.s.size === 1.15))),
+        row("Appearance", h("div", {class:"opts"}, opt("look", "auto", "Auto", !this.s.look), opt("look", "light", "Paper", this.s.look === "light"), opt("look", "dark", "Midnight", this.s.look === "dark")))));
+    this.sheet.scrollTop = 0;
+    this.openSheet();
+  }
+  pick(el){ el.parentElement.querySelectorAll(".opt").forEach(b => b.setAttribute("aria-pressed", String(b === el))); }
+
+  // ── input ──
+  click(e){
+    const t = e.target;
+    const w = t.closest(".w");
+    if (w && this.el.contains(w)){ e.stopPropagation(); this.openWord(w); return; }
+    const chip = t.closest(".pr-chip");
+    if (chip){ const w2 = this.col && this.col.querySelector(`.w[data-s="${chip.dataset.s}"]`); if (w2) this.openWord(w2); return; }
+    const pl = t.closest("[data-play-line]");
+    if (pl){ this.playLine(+pl.dataset.playLine, pl.hasAttribute("data-slow") ? .7 : 1); return; }
+    const rv = t.closest("[data-reveal]");
+    if (rv){ rv.setAttribute("aria-expanded", rv.getAttribute("aria-expanded") === "true" ? "false" : "true"); return; }
+    const act = t.closest("[data-act]");
+    if (act && !act.disabled){ this.action(act.dataset.act, act); return; }
+    const bb = t.closest(".bb");
+    if (bb){ bb.classList.toggle("show-tr"); this.fit(); return; }
+    if (t.closest(".rd-sheet, .rd-pop, .rd-player, .rd-head, .rd-side, .rd-rail, .mo-ctrl")) return;
+    if (this.active){ const resume = this.resumeAfterWord; this.closeWord(); if (resume) this.play(); return; }
+    if (this.sheetKind === "settings"){ this.closeSheet(); return; }
+    if (this.s.mode === "motion" && t.closest(".mo-frame")){ this.toggle(); return; }
+    if (this.s.mode === "read" && !this.desk) this.el.classList.toggle("chrome-off");
+  }
+  action(a, el){
+    const v = el.dataset.v;
+    switch (a){
+      case "mode": this.setMode(v); break;
+      case "settings": this.openSettings(); break;
+      case "play": this.toggle(); break;
+      case "prev": this.step(-1); break;
+      case "next": this.step(1); break;
+      case "speed": {
+        const seq = [1, 1.25, 1.5, .75]; this.s.speed = seq[(seq.indexOf(this.s.speed) + 1) % seq.length];
+        this.updatePlayer(); this.toast(`Speed ${this.fmtSpeed()}`); break;
+      }
+      case "cc":
+        this.s.cc = !this.s.cc; el.setAttribute("aria-pressed", String(this.s.cc));
+        if (this.moDlg){ const l = LINES[this.s.line] && LINES[this.s.line].scene === this.s.scene ? LINES[this.s.line] : SCENES[this.s.scene].lines[0]; this.showMotionLine(l); this.markSpeaking(this.s.line); }
+        break;
+      case "follow": this.s.follow = true; this.followBtn.hidden = true; this.reveal(this.s.line, true); break;
+      case "save": this.toggleSave(); break;
+      case "save-lemma": this.toggleSave(v); break;
+      case "listen": {
+        if (!this.active) break;
+        const ok = speak(this.active.dataset.s, 1);
+        if (!ok) this.toast("No Korean voice here · the app plays recorded audio");
+        break;
+      }
+      case "line": { const host = this.active && this.active.closest("[data-line]"); if (host) this.playLine(+host.dataset.line); break; }
+      case "scene-prev": this.setScene(this.s.scene - 1); break;
+      case "scene-next": this.setScene(this.s.scene + 1); break;
+      case "goto": this.setScene(+v); break;
+      case "tab": this.s.tab = v; this.renderSide(); break;
+      case "find": {
+        const w = this.el.querySelector(`.rd-main .w[data-s="${v}"]`) || this.el.querySelector(`.rd-main .w[data-lemma="${LEX[v].l}"]`);
+        if (!w){ this.toast("This word is in another scene"); break; }
+        const host = w.closest("[data-line]");
+        if (host) this.reveal(+host.dataset.line, true);
+        setTimeout(() => this.openWord(w), RM.matches ? 0 : 380);
+        break;
+      }
+      case "roman":
+        this.s.roman = !this.s.roman; this.el.classList.toggle("roman", this.s.roman);
+        el.setAttribute("aria-checked", String(this.s.roman)); requestAnimationFrame(() => this.fit()); break;
+      case "tr-all": {
+        const on = this.el.classList.toggle("tr-all"); el.setAttribute("aria-checked", String(on)); requestAnimationFrame(() => this.fit()); break;
+      }
+      case "size":
+        this.s.size = +v; this.el.style.setProperty("--rd-size", v); this.pick(el); requestAnimationFrame(() => this.fit()); break;
+      case "look":
+        this.s.look = v === "auto" ? null : v;
+        if (this.s.look) this.el.dataset.look = this.s.look; else delete this.el.dataset.look;
+        this.pick(el); break;
+      case "level":
+        this.pick(el);
+        this.toast(v === "A2" ? "You’re reading the A2 edition" : `${v} edition · same art, ${v === "A1" ? "simpler" : "richer"} lines`); break;
+      case "lang":
+        this.toast(v === "ko" ? "You’re learning Korean" : v === "en" ? "Opens the English edition of this episode" : "No Japanese edition of this story yet"); break;
+      case "native": this.pick(el); this.toast(v === "ru" ? "Translations switch to Russian" : "Translations in English"); break;
+      case "review": this.toast(`Review starts with ${SAVED.size} words`); break;
+      case "next-ep": this.toast("Episode 4 · 비 오는 날 · Rainy Day"); break;
+    }
+  }
+  key(e){
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    const k = e.key, t = e.target;
+    const native = t.tagName === "BUTTON" || t.tagName === "INPUT";
+    if ((k === "Enter" || k === " ") && t.classList && t.classList.contains("w")){ e.preventDefault(); this.openWord(t); return; }
+    if ((k === "Enter" || k === " ") && native) return;
+    if (k === " "){ e.preventDefault(); this.toggle(); }
+    else if (k === "ArrowRight"){ e.preventDefault(); this.step(1); }
+    else if (k === "ArrowLeft"){ e.preventDefault(); this.step(-1); }
+    else if (k === "j" || k === "J"){ this.setScene(this.s.scene + 1); }
+    else if (k === "k" || k === "K"){ this.setScene(this.s.scene - 1); }
+    else if (k === "1" || k === "2" || k === "3"){ this.setMode(MODES[+k - 1].id); }
+    else if ((k === "s" || k === "S") && this.active){ this.toggleSave(); }
+    else if ((k === "l" || k === "L") && this.active){ if (!speak(this.active.dataset.s, 1)) this.toast("No Korean voice here · the app plays recorded audio"); }
+    else if (k === "t" || k === "T"){
+      const i = this.s.line >= 0 ? this.s.line : firstLine(this.s.scene);
+      const el = this.lineEl(i);
+      if (el && el.classList.contains("bb")){ el.classList.toggle("show-tr"); this.fit(); }
+      else if (el){ const rv = el.querySelector("[data-reveal]"); if (rv) rv.setAttribute("aria-expanded", rv.getAttribute("aria-expanded") === "true" ? "false" : "true"); }
+    }
+    else if (k === "Escape"){ const resume = this.resumeAfterWord; this.closeWord(); if (this.sheetKind) this.closeSheet(); if (resume) this.play(); }
+  }
+}
+
+// ── static demos ──
+function buildStates(){
+  const box = document.getElementById("states");
+  const item = (cls, title, note) => h("figure", {},
+    h("div", {class:"bb bb--speech bb--static"}, h("span", {lang:"ko"}, "오늘은 ", h("span", {class:"w " + cls}, "두 잔"), " 주세요")),
+    h("figcaption", {}, h("b", {}, title), note));
+  box.append(
+    item("", "Обычное", "Тапается любое слово, курсор и hover подсказывают на десктопе"),
+    item("saved", "Сохранённое", "Полоса маркера в нижней половине строки"),
+    item("is-active", "Открыто в карточке", "Заливка маркером, пока карточка открыта"),
+    item("k-on", "Звучит", "Подчёркивание акцентом идёт по словам за голосом"));
+}
+function buildAnatomy(){
+  document.getElementById("anat-sheet").append(h("i", {class:"grab"}), wordCard("왔네요", LEX["왔네요"], {saved:false, line:2}));
+  const stage = document.getElementById("anat-pop-stage");
+  stage.append(
+    h("div", {class:"bb bb--speech bb--static", style:"font-size:19px"}, h("span", {lang:"ko"}, "제 ", h("span", {class:"w is-active"}, "여동생이에요"), "!")),
+    h("div", {class:"anat-pop"}, wordCard("여동생이에요", LEX["여동생이에요"], {saved:true, compact:true, line:9})));
+}
+function demoPlayer({img, who, text, playing, progress, speed = "1×", menu}){
+  return h("div", {class:"rd-player is-demo"},
+    h("img", {class:"pl-av", src:img, alt:""}),
+    h("div", {class:"pl-meta"}, h("p", {class:"pl-who"}, who), h("p", {class:"pl-txt", lang:"ko"}, text)),
+    h("div", {class:"pl-ctl", "aria-hidden":"true"},
+      h("span", {class:"ib ib--sm", html:ICON.prev}), h("span", {class:"pl-play", html:playing ? ICON.pause : ICON.play}),
+      h("span", {class:"ib ib--sm", html:ICON.next}), h("span", {class:"pl-speed"}, speed)),
+    h("span", {class:"pl-bar"}, h("i", {style:`width:${progress}%`})),
+    menu ? h("div", {class:"pl-menu"}, ["0.75×", "1×", "1.25×", "1.5×"].map(x => h("span", {class:"pl-mi" + (x === speed ? " on" : "")}, x))) : null);
+}
+function buildAudio(){
+  const box = document.getElementById("pl-demos");
+  const wrap = (label, el, cls) => h("div", {class:"pl-demo" + (cls ? " " + cls : "")}, h("span", {class:"eyebrow"}, label), el);
+  box.append(
+    wrap("Ожидание · начало сцены", demoPlayer({img:"img/s3.webp", who:"Scene 3 · 8 lines left", text:"Listen from here", playing:false, progress:0})),
+    wrap("Играет · реплика Милы", demoPlayer({img:"img/mila.webp", who:"Mila", text:"여기 있어요, 따뜻한 라테요.", playing:true, progress:36})),
+    wrap("Скорость", demoPlayer({img:"img/denis.webp", who:"Denis", text:"고마워요. 오늘은 두 잔 주세요.", playing:true, progress:45, speed:"1.25×", menu:true}), "pl-demo--menu"));
+  document.getElementById("lock-demo").append(h("div", {class:"lock", "aria-label":"Lock screen with Media Session controls"},
+    h("img", {class:"lock-bg", src:"img/s3.webp", alt:""}),
+    h("p", {class:"lock-date"}, "Saturday, 21 November"),
+    h("p", {class:"lock-time"}, "9:41"),
+    h("div", {class:"lock-w"},
+      h("img", {src:"img/s3.webp", alt:""}),
+      h("div", {}, h("p", {class:"lock-t"}, "Two Cups · Scene 3"), h("p", {class:"lock-a", lang:"ko"}, "Mila — 여기 있어요, 따뜻한 라테요.")),
+      h("span", {class:"lock-bar"}, h("i")),
+      h("div", {class:"lock-c", html:ICON.prev + ICON.pause + ICON.next}))));
+}
+const COLORS = [
+  ["--bg", "Основной фон", "#FBF9F4", "#0E0F13"],
+  ["--bg-2", "Вторичный фон, подложки, чипы", "#F2EEE5", "#17181E"],
+  ["--surface", "Поверхность: карточки, поля", "#FFFFFF", "#1B1C23"],
+  ["--raised", "Приподнятая: шторка, поповер, плеер", "#FFFFFF", "#262731"],
+  ["--fg-strong", "Заголовки, текст истории", "#121110", "#F6F4EF"],
+  ["--fg", "Основной текст интерфейса", "#2A2824", "#DEDCD6"],
+  ["--fg-2", "Вторичный текст", "#6B675F", "#9A98A3"],
+  ["--line", "Границы, разделители", "#E5E0D5", "#2A2B34"],
+  ["--accent", "Акцент: действие, голос, прогресс", "#5546D6", "#A499FF"],
+  ["--marker", "Учёба: открытое и сохранённое слово", "#F7E36B", "#EBCB55"],
+  ["--success", "Успех", "#2E7D4F", "#5DC38C"],
+  ["--error", "Ошибка", "#C2412D", "#FF8270"]
+];
+function buildSystem(){
+  const sw = (c) => h("span", {class:"sw"}, h("i", {style:`background:${c}`}), h("code", {}, c));
+  document.getElementById("colors").append(...COLORS.map(([tk, role, l, d]) => h("tr", {}, h("td", {}, h("code", {}, tk)), h("td", {}, role), h("td", {}, sw(l)), h("td", {}, sw(d)))));
+  const TYPE = [
+    ["Display", "Source Serif 4 · 600 · 40/44", "font:600 40px/1.1 var(--f-display);letter-spacing:-.02em", "Two Cups", null],
+    ["Title", "Source Serif 4 · 600 · 28/32", "font:600 28px/1.15 var(--f-display)", "Corner Café", null],
+    ["Heading", "Source Serif 4 · 600 · 20/26", "font:600 20px/1.3 var(--f-display)", "Words in this scene", null],
+    ["Reading, Latin", "Source Serif 4 · 400 · 19/1.6 · max 36em", "font:400 19px/1.6 var(--f-display);max-width:36em", "Mila writes a name on each cup and wonders who the second one is for.", null],
+    ["Reading, Korean", "Noto Sans KR · 400 · 18/1.7 · keep-all", "font:400 18px/1.7 var(--f-ko)", "밀라는 컵에 이름을 써요. 두 잔? 누구 거지?", "ko"],
+    ["Bubble", "Noto Sans KR · clamp(12.5px, 4.1cqw, 19px)/1.45", "font:400 17px/1.45 var(--f-ko)", "오늘은 두 잔 주세요.", "ko"],
+    ["UI", "Inter · 500 · 15/20", "font:500 15px/1.35 var(--f-ui)", "Save word · Play line", null],
+    ["Caption", "Inter · 400 · 13/18", "font:400 13px/1.4 var(--f-ui);color:var(--fg-2)", "Scene 3 of 6 · 8 lines left", null],
+    ["Label", "Inter · 600 · 11/14 · caps +0.1em", "font:600 11px/1.3 var(--f-ui);letter-spacing:.1em;text-transform:uppercase;color:var(--fg-2)", "In this sentence", null]
+  ];
+  document.getElementById("typescale").append(...TYPE.map(([n, spec, css, sample, lang]) => h("div", {class:"ts-row"},
+    h("div", {class:"ts-meta"}, h("b", {}, n), h("span", {}, spec)),
+    h("p", {class:"ts-s", style:css, lang}, sample))));
+}
+
+// ── theme toggle ──
+const hostTheme = document.documentElement.getAttribute("data-theme");
+document.querySelectorAll("[data-theme-set]").forEach(b => b.addEventListener("click", () => {
+  const v = b.dataset.themeSet;
+  if (v === "auto"){ if (hostTheme) document.documentElement.setAttribute("data-theme", hostTheme); else document.documentElement.removeAttribute("data-theme"); }
+  else document.documentElement.setAttribute("data-theme", v);
+  document.querySelectorAll("[data-theme-set]").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+}));
+
+// ── desktop scaling ──
+function fitDesk(){
+  const wrap = document.getElementById("desk-scale"); if (!wrap) return;
+  const win = wrap.firstElementChild;
+  const s = Math.min(1, wrap.clientWidth / 1200);
+  win.style.transform = `scale(${s})`;
+  wrap.style.height = (780 * s) + "px";
+  const rd = win.querySelector(".rd"); if (rd && rd.__reader) rd.__reader.scale = s;
+}
+
+// ── boot ──
+buildStates(); buildAnatomy(); buildAudio(); buildSystem();
+const get = (n) => document.querySelector(`[data-reader="${n}"]`);
+const hero = new Reader(get("hero"), {mode:"read", scene:1});
+const gRead = new Reader(get("read"), {mode:"read", scene:2});
+const gMotion = new Reader(get("motion"), {mode:"motion", scene:1});
+const gPractice = new Reader(get("practice"), {mode:"practice", scene:4});
+const deskHost = get("desk");
+const desk = new Reader(deskHost, {mode:"read", scene:5, desk:true});
+deskHost.replaceWith(desk.el);
+fitDesk();
+new ResizeObserver(fitDesk).observe(document.getElementById("desk-scale"));
+addEventListener("resize", () => READERS.forEach(r => r.fit()));
+
+const ready = Promise.race([document.fonts ? document.fonts.ready : Promise.resolve(), new Promise(r => setTimeout(r, 1500))]);
+ready.then(() => requestAnimationFrame(() => {
+  READERS.forEach(r => r.fit());
+  // Resting states: each frame opens on a real moment of the episode.
+  hero.setScene(1, true, true);
+  requestAnimationFrame(() => { const w = hero.el.querySelector('.w[data-s="왔네요"]'); if (w) hero.openWord(w, true); });
+
+  gRead.setScene(2, true, true);
+  gRead.s.line = 3; gRead.markSpeaking(3); gRead.updatePlayer();
+  const wr = gRead.lineEl(3) && gRead.lineEl(3).querySelectorAll(".w")[1]; if (wr) wr.classList.add("k-on");
+  const tr = gRead.lineEl(4); if (tr){ tr.classList.add("show-tr"); gRead.fit(); }
+
+  gMotion.s.line = 2; gMotion.showMotionLine(LINES[2]); gMotion.markSpeaking(2); gMotion.segProgress(); gMotion.updatePlayer();
+  const wm = gMotion.moDlg.querySelectorAll(".w")[3]; if (wm) wm.classList.add("k-on");
+
+  const rv = gPractice.el.querySelector(".pr-line [data-reveal]"); if (rv) rv.setAttribute("aria-expanded", "true");
+  gPractice.s.line = 8; gPractice.markSpeaking(8);
+
+  desk.setScene(5, true, true);
+  requestAnimationFrame(() => { const w = desk.el.querySelector('.w[data-s="여동생이에요"]'); if (w) desk.openWord(w); });
+}));
+})();
+</script>

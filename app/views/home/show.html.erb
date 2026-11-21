@@ -36,7 +36,7 @@
 
 <nav class="grid grid-cols-2 gap-3 mb-8" id="stories-nav" aria-label="<%= t("stories.home.nav") %>">
   <%= link_to new_story_path, class: "card p-4 col-span-2 flex items-center gap-3 hover:border-ink-strong transition-colors" do %>
-    <span class="text-2xl" aria-hidden="true">✍️</span>
+    <span class="btn-icon-soft size-11 text-accent"><%= icon(:pen) %></span>
     <span>
       <span class="block font-semibold text-ink-strong"><%= t("stories.home.create") %></span>
       <span class="block text-sm text-muted"><%= t("stories.home.create_hint") %></span>
@@ -66,7 +66,7 @@
                   <span class="tabular-nums text-muted w-5"><%= episode.number %></span>
                   <span class="text-ink-strong min-w-0 truncate"><%= episode.title %></span>
                   <span class="ml-auto shrink-0 text-xs text-muted">
-                    <% if @progress&.dig(episode.id)&.completed? %>✓ <%= t("home.completed") %><% elsif !episode.free? %>🔒<% end %>
+                    <% if @progress&.dig(episode.id)&.completed? %><span class="inline-flex items-center gap-1"><%= icon(:check) %><%= t("home.completed") %></span><% elsif !episode.free? %><%= icon(:lock, label: t("home.locked")) %><% end %>
                   </span>
                 <% end %>
               </li>

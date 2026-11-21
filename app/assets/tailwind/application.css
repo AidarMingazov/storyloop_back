@@ -1,59 +1,237 @@
 @import "tailwindcss";
 
-/* Style A «Бумага и маркер» (Readwise + Oku) for the whole product.
-   The reader's night theme comes from style D (ElevenReader + Kippo): <html data-theme="night">. */
-@custom-variant night (&:where([data-theme=night], [data-theme=night] *));
+/* Storyloop design system (wave Р1): style A «Бумага и маркер», evolved.
+   Two themes on one set of semantic tokens — Paper (default) and Midnight (<html data-theme="night">,
+   or .theme-night on any element). One accent (violet ink) for reading actions, voice and progress;
+   the marker is the only "learning" colour; dialogue bubbles stay paper in both themes.
+   Live preview of every token and component: /admin/styleguide. Mockups: docs/reader-design/. */
+@custom-variant night (&:where([data-theme=night], [data-theme=night] *, .theme-night, .theme-night *));
 
-@theme {
+/* static: every token is emitted, so views and inline styles can use any of them as var(--color-…) */
+@theme static {
   --font-serif: "Source Serif 4", "Noto Serif KR", Georgia, serif;
   --font-sans: "Inter", "Noto Sans KR", ui-sans-serif, system-ui, sans-serif;
+  /* Text in the learning language follows its script (see "Scripts" below). JA/ZH faces load only
+     on pages that ask for them: DesignHelper#use_fonts_for. */
+  --font-ko: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-ko-serif: "Noto Serif KR", "Source Serif 4", serif;
+  --font-ja: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif;
+  --font-zh: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
 
-  /* light — paper & marker */
-  --color-paper: #fbf9f3;        /* page canvas */
-  --color-panel: #ffffff;        /* cards, sheets */
-  --color-recess: #f5f1e8;       /* inset fills */
-  --color-pebble: #e8e6e1;       /* neutral buttons */
-  --color-edge: #dbd7cd;         /* borders, dividers */
-  --color-ink: #333333;          /* text */
-  --color-ink-strong: #161616;   /* primary actions, headings */
-  --color-muted: #7b7a79;        /* secondary text */
-  --color-marker: #f9e874;       /* saved word highlight */
-  --color-marker-soft: #f9ed9e;  /* tapped word */
-  --color-link: #2675de;
-  --color-warm: #ff8904;         /* badges, best value */
+  /* Paper — semantic tokens. Midnight redefines them in @layer base. */
+  --color-bg: #fbf9f4;           /* page */
+  --color-bg-2: #f2eee5;         /* insets, chips, quiet fills */
+  --color-surface: #ffffff;      /* cards, fields */
+  --color-raised: #ffffff;       /* sheets, popovers, player */
+  --color-chip: #ebe7dd;         /* neutral buttons */
+  --color-fg: #2a2824;           /* UI text */
+  --color-fg-strong: #121110;    /* headings, story text, primary buttons */
+  --color-fg-2: #6b675f;         /* secondary text (5.3:1 on bg) */
+  --color-line: #e5e0d5;         /* borders, dividers */
+  --color-line-2: #d4cec1;       /* stronger borders, control outlines */
+  --color-accent: #5546d6;       /* reading actions, voice, progress */
+  --color-accent-strong: #4334bd;
+  --color-on-accent: #ffffff;
+  --color-accent-soft: #ece9fd;
+  --color-marker: #f7e36b;       /* the word open in the card; saved words */
+  --color-marker-soft: #f9ed9e;  /* notices */
+  --color-marker-ink: #1e1a05;
+  --color-hl-saved: rgb(247 227 107 / 0.85); /* half-height marker stroke under saved words */
+  --color-success: #2e7d4f;
+  --color-error: #c2412d;
+  --color-warm: #ff8904;         /* paywall "best value" only */
 
-  /* night reader — style D */
-  --color-night: #0e0e12;
-  --color-night-sheet: #1b1b22;
-  --color-night-edge: #2c2c36;
-  --color-night-fg: #ececf1;
-  --color-coral: #f58971;        /* night accent */
-  --color-violet: #7767d8;       /* night saved word */
+  /* Constants: bubbles are paper in every theme, so their colours do not switch. */
+  --color-bubble: #fffefb;
+  --color-bubble-ink: #171614;
+  --color-bubble-2: #6a665d;
+  --color-bubble-line: #dbd7cd;
+  --color-bubble-hl: rgb(247 227 107 / 0.9);
+  --color-bubble-marker: #f7e36b;
+  --color-bubble-marker-ink: #1e1a05;
+  --color-bubble-accent: #5546d6;
 
   --radius-pill: 40px;
+  --ease-soft: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Style A names, kept for existing views: they now resolve through the semantic tokens.
+   `inline` so a nested .theme-night scope re-resolves them. */
+@theme inline {
+  --color-paper: var(--color-bg);
+  --color-panel: var(--color-surface);
+  --color-recess: var(--color-bg-2);
+  --color-pebble: var(--color-chip);
+  --color-edge: var(--color-line);
+  --color-ink: var(--color-fg);
+  --color-ink-strong: var(--color-fg-strong);
+  --color-muted: var(--color-fg-2);
+  --color-link: var(--color-accent);
 }
 
 @layer base {
-  html { background: var(--color-paper); color: var(--color-ink); -webkit-tap-highlight-color: transparent; }
-  html[data-theme="night"] { background: var(--color-night); color: var(--color-night-fg); }
+  /* Midnight */
+  [data-theme="night"], .theme-night {
+    --color-bg: #0e0f13;
+    --color-bg-2: #17181e;
+    --color-surface: #1b1c23;
+    --color-raised: #262731;
+    --color-chip: #2a2b35;
+    --color-fg: #dedcd6;
+    --color-fg-strong: #f6f4ef;
+    --color-fg-2: #9a98a3;
+    --color-line: #2a2b34;
+    --color-line-2: #3a3b46;
+    --color-accent: #a499ff;
+    --color-accent-strong: #b9b1ff;
+    --color-on-accent: #16123a;
+    --color-accent-soft: rgb(164 153 255 / 0.16);
+    --color-marker: #ebcb55;
+    --color-marker-soft: #4a4127;
+    --color-marker-ink: #1a1503;
+    --color-hl-saved: rgb(235 203 85 / 0.36);
+    --color-success: #5dc38c;
+    --color-error: #ff8270;
+    color-scheme: dark;
+  }
+
+  html { background: var(--color-bg); color: var(--color-fg); -webkit-tap-highlight-color: transparent; }
   body { font-family: var(--font-sans); }
   h1, h2, h3 { text-wrap: balance; }
-  :focus-visible { outline: 2px solid var(--color-link); outline-offset: 2px; }
+  :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+
+  /* Scripts: line breaking follows the language of the text, not of the interface. */
+  :lang(ko) { word-break: keep-all; }
+  :lang(ja), :lang(zh) { line-break: strict; }
+  rt { font-family: var(--font-sans); font-size: 0.45em; font-weight: 500; letter-spacing: 0.01em; color: var(--color-fg-2); }
 }
 
 /* Base shapes as utilities so components can @apply them (Tailwind v4). */
 @utility btn {
   @apply inline-flex items-center justify-center gap-2 rounded-pill px-5 h-[42px] text-sm font-semibold
-         cursor-pointer transition-colors disabled:opacity-50;
+         cursor-pointer transition-colors disabled:opacity-50 disabled:cursor-default;
+}
+@utility btn-icon {
+  @apply inline-flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full p-0 text-fg-strong
+         transition-colors hover:bg-bg-2 disabled:cursor-default disabled:opacity-35;
 }
 @utility badge { @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold bg-recess text-ink; }
 @utility flash { @apply rounded-xl px-4 py-3 text-sm font-medium; }
 
 @layer components {
-  .btn-primary { @apply btn bg-ink-strong text-white hover:bg-ink; }
-  .btn-secondary { @apply btn bg-pebble text-ink-strong hover:bg-edge; }
-  .btn-danger { @apply btn bg-transparent text-red-700 hover:bg-red-50; }
+  /* Buttons. Primary stays ink (general app actions); accent is for the one reading action on a screen. */
+  .btn-primary { @apply btn bg-fg-strong text-bg hover:bg-fg; }
+  .btn-accent { @apply btn bg-accent text-on-accent hover:bg-accent-strong; }
+  .btn-secondary { @apply btn bg-chip text-fg-strong hover:bg-line-2; }
+  .btn-ghost { @apply btn bg-transparent text-fg-strong hover:bg-bg-2; }
+  .btn-saved { @apply btn bg-marker text-marker-ink; }
+  .btn-danger { @apply btn bg-transparent text-error hover:bg-error/10; }
   .btn-sm { @apply h-8 px-3.5 text-xs; }
+  .btn-lg { @apply h-12 px-6 text-[15px]; }
+  .btn-icon.btn-sm { @apply size-8; }
+  .btn-icon-soft { @apply btn-icon bg-bg-2 hover:bg-chip; }
+
+  /* Icons come from the sprite in shared/_icons (helper `icon`, reader/icons.js); they take the text colour. */
+  .icon { width: 1.25em; height: 1.25em; flex-shrink: 0; display: inline-block; vertical-align: -0.22em; }
+  .btn-icon .icon { width: 20px; height: 20px; }
+
+  /* Chips (filters, genres, choices) and tags (part of speech, level). */
+  .chip {
+    @apply inline-flex h-8 cursor-pointer items-center gap-1.5 rounded-full border border-line-2 bg-transparent px-3
+           text-[13px] font-medium text-fg transition-colors hover:border-fg-2;
+  }
+  .chip[aria-pressed="true"], .chip.is-on { @apply border-fg-strong bg-fg-strong text-bg; }
+  .chip-note { @apply text-[11px] text-fg-2; }
+  .chip[aria-pressed="true"] .chip-note { color: inherit; opacity: 0.7; }
+  .tag { @apply inline-flex items-center rounded-md bg-bg-2 px-2 py-1 text-[11.5px] leading-none font-semibold text-fg-2; }
+
+  /* Segmented control: modes, language, level. */
+  .seg { @apply inline-flex gap-0.5 rounded-full bg-bg-2 p-[3px]; }
+  .seg > button, .seg > a {
+    @apply cursor-pointer rounded-full px-3 py-2 text-[12.5px] leading-none font-semibold text-fg-2 transition-colors;
+  }
+  .seg > [aria-pressed="true"], .seg > [aria-current="true"] { @apply bg-raised text-fg-strong shadow-sm; }
+
+  /* Switch: <button role="switch" aria-checked class="switch"><span>Label</span><i class="switch-knob"></i></button> */
+  .switch {
+    @apply flex min-h-11 w-full cursor-pointer items-center justify-between gap-3 bg-transparent p-0 text-left
+           text-[14.5px] font-medium text-fg;
+  }
+  .switch-knob {
+    @apply relative h-[26px] w-[42px] shrink-0 rounded-full bg-line-2 transition-colors;
+  }
+  .switch-knob::after {
+    content: ""; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 999px;
+    background: #fff; box-shadow: 0 1px 2px rgb(0 0 0 / 0.25); transition: transform 0.2s var(--ease-soft);
+  }
+  .switch[aria-checked="true"] .switch-knob { @apply bg-accent; }
+  .switch[aria-checked="true"] .switch-knob::after { transform: translateX(16px); }
+
+  /* Progress: <div class="progress"><i style="width: 40%"></i></div> */
+  .progress { @apply h-1.5 overflow-hidden rounded-full bg-bg-2; }
+  .progress > i { @apply block h-full rounded-full bg-accent transition-[width] duration-300; }
+
+  /* Bottom sheet (phone) and popover (desktop) share the card look; neither dims the page. */
+  .sheet {
+    @apply fixed inset-x-0 bottom-0 z-30 mx-auto max-h-[70dvh] max-w-[640px] overflow-y-auto overscroll-contain
+           rounded-t-3xl bg-raised px-5 pt-2 text-fg;
+    padding-bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
+    box-shadow: 0 -12px 40px rgb(0 0 0 / 0.18);
+    transform: translateY(104%); transition: transform 0.32s var(--ease-soft);
+  }
+  .sheet.is-open { transform: none; }
+  .sheet-handle { @apply mx-auto mb-3 block h-1 w-9 rounded-full bg-fg-2 opacity-35; }
+  .popover {
+    @apply absolute z-30 w-80 rounded-2xl border border-line bg-raised px-4 pt-3.5 pb-4 text-fg;
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.06), 0 12px 32px -8px rgb(0 0 0 / 0.22);
+    --arrow-x: 50%;
+  }
+  .popover::before {
+    content: ""; position: absolute; top: -7px; left: calc(var(--arrow-x) - 6px); width: 12px; height: 12px;
+    background: var(--color-raised); border-left: 1px solid var(--color-line); border-top: 1px solid var(--color-line);
+    transform: rotate(45deg);
+  }
+  .popover.is-above::before { top: auto; bottom: -7px; transform: rotate(225deg); }
+
+  /* Native <dialog class="modal"> */
+  .modal {
+    @apply m-auto w-[min(92vw,420px)] rounded-3xl border border-line bg-raised p-6 text-fg;
+    box-shadow: 0 24px 60px -12px rgb(0 0 0 / 0.35);
+  }
+  .modal::backdrop { background: rgb(14 15 19 / 0.45); }
+
+  .toast {
+    @apply inline-flex max-w-[calc(100vw-2rem)] items-center gap-2 rounded-full bg-fg-strong px-3.5 py-2 text-[13px]
+           font-semibold text-bg;
+  }
+
+  /* Empty and loading states */
+  .empty-state { @apply grid justify-items-center gap-1 px-4 py-10 text-center text-sm text-fg-2; }
+  .empty-state .icon { @apply mb-2 size-7 text-fg-2; }
+  .empty-state-title { @apply font-serif text-lg font-semibold text-fg-strong; }
+  .skeleton { @apply rounded-lg bg-bg-2; animation: skeleton 1.4s ease-in-out infinite; }
+
+  .kbd {
+    @apply inline-block min-w-[22px] rounded-md border border-b-2 border-line-2 bg-surface px-1.5 py-0.5 text-center
+           text-[11.5px] leading-tight font-semibold text-fg-strong;
+  }
+
+  /* Words in the learning language: open in the card = marker fill, saved = half-height marker stroke. */
+  .word-open { background: var(--color-marker); color: var(--color-marker-ink); border-radius: 0.22em; box-shadow: 0 0 0 0.14em var(--color-marker); }
+  .word-saved { background-image: linear-gradient(transparent 58%, var(--color-hl-saved) 58%); border-radius: 0.22em; }
+  .word-speaking { text-decoration: underline 2px var(--color-accent); text-underline-offset: 0.26em; }
+
+  /* Dialogue bubble base: paper in both themes, so the word states inside use the paper values. */
+  .bubble {
+    @apply rounded-[1.1em] border border-bubble-line bg-bubble px-[.8em] py-[.5em] text-bubble-ink;
+    --color-marker: var(--color-bubble-marker); --color-marker-ink: var(--color-bubble-marker-ink);
+    --color-hl-saved: var(--color-bubble-hl); --color-accent: var(--color-bubble-accent);
+  }
+
+  /* Text in the learning language */
+  .script:lang(ko) { font-family: var(--font-ko); }
+  .script:lang(ja) { font-family: var(--font-ja); }
+  .script:lang(zh) { font-family: var(--font-zh); }
 
   .label { @apply block text-xs font-semibold uppercase tracking-wider text-muted mb-1.5; }
   .input {
@@ -78,48 +256,31 @@
   .badge-archived { @apply badge text-muted; }
 }
 
+@keyframes skeleton { 50% { opacity: 0.55; } }
+
 /* ───────────── Reader ─────────────
-   Light: style A (paper + marker). Night: style D (dark stage, coral tap, violet saved).
-   Story text uses the serif face for English and Noto Sans KR for Korean (webtoon convention). */
+   Built on the semantic tokens, so Paper and Midnight come from the theme, not from reader-only colours.
+   Story text uses the serif face for English and the script's sans face for KO/JA/ZH (webtoon convention).
+   Wave Р2 moves the reader chrome onto the shared components above. */
 @layer components {
   .reader {
-    --r-bg: var(--color-paper);
-    --r-fg: var(--color-ink);
-    --r-muted: var(--color-muted);
-    --r-edge: var(--color-edge);
-    --r-sheet: var(--color-panel);
-    --r-chip: var(--color-recess);
-    --r-accent: var(--color-ink-strong);
-    --r-on-accent: #fff;
-    --r-tap-bg: var(--color-marker-soft);
-    --r-tap-fg: var(--color-ink-strong);
-    --r-saved-bg: var(--color-marker);
-    --r-saved-shadow: none;
-    --r-saved-fg: var(--color-ink-strong);
-    --r-me-bg: var(--color-ink-strong);
-    --r-me-fg: #fff;
-    --r-them-bg: var(--color-panel);
+    --r-bg: var(--color-bg);
+    --r-fg: var(--color-fg);
+    --r-muted: var(--color-fg-2);
+    --r-edge: var(--color-line);
+    --r-sheet: var(--color-raised);
+    --r-chip: var(--color-bg-2);
+    --r-accent: var(--color-accent);
+    --r-on-accent: var(--color-on-accent);
+    --r-tap-bg: var(--color-marker);
+    --r-tap-fg: var(--color-marker-ink);
+    --r-hl-saved: var(--color-hl-saved);
+    --r-me-bg: var(--color-accent);
+    --r-me-fg: var(--color-on-accent);
+    --r-them-bg: var(--color-surface);
     min-height: 100dvh;
     background: var(--r-bg);
     color: var(--r-fg);
-  }
-  .night .reader, [data-theme=night] .reader {
-    --r-bg: var(--color-night);
-    --r-fg: var(--color-night-fg);
-    --r-muted: #9a9aa6;
-    --r-edge: var(--color-night-edge);
-    --r-sheet: var(--color-night-sheet);
-    --r-chip: #26262f;
-    --r-accent: var(--color-coral);
-    --r-on-accent: #1a0d09;
-    --r-tap-bg: #ffd9cf;
-    --r-tap-fg: #7a2a17;
-    --r-saved-bg: transparent;
-    --r-saved-shadow: inset 0 -2px 0 var(--color-violet);
-    --r-saved-fg: inherit;
-    --r-me-bg: var(--color-violet);
-    --r-me-fg: #fff;
-    --r-them-bg: #23232c;
   }
   .reader-muted { color: var(--r-muted); }
 
@@ -154,10 +315,12 @@
 
   /* story text + tokens */
   .story-text { font-family: var(--font-serif); line-height: 1.35; }
-  .story-text:lang(ko), [lang=ko] .story-text { font-family: "Noto Sans KR", var(--font-sans); word-break: keep-all; }
+  .story-text:lang(ko) { font-family: var(--font-ko); line-height: 1.45; }
+  .story-text:lang(ja) { font-family: var(--font-ja); line-height: 1.55; }
+  .story-text:lang(zh) { font-family: var(--font-zh); line-height: 1.55; }
   .tok { cursor: pointer; border-radius: 3px; box-decoration-break: clone; -webkit-box-decoration-break: clone; transition: background-color .15s; }
-  .tok:focus-visible { outline: 2px solid var(--color-link); outline-offset: 1px; }
-  .reader[data-highlight="on"] .tok.is-saved { background: var(--r-saved-bg); box-shadow: var(--r-saved-shadow); color: var(--r-saved-fg); }
+  .tok:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 1px; }
+  .reader[data-highlight="on"] .tok.is-saved { background-image: linear-gradient(transparent 58%, var(--r-hl-saved) 58%); }
   .tok.is-active, .reader[data-highlight="on"] .tok.is-active { background: var(--r-tap-bg); color: var(--r-tap-fg); box-shadow: 0 0 0 2px var(--r-tap-bg); }
   .tok-rt { display: none; font-family: var(--font-sans); font-size: .55em; line-height: 1.1; letter-spacing: .01em; color: var(--r-muted); }
   .reader[data-romanization="on"] .tok--roman { display: inline-flex; flex-direction: column; align-items: center; vertical-align: top; }
@@ -166,27 +329,33 @@
   /* webtoon */
   .wt-panel { position: relative; container-type: inline-size; overflow: hidden; background: var(--r-chip); margin: 0 0 6px; scroll-margin-top: 64px; }
   .wt-panel img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  /* Bubbles are paper in both themes, so they use the bubble constants and a stronger saved stroke. */
   .wt-bubble {
-    position: absolute; background: #fff; color: #161616; border: 1px solid #dbd7cd;
+    position: absolute; background: var(--color-bubble); color: var(--color-bubble-ink); border: 1px solid var(--color-bubble-line);
     border-radius: 1.1em; padding: .55em .8em; font-size: clamp(14px, 4.3cqw, 22px);
     box-shadow: 0 1px 0 rgb(0 0 0 / .04);
+    --r-hl-saved: var(--color-bubble-hl);
+    --r-tap-bg: var(--color-bubble-hl);
+    --r-tap-fg: var(--color-bubble-ink);
   }
-  .wt-bubble .tok-rt { color: #7b7a79; }
+  .wt-bubble .tok-rt { color: var(--color-bubble-2); }
   .wt-bubble { scroll-margin-top: 72px; } /* keep bubbles clear of the sticky header when scrolled to */
   .wt-bubble--thought { border-style: dashed; font-style: italic; }
+  .wt-bubble--thought:is(:lang(ko), :lang(ja), :lang(zh)) { font-style: normal; } /* no fake italics for CJK */
   .wt-bubble--narration { background: #f5f1e8; border-radius: .35em; }
   .wt-bubble--narration .story-text { font-family: var(--font-sans); font-size: .92em; }
   .bubble-translate {
     position: absolute; right: -.55em; top: -.55em; width: 1.7em; height: 1.7em; border-radius: 999px;
     display: inline-flex; align-items: center; justify-content: center; font-size: .72em; font-weight: 700;
-    background: #161616; color: #fff; font-family: var(--font-sans); font-style: normal;
+    background: var(--color-bubble-ink); color: var(--color-bubble); font-family: var(--font-sans); font-style: normal;
   }
   .bubble-translate::after, .bubble-audio::after { content: ""; position: absolute; inset: -10px; } /* 44px touch target */
   .bubble-audio {
     position: absolute; right: 1.5em; top: -.55em; width: 1.7em; height: 1.7em; border-radius: 999px;
     display: inline-flex; align-items: center; justify-content: center; font-size: .72em;
-    background: #fff; border: 1px solid #dbd7cd; font-style: normal;
+    background: var(--color-bubble); color: var(--color-bubble-ink); border: 1px solid var(--color-bubble-line); font-style: normal;
   }
+  .bubble-translate .icon, .bubble-audio .icon { width: 1.1em; height: 1.1em; vertical-align: 0; }
   .wt-caption { padding: .75rem 1rem; }
 
   /* manga: one page at a time, each a 2-column grid of panels; reader/pager.js lays out the pages and draws the turns */
@@ -225,6 +394,7 @@
   .ill-p .story-text { line-height: 1.6; }
   .ill-p--speech, .ill-p--thought { padding-left: .9rem; border-left: 3px solid var(--r-edge); }
   .ill-p--thought .story-text { font-style: italic; }
+  .ill-p--thought .story-text:is(:lang(ko), :lang(ja), :lang(zh)) { font-style: normal; }
   .ill-speaker { display: block; font-size: .78rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--r-muted); }
   .ill-action {
     display: inline-flex; align-items: center; justify-content: center; width: 2.75rem; height: 2rem; margin-left: .15rem;
@@ -248,8 +418,11 @@
     background: var(--r-them-bg); border: 1px solid var(--r-edge); border-bottom-left-radius: .35rem;
   }
   .chat-msg--me .chat-bubble { background: var(--r-me-bg); color: var(--r-me-fg); border-color: transparent; border-bottom-left-radius: 1.1rem; border-bottom-right-radius: .35rem; }
-  .chat-msg--me .tok-rt { color: rgb(255 255 255 / .7); }
-  .chat-msg--me .tok.is-saved { color: var(--color-ink-strong); }
+  .chat-msg--me .tok-rt { color: color-mix(in srgb, var(--r-me-fg) 70%, transparent); }
+  /* a marker stroke under accent-coloured text is unreadable: saved words in my bubbles get a marker underline */
+  .reader[data-highlight="on"] .chat-msg--me .tok.is-saved {
+    background-image: none; text-decoration: underline 2px var(--color-marker); text-underline-offset: .2em;
+  }
   .tok.is-active .tok-rt, .reader[data-highlight="on"] .tok.is-saved .tok-rt { color: currentColor; opacity: .7; }
   .chat-actions { align-self: center; display: flex; flex-direction: column; }
   .chat-translate { align-self: center; flex-shrink: 0; width: 2.75rem; height: 2.75rem; border-radius: 999px; color: var(--r-muted); font-size: .75rem; font-weight: 700; }
@@ -265,6 +438,8 @@
     background: var(--r-accent); color: var(--r-on-accent);
   }
   .reader-btn--ghost { background: var(--r-chip); color: var(--r-fg); }
+  .reader-btn .icon { width: 18px; height: 18px; }
+  .reader-icon-btn .icon, .chat-translate .icon, .ill-action .icon { width: 20px; height: 20px; vertical-align: 0; }
 
   /* summary */
   .reader-summary { @apply mx-auto grid max-w-[640px] gap-5 px-4 pt-8; }
@@ -278,8 +453,10 @@
     background: var(--r-sheet); border: 1px solid var(--r-edge);
   }
   .summary-word .lemma { font-family: var(--font-serif); font-weight: 600; font-size: 1.1rem; }
-  .summary-word .lemma:lang(ko) { font-family: "Noto Sans KR", var(--font-sans); }
-  .summary-word.is-saved .lemma { background: var(--r-saved-bg); box-shadow: var(--r-saved-shadow); border-radius: 3px; padding: 0 .15em; }
+  .summary-word .lemma:lang(ko) { font-family: var(--font-ko); }
+  .summary-word .lemma:lang(ja) { font-family: var(--font-ja); }
+  .summary-word .lemma:lang(zh) { font-family: var(--font-zh); }
+  .summary-word.is-saved .lemma { background-image: linear-gradient(transparent 58%, var(--r-hl-saved) 58%); border-radius: 3px; padding: 0 .15em; }
   .summary-word button { margin-left: auto; }
   .summary-actions { display: grid; gap: .6rem; }
   .summary-signup { padding: 1rem; border-radius: 1rem; background: var(--r-tap-bg); color: var(--r-tap-fg); }
@@ -298,7 +475,9 @@
   .sheet-grab { width: 2.25rem; height: 4px; border-radius: 4px; background: currentColor; opacity: .2; margin: 0 auto .6rem; }
   .sheet-head { display: flex; align-items: baseline; flex-wrap: wrap; gap: .25rem .6rem; }
   .sheet-word { font-family: var(--font-serif); font-size: 1.75rem; font-weight: 600; line-height: 1.15; }
-  .sheet-word:lang(ko) { font-family: "Noto Sans KR", var(--font-sans); font-weight: 700; }
+  .sheet-word:lang(ko) { font-family: var(--font-ko); font-weight: 700; }
+  .sheet-word:lang(ja) { font-family: var(--font-ja); font-weight: 700; }
+  .sheet-word:lang(zh) { font-family: var(--font-zh); font-weight: 700; }
   .sheet-lemma { font-size: .85rem; color: var(--r-muted); }
   .sheet-roman { font-size: .9rem; color: var(--r-muted); margin-top: .1rem; }
   .sheet-translation { font-size: 1.15rem; font-weight: 600; margin-top: .5rem; }
@@ -307,28 +486,33 @@
   .sheet-chip { font-size: .8rem; padding: .2rem .55rem; border-radius: 999px; background: var(--r-chip); }
   .sheet-chip b { font-weight: 700; }
   .sheet-phrase { font-family: var(--font-serif); font-size: 1.25rem; line-height: 1.4; }
-  .sheet-phrase:lang(ko) { font-family: "Noto Sans KR", var(--font-sans); }
+  .sheet-phrase:lang(ko) { font-family: var(--font-ko); }
+  .sheet-phrase:lang(ja) { font-family: var(--font-ja); }
+  .sheet-phrase:lang(zh) { font-family: var(--font-zh); }
   .sheet-actions { display: flex; gap: .6rem; margin-top: 1rem; }
   .sheet-actions .reader-btn { flex: 1; }
+  .sheet-actions .reader-btn[aria-pressed="true"] { background: var(--color-marker); color: var(--color-marker-ink); }
   .sheet-actions .reader-btn--icon { flex: 0 0 3rem; padding: 0; }
   .sheet-close { position: absolute; right: .5rem; top: .35rem; }
 }
 
 @keyframes chat-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) {
-  .word-sheet, .reader-progress i { transition: none; }
-  .chat-msg { animation: none; }
+  .word-sheet, .reader-progress i, .sheet, .switch-knob::after, .progress > i { transition: none; }
+  .chat-msg, .skeleton { animation: none; }
 }
 
 /* ───────────── Review ───────────── */
 @layer components {
-  .review-text:lang(ko) { font-family: "Noto Sans KR", var(--font-sans); }
+  .review-text:lang(ko) { font-family: var(--font-ko); }
+  .review-text:lang(ja) { font-family: var(--font-ja); }
+  .review-text:lang(zh) { font-family: var(--font-zh); }
   .review-rate {
     @apply flex min-h-16 w-full flex-col items-center justify-center gap-0.5 rounded-2xl px-1 py-2 cursor-pointer transition-colors;
     @apply disabled:opacity-60;
   }
   .review-rate--again { @apply bg-[#fbe4df] text-[#8a2d1c] hover:bg-[#f7d3cb]; }
   .review-rate--hard  { @apply bg-pebble text-ink-strong hover:bg-edge; }
-  .review-rate--good  { @apply bg-ink-strong text-white hover:bg-ink; }
-  .review-rate--easy  { @apply bg-marker text-ink-strong hover:bg-[#f3df5a]; }
+  .review-rate--good  { @apply bg-ink-strong text-bg hover:bg-ink; }
+  .review-rate--easy  { @apply bg-marker text-marker-ink hover:brightness-95; }
 }

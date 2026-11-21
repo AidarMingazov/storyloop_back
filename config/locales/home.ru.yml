@@ -13,3 +13,4 @@ ru:
     panel_progress: "%{done} из %{total}"
     my_words: Мои слова
     completed: прочитано
+    locked: Только по подписке

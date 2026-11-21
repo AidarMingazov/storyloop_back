@@ -1,5 +1,6 @@
 import { h } from "reader/dom"
 import { tokenizedText } from "reader/text"
+import { icon } from "reader/icons"
 
 const AVATAR_COLORS = [ "#c4703f", "#3f74c4", "#7a64b8", "#3f8f62", "#b5527a", "#8a7a3a" ]
 
@@ -40,9 +41,9 @@ export function renderChat(stage, episode, t) {
             h("div", { class: "chat-bubble", "data-bubble-id": bubble.id }, tokenizedText(bubble))),
           h("div", { class: "chat-actions" },
             bubble.audio_url ? h("button", { type: "button", class: "chat-translate", "data-speak-bubble": bubble.id,
-                                             "aria-label": t.listen, title: t.listen }, "🔊") : null,
+                                             "aria-label": t.listen, title: t.listen }, icon("sound")) : null,
             h("button", { type: "button", class: "chat-translate", "data-translate-bubble": bubble.id,
-                          "aria-label": t.translate_phrase, title: t.translate_phrase }, "⇄")))
+                          "aria-label": t.translate_phrase, title: t.translate_phrase }, icon("translate"))))
         previousSender = character.id
       }
       items.push(item)

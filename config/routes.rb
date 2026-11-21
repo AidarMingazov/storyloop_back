@@ -44,6 +44,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     root "series#index"
+    get "styleguide", to: "styleguide#show", as: :styleguide # design system: tokens and components (Р1)
 
     resources :series do
       post :generate, on: :member

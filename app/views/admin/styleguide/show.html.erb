@@ -1,0 +1,22 @@
+<% content_for :title, "Дизайн-система" %>
+<% use_fonts_for "ja", "zh" %>
+
+<header class="mb-6 max-w-3xl">
+  <h1 class="font-serif text-3xl font-semibold text-fg-strong">Дизайн-система</h1>
+  <p class="mt-2 text-fg-2">
+    Токены и общие компоненты из <code class="text-sm">app/assets/tailwind/application.css</code> в двух темах.
+    Слева «Бумага», справа «Полночь» (<code class="text-sm">.theme-night</code>, в читалке — <code class="text-sm">html[data-theme=night]</code>).
+    Иконки — <code class="text-sm">icon(:name)</code> и <code class="text-sm">reader/icons.js</code>. Макеты читалки — <code class="text-sm">docs/reader-design/</code>.
+  </p>
+</header>
+
+<div class="grid gap-6 lg:grid-cols-2">
+  <section class="rounded-3xl border border-line bg-bg p-5 text-fg sm:p-6" data-theme-sample="paper" aria-label="Бумага">
+    <p class="label">Бумага</p>
+    <%= render "admin/styleguide/kit" %>
+  </section>
+  <section class="theme-night rounded-3xl border border-line bg-bg p-5 text-fg sm:p-6" data-theme-sample="midnight" aria-label="Полночь">
+    <p class="label">Полночь</p>
+    <%= render "admin/styleguide/kit" %>
+  </section>
+</div>

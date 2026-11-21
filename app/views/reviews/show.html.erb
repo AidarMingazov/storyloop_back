@@ -1,7 +1,7 @@
 <% content_for :title, t("review.title") %>
 <header class="flex items-center justify-between gap-3 mb-5">
   <%= link_to root_path, class: "reader-icon-btn -ml-3 text-ink", aria: { label: t("reader.back") } do %>
-    <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <%= icon(:back) %>
   <% end %>
   <h1 class="font-serif text-2xl font-semibold text-ink-strong"><%= t("review.title") %></h1>
   <span class="w-8"></span>
@@ -10,6 +10,7 @@
 <%= turbo_frame_tag "review" do %>
   <% if @word %>
     <% pair = @word.language_pair %>
+    <% use_fonts_for pair&.target_lang %>
     <% lang = pair&.target_lang || @word.lexeme.language %>
     <% token = @word.source_token %>
     <p class="mb-3 flex justify-between text-xs font-semibold uppercase tracking-wider text-muted tabular-nums">
@@ -39,7 +40,7 @@
             <% if @word.lexeme.romanization %><p class="text-sm text-muted"><%= @word.lexeme.romanization %></p><% end %>
           </div>
           <button type="button" class="btn-secondary size-11 shrink-0 px-0" data-action="flashcard#speak"
-                  aria-label="<%= t("review.listen") %>" title="<%= t("review.listen") %>">🔊</button>
+                  aria-label="<%= t("review.listen") %>" title="<%= t("review.listen") %>"><%= icon(:sound) %></button>
         </div>
         <p class="text-xl font-semibold text-ink-strong mt-3"><%= @word.lexeme.translation_for(pair&.native_lang) %></p>
 
@@ -75,7 +76,7 @@
     </article>
   <% elsif @reader&.user_words&.exists? %>
     <section class="card p-6 text-center">
-      <p class="text-4xl" aria-hidden="true">✓</p>
+      <p class="text-success"><%= icon(:check, class: "size-10") %></p>
       <h2 class="font-serif text-3xl font-semibold text-ink-strong mt-2"><%= t("review.done.title") %></h2>
       <p class="mt-2"><%= t("review.done.body", count: @reviewed_today) %></p>
       <% if @next_due %>
