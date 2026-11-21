@@ -66,6 +66,9 @@ en:
         other: "Up to %{count} characters or a .txt file"
       surprise_hint: AI picks the genre, the characters and the plot. Something new every time.
       surprise_title: Surprise
+      cast: Characters
+      cast_auto: Pick for me
+      cast_auto_hint: "By the theme; everyday heroes for an idea or a text"
       photos: A comic from your photos
       pair: Language
       level: Level

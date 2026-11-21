@@ -81,7 +81,7 @@ class StoriesController < ApplicationController
     end
 
     def form_params
-      params.expect(story: %i[mode theme prompt text_file pair cefr_level format visibility display_name rules_accepted])
+      params.expect(story: %i[mode theme cast prompt text_file pair cefr_level format visibility display_name rules_accepted])
     end
 
     def render_limit

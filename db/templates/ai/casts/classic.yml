@@ -1,0 +1,37 @@
+title: { ru: "Классика", en: "Classic" }
+themes: []
+genre: classic short story
+tone: >-
+  Warm and a little bittersweet, like a graphic novel of a classic short story.
+art_style: >-
+  Classic American graphic novel style: warm ink lines, soft gouache coloring, gentle film grain, expressive but
+  realistic faces.
+style_prompt: >-
+  Classic American graphic novel style: warm ink lines, soft gouache colors, gentle film grain, muted palette
+  (burgundy, cream, deep green, gold); an old city around 1905: small rented flats with gas lamps, snowy streets,
+  shop windows; warm lamplight inside, cold blue evenings outside. Vertical webtoon panel composition.
+  No text, letters, numbers, signs, captions or speech bubbles anywhere in the image.
+narrator_voice: { ko: Korean_CalmLady, en: English_CaptivatingStoryteller }
+characters:
+  - key: della
+    names: { ko: Della, en: Della }
+    protagonist: true
+    voice: { ko: Korean_SweetGirl, en: English_SentimentalLady }
+    sheet: series/classic-gift-of-the-magi/characters/della.jpeg
+    appearance_prompt: >-
+      Young woman of 1905, about 22, slim, pale face with big gray eyes, very long wavy chestnut-brown hair pinned up
+      in a large soft bun; plain worn brown wool dress with a high collar and long sleeves. Loving, quick, emotional.
+  - key: jim
+    names: { ko: Jim, en: Jim }
+    voice: { ko: Korean_ReliableYouth, en: English_DecentYoungMan }
+    sheet: series/classic-gift-of-the-magi/characters/jim.jpeg
+    appearance_prompt: >-
+      Young man of 1905, about 22, thin, serious kind face, short neat dark hair, clean-shaven; a plain old gray
+      overcoat, worn white shirt and dark vest, an old gold pocket watch on a cheap leather strap. Quiet, calm, loving.
+  - key: sofronie
+    names: { ko: Madame Sofronie, en: Madame Sofronie }
+    voice: { ko: Korean_FriendlyBigSister, en: English_AssertiveQueen }
+    sheet: series/classic-gift-of-the-magi/characters/sofronie.jpeg
+    appearance_prompt: >-
+      Large middle-aged woman of 1905, about 50, very pale powdered face, cold sharp eyes, tight gray bun, plain black
+      dress with a high white lace collar, a measuring tape around her neck. Businesslike, cold.

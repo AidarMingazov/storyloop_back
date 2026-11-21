@@ -1,7 +1,8 @@
-# User stories (wave 7): configuration and the two seams the AI pipeline (wave 6) plugs into.
+# User stories (wave 7): configuration and the two seams — the generator (fake, or the wave 6 AI pipeline) and the
+# moderator (fake marker check, or the AI classifier).
 module Stories
-  GENERATORS = { "fake" => "Stories::FakeGenerator", "pipeline" => "Ai::StoryPipeline" }.freeze
-  MODERATORS = { "fake" => "Stories::FakeModerator", "pipeline" => "Ai::StoryModerator" }.freeze
+  GENERATORS = { "fake" => "Stories::FakeGenerator", "pipeline" => "Stories::PipelineGenerator" }.freeze
+  MODERATORS = { "fake" => "Stories::FakeModerator", "pipeline" => "Stories::AiModerator" }.freeze
 
   module_function
 

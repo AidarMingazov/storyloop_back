@@ -1,8 +1,10 @@
-# User stories (wave 7). The generator and the moderator are swappable: wave 6 plugs the AI
-# pipeline in with STORY_GENERATOR=pipeline (Ai::StoryPipeline), the text classifier with STORY_MODERATOR.
+# User stories (wave 7). The generator and the moderator are swappable: "pipeline" is the AI pipeline
+# (Stories::PipelineGenerator) and the AI classifier (Stories::AiModerator); "fake" needs no keys and costs nothing.
+# Production uses the AI by default; development and tests the fakes (STORY_GENERATOR=pipeline to try it for real).
 Rails.application.configure do
-  config.x.stories.generator = ENV.fetch("STORY_GENERATOR", "fake")
-  config.x.stories.moderator = ENV.fetch("STORY_MODERATOR", "fake")
+  ai_default = Rails.env.production? ? "pipeline" : "fake"
+  config.x.stories.generator = ENV.fetch("STORY_GENERATOR", ai_default)
+  config.x.stories.moderator = ENV.fetch("STORY_MODERATOR", ai_default)
   config.x.stories.free_generations = ENV.fetch("FREE_STORY_GENERATIONS", 3).to_i
   # Open reports that take a story out of the feed until a moderator looks at it.
   config.x.stories.reports_to_hide = ENV.fetch("STORY_REPORTS_TO_HIDE", 1).to_i

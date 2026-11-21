@@ -1,0 +1,38 @@
+title: { ru: "Кафе и будни", en: "Café & everyday" }
+themes: [cafe]
+genre: everyday slice of life
+tone: >-
+  Cozy everyday life: friends, neighbors, small problems solved with kindness and a bit of humor.
+art_style: >-
+  Cozy slice-of-life webtoon style: soft rounded line art, gentle cel shading, warm pastel colors.
+style_prompt: >-
+  Cozy slice-of-life webtoon style: soft rounded line art, gentle cel shading, warm pastel colors; a small
+  neighborhood café with plants and wooden tables, apartment rooms, parks, buses and city streets; warm daylight
+  and cozy evening lamps. Vertical webtoon panel composition.
+  No text, letters, numbers, menus with writing, signs, captions or speech bubbles anywhere in the image.
+narrator_voice: { ko: Korean_CalmLady, en: English_CaptivatingStoryteller }
+characters:
+  - key: jun
+    names: { ko: Jun, en: Jake }
+    protagonist: true
+    voice: { ko: Korean_ReliableYouth, en: English_DecentYoungMan }
+    sheet: casts/cafe/jun.jpeg
+    appearance_prompt: >-
+      Young man, about 26, barista, soft brown hair with a slight wave, kind sleepy eyes; dark-green apron over a white
+      T-shirt, rolled sleeves, black jeans, a pencil behind his ear. Calm, kind, makes great coffee, bad with words.
+  - key: eunji
+    names: { ko: Eunji, en: Anna }
+    voice: { ko: Korean_SweetGirl, en: English_SentimentalLady }
+    sheet: casts/cafe/eunji.jpeg
+    appearance_prompt: >-
+      Young woman, about 25, long black hair with see-through bangs, bright smile, small round earrings; pastel-yellow
+      knit sweater, light-blue jeans, white sneakers, a tote bag with a sketchbook. Cheerful regular customer,
+      an illustrator, talks a lot.
+  - key: owner
+    names: { ko: Mrs. Choi, en: Mrs. Baker }
+    voice: { ko: Korean_FriendlyBigSister, en: English_AssertiveQueen }
+    speech_level: casual
+    sheet: casts/cafe/owner.jpeg
+    appearance_prompt: >-
+      Woman, about 55, café owner, short permed dark hair with gray streaks, reading glasses on a chain; burgundy
+      cardigan, cream blouse, long brown skirt, a cat often on her shoulder. Bossy, generous, knows everybody's business.

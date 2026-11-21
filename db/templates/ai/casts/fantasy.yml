@@ -1,0 +1,40 @@
+title: { ru: "Фэнтези", en: "Fantasy" }
+themes: [fantasy]
+genre: fantasy adventure
+tone: >-
+  A light fantasy adventure: magic, a small quest, humor and courage; peril without gore.
+art_style: >-
+  Vibrant fantasy webtoon style: clean dynamic line art, rich painterly shading, glowing magic effects, warm colors.
+style_prompt: >-
+  Vibrant fantasy webtoon style: clean dynamic line art, rich painterly shading, glowing magic effects, warm colors;
+  enchanted forests, a magic academy tower, a market town with stone bridges, mountain caves; golden sunlight and
+  soft magical glow. Vertical webtoon panel composition.
+  No text, letters, runes, numbers, signs, captions or speech bubbles anywhere in the image.
+narrator_voice: { ko: Korean_CalmLady, en: English_CaptivatingStoryteller }
+characters:
+  - key: ara
+    names: { ko: Ara, en: Ivy }
+    protagonist: true
+    voice: { ko: Korean_SweetGirl, en: English_PlayfulGirl }
+    speech_level: casual
+    sheet: casts/fantasy/ara.jpeg
+    appearance_prompt: >-
+      Young apprentice mage, girl about 18, long wavy copper-red hair in a loose braid, bright green eyes; deep-blue
+      hooded cloak over a cream tunic, brown belt with small potion bottles, knee-high boots, a short wooden wand.
+      Curious, brave, her spells often go a little wrong.
+  - key: rowan
+    names: { ko: Rowan, en: Rowan }
+    voice: { ko: Korean_ReliableYouth, en: English_DecentYoungMan }
+    speech_level: casual
+    sheet: casts/fantasy/rowan.jpeg
+    appearance_prompt: >-
+      Young knight, about 20, short blond hair, honest blue eyes, a small bandage on the cheek; light silver armor over a
+      dark-red tunic, brown leather gloves, a round shield on his back and a sword at his side. Loyal, serious, bad at jokes.
+  - key: pip
+    names: { ko: Pip, en: Pip }
+    voice: { ko: Korean_CheerfulLittleSister, en: English_PlayfulGirl }
+    speech_level: casual
+    sheet: casts/fantasy/pip.jpeg
+    appearance_prompt: >-
+      A tiny talking dragon the size of a cat, round body, mint-green scales, small cream belly, little wings, big
+      golden eyes, a puff of smoke from the nose when upset. Cheeky, hungry, loves sweets.

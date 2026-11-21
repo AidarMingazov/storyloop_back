@@ -1,0 +1,41 @@
+title: { ru: "Школа", en: "School" }
+themes: [school]
+genre: school life
+tone: >-
+  Bright and funny school slice of life: friendship, small crushes, exams and club activities; nothing explicit.
+art_style: >-
+  Bright modern school webtoon style: crisp clean line art, flat cel shading, big expressive eyes, cheerful colors.
+style_prompt: >-
+  Bright modern school webtoon style: crisp clean line art, flat cel shading, big expressive eyes, cheerful colors;
+  a modern high school: classrooms with big windows, corridors with lockers, a rooftop, a sports field, a snack shop
+  nearby; sunny daylight. Vertical webtoon panel composition.
+  No text, letters, numbers, signs, captions or speech bubbles anywhere in the image.
+narrator_voice: { ko: Korean_CalmLady, en: English_CaptivatingStoryteller }
+characters:
+  - key: jiwoo
+    names: { ko: Jiwoo, en: Lily }
+    protagonist: true
+    voice: { ko: Korean_SweetGirl, en: English_PlayfulGirl }
+    speech_level: casual
+    sheet: casts/school/jiwoo.jpeg
+    appearance_prompt: >-
+      Teenage girl, 17, shoulder-length straight dark-brown hair with a yellow hairpin, round cheerful face, big eyes;
+      navy school blazer, white shirt, red ribbon tie, gray pleated skirt, white sneakers, a backpack with a small
+      plush keychain. Energetic, honest, easily flustered.
+  - key: minjun
+    names: { ko: Minjun, en: Ethan }
+    voice: { ko: Korean_OptimisticYouth, en: English_ReservedYoungMan }
+    speech_level: casual
+    sheet: casts/school/minjun.jpeg
+    appearance_prompt: >-
+      Teenage boy, 17, tall, messy black hair falling over the forehead, calm dark eyes; navy school blazer worn open,
+      white shirt with loosened red tie, gray trousers, white wireless earbuds around his neck. Quiet new transfer
+      student, secretly kind.
+  - key: teacher
+    names: { ko: Ms. Han, en: Ms. Clark }
+    voice: { ko: Korean_FriendlyBigSister, en: English_Wiselady }
+    speech_level: polite
+    sheet: casts/school/teacher.jpeg
+    appearance_prompt: >-
+      Woman teacher, about 40, hair in a neat low bun, rectangular black glasses, warm smile; light-gray cardigan over
+      a white blouse, dark-green long skirt, holding a class register. Strict but caring homeroom teacher.

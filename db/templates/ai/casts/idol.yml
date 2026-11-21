@@ -1,0 +1,40 @@
+title: { ru: "Айдолы", en: "Idols" }
+themes: [idol]
+genre: K-pop idol drama
+tone: >-
+  Glossy and heartfelt: auditions, practice rooms, stage nerves, friendship and rivalry; nothing explicit.
+art_style: >-
+  Glossy K-pop idol webtoon style: sleek line art, soft glowing shading, sparkling eyes, fashionable outfits.
+style_prompt: >-
+  Glossy K-pop idol webtoon style: sleek line art, soft glowing shading, sparkling eyes, fashionable outfits;
+  a dance practice room with mirrors, a backstage dressing room, a concert stage with colored lights and fans
+  with light sticks, a night convenience store. Vertical webtoon panel composition.
+  No text, letters, numbers, logos, signs, captions or speech bubbles anywhere in the image.
+narrator_voice: { ko: Korean_CalmLady, en: English_CaptivatingStoryteller }
+characters:
+  - key: hana
+    names: { ko: Hana, en: Hana }
+    protagonist: true
+    voice: { ko: Korean_ChildhoodFriendGirl, en: English_PlayfulGirl }
+    sheet: casts/idol/hana.jpeg
+    appearance_prompt: >-
+      Young woman, 19, idol trainee, long straight black hair in a high ponytail, bright determined eyes, small beauty
+      mark under the right eye; oversized lavender hoodie, black training shorts over leggings, white dance sneakers,
+      a towel around her neck. Hardworking, nervous on stage, never gives up.
+  - key: kai
+    names: { ko: Kai, en: Kai }
+    voice: { ko: Korean_CheerfulBoyfriend, en: English_DecentYoungMan }
+    speech_level: casual
+    sheet: casts/idol/kai.jpeg
+    appearance_prompt: >-
+      Young man, 22, idol group leader, silver-ash dyed hair with a soft middle part, gentle smile, a small silver
+      earring in one ear; black leather jacket over a white T-shirt, black jeans, silver chain necklace. Charismatic,
+      kind to trainees.
+  - key: manager
+    names: { ko: Manager Seo, en: Ms. Reed }
+    voice: { ko: Korean_FriendlyBigSister, en: English_ConfidentWoman }
+    speech_level: polite
+    sheet: casts/idol/manager.jpeg
+    appearance_prompt: >-
+      Woman manager, about 35, sharp short bob, minimal makeup, headset around her neck; black blazer over a gray
+      turtleneck, black trousers, tablet in hand. Strict, fast, secretly proud of her team.

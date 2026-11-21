@@ -1,10 +1,11 @@
 module Stories
-  # The contract every story generator follows — Stories::FakeGenerator today, the AI pipeline of
-  # wave 6 (7.4, Ai::StoryPipeline) later. GenerateStoryJob calls `generator.call(request)`.
+  # The contract every story generator follows — Stories::FakeGenerator (seed episodes, no AI) and
+  # Stories::PipelineGenerator (the wave 6 AI pipeline, 7.4). GenerateStoryJob calls `generator.call(request)`.
   #
   # Input — a StoryRequest:
   #   mode        theme | idea | text | surprise   (later photos, voice)
-  #   theme       key from config/story_themes.yml (mode theme)
+  #   theme       key of Stories::Themes (mode theme)
+  #   cast_key    db/templates/ai/casts/<key>.yml the story is drawn with (picked on the form or by Stories::Cast.for)
   #   prompt      the idea (≤ 500 chars) or the learner's own text to adapt (≤ 3000 chars)
   #   language_pair, cefr_level, format (webtoon | chat)
   #   series      already created: author, visibility, slug, placeholder title

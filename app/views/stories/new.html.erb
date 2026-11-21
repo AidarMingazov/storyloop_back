@@ -60,6 +60,27 @@
     <%= t("stories.new.surprise_hint") %>
   </p>
 
+  <fieldset class="grid gap-2" id="story-casts">
+    <legend class="label"><%= t("stories.new.cast") %></legend>
+    <div class="grid grid-cols-2 gap-2">
+      <label class="card p-3 cursor-pointer has-[:checked]:border-ink-strong has-[:checked]:border-2">
+        <%= form.radio_button :cast, "", class: "sr-only" %>
+        <span class="block text-sm font-semibold text-ink-strong"><%= t("stories.new.cast_auto") %></span>
+        <span class="block text-xs text-muted mt-0.5"><%= t("stories.new.cast_auto_hint") %></span>
+      </label>
+      <% Stories::Cast.all.each do |cast| %>
+        <label class="card p-3 cursor-pointer has-[:checked]:border-ink-strong has-[:checked]:border-2">
+          <%= form.radio_button :cast, cast.key, class: "sr-only" %>
+          <% if (sheet = cast_preview(cast)) %>
+            <%= image_tag sheet, alt: "", loading: "lazy", class: "w-full aspect-video object-cover rounded-md mb-2 bg-paper" %>
+          <% end %>
+          <span class="block text-sm font-semibold text-ink-strong"><%= cast.title %></span>
+          <span class="block text-xs text-muted mt-0.5"><%= cast.names("en").join(", ") %></span>
+        </label>
+      <% end %>
+    </div>
+  </fieldset>
+
   <div class="card p-4 flex items-center justify-between gap-3 opacity-70" id="photos-soon">
     <span class="text-sm"><span aria-hidden="true">📷</span> <%= t("stories.new.photos") %></span>
     <span class="badge"><%= t("stories.new.soon") %></span>

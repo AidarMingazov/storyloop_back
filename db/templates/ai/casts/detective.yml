@@ -1,0 +1,38 @@
+title: { ru: "Детектив", en: "Detective" }
+themes: [detective]
+genre: cozy detective mystery
+tone: >-
+  A cozy mystery: clues, red herrings, a clever reveal at the end; tense but never gory.
+art_style: >-
+  Moody detective webtoon style: confident ink lines, semi-realistic faces, dramatic light and shadow, muted colors.
+style_prompt: >-
+  Moody detective webtoon style: confident ink lines, semi-realistic faces, dramatic light and shadow, muted colors
+  with warm accents; rainy city streets at night, a small detective office, a cozy café, an old mansion; desk lamps
+  and neon reflections. Vertical webtoon panel composition.
+  No text, letters, numbers, signs, captions or speech bubbles anywhere in the image.
+narrator_voice: { ko: Korean_CalmLady, en: English_CaptivatingStoryteller }
+characters:
+  - key: detective
+    names: { ko: Detective Yoon, en: Detective Harper }
+    protagonist: true
+    voice: { ko: Korean_FriendlyBigSister, en: English_ConfidentWoman }
+    sheet: casts/detective/detective.jpeg
+    appearance_prompt: >-
+      Woman detective, about 32, short wavy dark hair, sharp observant eyes, a thin scar on the chin; long beige trench
+      coat over a black turtleneck, dark jeans, ankle boots, a small notebook and pen. Calm, witty, notices everything.
+  - key: assistant
+    names: { ko: Taeho, en: Sam }
+    voice: { ko: Korean_EnthusiasticTeen, en: English_ReservedYoungMan }
+    speech_level: polite
+    sheet: casts/detective/assistant.jpeg
+    appearance_prompt: >-
+      Young man assistant, about 24, curly brown hair, big round glasses, eager face; mustard-yellow sweater vest over
+      a white shirt, brown corduroy trousers, a camera on a strap. Enthusiastic, clumsy, brave when it matters.
+  - key: owner
+    names: { ko: Mr. Park, en: Mr. Grant }
+    voice: { ko: Korean_GentleBoss, en: English_Trustworthy_Man }
+    speech_level: polite
+    sheet: casts/detective/owner.jpeg
+    appearance_prompt: >-
+      Older man, about 60, neat gray hair and a gray mustache, kind tired eyes; dark-green cardigan, white shirt with a
+      bow tie, holding a walking cane with a brass handle. Polite, mysterious, maybe hiding something.

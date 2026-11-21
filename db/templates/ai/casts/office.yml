@@ -1,0 +1,39 @@
+title: { ru: "Офис", en: "Office" }
+themes: [office-romance]
+genre: office romance
+tone: >-
+  Light, warm, a bit funny; romance is slow-burn (glances, misunderstandings, small kindness), nothing explicit.
+art_style: >-
+  Modern Korean romance webtoon style: clean thin line art, soft cel shading with gentle gradients,
+  glossy expressive eyes, delicate pastel palette.
+style_prompt: >-
+  Modern Korean romance webtoon style: clean thin line art, soft cel shading with gentle gradients,
+  glossy expressive eyes, delicate pastel palette (blush pink, cream, soft navy), warm soft lighting;
+  contemporary city offices, glass meeting rooms, cafés, rooftops at dusk. Vertical webtoon panel composition.
+  No text, letters, numbers, logos, signs with writing, captions or speech bubbles anywhere in the image.
+narrator_voice: { ko: Korean_CalmLady, en: English_CaptivatingStoryteller }
+characters:
+  - key: seoyeon
+    names: { ko: Seoyeon, en: Sophie }
+    protagonist: true
+    voice: { ko: Korean_SweetGirl, en: English_SentimentalLady }
+    sheet: series/office-romance/characters/seoyeon.jpeg
+    appearance_prompt: >-
+      Woman, 26, petite, long wavy chestnut-brown hair in a low half-up ponytail with a small pearl clip, big round
+      dark-brown eyes, light freckles; oversized cream knit cardigan over a light-blue blouse, beige wide trousers,
+      white sneakers, ID badge on a mint lanyard. Earnest, a bit clumsy, expressive face.
+  - key: dohyun
+    names: { ko: Dohyun, en: Daniel }
+    voice: { ko: Korean_ColdYoungMan, en: English_DecentYoungMan }
+    speech_level: polite
+    sheet: series/office-romance/characters/dohyun.jpeg
+    appearance_prompt: >-
+      Man, 31, tall and slim, neat black hair with a soft side part, sharp narrow eyes, thin silver-rimmed glasses,
+      small mole under the left eye; charcoal slim suit, white shirt, no tie, silver watch. Calm, cool, rare small smile.
+  - key: mina
+    names: { ko: Mina, en: Mia }
+    voice: { ko: Korean_CheerfulLittleSister, en: English_Graceful_Lady }
+    sheet: series/office-romance/characters/mina.jpeg
+    appearance_prompt: >-
+      Woman, 27, short black bob with blunt bangs, cat-eye eyeliner, small gold hoops; mustard-yellow sweater,
+      black pleated midi skirt, chunky loafers, always holding an iced coffee. Playful, gossipy, loyal best friend.

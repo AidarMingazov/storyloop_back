@@ -22,6 +22,7 @@ class StoriesControllerTest < ActionDispatch::IntegrationTest
     end
     series = Series.source_user.sole
     assert_redirected_to story_path(series)
+    assert_equal "school", series.story_requests.sole.cast_key, "the theme's cast"
     event = tracked("story_created").sole[:properties]
     assert_equal [ "theme", "school", "link", 2 ], event.values_at(:mode, :theme, :visibility, :generations_left)
 

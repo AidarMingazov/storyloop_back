@@ -1,0 +1,39 @@
+title: { ru: "Путешествие", en: "Travel" }
+themes: [travel]
+genre: travel slice of life
+tone: >-
+  Sunny and warm: getting lost, local food, kind strangers, small surprises on the road.
+art_style: >-
+  Sunny slice-of-life webtoon style: soft clean line art, light airy watercolor shading, warm natural colors.
+style_prompt: >-
+  Sunny slice-of-life webtoon style: soft clean line art, light airy watercolor shading, warm natural colors;
+  train stations, old streets and street markets, seaside towns, mountain trails, a small guesthouse; bright daylight
+  and golden evenings. Vertical webtoon panel composition.
+  No text, letters, numbers, signs, maps with writing, captions or speech bubbles anywhere in the image.
+narrator_voice: { ko: Korean_CalmLady, en: English_CaptivatingStoryteller }
+characters:
+  - key: sora
+    names: { ko: Sora, en: Emma }
+    protagonist: true
+    voice: { ko: Korean_ChildhoodFriendGirl, en: English_SentimentalLady }
+    sheet: casts/travel/sora.jpeg
+    appearance_prompt: >-
+      Young woman traveler, about 25, medium-length light-brown hair under a cream bucket hat, friendly face; denim jacket
+      over a striped T-shirt, olive cargo pants, hiking sneakers, a big orange backpack and a film camera.
+      Curious, a little clumsy, loves food.
+  - key: leo
+    names: { ko: Leo, en: Leo }
+    voice: { ko: Korean_OptimisticYouth, en: English_Jovialman }
+    speech_level: casual
+    sheet: casts/travel/leo.jpeg
+    appearance_prompt: >-
+      Young man, about 27, local guide, wavy black hair tied in a small bun, warm tanned skin, wide grin; white linen
+      shirt with rolled sleeves, beige shorts, sandals, a woven bag on his shoulder. Relaxed, funny, knows every shortcut.
+  - key: grandma
+    names: { ko: Grandma Kim, en: Grandma Rose }
+    voice: { ko: Korean_CalmLady, en: English_Wiselady }
+    speech_level: casual
+    sheet: casts/travel/grandma.jpeg
+    appearance_prompt: >-
+      Old woman, about 75, short curly white hair, round glasses, rosy cheeks, small and lively; flowery pink blouse,
+      purple padded vest, dark trousers, an apron. Runs a small guesthouse, feeds everyone, tells old stories.

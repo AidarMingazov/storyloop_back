@@ -56,4 +56,10 @@ module StoriesHelper
   end
 
   def theme_icon(key) = Stories::Themes.icon(key)
+
+  # The protagonist's sheet of a cast, small — once the cast has been used (its sheets are uploaded then).
+  def cast_preview(cast)
+    blob = cast.sheet_blob(cast.protagonist, create: false)
+    blob&.variant(resize_to_limit: [ 480, 270 ], format: :webp)
+  end
 end

@@ -9,6 +9,7 @@ class StoryForm
 
   attribute :mode, :string, default: "theme"
   attribute :theme, :string
+  attribute :cast, :string # empty: Stories::Cast.for picks one (theme, random for surprise, everyday)
   attribute :prompt, :string
   attribute :text_file
   attribute :pair, :string
@@ -23,6 +24,7 @@ class StoryForm
 
   validates :mode, inclusion: { in: StoryRequest::MODES }
   validates :theme, inclusion: { in: ->(_) { Stories::Themes.keys } }, if: -> { mode == "theme" }
+  validates :cast, inclusion: { in: ->(_) { Stories::Cast.keys } }, allow_blank: true
   validates :prompt, presence: true, if: -> { mode.in?(%w[idea text]) }
   validates :cefr_level, inclusion: { in: StoryRequest::LEVELS }
   validates :format, inclusion: { in: StoryRequest::FORMATS }
@@ -51,7 +53,8 @@ class StoryForm
                                         status: :generating, free: true)
       @story_request = StoryRequest.create!(user: user, series: series, episode: episode, language_pair: language_pair,
                                             mode: mode, theme: (theme if mode == "theme"), prompt: prompt.presence,
-                                            cefr_level: cefr_level, format: format)
+                                            cefr_level: cefr_level, format: format,
+                                            cast_key: Stories::Cast.for(mode:, theme:, cast:).key)
     end
   end
 

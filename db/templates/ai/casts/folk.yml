@@ -1,0 +1,40 @@
+title: { ru: "Сказка", en: "Folk tale" }
+themes: [folk-tale]
+genre: folk tale
+tone: >-
+  Like a picture book for adults: warm, gently funny, a clear moral at the end.
+art_style: >-
+  Korean storybook webtoon style: soft watercolor textures with clean ink outlines, warm earthy palette,
+  rounded friendly character design.
+style_prompt: >-
+  Korean storybook webtoon style: soft watercolor textures with clean ink outlines, warm earthy palette
+  (pine green, persimmon orange, hanji beige), rounded friendly character design; old countryside, pine forests,
+  misty mountains, ponds and thatched-roof villages; gentle light, magical glow for anything magical.
+  Vertical webtoon panel composition. No text, letters, numbers, signs, captions or speech bubbles anywhere in the image.
+narrator_voice: { ko: Korean_CalmLady, en: English_CaptivatingStoryteller }
+characters:
+  - key: woodcutter
+    names: { ko: Woodcutter, en: Woodcutter }
+    protagonist: true
+    voice: { ko: Korean_InnocentBoy, en: English_DecentYoungMan }
+    speech_level: polite
+    sheet: series/folk-golden-axe/characters/woodcutter.jpeg
+    appearance_prompt: >-
+      Young woodcutter of old Korea, about 25, kind round face, tanned skin, short topknot tied with a cloth band,
+      patched off-white hanbok with rolled-up sleeves, straw sandals, a wooden A-frame carrier on his back. Honest, shy smile.
+  - key: spirit
+    names: { ko: Mountain Spirit, en: Mountain Spirit }
+    voice: { ko: Korean_WiseTeacher, en: English_WiseScholar }
+    speech_level: casual
+    sheet: series/folk-golden-axe/characters/spirit.jpeg
+    appearance_prompt: >-
+      Mountain spirit: very old man with a long flowing white beard and white eyebrows, kind twinkling eyes,
+      white and pale-blue layered robes, a gnarled wooden staff, a soft silver glow. Wise, playful, a little mischievous.
+  - key: neighbor
+    names: { ko: Neighbor, en: Neighbor }
+    voice: { ko: Korean_CockyGuy, en: English_Jovialman }
+    speech_level: polite
+    sheet: series/folk-golden-axe/characters/neighbor.jpeg
+    appearance_prompt: >-
+      Greedy villager of old Korea, about 40, plump, thin curled mustache, narrow sly eyes, brown hanbok vest over
+      a gray jeogori, black gat hat. Smug grin, rubbing his hands.
