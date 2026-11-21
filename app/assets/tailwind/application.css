@@ -340,6 +340,7 @@
   }
   .wt-bubble .tok-rt { color: var(--color-bubble-2); }
   .wt-bubble { scroll-margin-top: 72px; } /* keep bubbles clear of the sticky header when scrolled to */
+  .wt-bubble.is-motion-hidden { visibility: hidden; } /* spike M.0: not shown yet, so no tap lands on it */
   .wt-bubble--thought { border-style: dashed; font-style: italic; }
   .wt-bubble--thought:is(:lang(ko), :lang(ja), :lang(zh)) { font-style: normal; } /* no fake italics for CJK */
   .wt-bubble--narration { background: #f5f1e8; border-radius: .35em; }

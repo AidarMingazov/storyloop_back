@@ -9,7 +9,8 @@
      data-reader-review-url-value="<%= review_path %>"
      data-reader-library-url-value="<%= root_path %>"
      data-reader-signup-url-value="<%= new_registration_path %>"
-     data-reader-episode-url-value="<%= episode_path("__ID__") %>">
+     data-reader-episode-url-value="<%= episode_path("__ID__") %>"
+     data-reader-motion-default-value="<%= MotionLite.variant(@reader.analytics_id) if @episode.format_webtoon? %>">
   <script type="application/json" data-reader-target="payload"><%= json_escape(@payload.to_json).html_safe %></script>
 
   <header class="reader-header">
@@ -38,6 +39,11 @@
         <input type="checkbox" id="pref_highlight" data-reader-target="highlightToggle" data-action="reader#setPref" data-pref="highlight"></label>
       <label class="reader-switch"><span><%= t("reader.js.night_mode") %></span>
         <input type="checkbox" id="pref_night" data-reader-target="nightToggle" data-action="reader#setPref" data-pref="night"></label>
+      <% if @episode.format_webtoon? && MotionLite.enabled? %>
+        <label class="reader-switch"><span><%= t("reader.js.motion") %>
+            <small class="block reader-muted" data-reader-target="motionHint" hidden><%= t("reader.js.motion_reduced") %></small></span>
+          <input type="checkbox" id="pref_motion" data-reader-target="motionToggle" data-action="reader#setPref" data-pref="motion"></label>
+      <% end %>
       <% if @episode.format == "manga" %>
         <label class="reader-switch" for="pref_page_turn"><span><%= t("reader.js.page_turn") %></span>
           <select id="pref_page_turn" class="reader-select" data-reader-target="pageTurnSelect" data-action="reader#setPageTurn">

@@ -20,6 +20,8 @@ en:
       page_turn_slide: Slide
       page_turn_curl: Page curl
       page_turn_none: No animation
+      motion: Panel animation
+      motion_reduced: Off because Reduce motion is on in your system settings
       save_word: Save word
       saved: Saved
       listen: Listen

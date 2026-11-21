@@ -4,6 +4,7 @@ import { renderWebtoon, fitBubbles } from "reader/webtoon"
 import { renderChat } from "reader/chat"
 import { renderManga } from "reader/manga"
 import { Pager, PAGE_TURN_EFFECTS } from "reader/pager"
+import { MotionLite } from "reader/motion_lite"
 import { renderIllustrated } from "reader/illustrated"
 import { WordSheet } from "reader/sheet"
 import { renderSummary, updateSummary } from "reader/summary"
@@ -22,9 +23,10 @@ const THEME_COLORS = { light: "#fbf9f4", night: "#0e0f13" }
 // message for chat.
 export default class extends Controller {
   static targets = [ "payload", "stage", "summary", "sheet", "progressBar", "settings", "settingsButton",
-                     "romanizationToggle", "highlightToggle", "nightToggle", "pageTurnSelect" ]
+                     "romanizationToggle", "highlightToggle", "nightToggle", "pageTurnSelect", "motionToggle", "motionHint" ]
+  // motionDefault: "motion" | "static" while spike M.0 runs for this webtoon (app/models/motion_lite.rb), else empty.
   static values = { i18n: Object, progressUrl: String, saveUrl: String, reviewUrl: String, libraryUrl: String,
-                    episodeUrl: String, signupUrl: String }
+                    episodeUrl: String, signupUrl: String, motionDefault: String }
 
   connect() {
     this.episode = JSON.parse(this.payloadTarget.textContent)
@@ -47,7 +49,11 @@ export default class extends Controller {
       case "chat": this.setupChat(); break
       case "manga": this.setupManga(); break
       case "illustrated": this.setupScrolling(renderIllustrated(this.stageTarget, this.episode, this.t)); break
-      default: this.setupScrolling(renderWebtoon(this.stageTarget, this.episode, this.t))
+      default: {
+        const panels = renderWebtoon(this.stageTarget, this.episode, this.t)
+        this.setupScrolling(panels)
+        this.setupMotion(panels)
+      }
     }
 
     this.paintSaved()
@@ -77,6 +83,7 @@ export default class extends Controller {
     this.observer?.disconnect()
     this.endObserver?.disconnect()
     this.pager?.destroy()
+    this.motion?.destroy()
     this.nextBar?.remove()
     this.flushProgress()
     stopSpeaking()
@@ -109,6 +116,18 @@ export default class extends Controller {
     } else if (this.furthest > 0) {
       requestAnimationFrame(() => panels[this.furthest]?.scrollIntoView({ block: "start" }))
     }
+  }
+
+  // Spike M.0: panels zoom in slowly and their bubbles appear one by one (reader/motion_lite.js). Panels the
+  // reader has passed stay as they are.
+  setupMotion(panels) {
+    if (!this.motionDefaultValue) return
+    this.motion = new MotionLite(panels, { enabled: this.motionOn, before: this.completed ? Infinity : this.furthest })
+  }
+
+  // The setting (its default is the reader's variant) and the system's reduced motion.
+  get motionOn() {
+    return Boolean(this.motionDefaultValue) && this.prefs.motion && !prefersReducedMotion()
   }
 
   // ── Manga: one page per screen ───────────────────────────
@@ -339,7 +358,8 @@ export default class extends Controller {
   saveProgress() {
     clearTimeout(this.saveTimer)
     this.saveTimer = null
-    request("PATCH", this.progressUrlValue, { last_panel_position: this.furthest, completed: this.completed },
+    request("PATCH", this.progressUrlValue, { last_panel_position: this.furthest, completed: this.completed,
+                                              motion: this.motion ? this.motionOn : undefined },
             { keepalive: true }).catch(() => {})
   }
 
@@ -394,12 +414,19 @@ export default class extends Controller {
       romanization: readPref("romanization", false),
       highlight: readPref("highlight", true),
       night: readPref("night", false),
-      pageTurn: readChoice("page_turn", PAGE_TURN_EFFECTS, "slide")
+      pageTurn: readChoice("page_turn", PAGE_TURN_EFFECTS, "slide"),
+      motion: readPref("motion", this.motionDefaultValue === "motion")
     }
     if (this.hasRomanizationToggleTarget) this.romanizationToggleTarget.checked = this.prefs.romanization
     this.highlightToggleTarget.checked = this.prefs.highlight
     this.nightToggleTarget.checked = this.prefs.night
     if (this.hasPageTurnSelectTarget) this.pageTurnSelectTarget.value = this.prefs.pageTurn
+    if (this.hasMotionToggleTarget) {
+      const reduced = prefersReducedMotion() // the system setting wins; the hint says why the switch is off
+      this.motionToggleTarget.checked = this.prefs.motion && !reduced
+      this.motionToggleTarget.disabled = reduced
+      if (this.hasMotionHintTarget) this.motionHintTarget.hidden = !reduced
+    }
     this.applyPrefs()
   }
 
@@ -420,6 +447,7 @@ export default class extends Controller {
     this.element.dataset.romanization = this.prefs.romanization ? "on" : "off"
     this.element.dataset.highlight = this.prefs.highlight ? "on" : "off"
     this.setTheme(this.prefs.night)
+    this.motion?.setEnabled(this.motionOn)
   }
 
   setTheme(night) {
@@ -448,6 +476,7 @@ export default class extends Controller {
 
   eventDetail() {
     return { episodeId: this.episode.id, format: this.episode.format, number: this.episode.number,
-             pair: this.episode.language_pair.code, level: this.episode.cefr_level }
+             pair: this.episode.language_pair.code, level: this.episode.cefr_level,
+             motion: this.motion ? this.motionOn : undefined }
   }
 }

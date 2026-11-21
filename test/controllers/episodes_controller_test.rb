@@ -19,6 +19,41 @@ class EpisodesControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test "spike M.0: a webtoon reader gets their motion variant and the setting; every event carries the variant" do
+    with_motion_lite("ab") do
+      get episode_path(@episode)
+      variant = MotionLite.variant(User.last.analytics_id)
+      assert_includes %w[motion static], variant
+      assert_select ".reader[data-reader-motion-default-value=?]", variant
+      assert_select "#pref_motion"
+      assert_equal variant, tracked("episode_started").sole[:properties][:motion_variant]
+      context = JSON.parse(css_select("meta[name='analytics-context']").first["content"])
+      assert_equal variant, context["motion_variant"], "browser events get it from analytics-context"
+    end
+  end
+
+  test "spike M.0 off, or not a webtoon: no motion, no setting, no variant" do
+    get episode_path(@episode)
+    assert_select ".reader[data-reader-motion-default-value='']"
+    assert_select "#pref_motion", false
+    assert_not tracked("episode_started").sole[:properties].key?(:motion_variant)
+
+    with_motion_lite("on") do
+      chat = Episodes::Importer.call(file_fixture("episode_ko.json").read, status: "published")
+      get episode_path(chat)
+      assert_select ".reader[data-reader-motion-default-value='']"
+      assert_select "#pref_motion", false
+    end
+  end
+
+  def with_motion_lite(mode)
+    previous = Rails.configuration.x.reader.motion_lite
+    Rails.configuration.x.reader.motion_lite = mode
+    yield
+  ensure
+    Rails.configuration.x.reader.motion_lite = previous
+  end
+
   test "Korean pair renders the English interface" do
     ko = Episodes::Importer.call(file_fixture("episode_ko.json").read, status: "published")
     get episode_path(ko)

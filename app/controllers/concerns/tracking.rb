@@ -54,7 +54,9 @@ module Tracking
                              properties: analytics_context(user: user, episode: episode).merge(properties))
     end
 
+    # Also the variants of running experiments, so every event can be split by them (spike M.0: MotionLite).
     def analytics_context(user: Current.user, episode: nil)
       Analytics.context(user: user, episode: episode, utm: stored_utm)
+               .merge(motion_variant: MotionLite.variant(user&.analytics_id || visitor_id)).compact
     end
 end

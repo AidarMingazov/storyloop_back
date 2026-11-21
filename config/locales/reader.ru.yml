@@ -20,6 +20,8 @@ ru:
       page_turn_slide: Сдвиг
       page_turn_curl: Загиб страницы
       page_turn_none: Без анимации
+      motion: Анимация кадров
+      motion_reduced: Выключена системной настройкой «Уменьшение движения»
       save_word: Сохранить слово
       saved: Сохранено
       listen: Слушать

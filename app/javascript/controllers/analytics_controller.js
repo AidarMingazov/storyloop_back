@@ -39,8 +39,8 @@ function context() {
 }
 
 function episodeProps(event) {
-  const { pair, format, number, level } = event.detail
-  return { pair, format, episode_number: number, episode_level: level }
+  const { pair, format, number, level, motion } = event.detail
+  return { pair, format, episode_number: number, episode_level: level, motion } // motion: spike M.0, webtoon only
 }
 
 // Official PostHog loader stub: queues calls until array.js arrives from the PostHog CDN.
