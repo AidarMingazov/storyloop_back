@@ -134,4 +134,33 @@ class UserStoriesTest < ApplicationSystemTestCase
     assert_equal "Timur", request.series.characters.find_by!(key: "p1").name
     assert_not request.photos.attached?, "originals are deleted once the story is made"
   end
+
+  test "every other way to create: a theme, own text, surprise me; a private story stays closed to guests" do
+    author = users(:one)
+    author.update!(language_pair: language_pairs(:en_ru), onboarded_at: Time.current, display_name: "Mia")
+    sign_in author
+
+    { "Тема" => -> { find("[data-modes=theme] label", text: "Детектив").click },
+      "Свой текст" => -> { fill_in "story_prompt_text", with: "Masha lost her keys and found them in the fridge." },
+      "Удиви меня" => -> { } }.each do |mode, fill|
+      visit new_story_path
+      find("label", text: mode).click
+      fill.call
+      choose "story_visibility_private", allow_label_click: true
+      check "story_rules_accepted"
+      click_on "Создать"
+      assert_text "Создаём историю…"
+      perform_enqueued_jobs
+      refresh
+      assert_selector "#read-story"
+    end
+
+    assert_equal %w[theme text surprise], StoryRequest.order(:id).pluck(:mode)
+    assert_equal [ "detective", "cafe" ], StoryRequest.order(:id).first(2).map(&:cast_key)
+    token = StoryRequest.last.episode.share_token
+
+    Capybara.reset_session!
+    visit shared_episode_path(token)
+    assert_selector "#story-unavailable"
+  end
 end
