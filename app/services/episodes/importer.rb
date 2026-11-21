@@ -159,9 +159,17 @@ module Episodes
           path = @base_dir.join(attrs["image"])
           raise Invalid, "panel #{panel.position + 1}: image not found: #{path}" unless path.file?
           panel.image.attach(io: path.open("rb"), filename: path.basename.to_s)
-        elsif @placeholders && !episode.format_chat?
+        elsif @placeholders && needs_picture?(episode, attrs)
           panel.image.attach(PlaceholderImage.for(panel))
         end
+      end
+
+      # Webtoon and manga panels are pictures; chat has none; an illustrated section has one only
+      # when it describes it.
+      def needs_picture?(episode, attrs)
+        return false if episode.format_chat?
+        return attrs["image_prompt"].present? if episode.format_illustrated?
+        true
       end
 
       # Finds or creates lexemes by (language, lemma, pos) and fills in missing data.

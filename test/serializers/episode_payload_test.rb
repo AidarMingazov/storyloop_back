@@ -13,6 +13,7 @@ class EpisodePayloadTest < ActiveSupport::TestCase
     assert_equal({ code: "en-ru", target_lang: "en", native_lang: "ru" }, json[:language_pair])
     panel = json[:panels].first
     assert_match %r{\A/rails/active_storage/representations/}, panel[:image_url]
+    assert_match(/ 800w, .+ 1200w\z/, panel[:image_srcset])
     assert_equal 0.8, panel[:aspect_ratio]
 
     bubble = panel[:bubbles].first

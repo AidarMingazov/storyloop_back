@@ -26,6 +26,11 @@
       <%= text_field_tag "lexeme[translations][#{native}]", @lexeme.translation_for(native), id: "lexeme_translations_#{native}", class: "input" %>
     </div>
   <% end %>
+  <div>
+    <%= f.label :audio, "Озвучка начальной формы", class: "label" %>
+    <% if @lexeme.audio.attached? %><audio controls preload="none" src="<%= url_for(@lexeme.audio) %>" class="mb-2 w-full"></audio><% end %>
+    <%= f.file_field :audio, accept: "audio/*", class: "input" %>
+  </div>
   <div class="flex gap-2">
     <%= f.submit "Сохранить", class: "btn-primary" %>
     <%= link_to "Отмена", admin_lexemes_path, class: "btn-secondary" %>

@@ -16,12 +16,16 @@ Postgres из контейнера доступен на хосте на пор�
 ## Тесты
 
 ```bash
-docker compose run --rm test                                 # unit + системные (Chrome в контейнере)
+docker compose run --rm test                                 # unit (2 потока) + системные по одному (Chrome в контейнере)
 docker compose run --rm web bin/rails test                   # только unit/интеграционные
 docker compose run --rm web bin/rubocop
 ```
 
 Посмотреть системные тесты вживую: http://localhost:7900 (пароль `secret`).
+
+Docker Desktop с ~3 ГБ памяти тесно: dev-сервер, Postgres, тесты и Chrome вместе могут не поместиться. Лучше выделить 6–8 ГБ (Settings → Resources → Memory).
+
+JSON API для нативных клиентов: `docs/api.md`.
 
 ## Контент
 

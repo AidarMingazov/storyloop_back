@@ -21,6 +21,8 @@ en:
       listen: Listen
       translate_phrase: Translate phrase
       close: Close
+      previous_page: Previous page
+      next_page: Next page
       next_message: Next
       summary_title: Episode complete
       new_words: New words

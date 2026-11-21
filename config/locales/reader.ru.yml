@@ -21,6 +21,8 @@ ru:
       listen: Слушать
       translate_phrase: Перевод фразы
       close: Закрыть
+      previous_page: Предыдущая страница
+      next_page: Следующая страница
       next_message: Дальше
       summary_title: Эпизод прочитан
       new_words: Новые слова

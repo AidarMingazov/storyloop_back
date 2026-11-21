@@ -46,6 +46,19 @@ Rails.application.routes.draw do
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   get "up" => "rails/health#show", as: :rails_health_check
 
+  # JSON API for native clients (docs/api.md)
+  namespace :api do
+    namespace :v1 do
+      resources :guests, only: :create
+      resources :sessions, only: :create
+      resource :session, only: :destroy
+      resources :episodes, only: :show do
+        resource :progress, only: :update
+      end
+      resources :user_words, only: %i[index create destroy], param: :lexeme_id
+    end
+  end
+
   # PWA
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker

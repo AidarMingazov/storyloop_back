@@ -23,6 +23,7 @@ class ReaderTest < ApplicationSystemTestCase
     find(".tok", text: "By the way").click
     assert_selector ".word-sheet.is-open", text: "Так переходят к новой теме."
 
+    execute_script "window.scrollTo(0, 0)" # the first bubble sits at the very top, under the sticky header
     first(".bubble-translate").click
     assert_selector ".word-sheet.is-open", text: "Угадай, кого я сегодня встретила!"
 

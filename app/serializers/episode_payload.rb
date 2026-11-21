@@ -4,9 +4,12 @@
 class EpisodePayload
   include Rails.application.routes.url_helpers
 
-  def initialize(episode, user: nil)
+  # media_host: { host:, protocol: } → absolute media URLs (native clients); nil → paths (web reader).
+  # (Not `url_options`: Rails' url helpers use that name internally.)
+  def initialize(episode, user: nil, media_host: nil)
     @episode = episode
     @user = user
+    @media_host = media_host
   end
 
   def as_json(*)
@@ -32,7 +35,7 @@ class EpisodePayload
   def to_json(*) = as_json.to_json
 
   private
-    attr_reader :episode, :user
+    attr_reader :episode, :user, :media_host
 
     def series = episode.series
     def pair = series.language_pair
@@ -51,19 +54,21 @@ class EpisodePayload
 
     def character_json(character)
       { id: character.id, key: character.key, name: character.name, protagonist: character.protagonist,
-        avatar_url: character.avatar.attached? ? rails_blob_path(character.avatar, only_path: true) : nil }
+        avatar_url: character.avatar.attached? ? blob_link(character.avatar) : nil }
     end
 
     def panel_json(panel)
-      { id: panel.id, position: panel.position, aspect_ratio: panel.aspect_ratio,
-        image_url: panel.image.attached? ? rails_representation_path(panel.image.variant(:phone), only_path: true) : nil,
+      image = panel.image.attached?
+      { id: panel.id, position: panel.position, aspect_ratio: panel.aspect_ratio, layout: panel.layout,
+        image_url: image ? variant_link(panel.image.variant(:phone)) : nil,
+        image_srcset: image ? "#{variant_link(panel.image.variant(:phone))} 800w, #{variant_link(panel.image.variant(:phone_2x))} 1200w" : nil,
         bubbles: panel.bubbles.map { |bubble| bubble_json(bubble) } }
     end
 
     def bubble_json(bubble)
       { id: bubble.id, position: bubble.position, kind: bubble.kind, character_id: bubble.character_id,
         text: bubble.text, translation: bubble.translation, box: bubble.box,
-        audio_url: bubble.audio.attached? ? rails_blob_path(bubble.audio, only_path: true) : nil,
+        audio_url: bubble.audio.attached? ? blob_link(bubble.audio) : nil,
         tokens: bubble.tokens.map { |token| token_json(token) } }
     end
 
@@ -76,7 +81,15 @@ class EpisodePayload
     def lexeme_json(lexeme)
       { id: lexeme.id, lemma: lexeme.lemma, pos: lexeme.pos, cefr_level: lexeme.cefr_level,
         romanization: lexeme.romanization, translation: lexeme.translation_for(pair.native_lang),
-        audio_url: lexeme.audio.attached? ? rails_blob_path(lexeme.audio, only_path: true) : nil }
+        audio_url: lexeme.audio.attached? ? blob_link(lexeme.audio) : nil }
+    end
+
+    def variant_link(variant)
+      media_host ? rails_representation_url(variant, **media_host) : rails_representation_path(variant, only_path: true)
+    end
+
+    def blob_link(attachment)
+      media_host ? rails_blob_url(attachment, **media_host) : rails_blob_path(attachment, only_path: true)
     end
 
     def next_episode_json

@@ -1,7 +1,9 @@
 import { Controller } from "@hotwired/stimulus"
 import { h, prefersReducedMotion } from "reader/dom"
-import { renderWebtoon } from "reader/webtoon"
+import { renderWebtoon, fitBubbles } from "reader/webtoon"
 import { renderChat } from "reader/chat"
+import { renderManga } from "reader/manga"
+import { renderIllustrated } from "reader/illustrated"
 import { WordSheet } from "reader/sheet"
 import { renderSummary, updateSummary } from "reader/summary"
 import { speak, stopSpeaking } from "reader/speech"
@@ -14,7 +16,8 @@ const THEME_COLORS = { light: "#fbf9f3", night: "#0e0e12" }
 // (the same shape API v1 will serve). Tapping a word opens the sheet instantly; only saving
 // words and progress talk to the server.
 //
-// Progress position: panel index for webtoon, index of the last revealed message for chat.
+// Progress position: panel index for webtoon, manga and illustrated; index of the last revealed
+// message for chat.
 export default class extends Controller {
   static targets = [ "payload", "stage", "summary", "sheet", "progressBar", "settings", "settingsButton",
                      "romanizationToggle", "highlightToggle", "nightToggle" ]
@@ -38,14 +41,23 @@ export default class extends Controller {
     })
     this.loadPrefs()
 
-    if (this.episode.format === "chat") this.setupChat()
-    else this.setupWebtoon() // manga and illustrated get their own layouts in wave 5
+    switch (this.episode.format) {
+      case "chat": this.setupChat(); break
+      case "manga": this.setupManga(); break
+      case "illustrated": this.setupScrolling(renderIllustrated(this.stageTarget, this.episode, this.t)); break
+      default: this.setupScrolling(renderWebtoon(this.stageTarget, this.episode, this.t))
+    }
 
     this.paintSaved()
     this.updateProgressBar()
 
+    this.onResize = () => fitBubbles(this.stageTarget)
+    this.onResize()
+    document.fonts?.ready.then(this.onResize)
+    window.addEventListener("resize", this.onResize)
+
     this.onDocumentClick = (event) => this.documentClick(event)
-    this.onKeydown = (event) => { if (event.key === "Escape") this.sheet.close() }
+    this.onKeydown = (event) => this.keydown(event)
     this.onPageHide = () => this.flushProgress()
     // Scrolling on with the sheet open means the reader moved on: get the sheet out of the way.
     this.onScroll = () => {
@@ -66,16 +78,16 @@ export default class extends Controller {
     this.flushProgress()
     stopSpeaking()
     window.removeEventListener("scroll", this.onScroll)
+    window.removeEventListener("resize", this.onResize)
     document.removeEventListener("click", this.onDocumentClick)
     document.removeEventListener("keydown", this.onKeydown)
     window.removeEventListener("pagehide", this.onPageHide)
     this.setTheme(false) // other pages use the light theme
   }
 
-  // ── Webtoon ──────────────────────────────────────────────
+  // ── Webtoon and illustrated: vertical scrolling ──────────
 
-  setupWebtoon() {
-    const panels = renderWebtoon(this.stageTarget, this.episode, this.t)
+  setupScrolling(panels) {
     this.total = panels.length
 
     // A panel counts as read when it crosses the middle band of the screen.
@@ -94,6 +106,56 @@ export default class extends Controller {
     } else if (this.furthest > 0) {
       requestAnimationFrame(() => panels[this.furthest]?.scrollIntoView({ block: "start" }))
     }
+  }
+
+  // ── Manga: one page per screen ───────────────────────────
+
+  setupManga() {
+    const { pager, pages, counter } = renderManga(this.stageTarget, this.episode, this.t)
+    this.pager = pager
+    this.pages = pages
+    this.pageCounter = counter
+    this.total = this.episode.panels.length
+    this.pageIndex = 0
+
+    pager.addEventListener("scroll", () => {
+      clearTimeout(this.pageScrollTimer)
+      this.pageScrollTimer = setTimeout(() => this.pageChanged(), 80)
+    }, { passive: true })
+
+    if (this.completed) {
+      this.showSummary()
+    } else if (this.furthest > 0) {
+      const page = this.pages.findIndex((p) => Number(p.dataset.lastPosition) >= this.furthest)
+      requestAnimationFrame(() => this.goToPage(Math.max(0, page), "auto"))
+    }
+    this.pageChanged()
+  }
+
+  nextPage() { this.goToPage(this.pageIndex + 1) }
+  previousPage() { this.goToPage(this.pageIndex - 1) }
+
+  goToPage(index, behavior = prefersReducedMotion() ? "auto" : "smooth") {
+    if (!this.pager || index < 0 || index >= this.pages.length) return
+    this.sheet.close()
+    this.pager.scrollTo({ left: this.pages[index].offsetLeft, behavior })
+    if (behavior === "auto") this.pageChanged()
+  }
+
+  pageChanged() {
+    const index = Math.round(this.pager.scrollLeft / Math.max(1, this.pager.clientWidth))
+    this.pageIndex = Math.min(Math.max(index, 0), this.pages.length - 1)
+    this.pageCounter.textContent = `${this.pageIndex + 1} / ${this.pages.length}`
+    this.pages.forEach((page, i) => page.setAttribute("aria-hidden", String(i !== this.pageIndex)))
+    this.reached(Number(this.pages[this.pageIndex].dataset.lastPosition))
+    if (this.pageIndex === this.pages.length - 1) this.complete()
+  }
+
+  keydown(event) {
+    if (event.key === "Escape") return this.sheet.close()
+    if (!this.pager || event.target.closest("input, textarea")) return
+    if (event.key === "ArrowRight") { event.preventDefault(); this.nextPage() }
+    if (event.key === "ArrowLeft") { event.preventDefault(); this.previousPage() }
   }
 
   // ── Chat ─────────────────────────────────────────────────
@@ -132,11 +194,15 @@ export default class extends Controller {
   // ── Taps ─────────────────────────────────────────────────
 
   stageClick(event) {
+    const listen = event.target.closest("[data-speak-bubble]")
     const translate = event.target.closest("[data-translate-bubble]")
     const token = event.target.closest("[data-token-id]")
     const bubble = event.target.closest("[data-bubble-id]")
 
-    if (translate) this.openPhrase(Number(translate.dataset.translateBubble))
+    if (listen) {
+      const line = this.bubbles.get(Number(listen.dataset.speakBubble))
+      speak(line.text, this.lang, line.audio_url)
+    } else if (translate) this.openPhrase(Number(translate.dataset.translateBubble))
     else if (token) this.openToken(token)
     else if (bubble) this.openPhrase(Number(bubble.dataset.bubbleId)) // tap on the bubble outside words
     else return
@@ -180,7 +246,8 @@ export default class extends Controller {
   }
 
   speakCurrent() {
-    if (this.current) speak(this.current.token.surface, this.lang, null)
+    // Recorded audio of the dictionary form when we have it, otherwise the word as written.
+    if (this.current) speak(this.current.token.surface, this.lang, this.current.lexeme.audio_url)
     else if (this.currentBubble) speak(this.currentBubble.text, this.lang, this.currentBubble.audio_url)
   }
 

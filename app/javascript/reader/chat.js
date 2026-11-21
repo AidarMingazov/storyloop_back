@@ -14,7 +14,8 @@ export function renderChat(stage, episode, t) {
   for (const panel of episode.panels) {
     if (panel.image_url) {
       items.push(h("div", { class: "chat-msg chat-msg--them" },
-        h("img", { class: "chat-image", src: panel.image_url, alt: "", loading: "lazy" })))
+        h("img", { class: "chat-image", src: panel.image_url, srcset: panel.image_srcset || null,
+                   sizes: "70vw", alt: "", loading: "lazy" })))
     }
 
     for (const bubble of panel.bubbles) {
@@ -37,8 +38,11 @@ export function renderChat(stage, episode, t) {
           h("div", { class: "min-w-0" },
             !me && firstInGroup ? h("p", { class: "chat-name" }, character.name) : null,
             h("div", { class: "chat-bubble", "data-bubble-id": bubble.id }, tokenizedText(bubble))),
-          h("button", { type: "button", class: "chat-translate", "data-translate-bubble": bubble.id,
-                        "aria-label": t.translate_phrase, title: t.translate_phrase }, "⇄"))
+          h("div", { class: "chat-actions" },
+            bubble.audio_url ? h("button", { type: "button", class: "chat-translate", "data-speak-bubble": bubble.id,
+                                             "aria-label": t.listen, title: t.listen }, "🔊") : null,
+            h("button", { type: "button", class: "chat-translate", "data-translate-bubble": bubble.id,
+                          "aria-label": t.translate_phrase, title: t.translate_phrase }, "⇄")))
         previousSender = character.id
       }
       items.push(item)

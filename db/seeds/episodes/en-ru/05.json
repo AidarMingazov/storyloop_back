@@ -1,0 +1,1504 @@
+{
+  "language_pair": "en-ru",
+  "series": {
+    "slug": "coffee-and-coincidences",
+    "title": "Coffee & Coincidences",
+    "description": "Бариста Миа путает заказы и проливает кофе на альбом нового посетителя — художника Лео. С этой неловкой встречи начинается тёплая история о случайностях, первых свиданиях и маленьких чудесах.",
+    "genre": "romance",
+    "cefr_level": "A2",
+    "style_prompt": "Soft, warm Korean webtoon style with clean, thin line art and gentle cel shading. Pastel palette of peach, cream, mint and latte brown, cozy golden lighting, expressive but simple faces, slightly rounded proportions, uncluttered backgrounds with soft bokeh. Vertical-scroll comic panel composition. No text, letters, readable signs or speech bubbles in the image.",
+    "characters": [
+      {
+        "key": "mia",
+        "name": "Mia",
+        "appearance_prompt": "24-year-old woman, petite, shoulder-length wavy auburn hair usually tied in a messy low bun with a few loose strands, warm brown eyes, light freckles across her nose and cheeks, small silver star earrings. At work she wears a mustard-yellow barista apron over a cream knit sweater with pushed-up sleeves, black jeans and white sneakers.",
+        "protagonist": true
+      },
+      {
+        "key": "leo",
+        "name": "Leo",
+        "appearance_prompt": "26-year-old man, tall and slim, messy dark-brown hair falling over his forehead, round tortoiseshell glasses, soft green eyes, a small ink stain on his right hand. Wears an oversized olive-green corduroy jacket over a plain white T-shirt, beige chinos and worn white sneakers; usually carries a brown leather sketchbook."
+      },
+      {
+        "key": "sam",
+        "name": "Sam",
+        "appearance_prompt": "25-year-old woman, Mia's roommate, short bleached-blonde pixie cut, bright blue eyes, wide cheerful grin, several small silver ear piercings. Wears oversized lavender hoodies, patterned leggings and fuzzy socks; very expressive face, often has her phone in her hand."
+      },
+      {
+        "key": "nora",
+        "name": "Nora",
+        "appearance_prompt": "28-year-old woman, tall and elegant, long glossy black hair in loose waves, soft green eyes exactly like Leo's, bright red lipstick, gold hoop earrings. Wears a fitted red dress under a cream trench coat and red heels; dramatic, confident gestures."
+      }
+    ]
+  },
+  "episode": {
+    "number": 5,
+    "title": "The Wrong Idea",
+    "format": "manga",
+    "cefr_level": "A2",
+    "free": false,
+    "estimated_minutes": 4,
+    "synopsis": "At the exhibition, Mia thinks the glamorous Nora is Leo's girlfriend and tries to leave, but Nora turns out to be his big sister, who just flew in from London to surprise him; they have the same green eyes. Mia is terribly embarrassed, Nora teases Leo and leaves the two alone on purpose, and Leo asks Mia on a real date. Then Nora rushes back: a mysterious man wants to buy Leo's painting of Mia.",
+    "target_words": [
+      "get the wrong idea",
+      "fly in",
+      "surprise",
+      "turn out to be",
+      "make sense",
+      "embarrassing",
+      "make a mistake",
+      "all the time",
+      "on purpose",
+      "look forward to"
+    ],
+    "panels": [
+      {
+        "image_prompt": "Black-and-white manga panel, clean ink lines with screentone shading. Wide shot inside a small bright art gallery with white walls and a large framed painting. In the background, Nora (tall, elegant, long glossy black wavy hair, dark fitted dress under a light trench coat, hoop earrings) hugs Leo (tall, slim, messy dark hair, round glasses) around the neck. In the right foreground, Mia (petite, freckles, wet wavy hair down) stands frozen, wrapped in Leo's oversized corduroy jacket, water dripping from her hair, eyes shadowed. No text, no speech bubbles.",
+        "layout": {
+          "page": 1,
+          "cols": 2,
+          "aspect_ratio": 2.0
+        },
+        "bubbles": [
+          {
+            "kind": "narration",
+            "character": null,
+            "text": "The woman in red was still hugging Leo.",
+            "translation": "Женщина в красном всё ещё обнимала Лео.",
+            "box": {
+              "x": 3,
+              "y": 5,
+              "w": 44,
+              "h": 22
+            },
+            "tokens": [
+              {
+                "surface": "The",
+                "lemma": "the",
+                "pos": "determiner",
+                "translation": "определённый артикль"
+              },
+              {
+                "surface": "woman",
+                "lemma": "woman",
+                "pos": "noun",
+                "translation": "женщина",
+                "cefr": "A1"
+              },
+              {
+                "surface": "in red",
+                "lemma": "in red",
+                "pos": "phrase",
+                "translation": "в красном",
+                "lemma_translation": "в красном (об одежде)",
+                "cefr": "A2",
+                "note": "In red — «в красном» (об одежде): the woman in red — женщина в красном."
+              },
+              {
+                "surface": "was",
+                "lemma": "be",
+                "pos": "verb",
+                "translation": "вспомогательный глагол",
+                "lemma_translation": "быть",
+                "note": "Was hugging — прошедшее длительное время: действие продолжалось в тот момент."
+              },
+              {
+                "surface": "still",
+                "lemma": "still",
+                "pos": "adverb",
+                "translation": "всё ещё",
+                "lemma_translation": "всё ещё; до сих пор",
+                "cefr": "A2"
+              },
+              {
+                "surface": "hugging",
+                "lemma": "hug",
+                "pos": "verb",
+                "translation": "обнимала",
+                "lemma_translation": "обнимать",
+                "cefr": "A2"
+              },
+              {
+                "surface": "Leo",
+                "lemma": "Leo",
+                "pos": "noun",
+                "translation": "Лео"
+              }
+            ]
+          },
+          {
+            "kind": "thought",
+            "character": "mia",
+            "text": "Of course. He has a girlfriend.",
+            "translation": "Ну конечно. У него есть девушка.",
+            "box": {
+              "x": 53,
+              "y": 72,
+              "w": 44,
+              "h": 23
+            },
+            "tokens": [
+              {
+                "surface": "Of course",
+                "lemma": "of course",
+                "pos": "phrase",
+                "translation": "ну конечно",
+                "lemma_translation": "конечно",
+                "cefr": "A1"
+              },
+              {
+                "surface": "He",
+                "lemma": "he",
+                "pos": "pronoun",
+                "translation": "у него",
+                "lemma_translation": "он"
+              },
+              {
+                "surface": "has",
+                "lemma": "have",
+                "pos": "verb",
+                "translation": "есть",
+                "lemma_translation": "иметь",
+                "cefr": "A1",
+                "note": "He has… — по-русски обычно «у него есть…»."
+              },
+              {
+                "surface": "a",
+                "lemma": "a",
+                "pos": "determiner",
+                "translation": "неопределённый артикль"
+              },
+              {
+                "surface": "girlfriend",
+                "lemma": "girlfriend",
+                "pos": "noun",
+                "translation": "девушка",
+                "lemma_translation": "девушка (с которой встречаются)",
+                "cefr": "A2",
+                "note": "Girlfriend — девушка, с которой встречаются. Просто подруга — a friend."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "image_prompt": "Black-and-white manga panel, clean ink lines with screentone shading. Vertical close-up of Mia looking down, her eyes hidden under wet bangs, slowly taking off Leo's oversized corduroy jacket and holding it out. Gloomy diagonal screentone background. No text, no speech bubbles.",
+        "layout": {
+          "page": 1,
+          "cols": 1,
+          "aspect_ratio": 0.8
+        },
+        "bubbles": [
+          {
+            "kind": "speech",
+            "character": "mia",
+            "text": "Sorry. I should go.",
+            "translation": "Извини. Мне пора.",
+            "box": {
+              "x": 6,
+              "y": 4,
+              "w": 80,
+              "h": 18
+            },
+            "tokens": [
+              {
+                "surface": "Sorry",
+                "lemma": "sorry",
+                "pos": "adjective",
+                "translation": "извини",
+                "lemma_translation": "извини(те); сожалеющий",
+                "cefr": "A1"
+              },
+              {
+                "surface": "I",
+                "lemma": "I",
+                "pos": "pronoun",
+                "translation": "мне",
+                "lemma_translation": "я"
+              },
+              {
+                "surface": "should",
+                "lemma": "should",
+                "pos": "verb",
+                "translation": "пора",
+                "lemma_translation": "следует, стоит",
+                "cefr": "A2",
+                "note": "Should — «следует, стоит». I should go — «мне пора (идти)»."
+              },
+              {
+                "surface": "go",
+                "lemma": "go",
+                "pos": "verb",
+                "translation": "идти",
+                "lemma_translation": "идти; уходить",
+                "cefr": "A1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "image_prompt": "Black-and-white manga panel, clean ink lines with screentone shading. Vertical shot of Leo (round glasses, messy dark hair, white T-shirt) looking surprised and confused, one hand reaching out; the elegant woman with long black hair is still holding his other arm. Small surprise lines around his head. No text, no speech bubbles.",
+        "layout": {
+          "page": 1,
+          "cols": 1,
+          "aspect_ratio": 0.8
+        },
+        "bubbles": [
+          {
+            "kind": "speech",
+            "character": "leo",
+            "text": "Go? But you just got here!",
+            "translation": "Уйти? Но ты же только пришла!",
+            "box": {
+              "x": 14,
+              "y": 4,
+              "w": 80,
+              "h": 18
+            },
+            "tokens": [
+              {
+                "surface": "Go",
+                "lemma": "go",
+                "pos": "verb",
+                "translation": "уйти",
+                "lemma_translation": "идти; уходить",
+                "cefr": "A1"
+              },
+              {
+                "surface": "But",
+                "lemma": "but",
+                "pos": "conjunction",
+                "translation": "но"
+              },
+              {
+                "surface": "you",
+                "lemma": "you",
+                "pos": "pronoun",
+                "translation": "ты",
+                "lemma_translation": "ты; вы"
+              },
+              {
+                "surface": "just",
+                "lemma": "just",
+                "pos": "adverb",
+                "translation": "только",
+                "lemma_translation": "просто; только что",
+                "cefr": "A1"
+              },
+              {
+                "surface": "got here",
+                "lemma": "get here",
+                "pos": "phrase",
+                "translation": "пришла",
+                "lemma_translation": "добраться сюда, прийти",
+                "cefr": "A2",
+                "note": "Get here — «добраться сюда, прийти». Got — прошедшее время от get."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "image_prompt": "Black-and-white manga panel, clean ink lines with screentone shading. Very wide shot: Nora lets go of Leo and points excitedly from Mia to the large painting of a barista girl with coffee splashing around her like stars, her eyes huge and sparkling, sparkle effects around her. Mia, in the corduroy jacket, blinks in confusion on the right. No text, no speech bubbles.",
+        "layout": {
+          "page": 1,
+          "cols": 2,
+          "aspect_ratio": 2.2
+        },
+        "bubbles": [
+          {
+            "kind": "speech",
+            "character": "nora",
+            "text": "Wait! You're the girl in the painting!",
+            "translation": "Подожди! Ты же девушка с картины!",
+            "box": {
+              "x": 4,
+              "y": 6,
+              "w": 50,
+              "h": 28
+            },
+            "tokens": [
+              {
+                "surface": "Wait",
+                "lemma": "wait",
+                "pos": "verb",
+                "translation": "подожди",
+                "lemma_translation": "ждать",
+                "cefr": "A1"
+              },
+              {
+                "surface": "You're",
+                "lemma": "you are",
+                "pos": "pronoun",
+                "translation": "ты",
+                "lemma_translation": "ты; вы",
+                "note": "You're = you are."
+              },
+              {
+                "surface": "the",
+                "lemma": "the",
+                "pos": "determiner",
+                "translation": "определённый артикль"
+              },
+              {
+                "surface": "girl",
+                "lemma": "girl",
+                "pos": "noun",
+                "translation": "девушка",
+                "lemma_translation": "девочка; девушка",
+                "cefr": "A1"
+              },
+              {
+                "surface": "in",
+                "lemma": "in",
+                "pos": "preposition",
+                "translation": "с",
+                "lemma_translation": "в",
+                "note": "The girl in the painting — девушка на картине (с картины)."
+              },
+              {
+                "surface": "the",
+                "lemma": "the",
+                "pos": "determiner",
+                "translation": "определённый артикль"
+              },
+              {
+                "surface": "painting",
+                "lemma": "painting",
+                "pos": "noun",
+                "translation": "картины",
+                "lemma_translation": "картина",
+                "cefr": "A2"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "image_prompt": "Black-and-white manga panel, clean ink lines with screentone shading. Wide shot: Mia gives a stiff, forced polite smile, hands clasped in front of her, a big comic sweat drop on her head. Nora and Leo stand side by side opposite her, both staring at her with blank, puzzled dot eyes. No text, no speech bubbles.",
+        "layout": {
+          "page": 2,
+          "cols": 2,
+          "aspect_ratio": 2.0
+        },
+        "bubbles": [
+          {
+            "kind": "speech",
+            "character": "mia",
+            "text": "Hi, I'm Mia. You two look great together!",
+            "translation": "Привет, я Миа. Вы отлично смотритесь вместе!",
+            "box": {
+              "x": 3,
+              "y": 5,
+              "w": 48,
+              "h": 26
+            },
+            "tokens": [
+              {
+                "surface": "Hi",
+                "lemma": "hi",
+                "pos": "interjection",
+                "translation": "привет",
+                "cefr": "A1"
+              },
+              {
+                "surface": "I'm",
+                "lemma": "I am",
+                "pos": "pronoun",
+                "translation": "я"
+              },
+              {
+                "surface": "Mia",
+                "lemma": "Mia",
+                "pos": "noun",
+                "translation": "Миа"
+              },
+              {
+                "surface": "You two",
+                "lemma": "you two",
+                "pos": "phrase",
+                "translation": "вы",
+                "lemma_translation": "вы двое",
+                "cefr": "A2",
+                "note": "You two — «вы двое, вы оба»: так обращаются к паре людей."
+              },
+              {
+                "surface": "look",
+                "lemma": "look",
+                "pos": "verb",
+                "translation": "смотритесь",
+                "lemma_translation": "выглядеть; смотреть",
+                "cefr": "A1"
+              },
+              {
+                "surface": "great",
+                "lemma": "great",
+                "pos": "adjective",
+                "translation": "отлично",
+                "lemma_translation": "отличный",
+                "cefr": "A1"
+              },
+              {
+                "surface": "together",
+                "lemma": "together",
+                "pos": "adverb",
+                "translation": "вместе",
+                "cefr": "A1"
+              }
+            ]
+          },
+          {
+            "kind": "thought",
+            "character": "mia",
+            "text": "Smile, Mia. Just smile.",
+            "translation": "Улыбайся, Миа. Просто улыбайся.",
+            "box": {
+              "x": 55,
+              "y": 68,
+              "w": 40,
+              "h": 26
+            },
+            "tokens": [
+              {
+                "surface": "Smile",
+                "lemma": "smile",
+                "pos": "verb",
+                "translation": "улыбайся",
+                "lemma_translation": "улыбаться",
+                "cefr": "A1"
+              },
+              {
+                "surface": "Mia",
+                "lemma": "Mia",
+                "pos": "noun",
+                "translation": "Миа"
+              },
+              {
+                "surface": "Just",
+                "lemma": "just",
+                "pos": "adverb",
+                "translation": "просто",
+                "lemma_translation": "просто; только что",
+                "cefr": "A1"
+              },
+              {
+                "surface": "smile",
+                "lemma": "smile",
+                "pos": "verb",
+                "translation": "улыбайся",
+                "lemma_translation": "улыбаться",
+                "cefr": "A1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "image_prompt": "Black-and-white manga panel, clean ink lines with screentone shading. Wide comedic shot: Nora bends over laughing loudly, holding her stomach, tears of laughter in her eyes; Leo, blushing hard with hatching lines on his cheeks, waves both hands in front of him in panic. Speed lines in the background. No text, no speech bubbles.",
+        "layout": {
+          "page": 2,
+          "cols": 2,
+          "aspect_ratio": 2.0
+        },
+        "bubbles": [
+          {
+            "kind": "speech",
+            "character": "leo",
+            "text": "Together? No, no! You've got the wrong idea!",
+            "translation": "Вместе? Нет-нет! Ты всё не так поняла!",
+            "box": {
+              "x": 3,
+              "y": 5,
+              "w": 50,
+              "h": 26
+            },
+            "tokens": [
+              {
+                "surface": "Together",
+                "lemma": "together",
+                "pos": "adverb",
+                "translation": "вместе",
+                "cefr": "A1"
+              },
+              {
+                "surface": "No",
+                "lemma": "no",
+                "pos": "interjection",
+                "translation": "нет"
+              },
+              {
+                "surface": "no",
+                "lemma": "no",
+                "pos": "interjection",
+                "translation": "нет"
+              },
+              {
+                "surface": "You've",
+                "lemma": "you have",
+                "pos": "pronoun",
+                "translation": "ты",
+                "lemma_translation": "ты; вы",
+                "note": "You've = you have."
+              },
+              {
+                "surface": "got the wrong idea",
+                "lemma": "get the wrong idea",
+                "pos": "idiom",
+                "translation": "всё не так поняла",
+                "lemma_translation": "неправильно понять",
+                "cefr": "B1",
+                "note": "Get the wrong idea — неправильно понять ситуацию, сделать неверный вывод."
+              }
+            ]
+          },
+          {
+            "kind": "speech",
+            "character": "nora",
+            "text": "Me and Leo? Ha-ha-ha!",
+            "translation": "Я и Лео? Ха-ха-ха!",
+            "box": {
+              "x": 58,
+              "y": 66,
+              "w": 38,
+              "h": 24
+            },
+            "tokens": [
+              {
+                "surface": "Me",
+                "lemma": "me",
+                "pos": "pronoun",
+                "translation": "я",
+                "lemma_translation": "меня; мне",
+                "note": "В разговоре часто говорят me вместо I: Me and Leo? — Я и Лео?"
+              },
+              {
+                "surface": "and",
+                "lemma": "and",
+                "pos": "conjunction",
+                "translation": "и"
+              },
+              {
+                "surface": "Leo",
+                "lemma": "Leo",
+                "pos": "noun",
+                "translation": "Лео"
+              },
+              {
+                "surface": "Ha-ha-ha",
+                "lemma": "ha-ha",
+                "pos": "interjection",
+                "translation": "ха-ха-ха"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "image_prompt": "Black-and-white manga panel, clean ink lines with screentone shading. Wide shot: Nora proudly puts her arm around Leo's shoulders in a big-sister pose and gives a thumbs-up; a small rolling suitcase stands next to her. Leo looks embarrassed and tired, his round glasses slightly crooked. No text, no speech bubbles.",
+        "layout": {
+          "page": 2,
+          "cols": 2,
+          "aspect_ratio": 2.0
+        },
+        "bubbles": [
+          {
+            "kind": "speech",
+            "character": "nora",
+            "text": "I'm his big sister! I just flew in from London to surprise him.",
+            "translation": "Я его старшая сестра! Я только что прилетела из Лондона, чтобы сделать ему сюрприз.",
+            "box": {
+              "x": 3,
+              "y": 4,
+              "w": 58,
+              "h": 30
+            },
+            "tokens": [
+              {
+                "surface": "I'm",
+                "lemma": "I am",
+                "pos": "pronoun",
+                "translation": "я"
+              },
+              {
+                "surface": "his",
+                "lemma": "his",
+                "pos": "determiner",
+                "translation": "его"
+              },
+              {
+                "surface": "big sister",
+                "lemma": "big sister",
+                "pos": "noun",
+                "translation": "старшая сестра",
+                "cefr": "A2",
+                "note": "Big sister — старшая сестра (разговорное; нейтрально — older sister). Младший брат — little brother."
+              },
+              {
+                "surface": "I",
+                "lemma": "I",
+                "pos": "pronoun",
+                "translation": "я"
+              },
+              {
+                "surface": "just",
+                "lemma": "just",
+                "pos": "adverb",
+                "translation": "только что",
+                "lemma_translation": "просто; только что",
+                "cefr": "A1"
+              },
+              {
+                "surface": "flew in",
+                "lemma": "fly in",
+                "pos": "phrasal_verb",
+                "translation": "прилетела",
+                "lemma_translation": "прилетать",
+                "cefr": "B1",
+                "note": "Fly in — прилететь (на самолёте). Неправильный глагол: fly — flew — flown."
+              },
+              {
+                "surface": "from",
+                "lemma": "from",
+                "pos": "preposition",
+                "translation": "из",
+                "lemma_translation": "из; от"
+              },
+              {
+                "surface": "London",
+                "lemma": "London",
+                "pos": "noun",
+                "translation": "Лондона",
+                "lemma_translation": "Лондон"
+              },
+              {
+                "surface": "to",
+                "lemma": "to",
+                "pos": "particle",
+                "translation": "чтобы",
+                "lemma_translation": "частица инфинитива",
+                "note": "To + глагол после действия часто значит «чтобы»: flew in to surprise him — прилетела, чтобы удивить его."
+              },
+              {
+                "surface": "surprise",
+                "lemma": "surprise",
+                "pos": "verb",
+                "translation": "сделать сюрприз",
+                "lemma_translation": "удивлять; делать сюрприз",
+                "cefr": "A2",
+                "note": "Surprise somebody — удивить кого-то, сделать сюрприз."
+              },
+              {
+                "surface": "him",
+                "lemma": "him",
+                "pos": "pronoun",
+                "translation": "ему",
+                "lemma_translation": "его; ему"
+              }
+            ]
+          },
+          {
+            "kind": "speech",
+            "character": "leo",
+            "text": "And she calls everyone “my love”.",
+            "translation": "А ещё она всех называет «любовь моя».",
+            "box": {
+              "x": 59,
+              "y": 68,
+              "w": 38,
+              "h": 26
+            },
+            "tokens": [
+              {
+                "surface": "And",
+                "lemma": "and",
+                "pos": "conjunction",
+                "translation": "а ещё",
+                "lemma_translation": "и"
+              },
+              {
+                "surface": "she",
+                "lemma": "she",
+                "pos": "pronoun",
+                "translation": "она"
+              },
+              {
+                "surface": "calls",
+                "lemma": "call",
+                "pos": "verb",
+                "translation": "называет",
+                "lemma_translation": "называть; звонить",
+                "cefr": "A1",
+                "note": "Call somebody something — называть кого-то как-то."
+              },
+              {
+                "surface": "everyone",
+                "lemma": "everyone",
+                "pos": "pronoun",
+                "translation": "всех",
+                "lemma_translation": "каждый, все"
+              },
+              {
+                "surface": "my",
+                "lemma": "my",
+                "pos": "determiner",
+                "translation": "моя",
+                "lemma_translation": "мой"
+              },
+              {
+                "surface": "love",
+                "lemma": "love",
+                "pos": "noun",
+                "translation": "любовь",
+                "cefr": "A1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "image_prompt": "Black-and-white manga panel, clean ink lines with screentone shading. Extreme wide close-up split into two halves: on the left, Nora's eyes with long lashes; on the right, Leo's eyes behind round glasses. Both have exactly the same almond shape, the same light irises and the same sparkle highlights, rendered with matching soft screentone. Dramatic realization lines. No text, no speech bubbles.",
+        "layout": {
+          "page": 3,
+          "cols": 2,
+          "aspect_ratio": 2.2
+        },
+        "bubbles": [
+          {
+            "kind": "narration",
+            "character": null,
+            "text": "So the woman in red turned out to be his sister.",
+            "translation": "Значит, женщина в красном оказалась его сестрой.",
+            "box": {
+              "x": 3,
+              "y": 5,
+              "w": 52,
+              "h": 28
+            },
+            "tokens": [
+              {
+                "surface": "So",
+                "lemma": "so",
+                "pos": "conjunction",
+                "translation": "значит",
+                "lemma_translation": "так; поэтому",
+                "cefr": "A1"
+              },
+              {
+                "surface": "the",
+                "lemma": "the",
+                "pos": "determiner",
+                "translation": "определённый артикль"
+              },
+              {
+                "surface": "woman",
+                "lemma": "woman",
+                "pos": "noun",
+                "translation": "женщина",
+                "cefr": "A1"
+              },
+              {
+                "surface": "in red",
+                "lemma": "in red",
+                "pos": "phrase",
+                "translation": "в красном",
+                "lemma_translation": "в красном (об одежде)",
+                "cefr": "A2"
+              },
+              {
+                "surface": "turned out to be",
+                "lemma": "turn out to be",
+                "pos": "phrasal_verb",
+                "translation": "оказалась",
+                "lemma_translation": "оказаться (кем-то)",
+                "cefr": "B1",
+                "note": "Turn out to be — «оказаться» (неожиданно): she turned out to be his sister — она оказалась его сестрой."
+              },
+              {
+                "surface": "his",
+                "lemma": "his",
+                "pos": "determiner",
+                "translation": "его"
+              },
+              {
+                "surface": "sister",
+                "lemma": "sister",
+                "pos": "noun",
+                "translation": "сестрой",
+                "lemma_translation": "сестра",
+                "cefr": "A1"
+              }
+            ]
+          },
+          {
+            "kind": "thought",
+            "character": "mia",
+            "text": "The same green eyes! Now it all makes sense.",
+            "translation": "Те же зелёные глаза! Теперь всё понятно.",
+            "box": {
+              "x": 56,
+              "y": 68,
+              "w": 41,
+              "h": 28
+            },
+            "tokens": [
+              {
+                "surface": "The same",
+                "lemma": "the same",
+                "pos": "phrase",
+                "translation": "те же",
+                "lemma_translation": "тот же самый",
+                "cefr": "A2",
+                "note": "The same — «тот же самый, такой же»: the same eyes — такие же глаза."
+              },
+              {
+                "surface": "green",
+                "lemma": "green",
+                "pos": "adjective",
+                "translation": "зелёные",
+                "lemma_translation": "зелёный",
+                "cefr": "A1"
+              },
+              {
+                "surface": "eyes",
+                "lemma": "eye",
+                "pos": "noun",
+                "translation": "глаза",
+                "lemma_translation": "глаз",
+                "cefr": "A1"
+              },
+              {
+                "surface": "Now",
+                "lemma": "now",
+                "pos": "adverb",
+                "translation": "теперь",
+                "lemma_translation": "сейчас; теперь",
+                "cefr": "A1"
+              },
+              {
+                "surface": "it all",
+                "lemma": "it all",
+                "pos": "phrase",
+                "translation": "всё",
+                "lemma_translation": "всё (это)",
+                "cefr": "A2"
+              },
+              {
+                "surface": "makes sense",
+                "lemma": "make sense",
+                "pos": "idiom",
+                "translation": "понятно",
+                "lemma_translation": "иметь смысл, быть понятным",
+                "cefr": "B1",
+                "note": "Make sense — «иметь смысл, быть понятным». Now it all makes sense — теперь всё понятно, всё сходится."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "image_prompt": "Black-and-white manga panel, clean ink lines with screentone shading. Vertical chibi-style shot: Mia hides her blushing face in both hands, hatching lines on her cheeks, comic steam puffing from her head, small and cute. No text, no speech bubbles.",
+        "layout": {
+          "page": 3,
+          "cols": 1,
+          "aspect_ratio": 0.8
+        },
+        "bubbles": [
+          {
+            "kind": "speech",
+            "character": "mia",
+            "text": "This is so embarrassing!",
+            "translation": "Это так неловко!",
+            "box": {
+              "x": 8,
+              "y": 5,
+              "w": 80,
+              "h": 18
+            },
+            "tokens": [
+              {
+                "surface": "This",
+                "lemma": "this",
+                "pos": "pronoun",
+                "translation": "это"
+              },
+              {
+                "surface": "is",
+                "lemma": "be",
+                "pos": "verb",
+                "translation": "есть (связка)",
+                "lemma_translation": "быть",
+                "cefr": "A1"
+              },
+              {
+                "surface": "so",
+                "lemma": "so",
+                "pos": "adverb",
+                "translation": "так",
+                "cefr": "A1"
+              },
+              {
+                "surface": "embarrassing",
+                "lemma": "embarrassing",
+                "pos": "adjective",
+                "translation": "неловко",
+                "lemma_translation": "неловкий, стыдный",
+                "cefr": "B1",
+                "note": "Embarrassing — неловкий, стыдный (о ситуации). А человек при этом embarrassed — смущён."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "image_prompt": "Black-and-white manga panel, clean ink lines with screentone shading. Vertical shot: Nora smiles warmly and gently pats Mia's head with one hand; soft flowers and sparkles in the screentone background. No text, no speech bubbles.",
+        "layout": {
+          "page": 3,
+          "cols": 1,
+          "aspect_ratio": 0.8
+        },
+        "bubbles": [
+          {
+            "kind": "speech",
+            "character": "nora",
+            "text": "Relax! Everyone makes that mistake.",
+            "translation": "Расслабься! Все так ошибаются.",
+            "box": {
+              "x": 10,
+              "y": 5,
+              "w": 82,
+              "h": 18
+            },
+            "tokens": [
+              {
+                "surface": "Relax",
+                "lemma": "relax",
+                "pos": "verb",
+                "translation": "расслабься",
+                "lemma_translation": "расслабляться, отдыхать",
+                "cefr": "A2"
+              },
+              {
+                "surface": "Everyone",
+                "lemma": "everyone",
+                "pos": "pronoun",
+                "translation": "все",
+                "lemma_translation": "каждый, все",
+                "note": "После everyone глагол в единственном числе: everyone makes."
+              },
+              {
+                "surface": "makes that mistake",
+                "lemma": "make a mistake",
+                "pos": "phrase",
+                "translation": "так ошибаются",
+                "lemma_translation": "ошибиться, совершить ошибку",
+                "cefr": "A2",
+                "note": "Make a mistake — ошибиться. Говорят make, а не do: make that mistake — совершить эту ошибку."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "image_prompt": "Black-and-white manga panel, clean ink lines with screentone shading. Wide shot: Nora leans toward Mia with a sly teasing grin, pointing her thumb at Leo; behind her, Leo, blushing furiously, reaches out to cover her mouth. Mia looks surprised and secretly happy. No text, no speech bubbles.",
+        "layout": {
+          "page": 3,
+          "cols": 2,
+          "aspect_ratio": 2.0
+        },
+        "bubbles": [
+          {
+            "kind": "speech",
+            "character": "nora",
+            "text": "So you're Mia! He talks about you all the time.",
+            "translation": "Так ты и есть Миа! Он постоянно о тебе говорит.",
+            "box": {
+              "x": 3,
+              "y": 5,
+              "w": 56,
+              "h": 28
+            },
+            "tokens": [
+              {
+                "surface": "So",
+                "lemma": "so",
+                "pos": "conjunction",
+                "translation": "так",
+                "lemma_translation": "так; поэтому",
+                "cefr": "A1"
+              },
+              {
+                "surface": "you're",
+                "lemma": "you are",
+                "pos": "pronoun",
+                "translation": "ты и есть",
+                "lemma_translation": "ты; вы"
+              },
+              {
+                "surface": "Mia",
+                "lemma": "Mia",
+                "pos": "noun",
+                "translation": "Миа"
+              },
+              {
+                "surface": "He",
+                "lemma": "he",
+                "pos": "pronoun",
+                "translation": "он"
+              },
+              {
+                "surface": "talks",
+                "lemma": "talk",
+                "pos": "verb",
+                "translation": "говорит",
+                "lemma_translation": "говорить, разговаривать",
+                "cefr": "A1"
+              },
+              {
+                "surface": "about",
+                "lemma": "about",
+                "pos": "preposition",
+                "translation": "о"
+              },
+              {
+                "surface": "you",
+                "lemma": "you",
+                "pos": "pronoun",
+                "translation": "тебе",
+                "lemma_translation": "ты; вы"
+              },
+              {
+                "surface": "all the time",
+                "lemma": "all the time",
+                "pos": "phrase",
+                "translation": "постоянно",
+                "lemma_translation": "всё время, постоянно",
+                "cefr": "A2",
+                "note": "All the time — «всё время, постоянно»."
+              }
+            ]
+          },
+          {
+            "kind": "speech",
+            "character": "leo",
+            "text": "Okay, that's enough!",
+            "translation": "Так, хватит!",
+            "box": {
+              "x": 62,
+              "y": 70,
+              "w": 35,
+              "h": 22
+            },
+            "tokens": [
+              {
+                "surface": "Okay",
+                "lemma": "okay",
+                "pos": "interjection",
+                "translation": "так",
+                "lemma_translation": "хорошо; ладно"
+              },
+              {
+                "surface": "that's enough",
+                "lemma": "that is enough",
+                "pos": "phrase",
+                "translation": "хватит",
+                "lemma_translation": "хватит, довольно",
+                "cefr": "A2",
+                "note": "That's enough! — «Хватит! Довольно!»: так останавливают кого-то. That's = that is."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "image_prompt": "Black-and-white manga panel, clean ink lines with screentone shading. Wide shot of the gallery: Nora walks away toward a small drinks table in the background, looking back over her shoulder with a playful wink and a wave. In the foreground, Mia and Leo stand awkwardly side by side, not looking at each other. No text, no speech bubbles.",
+        "layout": {
+          "page": 4,
+          "cols": 2,
+          "aspect_ratio": 2.0
+        },
+        "bubbles": [
+          {
+            "kind": "speech",
+            "character": "nora",
+            "text": "I need a drink. You two should talk!",
+            "translation": "Мне нужно чего-нибудь выпить. А вам двоим надо поговорить!",
+            "box": {
+              "x": 3,
+              "y": 5,
+              "w": 50,
+              "h": 26
+            },
+            "tokens": [
+              {
+                "surface": "I",
+                "lemma": "I",
+                "pos": "pronoun",
+                "translation": "мне",
+                "lemma_translation": "я"
+              },
+              {
+                "surface": "need",
+                "lemma": "need",
+                "pos": "verb",
+                "translation": "нужно",
+                "lemma_translation": "нуждаться; нужно",
+                "cefr": "A1"
+              },
+              {
+                "surface": "a",
+                "lemma": "a",
+                "pos": "determiner",
+                "translation": "неопределённый артикль"
+              },
+              {
+                "surface": "drink",
+                "lemma": "drink",
+                "pos": "noun",
+                "translation": "чего-нибудь выпить",
+                "lemma_translation": "напиток",
+                "cefr": "A1",
+                "note": "I need a drink — «мне нужно чего-нибудь выпить» (a drink — напиток)."
+              },
+              {
+                "surface": "You two",
+                "lemma": "you two",
+                "pos": "phrase",
+                "translation": "вам двоим",
+                "lemma_translation": "вы двое",
+                "cefr": "A2"
+              },
+              {
+                "surface": "should",
+                "lemma": "should",
+                "pos": "verb",
+                "translation": "надо",
+                "lemma_translation": "следует, стоит",
+                "cefr": "A2"
+              },
+              {
+                "surface": "talk",
+                "lemma": "talk",
+                "pos": "verb",
+                "translation": "поговорить",
+                "lemma_translation": "говорить, разговаривать",
+                "cefr": "A1"
+              }
+            ]
+          },
+          {
+            "kind": "thought",
+            "character": "mia",
+            "text": "Is she leaving us alone on purpose?",
+            "translation": "Она что, специально оставляет нас одних?",
+            "box": {
+              "x": 54,
+              "y": 68,
+              "w": 43,
+              "h": 27
+            },
+            "tokens": [
+              {
+                "surface": "Is",
+                "lemma": "be",
+                "pos": "verb",
+                "translation": "вспомогательный глагол",
+                "lemma_translation": "быть",
+                "note": "Is she leaving…? — вопрос в настоящем длительном времени: что происходит прямо сейчас."
+              },
+              {
+                "surface": "she",
+                "lemma": "she",
+                "pos": "pronoun",
+                "translation": "она"
+              },
+              {
+                "surface": "leaving us alone",
+                "lemma": "leave alone",
+                "pos": "phrase",
+                "translation": "оставляет нас одних",
+                "lemma_translation": "оставить одного; оставить в покое",
+                "cefr": "B1",
+                "note": "Leave somebody alone — оставить кого-то одного (или в покое). Местоимение стоит в середине: leave us alone."
+              },
+              {
+                "surface": "on purpose",
+                "lemma": "on purpose",
+                "pos": "idiom",
+                "translation": "специально",
+                "lemma_translation": "нарочно, специально",
+                "cefr": "B1",
+                "note": "On purpose — «нарочно, специально», а не случайно (by accident)."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "image_prompt": "Black-and-white manga panel, clean ink lines with screentone shading. Wide romantic shot in soft light: Leo and Mia stand in front of the large painting of the barista girl. Leo shyly rubs the back of his neck and looks at Mia; Mia, still wrapped in his corduroy jacket, smiles happily with lightly blushing cheeks. Floating sparkles and soft bokeh screentone. No text, no speech bubbles.",
+        "layout": {
+          "page": 4,
+          "cols": 2,
+          "aspect_ratio": 1.8
+        },
+        "bubbles": [
+          {
+            "kind": "speech",
+            "character": "leo",
+            "text": "Mia... can I take you on a real date? Just the two of us.",
+            "translation": "Миа... можно пригласить тебя на настоящее свидание? Только мы вдвоём.",
+            "box": {
+              "x": 3,
+              "y": 4,
+              "w": 58,
+              "h": 28
+            },
+            "tokens": [
+              {
+                "surface": "Mia",
+                "lemma": "Mia",
+                "pos": "noun",
+                "translation": "Миа"
+              },
+              {
+                "surface": "can",
+                "lemma": "can",
+                "pos": "verb",
+                "translation": "можно",
+                "lemma_translation": "мочь, уметь",
+                "cefr": "A1",
+                "note": "Can I…? — «можно я…?»: так вежливо спрашивают разрешения."
+              },
+              {
+                "surface": "I",
+                "lemma": "I",
+                "pos": "pronoun",
+                "translation": "я"
+              },
+              {
+                "surface": "take",
+                "lemma": "take",
+                "pos": "verb",
+                "translation": "пригласить",
+                "lemma_translation": "брать",
+                "cefr": "A1",
+                "note": "Take somebody on a date — пригласить (сводить) кого-то на свидание."
+              },
+              {
+                "surface": "you",
+                "lemma": "you",
+                "pos": "pronoun",
+                "translation": "тебя",
+                "lemma_translation": "ты; вы"
+              },
+              {
+                "surface": "on",
+                "lemma": "on",
+                "pos": "preposition",
+                "translation": "на"
+              },
+              {
+                "surface": "a",
+                "lemma": "a",
+                "pos": "determiner",
+                "translation": "неопределённый артикль"
+              },
+              {
+                "surface": "real",
+                "lemma": "real",
+                "pos": "adjective",
+                "translation": "настоящее",
+                "lemma_translation": "настоящий, реальный",
+                "cefr": "A2"
+              },
+              {
+                "surface": "date",
+                "lemma": "date",
+                "pos": "noun",
+                "translation": "свидание",
+                "lemma_translation": "свидание; дата",
+                "cefr": "A2"
+              },
+              {
+                "surface": "Just the two of us",
+                "lemma": "just the two of us",
+                "pos": "phrase",
+                "translation": "только мы вдвоём",
+                "cefr": "A2",
+                "note": "Just the two of us — «только мы вдвоём», без других людей."
+              }
+            ]
+          },
+          {
+            "kind": "speech",
+            "character": "mia",
+            "text": "Yes! I'm really looking forward to it.",
+            "translation": "Да! Я очень этого жду!",
+            "box": {
+              "x": 56,
+              "y": 70,
+              "w": 41,
+              "h": 25
+            },
+            "tokens": [
+              {
+                "surface": "Yes",
+                "lemma": "yes",
+                "pos": "interjection",
+                "translation": "да"
+              },
+              {
+                "surface": "I'm",
+                "lemma": "I am",
+                "pos": "pronoun",
+                "translation": "я"
+              },
+              {
+                "surface": "really",
+                "lemma": "really",
+                "pos": "adverb",
+                "translation": "очень",
+                "lemma_translation": "действительно; очень",
+                "cefr": "A1"
+              },
+              {
+                "surface": "looking forward to",
+                "lemma": "look forward to",
+                "pos": "phrasal_verb",
+                "translation": "жду",
+                "lemma_translation": "ждать с нетерпением",
+                "cefr": "B1",
+                "note": "Look forward to something — ждать с нетерпением, предвкушать. После to — существительное, it или глагол с -ing."
+              },
+              {
+                "surface": "it",
+                "lemma": "it",
+                "pos": "pronoun",
+                "translation": "этого",
+                "lemma_translation": "оно; это"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "image_prompt": "Black-and-white manga panel, clean ink lines with screentone shading. Wide dramatic shot: Nora rushes back toward Leo and Mia, excited, pointing behind her; in the background, a mysterious tall man in a dark suit and hat stands in front of the painting of the barista girl, his face hidden in shadow. Leo and Mia turn around in shock. No text, no speech bubbles.",
+        "layout": {
+          "page": 4,
+          "cols": 2,
+          "aspect_ratio": 2.0
+        },
+        "bubbles": [
+          {
+            "kind": "speech",
+            "character": "nora",
+            "text": "Leo! That man wants to buy your painting of Mia!",
+            "translation": "Лео! Тот мужчина хочет купить твою картину с Миа!",
+            "box": {
+              "x": 3,
+              "y": 5,
+              "w": 55,
+              "h": 28
+            },
+            "tokens": [
+              {
+                "surface": "Leo",
+                "lemma": "Leo",
+                "pos": "noun",
+                "translation": "Лео"
+              },
+              {
+                "surface": "That",
+                "lemma": "that",
+                "pos": "determiner",
+                "translation": "тот",
+                "lemma_translation": "тот; этот"
+              },
+              {
+                "surface": "man",
+                "lemma": "man",
+                "pos": "noun",
+                "translation": "мужчина",
+                "lemma_translation": "мужчина; человек",
+                "cefr": "A1"
+              },
+              {
+                "surface": "wants",
+                "lemma": "want",
+                "pos": "verb",
+                "translation": "хочет",
+                "lemma_translation": "хотеть",
+                "cefr": "A1"
+              },
+              {
+                "surface": "to",
+                "lemma": "to",
+                "pos": "particle",
+                "translation": "частица инфинитива"
+              },
+              {
+                "surface": "buy",
+                "lemma": "buy",
+                "pos": "verb",
+                "translation": "купить",
+                "lemma_translation": "покупать",
+                "cefr": "A1"
+              },
+              {
+                "surface": "your",
+                "lemma": "your",
+                "pos": "determiner",
+                "translation": "твою",
+                "lemma_translation": "твой; ваш"
+              },
+              {
+                "surface": "painting",
+                "lemma": "painting",
+                "pos": "noun",
+                "translation": "картину",
+                "lemma_translation": "картина",
+                "cefr": "A2"
+              },
+              {
+                "surface": "of",
+                "lemma": "of",
+                "pos": "preposition",
+                "translation": "с",
+                "lemma_translation": "предлог принадлежности (родительный падеж)",
+                "note": "A painting of Mia — картина, на которой изображена Миа."
+              },
+              {
+                "surface": "Mia",
+                "lemma": "Mia",
+                "pos": "noun",
+                "translation": "Миа"
+              }
+            ]
+          },
+          {
+            "kind": "narration",
+            "character": null,
+            "text": "To be continued...",
+            "translation": "Продолжение следует...",
+            "box": {
+              "x": 62,
+              "y": 76,
+              "w": 35,
+              "h": 18
+            },
+            "tokens": [
+              {
+                "surface": "To be continued",
+                "lemma": "to be continued",
+                "pos": "phrase",
+                "translation": "продолжение следует",
+                "cefr": "B1",
+                "note": "To be continued — «продолжение следует»: так заканчивают серию."
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

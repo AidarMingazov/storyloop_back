@@ -55,7 +55,8 @@ services:
         condition: service_healthy
       chrome:
         condition: service_started
-    command: bash -c "bin/rails db:test:prepare && bin/rails test:all"
+    # Unit tests in 2 workers; system tests one at a time (one Chrome session fits Docker's memory)
+    command: bash -c "bin/rails db:test:prepare && bin/rails test && PARALLEL_WORKERS=1 bin/rails test:system"
 
   chrome:
     image: selenium/standalone-chromium:latest

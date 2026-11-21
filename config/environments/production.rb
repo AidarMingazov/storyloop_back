@@ -21,6 +21,10 @@ Rails.application.configure do
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.asset_host = "http://assets.example.com"
 
+  # Media go through the app (/rails/active_storage/...proxy) with long cache headers, so Cloudflare
+  # can cache panel images and audio in front of R2.
+  config.active_storage.resolve_model_to_route = :rails_storage_proxy
+
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 

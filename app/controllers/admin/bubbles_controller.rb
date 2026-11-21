@@ -6,7 +6,7 @@ module Admin
     end
 
     def update
-      attrs = params.expect(bubble: %i[kind character_id text translation box_json])
+      attrs = params.expect(bubble: %i[kind character_id text translation box_json audio])
       box = parse_json_field(attrs.delete(:box_json))
       if box == :invalid
         @bubble.errors.add(:box, "не JSON")

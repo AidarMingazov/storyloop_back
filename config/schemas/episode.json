@@ -66,7 +66,9 @@
           "type": "object",
           "additionalProperties": true,
           "properties": {
-            "aspect_ratio": { "type": "number", "exclusiveMinimum": 0, "description": "width / height, default 0.8" }
+            "aspect_ratio": { "type": "number", "exclusiveMinimum": 0, "description": "width / height, default 0.8" },
+            "page": { "type": "integer", "minimum": 1, "description": "Manga: page number. Missing → panels are paginated automatically" },
+            "cols": { "type": "integer", "enum": [1, 2], "description": "Manga: 2 = full page width, 1 = half width (two half panels sit side by side)" }
           }
         },
         "bubbles": { "type": "array", "items": { "$ref": "#/$defs/bubble" } }

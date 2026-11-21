@@ -64,6 +64,7 @@
               <span class="badge"><%= bubble.kind %></span>
               <span class="font-semibold text-ink"><%= bubble.character&.name || "—" %></span>
               <% if bubble.box %><span class="tabular-nums">box <%= bubble.box.values_at("x", "y", "w", "h").join(" / ") %></span><% end %>
+              <% if bubble.audio.attached? %><span>🔊</span><% end %>
               <span class="ml-auto flex gap-3">
                 <%= link_to "Пузырь", edit_admin_bubble_path(bubble), class: "text-link hover:underline" %>
                 <%= link_to "+ токен", new_admin_bubble_token_path(bubble), class: "text-link hover:underline" %>

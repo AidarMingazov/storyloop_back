@@ -1,0 +1,173 @@
+{
+  "language_pair": "en-ru",
+  "series": {
+    "slug": "reader-manga",
+    "title": "Reader Manga",
+    "cefr_level": "A2",
+    "characters": [
+      {
+        "key": "mia",
+        "name": "Mia",
+        "protagonist": true
+      },
+      {
+        "key": "leo",
+        "name": "Leo"
+      }
+    ]
+  },
+  "episode": {
+    "number": 1,
+    "title": "Spilled",
+    "format": "manga",
+    "free": true,
+    "target_words": [
+      "run into",
+      "by the way"
+    ],
+    "panels": [
+      {
+        "image_prompt": "A small café",
+        "layout": {
+          "page": 1,
+          "cols": 2,
+          "aspect_ratio": 1.6
+        },
+        "bubbles": [
+          {
+            "kind": "speech",
+            "character": "mia",
+            "text": "Guess who I ran into today!",
+            "translation": "Угадай, кого я сегодня встретила!",
+            "box": {
+              "x": 5,
+              "y": 5,
+              "w": 60,
+              "h": 18
+            },
+            "tokens": [
+              {
+                "surface": "Guess",
+                "lemma": "guess",
+                "pos": "verb",
+                "translation": "угадай"
+              },
+              {
+                "surface": "who",
+                "lemma": "who",
+                "pos": "pronoun",
+                "translation": "кого"
+              },
+              {
+                "surface": "I",
+                "lemma": "I",
+                "pos": "pronoun",
+                "translation": "я"
+              },
+              {
+                "surface": "ran into",
+                "lemma": "run into",
+                "pos": "phrasal_verb",
+                "translation": "случайно встретила",
+                "lemma_translation": "случайно встретить",
+                "note": "Неожиданная встреча со знакомым.",
+                "cefr": "B1"
+              },
+              {
+                "surface": "today",
+                "lemma": "today",
+                "pos": "adverb",
+                "translation": "сегодня"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "image_prompt": "Leo smiles",
+        "layout": {
+          "page": 2,
+          "cols": 1,
+          "aspect_ratio": 0.8
+        },
+        "bubbles": [
+          {
+            "kind": "speech",
+            "character": "leo",
+            "text": "By the way, nice to meet you.",
+            "translation": "Кстати, приятно познакомиться.",
+            "box": {
+              "x": 30,
+              "y": 6,
+              "w": 62,
+              "h": 16
+            },
+            "tokens": [
+              {
+                "surface": "By the way",
+                "lemma": "by the way",
+                "pos": "phrase",
+                "translation": "кстати",
+                "note": "Так переходят к новой теме."
+              },
+              {
+                "surface": "nice",
+                "lemma": "nice",
+                "pos": "adjective",
+                "translation": "приятно"
+              },
+              {
+                "surface": "to",
+                "lemma": "to",
+                "pos": "particle",
+                "translation": "частица инфинитива"
+              },
+              {
+                "surface": "meet",
+                "lemma": "meet",
+                "pos": "verb",
+                "translation": "познакомиться"
+              },
+              {
+                "surface": "you",
+                "lemma": "you",
+                "pos": "pronoun",
+                "translation": "тобой"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "image_prompt": "The café at night",
+        "layout": {
+          "page": 2,
+          "cols": 1,
+          "aspect_ratio": 0.8
+        },
+        "bubbles": [
+          {
+            "kind": "narration",
+            "character": null,
+            "text": "To be continued.",
+            "translation": "Продолжение следует.",
+            "box": {
+              "x": 4,
+              "y": 4,
+              "w": 50,
+              "h": 12
+            },
+            "tokens": [
+              {
+                "surface": "To be continued",
+                "lemma": "to be continued",
+                "pos": "phrase",
+                "translation": "продолжение следует"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

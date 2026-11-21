@@ -16,7 +16,7 @@ module Admin
     end
 
     def update
-      attrs = params.expect(lexeme: [ :lemma, :pos, :cefr_level, :romanization, translations: {} ])
+      attrs = params.expect(lexeme: [ :lemma, :pos, :cefr_level, :romanization, :audio, translations: {} ])
       attrs[:translations] = @lexeme.translations.merge(attrs[:translations].to_h) if attrs[:translations]
       if @lexeme.update(attrs)
         redirect_to admin_lexemes_path(language: @lexeme.language, q: @lexeme.lemma), notice: "Лексема сохранена"
