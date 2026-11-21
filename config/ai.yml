@@ -1,0 +1,69 @@
+# AI providers for the content pipeline (wave 6). See docs/ai-pipeline-research.md for why these were chosen.
+#
+# steps:      pipeline step → provider + model (+ optional fallback). Code asks Ai.llm(:script), Ai.image(:images)…
+# providers:  how to reach a provider. Keys: credentials ai.<provider>_api_key, else ENV[<env>].
+# prices:     USD. LLM per 1M tokens, images per image (+ reference images), TTS per 1M billed characters.
+# force_provider: every step uses this provider (tests use the fakes). AI_LIVE=1 ignores it.
+shared:
+  steps:
+    script: { provider: deepseek, model: deepseek-flash }
+    tokens:
+      provider: openrouter
+      model: anthropic/claude-haiku-5.5
+      fallback: { provider: deepseek, model: deepseek-flash }
+    vision: { provider: openrouter, model: google/gemini-3.8-flash }
+    images: { provider: seedream, model: seedream-4-5-251128 }
+    sheets: { provider: seedream, model: seedream-4-5-251128 }
+    photo_sheets: { provider: seedream, model: seedream-5-0-lite-260128 }
+    audio: { provider: minimax, model: speech-2.8-turbo }
+    stt: { provider: fake } # 7.12: provider not chosen yet
+
+  providers:
+    deepseek:
+      kind: llm
+      adapter: Ai::Llm::OpenaiCompatible
+      base_url: https://api.deepseek.com
+      env: DEEPSEEK_API_KEY
+      timeout: 600 # reasoning is on by default: 30–70 s for a scenario
+    openrouter:
+      kind: llm
+      adapter: Ai::Llm::OpenaiCompatible
+      base_url: https://openrouter.ai/api/v1
+      env: OPENROUTER_API_KEY
+      reports_cost: true # usage.cost in the response; OpenRouter reserves credits for max_tokens
+      timeout: 300
+    seedream:
+      kind: image
+      adapter: Ai::Image::Seedream
+      base_url: https://ark.ap-southeast.bytepluses.com/api/v3
+      env: ARK_API_KEY
+      timeout: 300
+    minimax:
+      kind: tts
+      adapter: Ai::Tts::Minimax
+      base_url: https://api.minimax.io
+      env: MINIMAX_API_KEY # M Plan key: M Plan credits do not work with a pay-as-you-go key
+      timeout: 120
+
+  prices:
+    deepseek:
+      # peak prices; off-peak (all hours except below, and weekends) is half
+      off_peak: { factor: 0.5, peak_hours_utc: [ [ 1, 4 ], [ 6, 10 ] ], weekdays_only: true }
+      deepseek-flash: { input: 0.30, input_cached: 0.006, output: 1.20 }
+      deepseek-v4-pro: { input: 1.32, input_cached: 0.044, output: 3.96 }
+    openrouter: # fallback only; OpenRouter reports the real cost per call
+      anthropic/claude-haiku-5.5: { input: 0.10, output: 0.50 }
+      anthropic/claude-sonnet-5.5: { input: 2.00, output: 10.00 }
+      google/gemini-3.8-flash: { input: 0.825, output: 4.125 }
+      deepseek/deepseek-v4.1-flash-1017: { input: 0.036, output: 0.50 }
+    seedream: # ModelArk console, 2026-11-21; free quota is spent first and still counted here
+      seedream-4-5-251128: { image: 0.040, reference: 0.0 }
+      seedream-5-0-lite-260128: { image: 0.035, reference: 0.0 }
+      dola-seedream-5-0-pro-260628: { image: 0.045, reference: 0.003, free_references: 1 }
+      dola-seedream-5-5-261028: { image: 0.020, reference: 0.008 }
+    minimax:
+      speech-2.8-turbo: { per_million_characters: 60 }
+      speech-2.8-hd: { per_million_characters: 100 }
+
+test:
+  force_provider: fake

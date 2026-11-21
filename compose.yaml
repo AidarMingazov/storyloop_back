@@ -12,6 +12,9 @@ x-app: &app
   volumes:
     - .:/rails
     - bundle:/usr/local/bundle
+  env_file: # AI provider keys for development (gitignored); see config/ai.yml and script/ai_probe/env.example
+    - path: .env
+      required: false
   environment: &app-env
     DATABASE_URL: postgres://postgres:postgres@db:5432
     RAILS_LOG_TO_STDOUT: "1"
