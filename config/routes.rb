@@ -49,10 +49,14 @@ Rails.application.routes.draw do
       member do
         post :publish
         post :unpublish
+        post :rerun
       end
     end
-    resources :panels, only: %i[edit update]
+    resources :panels, only: %i[edit update] do
+      post :redraw, on: :member
+    end
     resources :bubbles, only: %i[edit update] do
+      post :markup, on: :member
       resources :tokens, shallow: true, only: %i[new create edit update destroy]
     end
     resources :lexemes, only: %i[index edit update]

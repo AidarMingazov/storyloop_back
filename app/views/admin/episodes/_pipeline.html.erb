@@ -1,0 +1,44 @@
+<%# AI pipeline steps of the episode: status, model, cost and notes from GenerationLog, with "run again" buttons. %>
+<section class="card p-4 sm:p-5 mb-6" id="pipeline">
+  <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+    <h2 class="font-serif text-2xl font-semibold text-ink-strong">Конвейер</h2>
+    <p class="text-sm tabular-nums">Себестоимость: <strong class="text-ink-strong">$<%= format("%.3f", pipeline.total_usd) %></strong></p>
+  </div>
+  <% if episode.generating? %>
+    <meta http-equiv="refresh" content="15">
+    <p class="flash-notice mb-3" role="status">Идёт генерация — страница обновляется каждые 15 секунд.</p>
+  <% end %>
+  <div class="overflow-x-auto">
+    <table class="table text-sm">
+      <thead><tr><th>Шаг</th><th>Статус</th><th>Модель</th><th class="text-right">$</th><th class="text-right">Время</th><th>Заметки</th><th></th></tr></thead>
+      <tbody>
+        <% pipeline.rows.each do |row| %>
+          <tr id="step-<%= row.step %>">
+            <td class="font-semibold text-ink-strong whitespace-nowrap"><%= Ai::PipelineStatus::NAMES[row.step] %></td>
+            <td class="whitespace-nowrap"><%= { "succeeded" => "готово", "failed" => "ошибка", "running" => "идёт" }.fetch(row.status, "—") %></td>
+            <td class="text-muted whitespace-nowrap"><%= row.model %></td>
+            <td class="text-right tabular-nums"><%= format("%.3f", row.cost_usd) %></td>
+            <td class="text-right tabular-nums whitespace-nowrap"><%= "#{(row.duration_ms / 1000.0).round(1)} с" if row.duration_ms %></td>
+            <td class="min-w-56">
+              <%= row.notes %>
+              <% if row.error %><div class="text-muted mt-1"><%= row.error.truncate(300) %></div><% end %>
+            </td>
+            <td>
+              <% unless episode.generating? || (row.step == "images" && episode.format_chat?) || (row.step == "layout" && episode.format_chat?) %>
+                <%= button_to "Заново", rerun_admin_episode_path(episode, step: row.step), class: "btn-secondary btn-sm",
+                      disabled: row.step == "script" && episode.published?,
+                      form: { data: { turbo_confirm: {
+                        "script" => "Новый сценарий заменит кадры, пузыри и токены, затем пройдут все шаги. Продолжить?",
+                        "images" => "Перерисовать все кадры (~$0.04 за кадр)?",
+                        "layout" => "Расставить все пузыри заново? Ручные позиции будут потеряны.",
+                        "tokens" => "Разметить все реплики заново? Ручные правки токенов будут потеряны.",
+                        "audio" => "Переозвучить все реплики?"
+                      }.fetch(row.step) } } %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</section>

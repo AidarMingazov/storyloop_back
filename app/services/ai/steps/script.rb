@@ -39,7 +39,8 @@ module Ai
         existing = series.episodes.find_by(number:)
         raise ArgumentError, "episode #{number} of #{series.slug} is published, unpublish it first" if existing&.published?
 
-        GenerationLog.track(step: "script", episode: existing, metadata: { "number" => number, "format" => format }) do |log|
+        request = { "number" => number, "format" => format, "panels" => panels, "brief" => @brief, "requested_words" => @target_words }
+        GenerationLog.track(step: "script", episode: existing, metadata: request) do |log|
           doc = generate
           episode = Episodes::Importer.call(doc, status: "draft")
           log.update!(episode:, metadata: log.metadata.merge("attempts" => attempts, "warnings" => warnings,

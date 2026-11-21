@@ -1,9 +1,11 @@
 module Admin
   class EpisodesController < BaseController
-    before_action :set_episode, only: %i[show edit update destroy publish unpublish]
+    before_action :set_episode, only: %i[show edit update destroy publish unpublish rerun]
 
     def show
-      @panels = @episode.panels.includes(image_attachment: :blob, bubbles: [ :character, { tokens: :lexeme } ])
+      @panels = @episode.panels.includes(image_attachment: :blob,
+                                         bubbles: [ :character, { audio_attachment: :blob }, { tokens: :lexeme } ])
+      @pipeline = Ai::PipelineStatus.new(@episode)
     end
 
     def new
@@ -42,6 +44,19 @@ module Admin
     def publish
       @episode.publish!
       redirect_to admin_episode_path(@episode), notice: "Эпизод опубликован"
+    end
+
+    # Redo one AI step (and the steps that depend on it) in the background.
+    def rerun
+      step = params.expect(:step)
+      if !Ai::Pipeline::STEPS.include?(step)
+        redirect_to admin_episode_path(@episode), alert: "Неизвестный шаг #{step}"
+      elsif @episode.generating?
+        redirect_to admin_episode_path(@episode), alert: "Конвейер уже работает с этим эпизодом"
+      else
+        RerunPipelineStepJob.perform_later(@episode, step)
+        redirect_to admin_episode_path(@episode), notice: "Шаг «#{Ai::PipelineStatus::NAMES[step]}» запущен заново"
+      end
     end
 
     def unpublish

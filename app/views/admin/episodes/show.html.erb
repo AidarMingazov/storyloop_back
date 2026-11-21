@@ -26,6 +26,10 @@
   </div>
 </div>
 
+<%= render "pipeline", episode: @episode, pipeline: @pipeline %>
+<% unresolved = @pipeline.unresolved_bubbles %>
+<% failed_panels = @pipeline.failed_panels %>
+
 <p class="text-sm text-muted mb-6 tabular-nums">
   <%= @panels.size %> кадров · <%= @panels.sum { |p| p.bubbles.size } %> пузырей ·
   <%= @panels.sum { |p| p.bubbles.sum { |b| b.tokens.size } } %> токенов
@@ -37,8 +41,17 @@
       <div>
         <div class="flex items-center justify-between mb-2">
           <h2 class="label mb-0">Кадр <%= panel.position + 1 %></h2>
-          <%= link_to "Кадр", edit_admin_panel_path(panel), class: "text-xs text-link hover:underline" %>
+          <span class="flex items-center gap-3">
+            <% unless @episode.format_chat? || panel.image_prompt.blank? %>
+              <%= button_to "Перерисовать", redraw_admin_panel_path(panel), class: "text-xs text-link hover:underline",
+                    form: { data: { turbo_confirm: "Перерисовать кадр #{panel.position + 1} (~$0.04)?" } } %>
+            <% end %>
+            <%= link_to "Кадр", edit_admin_panel_path(panel), class: "text-xs text-link hover:underline" %>
+          </span>
         </div>
+        <% if failed_panels[panel.id] %>
+          <p class="flash-alert text-xs mb-2" role="alert">Не нарисован: <%= failed_panels[panel.id].truncate(200) %></p>
+        <% end %>
         <% if panel.image.attached? %>
           <figure class="relative @container overflow-hidden rounded-xl bg-recess" style="aspect-ratio: <%= panel.aspect_ratio %>">
             <%= image_tag panel.image, class: "absolute inset-0 size-full object-cover", loading: "lazy", alt: panel.image_prompt.to_s.truncate(120) %>
@@ -65,13 +78,21 @@
               <span class="font-semibold text-ink"><%= bubble.character&.name || "—" %></span>
               <% if bubble.box %><span class="tabular-nums">box <%= bubble.box.values_at("x", "y", "w", "h").join(" / ") %></span><% end %>
               <% if bubble.audio.attached? %><span>🔊</span><% end %>
+              <% if (problems = unresolved["p#{panel.position + 1}b#{bubble.position + 1}"]) %>
+                <span class="badge" title="<%= problems.join("; ") %>">не размечено до конца</span>
+              <% end %>
               <span class="ml-auto flex gap-3">
+                <%= button_to "Разметить", markup_admin_bubble_path(bubble), class: "text-link hover:underline",
+                      form: { data: { turbo_confirm: "Разметить реплику заново? Её токены будут заменены." } } %>
                 <%= link_to "Пузырь", edit_admin_bubble_path(bubble), class: "text-link hover:underline" %>
                 <%= link_to "+ токен", new_admin_bubble_token_path(bubble), class: "text-link hover:underline" %>
               </span>
             </div>
             <p class="font-serif text-xl leading-relaxed text-ink-strong"><%= tokenized_text(bubble) %></p>
             <p class="text-sm text-muted mt-1"><%= bubble.translation %></p>
+            <% if bubble.audio.attached? %>
+              <audio controls preload="none" src="<%= url_for(bubble.audio) %>" class="mt-2 h-8 w-full max-w-xs"></audio>
+            <% end %>
 
             <% if bubble.tokens.any? %>
               <details class="mt-3">

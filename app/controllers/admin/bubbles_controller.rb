@@ -5,6 +5,12 @@ module Admin
     def edit
     end
 
+    # Word markup again for this bubble only (replaces its tokens).
+    def markup
+      RerunPipelineStepJob.perform_later(@bubble.episode, "tokens", [ @bubble.id ])
+      redirect_to admin_episode_path(@bubble.episode, anchor: dom_id(@bubble.panel)), notice: "Реплика размечается заново"
+    end
+
     def update
       attrs = params.expect(bubble: [ :kind, :character_id, :text, :translation, :audio, box: Bubble::BOX_KEYS ])
       @bubble.assign_attributes(attrs.except(:box))

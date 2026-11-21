@@ -1,4 +1,5 @@
 require "test_helper"
+require_relative "../../test_helpers/script_test_helper"
 
 class Admin::CharactersControllerTest < ActionDispatch::IntegrationTest
   include ActiveJob::TestHelper
@@ -57,5 +58,62 @@ class Admin::CharactersControllerTest < ActionDispatch::IntegrationTest
     assert_no_enqueued_jobs { post generate_sheet_admin_character_path(@character) }
     follow_redirect!
     assert_select "#alert", /внешность/
+  end
+end
+
+class Admin::PipelineControllerTest < ActionDispatch::IntegrationTest
+  include ActiveJob::TestHelper
+  include ScriptTestHelper
+  include TokensTestHelper
+
+  setup do
+    sign_in_as users(:admin)
+    Ai.reset_fakes!
+    Ai::Llm::Fake.respond_with(ko_answer(panels: 2))
+    @episode = Ai::Steps::Script.call(ko_series, panels: 2)
+  end
+
+  test "review screen shows the pipeline with costs, notes and buttons" do
+    Ai::Steps::Images.call(@episode, panels: [ @episode.panels.first ])
+    Ai::Image::Fake.respond_with(Ai::ContentRejected.new("seedream: rejected by the safety filter"))
+    Ai::Steps::Images.call(@episode)
+    bubble = @episode.bubbles.first
+    Ai::Llm::Fake.respond_with({ "bubbles" => [ { "id" => "p1b1", "tokens" => [] } ] }, { "bubbles" => [] }, { "bubbles" => [] })
+    Ai::Steps::Tokens.call(@episode, bubbles: [ bubble ])
+
+    get admin_episode_path(@episode)
+
+    assert_response :success
+    assert_select "#pipeline tr#step-script td", /попыток: 1/
+    assert_select "#pipeline tr#step-images td", "ошибка"
+    assert_select "#pipeline tr#step-images td", /нарисовано 1 из 2 · ошибок: 1/
+    assert_select "#pipeline tr#step-tokens td", /не размечено: p1b1/
+    assert_select "#pipeline tr#step-audio td", "—"
+    assert_select "#pipeline form[action='#{rerun_admin_episode_path(@episode, step: 'tokens')}']"
+    assert_select ".flash-alert", /Не нарисован: Ai::ContentRejected/
+    assert_select ".badge", "не размечено до конца"
+  end
+
+  test "buttons enqueue the background work" do
+    assert_enqueued_with(job: RerunPipelineStepJob, args: [ @episode, "tokens" ]) do
+      post rerun_admin_episode_path(@episode, step: "tokens")
+    end
+    assert_redirected_to admin_episode_path(@episode)
+
+    panel = @episode.panels.first
+    assert_enqueued_with(job: GeneratePanelImageJob, args: [ panel ]) { post redraw_admin_panel_path(panel) }
+
+    bubble = @episode.bubbles.first
+    assert_enqueued_with(job: RerunPipelineStepJob, args: [ @episode, "tokens", [ bubble.id ] ]) do
+      post markup_admin_bubble_path(bubble)
+    end
+  end
+
+  test "no rerun while generating or for an unknown step" do
+    @episode.update!(status: :generating)
+    assert_no_enqueued_jobs { post rerun_admin_episode_path(@episode, step: "images") }
+    assert_no_enqueued_jobs { post rerun_admin_episode_path(@episode, step: "dance") }
+    get admin_episode_path(@episode)
+    assert_select "meta[http-equiv=refresh]"
   end
 end
