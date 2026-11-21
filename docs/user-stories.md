@@ -28,7 +28,7 @@ The feed and the author page show only `Series.listed` stories: public, approved
 
 Links to user stories always go through `/s/:token` (`read_path`). Messenger crawlers get a light page with OG tags only (`LinkPreview`), so no guest is created and no events fire.
 
-**After merging wave 5:** `Api::V1::EpisodesController#show` must call `StoryAccess`. Otherwise private stories can be read through the API by id.
+JSON API v1 follows the same rule: `GET /api/v1/episodes/:id` and `GET /api/v1/s/:share_token` answer 404 for a story the client may not read, and new progress needs access too (docs/api.md).
 
 ## Seams for wave 6
 

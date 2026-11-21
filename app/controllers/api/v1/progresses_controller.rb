@@ -7,6 +7,9 @@ module Api
       def update
         episode = Episode.published.find(params[:episode_id])
         progress = current_user.reading_progresses.find_or_initialize_by(episode: episode)
+        # Progress starts when the episode is opened (after StoryAccess); a new one here needs the same check.
+        return render_error(:not_found, "not_found") if progress.new_record? && !StoryAccess.new(episode, current_user).readable?
+
         position = params[:last_panel_position].to_i
         progress.last_panel_position = position if position > progress.last_panel_position
         just_completed = progress.completed_at.nil? && ActiveModel::Type::Boolean.new.cast(params[:completed])

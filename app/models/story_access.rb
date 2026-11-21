@@ -1,5 +1,5 @@
 # Who may open an episode — the one rule for the web reader, share links, reading progress and
-# API v1 (wave 5: Api::V1::EpisodesController must ask this too, or private stories leak by id).
+# JSON API v1 (episodes and progress).
 #
 #   catalog            → published episodes, as before (the paywall decides what is free);
 #   user story, author → always, even generating, failed or hidden by moderation;

@@ -25,6 +25,22 @@ class SharedLinksTest < ActionDispatch::IntegrationTest
     assert_equal author.public_id, tracked("signup").sole[:properties][:ref]
   end
 
+  test "manga and illustrated stories follow the same access rule" do
+    %w[manga illustrated].each do |format|
+      story = create_story(visibility: "link", fixture: "reader_#{format}.json")
+      get shared_episode_path(story.share_token)
+      assert_response :success
+      assert_select ".reader[data-format=#{format}]"
+
+      get episode_path(story)
+      assert_response :not_found
+
+      story.series.visibility_private!
+      get shared_episode_path(story.share_token)
+      assert_response :not_found
+    end
+  end
+
   test "a link story does not open by id, a private one not even by link" do
     story = create_story(visibility: "link")
     get episode_path(story)

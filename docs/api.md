@@ -18,10 +18,13 @@ Every call except creating a guest or a session sends `Authorization: Bearer <to
 ## Episodes
 
 `GET /episodes/:id` — published episodes only.
+`GET /s/:share_token` — a user story by its share link (the token from `https://<host>/s/<token>`).
 
 - `200` episode JSON (below). Media URLs are absolute.
 - `402 { error: "subscription_required", paywall: { plans } }` for a paid episode without access.
-- `404 { error: "not_found" }`.
+- `404 { error: "not_found" }`, also for a user story the client may not read (docs/user-stories.md, `StoryAccess`):
+  a `link` story opens only through `/s/:share_token`, a `private` one only with its author's token,
+  a hidden story or a banned author's for nobody else.
 
 ```jsonc
 {

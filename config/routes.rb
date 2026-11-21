@@ -79,6 +79,7 @@ Rails.application.routes.draw do
       resources :episodes, only: :show do
         resource :progress, only: :update
       end
+      get "s/:share_token", to: "episodes#show", as: :shared_episode # user story by its share link (wave 7)
       resources :user_words, only: %i[index create destroy], param: :lexeme_id
     end
   end
