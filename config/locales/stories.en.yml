@@ -19,6 +19,7 @@ en:
       idea: { title: "Your idea", hint: "A couple of lines — AI writes the rest" }
       text: { title: "Your text", hint: "AI adapts it to your level" }
       surprise: { title: "Surprise me", hint: "AI comes up with the plot" }
+      photos: { title: "From photos", hint: "A comic with you and your friends" }
     formats:
       webtoon: Comic
       chat: Chat
@@ -31,12 +32,15 @@ en:
       generating: In progress
       failed: Failed
       hidden: Hidden by a moderator
+      confirming: "Waiting for your characters"
     steps:
       script: Script
       images: Pictures
       layout: Bubble layout
       tokens: Word markup
       audio: Voice-over
+      vision: "Looking at the photos"
+      sheets: "Drawing the characters"
     home:
       nav: Your stories
       create: Create a story
@@ -75,6 +79,13 @@ en:
       cast_auto: Pick for me
       cast_auto_hint: "By the theme; everyday heroes for an idea or a text"
       photos: A comic from your photos
+      photos_label:
+        one: "Photos (up to %{count})"
+        other: "Photos (up to %{count})"
+      photos_hint: "JPEG, PNG or WebP, up to 10 MB each. People and animals become the characters, places the backgrounds. We delete the photos afterwards."
+      photos_idea: "A wish for the plot (optional)"
+      photos_idea_placeholder: "For example: how we got lost in Seoul and found the best café"
+      photos_consent: "These are my photos, and the people in them agree to be turned into a comic. There are no children in them."
       pair: Language
       level: Level
       format: Format
@@ -120,8 +131,25 @@ en:
       personal: "It has personal data or a real person in a hurtful context."
       copyright: "It looks like a copy of someone else's work — retell it in your own words."
       illegal: "It has instructions for something illegal."
+      minors: "There are children in the photos — we don't use such photos."
       images: "Its pictures didn't pass the safety filter."
       other: "It breaks the story rules."
+    confirm:
+      title: "Your characters"
+      hint: "We drew the characters from your photos. Fix their names and voices — or redraw one that doesn't look right."
+      name: "Name (Latin letters)"
+      name_hint: "Latin letters, up to 30 characters"
+      voice: "Voice"
+      voices:
+        female: "Female"
+        male: "Male"
+      redraw: "Redraw %{name}"
+      redraws_left:
+        one: "%{count} redraw left"
+        other: "%{count} redraws left"
+      redrawing: "Redrawing…"
+      submit: "Create the comic"
+      no_redraws: "No redraws left"
     show:
       link: Story link
       reset_link: New link
@@ -205,5 +233,12 @@ en:
             cefr_level: { inclusion: "Choose a level" }
             format: { inclusion: "Choose a format" }
             visibility: { inclusion: "Choose who can see the story" }
+            photos:
+              blank: "Add at least one photo"
+              too_many: "Up to %{count} photos"
+              invalid: "Photos must be JPEG, PNG or WebP"
+              too_big: "Each photo is up to 10 MB"
+            photos_consent:
+              accepted: "Confirm that these photos may be used"
             display_name: { too_long: "Author name is up to 40 characters" }
             rules_accepted: { accepted: "Please accept the story rules" }

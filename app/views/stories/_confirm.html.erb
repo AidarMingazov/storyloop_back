@@ -1,0 +1,47 @@
+<%# Comic from photos (7.11): the characters drawn from the photos, before the story is written. Part of the live
+    status (re-rendered over Turbo Streams): forms rely on Turbo's X-CSRF-Token header, not a hidden token. %>
+<% busy = story_request.step.present? %>
+<% left = StoryRequest::REDRAWS - story_request.redraws %>
+<% characters = story_request.series.characters.includes(sheet_attachment: :blob).order(:key) %>
+<div id="story-confirm">
+  <p class="font-semibold text-ink-strong text-lg"><%= t("stories.confirm.title") %></p>
+  <p class="text-sm text-muted mt-1"><%= t("stories.confirm.hint") %></p>
+
+  <%= form_with url: confirm_story_path(story_request.series), method: :post, authenticity_token: false, class: "mt-4 grid gap-4", id: "confirm-form" do %>
+    <% characters.each do |character| %>
+      <div class="grid gap-2 border-t border-edge pt-3" data-character="<%= character.key %>">
+        <% if character.sheet.attached? %>
+          <%= image_tag character.sheet.variant(resize_to_limit: [ 800, 450 ], format: :webp), alt: character.name,
+                        class: "w-full aspect-video object-contain rounded-md bg-recess" %>
+        <% end %>
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <%= label_tag "names_#{character.id}", t("stories.confirm.name"), class: "label" %>
+            <%= text_field_tag "names[#{character.id}]", character.name, id: "names_#{character.id}", maxlength: 30,
+                               pattern: "[A-Za-z][A-Za-z .'\\-]{0,29}", class: "input", title: t("stories.confirm.name_hint") %>
+          </div>
+          <div>
+            <%= label_tag "voices_#{character.id}", t("stories.confirm.voice"), class: "label" %>
+            <% lang = story_request.language_pair.target_lang %>
+            <% current = StoryRequest::VOICES.find { |_, by_lang| by_lang[lang] == character.voice }&.first || "female" %>
+            <%= select_tag "voices[#{character.id}]", options_for_select(StoryRequest::VOICES.keys.map { |key| [ t("stories.confirm.voices.#{key}"), key ] }, current),
+                           id: "voices_#{character.id}", class: "input" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    <% if busy %>
+      <p class="text-sm text-muted" id="redrawing"><%= t("stories.confirm.redrawing") %></p>
+    <% end %>
+    <%= submit_tag t("stories.confirm.submit"), class: "btn-primary", disabled: busy, id: "confirm-characters" %>
+  <% end %>
+
+  <div class="mt-4 flex flex-wrap items-center gap-2" id="redraw-buttons">
+    <% characters.select { |character| character.key.start_with?("p") }.each do |character| %>
+      <%= button_to "↻ #{t("stories.confirm.redraw", name: character.name)}", redraw_story_path(story_request.series),
+                    params: { character_id: character.id }, authenticity_token: false, class: "btn-secondary btn-sm",
+                    disabled: busy || left <= 0, form: { class: "inline" } %>
+    <% end %>
+    <span class="text-xs text-muted"><%= t("stories.confirm.redraws_left", count: left) %></span>
+  </div>
+</div>

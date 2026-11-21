@@ -2,16 +2,25 @@
 # (fake or the AI pipeline, 7.4) makes the story, the moderator checks the result (7.6), and the request moves
 # along — the status page follows over Turbo Streams. A rejected or failed story does not count toward the free
 # limit. Lower priority than catalog work (Solid Queue runs lower numbers first).
+#
+# A comic from photos (7.11) runs twice: first the characters are drawn from the photos and the request waits for
+# the author ("confirming"); StoriesController#confirm enqueues the job again for the story itself. The photos are
+# deleted as soon as the request is finished, whatever the outcome.
 class GenerateStoryJob < ApplicationJob
   queue_as :stories
   queue_with_priority 10
   discard_on ActiveJob::DeserializationError # the story was deleted meanwhile
 
   def perform(request)
-    return if request.succeeded? || request.failed?
+    return if request.succeeded? || request.failed? || request.confirming?
 
     request.start!
-    Stories.moderator.check(request.prompt).raise_if_rejected! if request.prompt.present?
+    Stories.moderator.check(request.prompt).raise_if_rejected! if request.prompt.present? && request.confirmed_at.nil?
+    if request.awaiting_confirmation?
+      Stories.generator.cast_from_photos(request)
+      return request.await_confirmation!
+    end
+
     episode = Stories.generator.call(request)
     request.series.reload # the generator saved titles and status through its own records
     Stories.moderator.check(text_of(episode), episode:).raise_if_rejected!
@@ -25,6 +34,8 @@ class GenerateStoryJob < ApplicationJob
   rescue StandardError => e
     Rails.error.report(e, context: { story_request_id: request.id })
     mark_failed(request, e, rejected: false)
+  ensure
+    request.purge_photos! if request.mode_photos? && (request.succeeded? || request.failed?)
   end
 
   private

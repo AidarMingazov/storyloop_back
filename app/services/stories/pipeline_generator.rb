@@ -17,7 +17,7 @@ module Stories
       return episode if episode.published? # a retried job after everything was done
 
       series = request.series
-      Cast.for(mode: request.mode, theme: request.theme, cast: request.cast_key).cast_into(series)
+      Cast.for(mode: request.mode, theme: request.theme, cast: request.cast_key).cast_into(series) unless request.mode_photos?
 
       request.progress!("script")
       episode = Script.new(request, random: @random).call
@@ -36,6 +36,10 @@ module Stories
       series.published! if series.draft?
       episode
     end
+
+    def cast_from_photos(request) = PhotoCast.call(request)
+
+    def redraw_sheet(request, character) = PhotoCast.new(request).redraw(character)
 
     private
       # A panel the provider's safety filter refused fails the story as rejected (7.6); other failed panels get one

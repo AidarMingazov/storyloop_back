@@ -62,6 +62,23 @@
     <%= form.file_field :text_file, accept: ".txt,text/plain", class: "text-sm" %>
   </div>
 
+  <div class="grid gap-3" data-story-form-target="section" data-modes="photos" id="story-photos">
+    <div>
+      <%= form.label :photos, t("stories.new.photos_label", count: StoryRequest::PHOTO_LIMIT), class: "label" %>
+      <%= form.file_field :photos, multiple: true, accept: StoryRequest::PHOTO_TYPES.join(","), class: "text-sm" %>
+      <p class="text-xs text-muted mt-1"><%= t("stories.new.photos_hint") %></p>
+    </div>
+    <div>
+      <%= form.label :prompt, t("stories.new.photos_idea"), class: "label", for: "story_prompt_photos" %>
+      <%= form.text_area :prompt, id: "story_prompt_photos", rows: 3, maxlength: StoryRequest::PROMPT_LIMITS["photos"],
+                         placeholder: t("stories.new.photos_idea_placeholder"), class: "input min-h-20 py-2" %>
+    </div>
+    <label class="flex items-start gap-3 text-sm">
+      <%= form.check_box :photos_consent, class: "mt-0.5 size-5 accent-ink-strong" %>
+      <span><%= t("stories.new.photos_consent") %></span>
+    </label>
+  </div>
+
   <p class="card p-4 text-sm text-muted" data-story-form-target="section" data-modes="surprise">
     <%= t("stories.new.surprise_hint") %>
   </p>
@@ -78,7 +95,7 @@
         <label class="card p-3 cursor-pointer has-[:checked]:border-ink-strong has-[:checked]:border-2">
           <%= form.radio_button :cast, cast.key, class: "sr-only" %>
           <% if (sheet = cast_preview(cast)) %>
-            <%= image_tag sheet, alt: "", loading: "lazy", class: "w-full aspect-video object-cover rounded-md mb-2 bg-paper" %>
+            <%= image_tag sheet, alt: "", loading: "lazy", class: "w-full aspect-video object-cover rounded-md mb-2 bg-recess" %>
           <% end %>
           <span class="block text-sm font-semibold text-ink-strong"><%= cast.title %></span>
           <span class="block text-xs text-muted mt-0.5"><%= cast.names("en").join(", ") %></span>
@@ -87,10 +104,6 @@
     </div>
   </fieldset>
 
-  <div class="card p-4 flex items-center justify-between gap-3 opacity-70" id="photos-soon">
-    <span class="text-sm"><span aria-hidden="true">📷</span> <%= t("stories.new.photos") %></span>
-    <span class="badge"><%= t("stories.new.soon") %></span>
-  </div>
 
   <div class="grid grid-cols-2 gap-3">
     <div>
@@ -118,7 +131,7 @@
     <legend class="label"><%= t("stories.new.visibility") %></legend>
     <% StoryForm::VISIBILITIES.each do |visibility| %>
       <label class="flex items-start gap-3 cursor-pointer">
-        <%= form.radio_button :visibility, visibility, class: "mt-1 size-5 accent-ink-strong" %>
+        <%= form.radio_button :visibility, visibility, class: "mt-1 size-5 accent-ink-strong", data: { action: "story-form#chooseVisibility" } %>
         <span>
           <span class="block font-medium text-ink-strong"><%= t("stories.visibility.#{visibility}.title") %></span>
           <span class="block text-xs text-muted"><%= t("stories.visibility.#{visibility}.hint") %></span>

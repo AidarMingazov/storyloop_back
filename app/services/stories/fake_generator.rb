@@ -26,6 +26,24 @@ module Stories
       episode
     end
 
+    # One character per photo (up to PHOTO_CHARACTERS) with a placeholder sheet; no vision, no safety check.
+    def cast_from_photos(request)
+      PhotoCast::NAMES["en"]["person"].first([ request.photos.count, StoryRequest::PHOTO_CHARACTERS ].min).each_with_index do |name, index|
+        request.progress!(index.zero? ? "vision" : "sheets")
+        character = request.series.characters.find_or_initialize_by(key: "p#{index + 1}")
+        character.update!(name:, protagonist: index.zero?, appearance_prompt: "Person from photo #{index + 1}",
+                          voice: StoryRequest::VOICES.dig("female", request.language_pair.target_lang))
+        redraw_sheet(request, character)
+      end
+      request.update!(vision: { "fake" => true, "scenes" => [ "photo 1: friends on a trip" ] })
+    end
+
+    def redraw_sheet(request, character)
+      sleep @step_delay if @step_delay.positive?
+      bytes = Episodes::PlaceholderImage.render(16 / 9.0, character.key.sum + request.redraws)
+      character.sheet.attach(io: StringIO.new(bytes), filename: "#{character.key}-sheet.webp", content_type: "image/webp")
+    end
+
     private
       # Seed episodes of the pair in the requested format; a different one for each request.
       def pick_template(request)

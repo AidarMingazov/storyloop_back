@@ -100,4 +100,38 @@ class UserStoriesTest < ApplicationSystemTestCase
     log = GenerationLog.where(step: "stt").sole
     assert_operator log.metadata["bytes"], :>, 30_000, "about 1.5 s of 16 kHz WAV"
   end
+
+  test "comic from photos: upload, confirm the characters, read; private by default" do
+    author = users(:one)
+    author.update!(language_pair: language_pairs(:en_ru), onboarded_at: Time.current)
+    sign_in author
+
+    visit new_story_path
+    find("label", text: "Из фото").click
+    assert_checked_field "story_visibility_private", visible: :all # real people: only the author by default
+    attach_file "story_photos", [ file_fixture("photo.jpg").to_s, file_fixture("photo.jpg").to_s ]
+    fill_in "story_prompt_photos", with: "Our trip to the sea"
+    check "story_photos_consent"
+    check "story_rules_accepted"
+    click_on "Создать"
+    assert_text "Создаём историю…"
+
+    perform_enqueued_jobs # the fake generator draws placeholder characters, one per photo
+    refresh
+    within "#story-confirm" do
+      assert_selector "img", count: 2
+      first("input[type=text]").fill_in(with: "Timur")
+      click_on "Создать комикс"
+    end
+    assert_text "Создаём историю…"
+    assert_selector "[data-step=vision][data-state=done]"
+
+    perform_enqueued_jobs
+    refresh
+    click_on "Читать"
+    assert_selector ".reader .tok", minimum: 1
+    request = StoryRequest.last
+    assert_equal "Timur", request.series.characters.find_by!(key: "p1").name
+    assert_not request.photos.attached?, "originals are deleted once the story is made"
+  end
 end

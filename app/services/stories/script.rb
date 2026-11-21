@@ -26,15 +26,16 @@ module Stories
         "story",
         target: @target, native: @native, cefr: series.cefr_level, format:, panels:, genre: series.genre,
         tone: series.tone.to_s, characters:, mode: @request.mode, theme: @request.theme_title,
-        idea: (@request.prompt if @request.mode_idea?), text: (@request.prompt if @request.mode_text?),
+        idea: (@request.prompt if @request.mode_idea? || @request.mode_photos?), text: (@request.prompt if @request.mode_text?),
         ideas: IDEAS.sample(4, random: @random), avoid:,
+        scenes: Array(@request.vision["scenes"]).first(StoryRequest::PHOTO_LIMIT), hooks: Array(@request.vision["story_hooks"]).first(3),
         language_rules: Ai::Prompt.render("languages/#{@target.code}", cefr: series.cefr_level, native: @native)
       )
     end
 
     private
       def document(json)
-        rename(json["cast"]) if json.is_a?(Hash)
+        rename(json["cast"]) if json.is_a?(Hash) && !@request.mode_photos? # photo characters are named by the author
         super
       end
 

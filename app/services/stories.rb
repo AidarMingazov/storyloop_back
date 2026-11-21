@@ -22,7 +22,7 @@ module Stories
   def reports_to_hide = config.reports_to_hide
 
   # Rule categories a story can break (moderation, 7.6); the status page names the category.
-  REJECTIONS = %w[sexual violence hate self_harm personal copyright illegal images other].freeze
+  REJECTIONS = %w[sexual violence hate self_harm personal copyright illegal minors images other].freeze
 
   # Raised by a generator or the job when the story must not be made (moderation).
   class Rejected < StandardError

@@ -51,6 +51,7 @@ module StoriesHelper
     request = series.story_requests.max_by(&:created_at)
     return :hidden if series.hidden?
     return :failed if episode&.failed? || request&.failed?
+    return :confirming if request&.confirming?
     return :generating unless episode&.published?
     :ready
   end

@@ -3,10 +3,10 @@ module Stories
   # Stories::PipelineGenerator (the wave 6 AI pipeline, 7.4). GenerateStoryJob calls `generator.call(request)`.
   #
   # Input — a StoryRequest:
-  #   mode        theme | idea | text | surprise   (later photos, voice)
+  #   mode        theme | idea | text | surprise | photos
   #   theme       key of Stories::Themes (mode theme)
   #   cast_key    db/templates/ai/casts/<key>.yml the story is drawn with (picked on the form or by Stories::Cast.for)
-  #   prompt      the idea (≤ 500 chars) or the learner's own text to adapt (≤ 3000 chars)
+  #   prompt      the idea (≤ 500 chars, also with photos) or the learner's own text to adapt (≤ 3000 chars)
   #   language_pair, cefr_level, format (webtoon | chat)
   #   series      already created: author, visibility, slug, placeholder title
   #   episode     already created: number 1, status generating
@@ -22,8 +22,21 @@ module Stories
   #   - be safe to run again for the same request (job retries);
   #   - return the episode; raise to fail (Stories::Rejected for moderation) — the request becomes
   #     failed and does not count toward the free limit.
+  #
+  # A comic from photos (mode photos) comes in two calls: cast_from_photos(request) makes the characters (with
+  # sheets) from request.photos — raise Stories::Rejected for photos that must not be used — and the author confirms
+  # them; then call(request) writes the story with those characters. redraw_sheet(request, character) draws one
+  # character's sheet again (confirmation screen).
   module Generator
     def call(request)
+      raise NotImplementedError
+    end
+
+    def cast_from_photos(request)
+      raise NotImplementedError
+    end
+
+    def redraw_sheet(request, character)
       raise NotImplementedError
     end
   end

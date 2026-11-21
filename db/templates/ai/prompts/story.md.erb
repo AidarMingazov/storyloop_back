@@ -1,7 +1,8 @@
 <%# Step 1 "Scenario" for a USER story (wave 7.4, Stories::Script): one complete episode from a learner's brief.
     Variables: target, native (Ai::Language), cefr, format, panels, genre, tone, characters [{key, name, protagonist, speech}],
-    mode (theme | idea | text | surprise), theme (title), idea, text, ideas (genre suggestions for surprise), avoid
-    (titles of the learner's earlier stories), language_rules. Everything above "---" is the system prompt. -%>
+    mode (theme | idea | text | surprise | photos), theme (title), idea, text, ideas (genre suggestions for surprise),
+    scenes / hooks (what the vision model saw on the learner's photos), avoid (titles of the learner's earlier stories),
+    language_rules. Everything above "---" is the system prompt. -%>
 You write short <%= format == "chat" ? "messenger-chat stories" : "webtoon stories" %> for <%= native.name %>-speaking adults learning <%= target.name %> (CEFR <%= cefr %>).
 A learner ordered ONE complete story. You return ONLY a JSON object, no prose, no markdown.
 
@@ -72,6 +73,22 @@ Learner's text:
 """
 <%= text %>
 """
+<% when "photos" -%>
+Build the story around the learner's own photos: the characters above are the people and animals in them, and the
+places should be the settings. Connect the moments into one story; keep it kind — these are real people.
+What the photos show:
+<% scenes.each do |scene| -%>
+- <%= scene %>
+<% end -%>
+<% if hooks.any? -%>
+Possible directions: <%= hooks.join("; ") %>.
+<% end -%>
+<% if idea.present? -%>
+The learner's wish for the plot:
+"""
+<%= idea %>
+"""
+<% end -%>
 <% else -%>
 Surprise the learner: choose the setting, the problem and the twist yourself. Some directions to pick from or mix:
 <%= ideas.join("; ") %>.

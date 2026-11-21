@@ -18,6 +18,8 @@ class StoryForm
   attribute :visibility, :string, default: "link"
   attribute :display_name, :string
   attribute :rules_accepted, :boolean, default: false
+  attribute :photos, default: -> { [] } # uploads, mode photos (7.11)
+  attribute :photos_consent, :boolean, default: false
 
   attr_accessor :user
   attr_reader :story_request
@@ -31,7 +33,8 @@ class StoryForm
   validates :visibility, inclusion: { in: VISIBILITIES }
   validates :display_name, length: { maximum: 40 }
   validates :rules_accepted, acceptance: { accept: true }
-  validate :pair_active, :prompt_fits, :text_file_readable
+  validates :photos_consent, acceptance: { accept: true }, if: -> { mode == "photos" }
+  validate :pair_active, :prompt_fits, :text_file_readable, :photos_fit
 
   def self.model_name = ActiveModel::Name.new(self, nil, "Story")
 
@@ -42,6 +45,7 @@ class StoryForm
   # → StoryRequest, or nil with errors
   def submit
     read_text_file
+    self.format = "webtoon" if mode == "photos" # the photos become pictures
     return unless valid?
 
     ActiveRecord::Base.transaction do
@@ -54,18 +58,22 @@ class StoryForm
       @story_request = StoryRequest.create!(user: user, series: series, episode: episode, language_pair: language_pair,
                                             mode: mode, theme: (theme if mode == "theme"), prompt: prompt.presence,
                                             cefr_level: cefr_level, format: format,
-                                            cast_key: Stories::Cast.for(mode:, theme:, cast:).key)
+                                            cast_key: Stories::Cast.for(mode:, theme:, cast:).key,
+                                            **({ photos: uploads } if mode == "photos").to_h)
     end
   end
 
   private
-    def prompt_text = mode.in?(%w[idea text]) ? prompt.to_s.strip : ""
+    def prompt_text = mode.in?(%w[idea text photos]) ? prompt.to_s.strip : ""
+
+    def uploads = Array(photos).select { |photo| photo.respond_to?(:content_type) }
 
     # Shown while the story is generated; the generator sets the real one.
     def placeholder_title
       case mode
       when "theme" then Stories::Themes.title(theme)
       when "surprise" then I18n.t("stories.new.surprise_title")
+      when "photos" then I18n.t("stories.new.photos")
       else prompt_text.lines.first.to_s.squish.truncate(60)
       end
     end
@@ -85,6 +93,15 @@ class StoryForm
 
     def pair_active
       errors.add(:pair, :inclusion) unless language_pair
+    end
+
+    def photos_fit
+      return unless mode == "photos"
+      return errors.add(:photos, :blank) if uploads.empty?
+
+      errors.add(:photos, :too_many, count: StoryRequest::PHOTO_LIMIT) if uploads.size > StoryRequest::PHOTO_LIMIT
+      errors.add(:photos, :invalid) unless uploads.all? { |photo| StoryRequest::PHOTO_TYPES.include?(photo.content_type) }
+      errors.add(:photos, :too_big) if uploads.any? { |photo| photo.size > StoryRequest::PHOTO_BYTES }
     end
 
     def prompt_fits

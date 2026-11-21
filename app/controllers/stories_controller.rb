@@ -3,7 +3,7 @@
 class StoriesController < ApplicationController
   allow_unauthenticated_access only: :new
   before_action :require_author, except: :new
-  before_action :set_story, only: %i[show update destroy reset_link]
+  before_action :set_story, only: %i[show update destroy reset_link confirm redraw]
   rate_limit to: 5, within: 1.minute, only: :create, with: -> { redirect_to stories_path, alert: t("stories.new.rate_limited") }
 
   def index
@@ -71,6 +71,27 @@ class StoriesController < ApplicationController
     redirect_to story_path(@story), notice: t("stories.show.link_reset")
   end
 
+  # Comic from photos (7.11): names and voices of the characters drawn from the photos; generation goes on.
+  def confirm
+    story_request = idle_confirmation or return redirect_to(story_path(@story))
+
+    choices = params.permit(names: {}, voices: {})
+    story_request.confirm!(names: choices[:names].to_h, voices: choices[:voices].to_h)
+    GenerateStoryJob.perform_later(story_request)
+    redirect_to story_path(@story)
+  end
+
+  # One character's sheet again from the same photo (StoryRequest::REDRAWS per story).
+  def redraw
+    story_request = idle_confirmation or return redirect_to(story_path(@story))
+    return redirect_to(story_path(@story), alert: t("stories.confirm.no_redraws")) if story_request.redraws >= StoryRequest::REDRAWS
+
+    character = @story.characters.find(params[:character_id])
+    story_request.update!(redraws: story_request.redraws + 1, step: "sheets")
+    RedrawStorySheetJob.perform_later(story_request, character)
+    redirect_to story_path(@story)
+  end
+
   private
     def require_author
       redirect_to new_story_path if Current.user.guest?
@@ -80,8 +101,15 @@ class StoriesController < ApplicationController
       @story = Current.user.stories.find(params[:id])
     end
 
+    # The request waiting for the author, with no sheet being redrawn.
+    def idle_confirmation
+      story_request = @story.story_requests.order(:created_at).last
+      story_request if story_request&.confirming? && story_request.step.nil?
+    end
+
     def form_params
-      params.expect(story: %i[mode theme cast prompt text_file pair cefr_level format visibility display_name rules_accepted])
+      params.expect(story: [ :mode, :theme, :cast, :prompt, :text_file, :pair, :cefr_level, :format, :visibility, :display_name,
+                             :rules_accepted, :photos_consent, photos: [] ])
     end
 
     def render_limit

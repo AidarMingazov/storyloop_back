@@ -30,7 +30,11 @@ Rails.application.routes.draw do
   end
   post "stories/transcription", to: "story_transcriptions#create", as: :story_transcription # "story by voice" (7.12)
   resources :stories, only: %i[index new create show update destroy] do
-    post :reset_link, on: :member
+    member do
+      post :reset_link
+      post :confirm # comic from photos: the author confirms the characters (7.11)
+      post :redraw  # … or redraws one character's sheet
+    end
   end
   get "community", to: "community#index", as: :community
   resources :authors, only: :show, path: "u", param: :public_id do

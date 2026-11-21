@@ -1,21 +1,32 @@
-# The brief for generating one user story (7.3) — the input of Stories::Generator (wave 6, 7.4) and
-# what the free-generation limit counts (7.5). The series and its episode #1 exist from the start,
-# so "My stories" and the share link work while the story is being generated.
+# The brief for generating one user story (7.3) — the input of Stories::Generator (7.4) and what the free-generation
+# limit counts (7.5). The series and its episode #1 exist from the start, so "My stories" and the share link work
+# while the story is being generated. A comic from photos (7.11) stops halfway: the author confirms the characters
+# drawn from the photos ("confirming"), then generation goes on. The photos themselves are deleted when it ends.
 class StoryRequest < ApplicationRecord
-  MODES = %w[theme idea text surprise].freeze # later: photos (7.11), voice (7.12)
-  PROMPT_LIMITS = { "idea" => 500, "text" => 3000 }.freeze
+  MODES = %w[theme idea text surprise photos].freeze
+  PROMPT_LIMITS = { "idea" => 500, "text" => 3000, "photos" => 500 }.freeze
   LEVELS = Cefr::LEVELS.first(4)
   FORMATS = %w[webtoon chat].freeze
   # Steps the status page shows, in order (a subset of GenerationLog::STEPS; a generator may skip some).
   STEPS = %w[script images layout tokens audio].freeze
+  PHOTO_STEPS = %w[vision sheets].freeze
+  PHOTO_LIMIT = 10
+  PHOTO_BYTES = 10.megabytes
+  PHOTO_TYPES = %w[image/jpeg image/png image/webp].freeze
+  PHOTO_CHARACTERS = 3 # people and animals that become characters
+  REDRAWS = 5          # sheet redraws per story on the confirmation screen
+  # Default voices on the confirmation screen; the author can switch.
+  VOICES = { "female" => { "ko" => "Korean_SweetGirl", "en" => "English_SentimentalLady" },
+             "male" => { "ko" => "Korean_ReliableYouth", "en" => "English_DecentYoungMan" } }.freeze
 
   belongs_to :user
   belongs_to :series
   belongs_to :episode
   belongs_to :language_pair
+  has_many_attached :photos
 
   enum :mode, MODES.index_by(&:itself), validate: true, prefix: true
-  enum :status, { queued: "queued", running: "running", succeeded: "succeeded", failed: "failed" },
+  enum :status, { queued: "queued", running: "running", confirming: "confirming", succeeded: "succeeded", failed: "failed" },
        default: :queued, validate: true
 
   validates :cefr_level, inclusion: { in: LEVELS }
@@ -34,12 +45,35 @@ class StoryRequest < ApplicationRecord
 
   def theme_title = Stories::Themes.title(theme)
 
+  def steps = mode_photos? ? PHOTO_STEPS + STEPS : STEPS
+
+  # Photos still waiting for the author's confirmation of the characters.
+  def awaiting_confirmation? = mode_photos? && confirmed_at.nil?
+
   def start!
     update!(status: :running, started_at: Time.current, error: nil, rejection: nil)
     episode.generating!
   end
 
   def progress!(step) = update!(step: step)
+
+  # Characters from the photos are drawn: the author looks at them (stories/_confirm).
+  def await_confirmation!
+    update!(status: :confirming, step: nil)
+  end
+
+  # names / voices: {character_id => value} from the confirmation screen.
+  def confirm!(names: {}, voices: {})
+    lang = language_pair.target_lang
+    transaction do
+      series.characters.each do |character|
+        name = names[character.id.to_s].to_s.squish
+        voice = VOICES.dig(voices[character.id.to_s].to_s, lang)
+        character.update!(name: (name.match?(Stories::Script::NAME) ? name : character.name), voice: voice || character.voice)
+      end
+      update!(status: :queued, confirmed_at: Time.current)
+    end
+  end
 
   def succeed!
     update!(status: :succeeded, step: nil, finished_at: Time.current)
@@ -56,6 +90,17 @@ class StoryRequest < ApplicationRecord
   end
 
   def duration = started_at && finished_at && (finished_at - started_at)
+
+  # A photo as a JPEG for the AI providers: at most 1600 px, rotated by EXIF and stripped of it (location, device).
+  def photo_jpeg(index)
+    photo = photos_attachments.order(:id)[index] or return
+    photo.variant(resize_to_limit: [ 1600, 1600 ], format: :jpeg, saver: { quality: 85, strip: true }).processed.download
+  end
+
+  # Originals are kept only while they are needed (generation, sheet redraws).
+  def purge_photos!
+    photos.purge_later if photos.attached?
+  end
 
   private
     def prompt_fits
