@@ -1,0 +1,105 @@
+en:
+  auth:
+    rate_limited: Too many attempts. Try again in a few minutes.
+    email: Email
+    password: Password
+    session:
+      title: Sign in
+      submit: Sign in
+      invalid: Wrong email or password.
+      forgot: Forgot password?
+      magic: Email me a sign-in link
+      no_account: No account?
+      sign_up: Create one
+    registration:
+      title: Save your progress and words
+      body: Create an account to keep what you've read and your saved words, and continue on any device.
+      password_hint: At least 8 characters
+      submit: Create account
+      or_magic: No password — email me a link
+      have_account: Already have an account?
+      sign_in: Sign in
+      taken: This email is already registered. Sign in and your progress on this device will be kept.
+      welcome: Done! Your progress and words are saved to your account.
+    magic_link:
+      title: Sign in with a link
+      body: We'll email you a link. Tap it and you're in — no password needed.
+      submit: Send link
+      sent: "We sent a link to %{email}. It works for 20 minutes."
+      invalid_email: Check the email address.
+      expired: This link is invalid or has expired. Request a new one.
+      signed_in: You're signed in.
+      email_subject: Your Storyloop sign-in link
+      email_body: "Tap to sign in to Storyloop:"
+      email_button: Sign in to Storyloop
+      email_footer: The link works once and expires in 20 minutes. If you didn't ask to sign in, just delete this email.
+    password:
+      title: Forgot your password?
+      submit: Send link
+      edit_title: New password
+      new_password: Password (8+ characters)
+      confirmation: Repeat it
+      save: Save
+      sent: If that email exists, we've sent a link to reset the password.
+      updated: Password updated.
+      mismatch: Passwords don't match.
+      too_short: The password needs at least 8 characters.
+      invalid_link: This link is invalid or has expired.
+  onboarding:
+    title: What are you learning?
+    subtitle: Read short stories and comics in the language you're learning. Tap a word to see its translation and an explanation.
+    level_title: What's your level?
+    level_subtitle: We'll pick a story for you. You can change it later.
+    levels:
+      A1: { title: "A1 · Just starting", body: "I know the alphabet and a few phrases" }
+      A2: { title: "A2 · I know the basics", body: "I understand simple everyday phrases" }
+      B1: { title: "B1 · I can get by", body: "I follow everyday conversations" }
+    start: Read the first episode
+    change_language: Another language
+  pairs:
+    en-ru: { title: "English", hint: "hints in Russian", flag: "🇬🇧" }
+    ko-en: { title: "Korean", hint: "hints in English", flag: "🇰🇷" }
+  paywall:
+    eyebrow: Storyloop subscription
+    title: Read every episode
+    body: The first episodes of every series are free. A subscription opens all stories and new episodes every week.
+    benefits:
+      - Every episode of every series
+      - New episodes every week
+      - Unlimited word review
+    plans:
+      yearly: Yearly
+      monthly: Monthly
+    per_month: "%{price} a month"
+    per_year: per year
+    per_month_short: per month
+    best_value: Best value
+    pay: Continue to payment
+    back: Back to stories
+    footnote: Cancel anytime.
+  waitlist:
+    title: Payments open this week
+    body: Leave your email and we'll let you in first, with a discount.
+    email: Email
+    submit: Leave my email
+    thanks_title: Thank you!
+    thanks_body: We'll write as soon as payments open. Your discount is reserved.
+    back: Back to stories
+  landing:
+    ko-en:
+      title: Learn Korean through comics
+      subtitle: Short stories about life in Seoul, in Korean. Tap any word for its meaning in context, a breakdown of particles and endings, and audio. Saved words come back for review right before you'd forget them.
+      cta: Read the first episode free
+      note: No sign-up · levels A1–A2
+      shots:
+        - Webtoon and chat-style stories
+        - Tap a word — meaning, breakdown, politeness
+        - Review words with flashcards
+    en-ru: {}
+  layout:
+    privacy: Privacy policy
+    terms: Terms of use
+  signup_banner:
+    title: Save your progress and words
+    body: Create an account — it takes 20 seconds.
+    cta: Create account

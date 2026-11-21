@@ -11,6 +11,9 @@ module ActiveSupport
     # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
     fixtures :all
 
-    # Add more helper methods to be used by all tests here...
+    setup { Analytics.backend.clear! }
+
+    def tracked_events = Analytics.backend.names
+    def tracked(event) = Analytics.backend.events.select { |e| e[:event] == event }
   end
 end

@@ -38,7 +38,8 @@ module Probe
   end
 
   # POST JSON, return [parsed_body, seconds]. Raises with the provider's error body on non-2xx.
-  def post_json(url, body, headers = {}, timeout: 300)
+  # headers is positional on purpose: with a keyword arg Ruby would treat "Authorization" => ... as keywords.
+  def post_json(url, body, headers = {}, timeout = 300)
     uri = URI(url)
     req = Net::HTTP::Post.new(uri, { "Content-Type" => "application/json" }.merge(headers))
     req.body = JSON.generate(body)

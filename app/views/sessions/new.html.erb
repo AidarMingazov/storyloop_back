@@ -1,17 +1,22 @@
-<% content_for :title, "Вход" %>
-<h1 class="font-serif text-4xl font-semibold text-ink-strong mb-6">Вход</h1>
+<% content_for :title, t("auth.session.title") %>
+<h1 class="font-serif text-4xl font-semibold text-ink-strong mb-6"><%= t("auth.session.title") %></h1>
 
 <%= form_with url: session_url, class: "card p-6 grid gap-5" do |form| %>
   <div>
-    <%= form.label :email_address, "Email", class: "label" %>
+    <%= form.label :email_address, t("auth.email"), class: "label" %>
     <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", value: params[:email_address], class: "input" %>
   </div>
   <div>
-    <%= form.label :password, "Пароль", class: "label" %>
+    <%= form.label :password, t("auth.password"), class: "label" %>
     <%= form.password_field :password, required: true, autocomplete: "current-password", maxlength: 72, class: "input" %>
   </div>
   <div class="flex flex-wrap items-center gap-4">
-    <%= form.submit "Войти", class: "btn-primary" %>
-    <%= link_to "Забыли пароль?", new_password_path, class: "text-sm text-muted underline hover:text-ink-strong" %>
+    <%= form.submit t("auth.session.submit"), class: "btn-primary" %>
+    <%= link_to t("auth.session.forgot"), new_password_path, class: "text-sm text-muted underline hover:text-ink-strong" %>
   </div>
 <% end %>
+
+<div class="mt-6 grid gap-3 text-sm">
+  <%= link_to t("auth.session.magic"), new_magic_link_path, class: "btn-secondary w-full" %>
+  <p class="text-center text-muted"><%= t("auth.session.no_account") %> <%= link_to t("auth.session.sign_up"), new_registration_path, class: "underline text-ink-strong" %></p>
+</div>

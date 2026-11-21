@@ -91,7 +91,8 @@ class EpisodePayload
       return unless user
 
       progress = user.reading_progresses.find_by(episode: episode)
-      { saved_lexeme_ids: user.user_words.where(lexeme_id: lexeme_ids).pluck(:lexeme_id),
+      { guest: user.guest?,
+        saved_lexeme_ids: user.user_words.where(lexeme_id: lexeme_ids).pluck(:lexeme_id),
         last_panel_position: progress&.last_panel_position || 0,
         completed: progress&.completed? || false }
     end

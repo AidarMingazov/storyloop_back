@@ -5,9 +5,9 @@ class AdminReviewTest < ApplicationSystemTestCase
     episode = Episodes::Importer.call(file_fixture("episode_en.json").read)
 
     visit new_session_path
-    fill_in "Email", with: users(:admin).email_address
-    fill_in "Пароль", with: "password"
-    click_on "Войти"
+    fill_in "email_address", with: users(:admin).email_address
+    fill_in "password", with: "password"
+    find("input[type=submit]").click
     assert_current_path root_path # wait for the session cookie before navigating
 
     visit admin_series_index_path

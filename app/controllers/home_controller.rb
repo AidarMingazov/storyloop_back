@@ -1,12 +1,11 @@
 class HomeController < ApplicationController
-  include ReaderLocale
-
   allow_unauthenticated_access
 
   def show
-    @pairs = LanguagePair.active.includes(series: :episodes).order(:code)
     @reader = resume_session&.user
-    return unless @reader
+    return redirect_to(start_path) unless @reader&.onboarded? || @reader&.admin?
+
+    @pairs = LanguagePair.active.includes(series: :episodes).order(:code)
 
     @due_today = @reader.user_words.due_today.count
     @progress = @reader.reading_progresses.index_by(&:episode_id)

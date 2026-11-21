@@ -1,6 +1,5 @@
 class ReviewsController < ApplicationController
   include ReaderIdentity
-  include ReaderLocale
 
   allow_unauthenticated_access
 
@@ -20,6 +19,9 @@ class ReviewsController < ApplicationController
   def answer
     word = current_reader.user_words.find(params.expect(:user_word_id))
     ReviewScheduler.new(word).answer!(params.expect(:rating))
+    unless current_reader.user_words.review_queue.exists?
+      track("review_session_completed", user: current_reader, reviewed_today: current_reader.word_reviews.on_day.count)
+    end
     redirect_to review_path, status: :see_other
   rescue ArgumentError
     head :unprocessable_entity

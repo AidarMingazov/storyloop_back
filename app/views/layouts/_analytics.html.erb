@@ -1,0 +1,8 @@
+<%# PostHog in the browser: same distinct id as server events (the visitor/user analytics id). %>
+<% posthog = Rails.application.config.x.posthog %>
+<% if posthog[:api_key].present? %>
+  <meta name="posthog-key" content="<%= posthog[:api_key] %>">
+  <meta name="posthog-host" content="<%= posthog[:host] %>">
+<% end %>
+<meta name="analytics-distinct-id" content="<%= Current.user&.analytics_id || visitor_id %>">
+<meta name="analytics-context" content="<%= analytics_context.to_json %>">

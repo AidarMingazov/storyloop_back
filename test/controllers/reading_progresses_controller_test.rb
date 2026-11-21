@@ -22,5 +22,6 @@ class ReadingProgressesControllerTest < ActionDispatch::IntegrationTest
 
     patch episode_progress_path(@episode), params: { last_panel_position: 3, completed: true }, as: :json
     assert_equal first_completion, progress.reload.completed_at
+    assert_equal 1, tracked("episode_completed").size
   end
 end

@@ -1,0 +1,39 @@
+<% content_for :title, "Storyloop" %>
+<header class="mb-6">
+  <p class="font-serif text-3xl font-semibold text-ink-strong">Storyloop</p>
+</header>
+
+<% if @pair.nil? %>
+  <h1 class="font-serif text-3xl font-semibold text-ink-strong"><%= t("onboarding.title") %></h1>
+  <p class="mt-2 mb-6"><%= t("onboarding.subtitle") %></p>
+  <div class="grid gap-3">
+    <% @pairs.each do |pair| %>
+      <% locale = pair.ui_locale %>
+      <%= link_to start_path(pair: pair.code), class: "card p-5 flex items-center gap-4 hover:border-ink-strong transition-colors", lang: locale do %>
+        <span class="text-3xl" aria-hidden="true"><%= t("pairs.#{pair.code}.flag", locale: locale) %></span>
+        <span class="min-w-0">
+          <span class="block font-serif text-2xl font-semibold text-ink-strong"><%= t("pairs.#{pair.code}.title", locale: locale) %></span>
+          <span class="block text-sm text-muted"><%= t("pairs.#{pair.code}.hint", locale: locale) %></span>
+        </span>
+      <% end %>
+    <% end %>
+  </div>
+<% else %>
+  <p class="label"><%= t("pairs.#{@pair.code}.flag") %> <%= t("pairs.#{@pair.code}.title") %> · <%= t("pairs.#{@pair.code}.hint") %></p>
+  <h1 class="font-serif text-3xl font-semibold text-ink-strong"><%= t("onboarding.level_title") %></h1>
+  <p class="mt-2 mb-6"><%= t("onboarding.level_subtitle") %></p>
+  <%= form_with url: start_path, class: "grid gap-3" do |form| %>
+    <%= form.hidden_field :pair, value: @pair.code %>
+    <% Cefr::LEVELS.first(3).each_with_index do |level, index| %>
+      <label class="card p-5 flex items-center gap-4 cursor-pointer has-[:checked]:border-ink-strong has-[:checked]:bg-marker-soft/40">
+        <%= form.radio_button :level, level, checked: index.zero?, class: "size-5 accent-ink-strong" %>
+        <span>
+          <span class="block font-semibold text-ink-strong"><%= t("onboarding.levels.#{level}.title") %></span>
+          <span class="block text-sm text-muted"><%= t("onboarding.levels.#{level}.body") %></span>
+        </span>
+      </label>
+    <% end %>
+    <%= form.submit t("onboarding.start"), class: "btn-primary w-full h-12 mt-3" %>
+  <% end %>
+  <p class="mt-4 text-center text-sm"><%= link_to t("onboarding.change_language"), start_path, class: "text-muted underline" %></p>
+<% end %>

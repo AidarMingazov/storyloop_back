@@ -1,14 +1,14 @@
-<% content_for :title, "Новый пароль" %>
-<h1 class="font-serif text-4xl font-semibold text-ink-strong mb-6">Новый пароль</h1>
+<% content_for :title, t("auth.password.edit_title") %>
+<h1 class="font-serif text-4xl font-semibold text-ink-strong mb-6"><%= t("auth.password.edit_title") %></h1>
 
 <%= form_with url: password_path(params[:token]), method: :put, class: "card p-6 grid gap-5" do |form| %>
   <div>
-    <%= form.label :password, "Пароль (от 8 символов)", class: "label" %>
+    <%= form.label :password, t("auth.password.new_password"), class: "label" %>
     <%= form.password_field :password, required: true, autocomplete: "new-password", minlength: 8, maxlength: 72, class: "input" %>
   </div>
   <div>
-    <%= form.label :password_confirmation, "Ещё раз", class: "label" %>
+    <%= form.label :password_confirmation, t("auth.password.confirmation"), class: "label" %>
     <%= form.password_field :password_confirmation, required: true, autocomplete: "new-password", maxlength: 72, class: "input" %>
   </div>
-  <div><%= form.submit "Сохранить", class: "btn-primary" %></div>
+  <div><%= form.submit t("auth.password.save"), class: "btn-primary" %></div>
 <% end %>

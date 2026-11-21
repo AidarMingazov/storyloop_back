@@ -26,6 +26,7 @@ class ReviewsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to review_path
     assert_operator word.reload.due, :>, 1.day.from_now
 
+    assert_equal 1, tracked("review_session_completed").size
     follow_redirect!
     assert_select "h2", "На сегодня всё"
     assert_select "p", "Повторено сегодня: 1"

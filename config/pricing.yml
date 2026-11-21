@@ -1,0 +1,12 @@
+# Paywall prices shown per language pair. Assumption to confirm: en-ru learners see rubles
+# (≈ $7.99 / $59), ko-en learners see dollars.
+shared:
+  default: &usd
+    currency: USD
+    monthly: { price: "$7.99" }
+    yearly: { price: "$59", per_month: "$4.92", saving: "−38%" }
+  ko-en: *usd
+  en-ru:
+    currency: RUB
+    monthly: { price: "799 ₽" }
+    yearly: { price: "5 990 ₽", per_month: "499 ₽", saving: "−38%" }

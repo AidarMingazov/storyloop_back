@@ -6,6 +6,8 @@ module Admin
     before_action :require_admin
 
     private
+      def request_locale = :ru # the admin area is Russian-only
+
       # Non-admins get a 404 so the admin area does not reveal itself.
       def require_admin
         raise ActionController::RoutingError, "Not Found" unless Current.user&.admin?

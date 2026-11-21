@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_21_090000) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_21_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -232,6 +232,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_21_090000) do
     t.string "self_level"
     t.datetime "onboarded_at"
     t.jsonb "utm", default: {}, null: false
+    t.uuid "analytics_id", default: -> { "gen_random_uuid()" }, null: false
+    t.datetime "magic_login_at"
+    t.index ["analytics_id"], name: "index_users_on_analytics_id", unique: true
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
     t.index ["language_pair_id"], name: "index_users_on_language_pair_id"
   end

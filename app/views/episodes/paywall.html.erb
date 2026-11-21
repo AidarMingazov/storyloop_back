@@ -1,0 +1,35 @@
+<% content_for :title, t("paywall.title") %>
+<p class="label"><%= t("paywall.eyebrow") %></p>
+<h1 class="font-serif text-4xl font-semibold text-ink-strong"><%= t("paywall.title") %></h1>
+<p class="mt-2"><%= t("paywall.body") %></p>
+
+<ul class="mt-5 grid gap-2">
+  <% t("paywall.benefits").each do |benefit| %>
+    <li class="flex gap-2"><span class="marker text-ink-strong font-semibold">✓</span><%= benefit %></li>
+  <% end %>
+</ul>
+
+<%= form_with url: checkout_path, class: "mt-6 grid gap-3", data: { turbo: false } do |form| %>
+  <%= form.hidden_field :episode_id, value: @episode.id %>
+  <% Pricing::PLANS.each do |plan| %>
+    <% info = @plans.fetch(plan) %>
+    <label class="card p-5 flex items-center gap-4 cursor-pointer has-[:checked]:border-ink-strong has-[:checked]:border-2">
+      <%= form.radio_button :plan, plan, checked: plan == "yearly", class: "size-5 accent-ink-strong" %>
+      <span class="min-w-0 flex-1">
+        <span class="flex items-center gap-2">
+          <span class="font-semibold text-ink-strong"><%= t("paywall.plans.#{plan}") %></span>
+          <% if info["saving"] %><span class="badge bg-warm/15 text-[#a35400]"><%= t("paywall.best_value") %> <%= info["saving"] %></span><% end %>
+        </span>
+        <% if info["per_month"] %><span class="block text-sm text-muted"><%= t("paywall.per_month", price: info["per_month"]) %></span><% end %>
+      </span>
+      <span class="text-right">
+        <span class="block text-xl font-semibold text-ink-strong tabular-nums"><%= info["price"] %></span>
+        <span class="block text-xs text-muted"><%= plan == "yearly" ? t("paywall.per_year") : t("paywall.per_month_short") %></span>
+      </span>
+    </label>
+  <% end %>
+  <%= form.submit t("paywall.pay"), class: "btn-primary w-full h-12 mt-2" %>
+  <p class="text-center text-xs text-muted"><%= t("paywall.footnote") %></p>
+<% end %>
+
+<p class="mt-6 text-center text-sm"><%= link_to t("paywall.back"), root_path, class: "text-muted underline" %></p>

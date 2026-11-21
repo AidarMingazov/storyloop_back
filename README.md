@@ -32,6 +32,15 @@ docker compose run --rm web bin/rubocop
 - Позиции токенов — в символах (codepoints). Если в JSON их нет, импортёр находит слова в тексте по порядку.
 - Без картинки у кадра генерируется плейсхолдер (WebP через libvips).
 
+## Воронка и аналитика
+
+- Вход для новых: лендинги `/en-ru`, `/ko-en` → `/start` (пара → уровень) → первый эпизод. Регистрация не нужна: создаётся гость.
+- Регистрация дописывает email/пароль в того же гостя; вход по ссылке — `/magic_link/new`.
+- Письма в development: http://localhost:3000/letter_opener
+- Пейвол: `PAYMENTS_MODE=fake_door` (по умолчанию) — «Оплатить» пишет `checkout_clicked` и ведёт в лист ожидания. Цены — `config/pricing.yml`.
+- PostHog: ключ проекта в credentials (`posthog: { api_key: phc_…, host: https://eu.i.posthog.com }`) или `POSTHOG_API_KEY`. Без ключа события пишутся в лог (`[analytics]`).
+- Скриншоты читалки для лендингов: `script/landing_screenshots.rb` (инструкция в файле).
+
 ## Документы
 
 - `docs/mvp-research.md` — исследование и принятые решения

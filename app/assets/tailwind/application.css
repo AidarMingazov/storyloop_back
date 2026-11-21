@@ -197,6 +197,7 @@
   .chat-msg--me .chat-bubble { background: var(--r-me-bg); color: var(--r-me-fg); border-color: transparent; border-bottom-left-radius: 1.1rem; border-bottom-right-radius: .35rem; }
   .chat-msg--me .tok-rt { color: rgb(255 255 255 / .7); }
   .chat-msg--me .tok.is-saved { color: var(--color-ink-strong); }
+  .tok.is-active .tok-rt, .reader[data-highlight="on"] .tok.is-saved .tok-rt { color: currentColor; opacity: .7; }
   .chat-translate { align-self: center; flex-shrink: 0; width: 2.75rem; height: 2.75rem; border-radius: 999px; color: var(--r-muted); font-size: .75rem; font-weight: 700; }
   .chat-translate:hover { background: var(--r-chip); }
   .chat-image { border-radius: 1rem; overflow: hidden; max-width: 70%; }
@@ -227,6 +228,8 @@
   .summary-word.is-saved .lemma { background: var(--r-saved-bg); box-shadow: var(--r-saved-shadow); border-radius: 3px; padding: 0 .15em; }
   .summary-word button { margin-left: auto; }
   .summary-actions { display: grid; gap: .6rem; }
+  .summary-signup { padding: 1rem; border-radius: 1rem; background: var(--r-tap-bg); color: var(--r-tap-fg); }
+  .summary-signup .reader-muted { color: inherit; opacity: .8; }
 
   /* bottom sheet */
   .word-sheet {

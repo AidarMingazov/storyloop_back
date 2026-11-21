@@ -8,6 +8,9 @@ class UserWordsController < ApplicationController
     lexeme = Lexeme.find(params.expect(:lexeme_id))
     token = lexeme.tokens.find_by(id: params[:token_id])
     word = current_reader.user_words.find_or_create_by!(lexeme: lexeme) { |w| w.source_token = token }
+    if word.previously_new_record?
+      track("word_saved", user: current_reader, episode: token&.bubble&.panel&.episode, lemma: lexeme.lemma)
+    end
 
     render json: { lexeme_id: word.lexeme_id, saved: true }, status: :created
   rescue ActiveRecord::RecordNotUnique

@@ -10,8 +10,10 @@ class ReadingProgressesController < ApplicationController
 
     position = params[:last_panel_position].to_i
     progress.last_panel_position = position if position > progress.last_panel_position
-    progress.completed_at ||= Time.current if ActiveModel::Type::Boolean.new.cast(params[:completed])
+    just_completed = progress.completed_at.nil? && ActiveModel::Type::Boolean.new.cast(params[:completed])
+    progress.completed_at = Time.current if just_completed
     progress.save!
+    track("episode_completed", user: current_reader, episode: episode) if just_completed
 
     head :no_content
   end

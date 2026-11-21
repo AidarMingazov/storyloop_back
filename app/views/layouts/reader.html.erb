@@ -7,9 +7,11 @@
       try { if (localStorage.getItem("storyloop:night") === "1") document.documentElement.dataset.theme = "night" } catch (e) {}
     </script>
     <%= render "layouts/head" %>
+    <%= render "layouts/analytics" %>
   </head>
 
-  <body class="min-h-dvh">
+  <body class="min-h-dvh" data-controller="analytics"
+        data-action="reader:token-tapped->analytics#tokenTapped reader:bubble-translated->analytics#bubbleTranslated">
     <%= yield %>
   </body>
 </html>

@@ -19,7 +19,7 @@ export default class extends Controller {
   static targets = [ "payload", "stage", "summary", "sheet", "progressBar", "settings", "settingsButton",
                      "romanizationToggle", "highlightToggle", "nightToggle" ]
   static values = { i18n: Object, progressUrl: String, saveUrl: String, reviewUrl: String, libraryUrl: String,
-                    episodeUrl: String }
+                    episodeUrl: String, signupUrl: String }
 
   connect() {
     this.episode = JSON.parse(this.payloadTarget.textContent)
@@ -47,6 +47,11 @@ export default class extends Controller {
     this.onDocumentClick = (event) => this.documentClick(event)
     this.onKeydown = (event) => { if (event.key === "Escape") this.sheet.close() }
     this.onPageHide = () => this.flushProgress()
+    // Scrolling on with the sheet open means the reader moved on: get the sheet out of the way.
+    this.onScroll = () => {
+      if (this.sheet.isOpen && Math.abs(window.scrollY - this.sheetOpenedAt) > 160) this.sheet.close()
+    }
+    window.addEventListener("scroll", this.onScroll, { passive: true })
     document.addEventListener("click", this.onDocumentClick)
     document.addEventListener("keydown", this.onKeydown)
     window.addEventListener("pagehide", this.onPageHide)
@@ -60,6 +65,7 @@ export default class extends Controller {
     this.nextBar?.remove()
     this.flushProgress()
     stopSpeaking()
+    window.removeEventListener("scroll", this.onScroll)
     document.removeEventListener("click", this.onDocumentClick)
     document.removeEventListener("keydown", this.onKeydown)
     window.removeEventListener("pagehide", this.onPageHide)
@@ -158,6 +164,7 @@ export default class extends Controller {
     const lexeme = this.lexeme(token.lexeme_id)
     this.current = { token, lexeme }
     this.setActive(element)
+    this.sheetOpenedAt = window.scrollY
     this.sheet.showToken({ token, lexeme, saved: this.saved.has(lexeme.id), lang: this.lang })
     this.dispatch("token-tapped", { detail: { ...this.eventDetail(), tokenId: token.id, lexemeId: lexeme.id } })
   }
@@ -167,6 +174,7 @@ export default class extends Controller {
     this.current = null
     this.currentBubble = bubble
     this.clearActive()
+    this.sheetOpenedAt = window.scrollY
     this.sheet.showPhrase({ bubble, lang: this.lang })
     this.dispatch("bubble-translated", { detail: { ...this.eventDetail(), bubbleId } })
   }
@@ -249,6 +257,7 @@ export default class extends Controller {
     this.furthest = Math.max(this.furthest, this.total - 1)
     this.updateProgressBar()
     this.saveProgress()
+    this.sheet.close()
     this.showSummary()
     this.dispatch("completed", { detail: this.eventDetail() })
   }
@@ -273,6 +282,7 @@ export default class extends Controller {
     renderSummary(this.summaryTarget, {
       t: this.t, lang: this.lang, saved: this.saved, savedInEpisode: this.savedInEpisode(),
       words: this.targetWords(), reviewUrl: this.reviewUrlValue, libraryUrl: this.libraryUrlValue,
+      signupUrl: this.episode.user?.guest ? this.signupUrlValue : null,
       next: this.episode.next_episode && {
         url: this.episodeUrlValue.replace("__ID__", this.episode.next_episode.id),
         locked: this.episode.next_episode.locked

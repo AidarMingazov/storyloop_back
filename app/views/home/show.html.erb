@@ -6,6 +6,13 @@
 
 <% if @reader %>
   <section class="grid gap-3 mb-8">
+    <% if @reader.guest? && @continue %>
+      <div class="rounded-2xl bg-marker-soft p-5" id="signup-banner">
+        <p class="font-semibold text-ink-strong"><%= t("signup_banner.title") %></p>
+        <p class="text-sm mt-1"><%= t("signup_banner.body") %></p>
+        <%= link_to t("signup_banner.cta"), new_registration_path, class: "btn-primary mt-3" %>
+      </div>
+    <% end %>
     <div class="card p-5 flex items-center justify-between gap-4">
       <p class="font-semibold text-ink-strong" id="due-today"><%= t("home.due_today", count: @due_today) %></p>
       <% if @due_today.positive? %><%= link_to t("home.review"), review_path, class: "btn-primary shrink-0" %><% end %>

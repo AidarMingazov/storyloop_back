@@ -14,6 +14,7 @@ class UserWordsControllerTest < ActionDispatch::IntegrationTest
       post user_words_path, params: { lexeme_id: @token.lexeme_id, token_id: @token.id }, as: :json
     end
     assert_response :created
+    assert_equal 1, tracked("word_saved").size, "saving twice is one event"
     word = @user.user_words.last
     assert_equal @token, word.source_token
     assert_equal 0, word.state # FSRS "new"

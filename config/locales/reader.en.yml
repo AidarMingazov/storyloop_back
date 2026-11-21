@@ -29,6 +29,9 @@ en:
       next_episode: Next episode
       next_locked: Next episode — subscription
       back_to_library: Back to library
+      signup_title: Save your progress and words
+      signup_body: Create an account to keep them and continue on any device.
+      signup_cta: Create account
       save_failed: Couldn't save. Check your connection and try again.
       pos:
         noun: noun

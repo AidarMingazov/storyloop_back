@@ -2,6 +2,15 @@ Rails.application.routes.draw do
   root "home#show"
 
   resource :session
+  resource :registration, only: %i[new create]
+  resource :magic_link, only: %i[new create show]
+
+  # Funnel: onboarding, paywall (fake door), waitlist
+  resource :start, only: %i[show create], controller: "onboardings"
+  resource :checkout, only: :create
+  resources :waitlist_entries, only: %i[new create show], path: "waitlist"
+  get "privacy", to: "pages#privacy"
+  get "terms", to: "pages#terms"
 
   # Reader
   resources :episodes, only: :show do
@@ -37,7 +46,12 @@ Rails.application.routes.draw do
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   get "up" => "rails/health#show", as: :rails_health_check
 
-  # PWA files from app/views/pwa/* — wired up in wave 4
-  # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
-  # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
+  # PWA
+  get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
+  get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
+
+  mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
+
+  # Ad landings: /en-ru, /ko-en (keep last, it matches any two-letter pair)
+  get ":pair", to: "landings#show", as: :landing, constraints: { pair: /[a-z]{2}-[a-z]{2}/ }
 end

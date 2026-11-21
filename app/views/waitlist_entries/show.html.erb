@@ -1,0 +1,7 @@
+<% content_for :title, t("waitlist.thanks_title") %>
+<section class="card p-6 text-center">
+  <p class="text-4xl" aria-hidden="true">✓</p>
+  <h1 class="font-serif text-3xl font-semibold text-ink-strong mt-2"><%= t("waitlist.thanks_title") %></h1>
+  <p class="mt-2"><%= t("waitlist.thanks_body") %></p>
+  <%= link_to t("waitlist.back"), root_path, class: "btn-primary mt-6" %>
+</section>

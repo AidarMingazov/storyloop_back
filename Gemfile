@@ -68,3 +68,7 @@ end
 gem "json_schemer", "~> 2.5"
 
 gem "fsrs_ruby", "~> 1.0"
+
+gem "posthog-ruby", "~> 3.34"
+
+gem "letter_opener_web", "~> 3.0", group: :development

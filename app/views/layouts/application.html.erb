@@ -3,13 +3,15 @@
   <head>
     <title><%= content_for(:title) || "Storyloop" %></title>
     <%= render "layouts/head" %>
+    <%= render "layouts/analytics" %>
     <%= yield :head %>
   </head>
 
-  <body class="min-h-dvh">
-    <main class="mx-auto w-full max-w-xl px-4 pt-[max(1.5rem,env(safe-area-inset-top))] pb-12">
+  <body class="min-h-dvh flex flex-col" data-controller="analytics">
+    <main class="mx-auto w-full max-w-xl flex-1 px-4 pt-[max(1.5rem,env(safe-area-inset-top))] pb-10">
       <%= render "shared/flash" %>
       <%= yield %>
     </main>
+    <%= render "layouts/footer" %>
   </body>
 </html>

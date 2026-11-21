@@ -36,11 +36,24 @@ class EpisodesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "paid episodes show the locked screen" do
+  test "paid episodes show the paywall with prices for the pair" do
     @episode.update!(free: false)
     get episode_path(@episode)
     assert_response :success
-    assert_select "h1", "Этот эпизод — по подписке"
+    assert_select "h1", "Читайте все эпизоды"
     assert_select "[data-controller=reader]", count: 0
+    assert_select "label", /Год.*5 990 ₽/m
+    assert_equal 1, tracked("paywall_viewed").size
+  end
+
+  test "episode_started is tracked once per reader and episode" do
+    get episode_path(@episode)
+    get episode_path(@episode)
+
+    events = tracked("episode_started")
+    assert_equal 1, events.size
+    assert_equal({ pair: "en-ru", format: "webtoon", episode_number: 1, episode_level: "A2", guest: true },
+                 events.first[:properties].slice(:pair, :format, :episode_number, :episode_level, :guest))
+    assert_equal User.last.analytics_id, events.first[:distinct_id]
   end
 end

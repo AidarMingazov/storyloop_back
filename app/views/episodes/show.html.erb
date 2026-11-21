@@ -6,6 +6,7 @@
      data-reader-save-url-value="<%= user_words_path %>"
      data-reader-review-url-value="<%= review_path %>"
      data-reader-library-url-value="<%= root_path %>"
+     data-reader-signup-url-value="<%= new_registration_path %>"
      data-reader-episode-url-value="<%= episode_path("__ID__") %>">
   <script type="application/json" data-reader-target="payload"><%= json_escape(@payload.to_json).html_safe %></script>
 
