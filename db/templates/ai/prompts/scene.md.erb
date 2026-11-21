@@ -11,7 +11,8 @@ Return ONLY a JSON object, no prose, no markdown.
 
 # Fields (use only these values)
 - setting: <%= values["setting"].join(" | ") %>
-- place: <%= values["place"].join(" | ") %> — the closest one; "other" when nothing fits
+- place: <%= values["place"].join(" | ") %> — the closest one (museum also means an art gallery or an exhibition);
+  "other" when nothing fits
 - time: <%= values["time"].join(" | ") %> — from the light and the story when the prompt does not say
 - weather: <%= values["weather"].join(" | ") %> — the weather outside, also for interiors (rain on the window);
   "clear" when nothing is said

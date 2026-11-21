@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://storyloop.app/schemas/scene.json",
   "title": "Panel scene",
-  "description": "What one panel shows, as closed tags: panels.scene, written by Ai::Steps::Scene. Does not depend on the language: a translated episode copies it with its panels. The motion player (wave M, docs/motion-research.md) turns the tags into camera moves, weather effects and ambient sound by rules. A new field or value is a new version.",
+  "description": "What one panel shows, as closed tags: panels.scene, written by Ai::Steps::Scene. Does not depend on the language: a translated episode copies it with its panels. The motion player (wave M, docs/motion-research.md) turns the tags into camera moves, weather effects and ambient sound by rules. New values may be added within a version (old tags stay valid); a new field or a removed or renamed value is a new version.",
   "type": "object",
   "required": ["v", "setting", "place", "time", "weather", "light", "mood", "shot"],
   "additionalProperties": false,
@@ -10,8 +10,9 @@
     "v": { "const": 1 },
     "setting": { "enum": ["interior", "exterior"] },
     "place": {
-      "enum": ["home", "cafe", "restaurant", "shop", "office", "school", "hospital", "transport", "street", "city", "park",
-               "nature", "forest", "mountain", "water", "beach", "village", "palace", "fantasy", "other"]
+      "enum": ["home", "cafe", "restaurant", "shop", "office", "school", "hospital", "museum", "transport", "street", "city",
+               "park", "nature", "forest", "mountain", "water", "beach", "village", "palace", "fantasy", "other"],
+      "description": "museum also covers art galleries and exhibitions"
     },
     "time": { "enum": ["morning", "day", "evening", "night"] },
     "weather": { "enum": ["clear", "cloudy", "rain", "storm", "snow", "fog", "wind"], "description": "Outside, also for interiors" },

@@ -7,6 +7,7 @@ class PanelSceneTest < ActiveSupport::TestCase
   test "values and fields come from the schema" do
     assert_equal %w[close medium wide], PanelScene.values(:shot)
     assert_includes PanelScene.values("elements"), "petals"
+    assert_includes PanelScene.values("place"), "museum", "galleries were tagged \"other\" before"
     assert_equal %w[setting place time weather light mood shot focus elements], PanelScene.fields
     assert_raises(ArgumentError) { PanelScene.values("smell") }
   end
