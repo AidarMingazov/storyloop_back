@@ -1,0 +1,52 @@
+# Series template for the AI pipeline (wave 6 research draft, 2026-11-21).
+# Maps 1:1 to `series` in config/schemas/episode.json; `voice` ids are MiniMax system voices (see ../voices.yml).
+# `sheet` = character reference image produced once by Seedream and passed as reference to every panel.
+language_pair: ko-en
+series:
+  slug: office-crush
+  title: "Office Crush · 사내 연애"
+  genre: office romance
+  tone: >-
+    Light, warm, a bit funny; romance is slow-burn (glances, misunderstandings, small kindness), nothing explicit.
+  cefr_level: A2
+  description: >-
+    Seoyeon starts her first job as a junior designer at a busy Seoul marketing agency. Her new team
+    leader Dohyun is cold, strict and annoyingly handsome. Her best friend and coworker Mina is sure
+    there is more to him than that.
+  # art_style: drawing style only (used for character sheets, no locations/lighting so sheets stay clean)
+  art_style: >-
+    Modern Korean romance webtoon style: clean thin line art, soft cel shading with gentle gradients,
+    glossy expressive eyes, delicate pastel palette.
+  style_prompt: >-
+    Modern Korean romance webtoon style: clean thin line art, soft cel shading with gentle gradients,
+    glossy expressive eyes, delicate pastel palette (blush pink, cream, soft navy), warm soft lighting with
+    light bloom and sparkles in emotional moments; contemporary Seoul office interiors, glass meeting rooms,
+    cafés, rooftop at dusk. Vertical webtoon panel composition, cinematic framing.
+    No text, letters, numbers, logos, signs with writing, captions or speech bubbles anywhere in the image.
+  characters:
+    - key: seoyeon
+      name: Seoyeon
+      protagonist: true
+      voice: Korean_SweetGirl
+      sheet: characters/seoyeon.jpeg
+      appearance_prompt: >-
+        Korean woman, 26, petite, long wavy chestnut-brown hair usually in a low half-up ponytail with a
+        small pearl clip, big round dark-brown eyes, light freckles on the nose; office look: oversized
+        cream knit cardigan over a light-blue collared blouse, beige wide trousers, white sneakers, ID badge
+        on a mint lanyard. Earnest, a bit clumsy, expressive face.
+    - key: dohyun
+      name: Dohyun
+      voice: Korean_ColdYoungMan
+      sheet: characters/dohyun.jpeg
+      appearance_prompt: >-
+        Korean man, 31, tall and slim, neat black hair with a soft side part and slightly long fringe,
+        sharp narrow eyes, thin silver-rimmed glasses, small mole under the left eye; charcoal slim suit,
+        white shirt with top button open, no tie, silver watch. Calm, cool expression, rare small smile.
+    - key: mina
+      name: Mina
+      voice: Korean_CheerfulLittleSister
+      sheet: characters/mina.jpeg
+      appearance_prompt: >-
+        Korean woman, 27, short black bob with blunt bangs, cat-eye eyeliner, small gold hoop earrings;
+        mustard-yellow sweater, black pleated midi skirt, chunky loafers, always holding an iced coffee.
+        Playful, gossipy, loyal best friend energy.

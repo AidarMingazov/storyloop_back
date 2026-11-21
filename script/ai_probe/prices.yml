@@ -15,8 +15,12 @@ anthropic:
   claude-sonnet-5-5: { input: 3.00, output: 15.00 }
 openrouter: {}      # OpenRouter returns usage.cost itself
 byteplus:
-  # Not on the docs page; ~$0.035–0.045/image by third parties. Fix after the first bill in the ModelArk console.
-  default:          { image: 0.045, extra_reference: 0.003 }
+  # ModelArk console → Model activation, 2026-11-21. Free quota is used first (4.5: 200 imgs, 5.0-lite: 50).
+  seedream-4-5-251128:          { image: 0.040, extra_reference: 0.0 }
+  seedream-5-0-lite-260128:     { image: 0.035, extra_reference: 0.0 }
+  dola-seedream-5-0-pro-260628: { image: 0.045, extra_reference: 0.003 }  # 0.045–0.090 by size; 1st ref free
+  dola-seedream-5-5-261028:     { image: 0.020, extra_reference: 0.008 }  # 0.020–0.035 by size
+  default:                      { image: 0.045, extra_reference: 0.003 }
 minimax:
   # https://platform.minimax.io/docs/guides/pricing-speech — billed by extra_info.usage_characters
   speech-2.8-turbo: { per_million_chars: 60 }

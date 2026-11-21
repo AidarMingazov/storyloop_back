@@ -15,13 +15,13 @@ refs = ARGV[1..].to_a.map do |ref|
   "data:image/#{ext};base64,#{Base64.strict_encode64(File.binread(ref))}"
 end
 
-model = ENV.fetch("SEEDREAM_MODEL", "seedream-5-0-260128")
+model = ENV.fetch("SEEDREAM_MODEL", "seedream-4-5-251128")
 base = ENV.fetch("ARK_BASE_URL", "https://ark.ap-southeast.bytepluses.com/api/v3")
 body = { model: model, prompt: prompt, size: ENV.fetch("SIZE", "1728x2160"), response_format: "url", watermark: false }
 body[:image] = refs.one? ? refs.first : refs if refs.any?
 
 res, sec = Probe.post_json("#{base}/images/generations", body, "Authorization" => "Bearer #{Probe.key!('ARK_API_KEY')}")
-p = Probe.price("byteplus", "default")
+p = Probe.price("byteplus", model).then { _1.empty? ? Probe.price("byteplus", "default") : _1 }
 images = res["data"].to_a
 cost = images.size * p["image"] + [ refs.size - 1, 0 ].max * p["extra_reference"]
 

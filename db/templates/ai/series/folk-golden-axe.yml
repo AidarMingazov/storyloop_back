@@ -1,0 +1,50 @@
+# Korean folk tale (public domain) retold for A1 learners — "starter" series idea: learners already know the plot.
+# One tale = one series of 1–2 episodes. Same format as office-romance.yml.
+language_pair: ko-en
+series:
+  slug: golden-axe
+  title: "The Golden Axe · 금도끼 은도끼"
+  genre: Korean folk tale
+  cefr_level: A1
+  tone: >-
+    Retell the well-known Korean folk tale 금도끼 은도끼 faithfully and simply, like a picture book for adults
+    learning Korean: warm, gently funny, a clear moral (honesty is rewarded, greed is punished).
+    The whole tale fits in one episode and ends with the moral instead of a cliffhanger.
+  description: >-
+    An honest, poor woodcutter drops his old iron axe into a mountain pond. A mountain spirit rises from the
+    water holding a golden axe and a silver axe. His greedy neighbor hears the story and tries the same trick.
+  art_style: >-
+    Korean storybook webtoon style: soft watercolor textures with clean ink outlines, warm earthy palette
+    (pine green, persimmon orange, hanji beige), rounded friendly character design.
+  style_prompt: >-
+    Korean storybook webtoon style: soft watercolor textures with clean ink outlines, warm earthy palette
+    (pine green, persimmon orange, hanji beige), rounded friendly character design; Joseon-era countryside,
+    pine forests, misty mountains, a clear mountain pond, thatched-roof village houses; gentle morning light,
+    magical glow around the mountain spirit. Vertical webtoon panel composition.
+    No text, letters, numbers, signs, captions or speech bubbles anywhere in the image.
+  characters:
+    - key: woodcutter
+      name: Woodcutter
+      protagonist: true
+      voice: Korean_InnocentBoy
+      sheet: characters/woodcutter.jpeg
+      appearance_prompt: >-
+        Young Korean woodcutter of the Joseon era, about 25, kind round face, tanned skin, short topknot
+        tied with a cloth band, patched off-white hanbok jeogori and baji with rolled-up sleeves, straw sandals,
+        a wooden A-frame carrier (jige) on his back. Honest, shy smile.
+    - key: spirit
+      name: Mountain Spirit
+      voice: Korean_WiseTeacher
+      sheet: characters/spirit.jpeg
+      appearance_prompt: >-
+        Korean mountain spirit (sansillyeong): very old man with a long flowing white beard and white eyebrows,
+        kind twinkling eyes, white and pale-blue layered robes, a gnarled wooden staff, a soft silver glow
+        around him. Wise, playful, a little mischievous.
+    - key: neighbor
+      name: Neighbor
+      voice: Korean_CockyGuy
+      sheet: characters/neighbor.jpeg
+      appearance_prompt: >-
+        Greedy Korean villager of the Joseon era, about 40, plump, thin curled mustache, narrow sly eyes,
+        brown silk-looking hanbok vest over a gray jeogori, black gat hat, shiny new axe in hand.
+        Smug grin, rubbing his hands.

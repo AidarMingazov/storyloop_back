@@ -1,0 +1,10 @@
+# MiniMax system voices per character (draft, 2026-11-21). Model: speech-2.8-turbo, language_boost: Korean.
+# Picked by ear for a first pass; revisit after the first full episode. Full list: Korean_* in
+# https://platform.minimax.io/docs/faq/system-voice-id
+ko:
+  female_lead_20s:   Korean_SweetGirl            # Jisoo; alt: Korean_ChildhoodFriendGirl, Korean_CalmLady
+  male_lead_20s:     Korean_CheerfulBoyfriend    # Minho; alt: Korean_ReliableYouth, Korean_OptimisticYouth
+  big_sister_30s:    Korean_FriendlyBigSister    # Yuna
+  boss_male_40s:     Korean_GentleBoss           # Team Leader Kim; alt: Korean_StrictBoss
+  young_staff:       Korean_EnthusiasticTeen     # Clerk (not auditioned yet)
+  narrator:          Korean_CalmLady             # narration bubbles (not auditioned yet)

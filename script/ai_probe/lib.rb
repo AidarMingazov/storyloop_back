@@ -54,6 +54,36 @@ module Probe
     [ parsed, seconds ]
   end
 
+  OPENAI_COMPATIBLE = {
+    "deepseek" => [ "https://api.deepseek.com/chat/completions", "DEEPSEEK_API_KEY" ],
+    "openrouter" => [ "https://openrouter.ai/api/v1/chat/completions", "OPENROUTER_API_KEY" ]
+  }.freeze
+
+  # Chat call with JSON mode. messages: [{role:, content:}]. Returns [text, usage_hash, seconds, cost_usd].
+  def chat(provider, model, messages, max_tokens: 16_000, temperature: 0.7)
+    url, key_name = OPENAI_COMPATIBLE.fetch(provider)
+    body = { model: model, messages: messages, response_format: { type: "json_object" },
+             temperature: temperature, max_tokens: max_tokens }
+    body[:usage] = { include: true } if provider == "openrouter"
+    res, sec = post_json(url, body, { "Authorization" => "Bearer #{key!(key_name)}" }, 600)
+    u = res["usage"] || {}
+    usage = { input: u["prompt_tokens"].to_i, output: u["completion_tokens"].to_i,
+              cached: (u["prompt_cache_hit_tokens"] || u.dig("prompt_tokens_details", "cached_tokens")).to_i,
+              reasoning: u.dig("completion_tokens_details", "reasoning_tokens") }
+    cost = if u["cost"]
+      u["cost"].to_f
+    elsif (p = price(provider, model)).any?
+      factor = provider == "deepseek" && !deepseek_peak? ? 0.5 : 1.0
+      ((usage[:input] - usage[:cached]) * p["input"] + usage[:cached] * p.fetch("input_cached", p["input"]) +
+        usage[:output] * p["output"]) / 1e6 * factor
+    end
+    [ res.dig("choices", 0, "message", "content").to_s, usage, sec, cost ]
+  end
+
+  def parse_json(text)
+    JSON.parse(text.sub(/\A\s*```(?:json)?\s*/, "").sub(/```\s*\z/, ""))
+  end
+
   def download(url, path)
     FileUtils.mkdir_p(File.dirname(path))
     File.binwrite(path, Net::HTTP.get(URI(url)))
@@ -61,8 +91,8 @@ module Probe
   end
 
   def save(name, bytes)
-    FileUtils.mkdir_p(OUT)
     path = File.join(OUT, name)
+    FileUtils.mkdir_p(File.dirname(path))
     File.binwrite(path, bytes)
     path
   end

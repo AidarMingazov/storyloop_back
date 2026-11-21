@@ -47,7 +47,8 @@ if provider == "anthropic"
   usage = { input: res.dig("usage", "input_tokens"), output: res.dig("usage", "output_tokens"), cached: res.dig("usage", "cache_read_input_tokens").to_i }
 else
   body = { model: model, messages: [ { role: "system", content: system }, { role: "user", content: user } ],
-           response_format: { type: "json_object" }, temperature: 0.3 }
+           response_format: { type: "json_object" }, temperature: 0.3,
+           max_tokens: ENV.fetch("MAX_TOKENS", "8000").to_i } # OpenRouter reserves credits for max_tokens
   body[:usage] = { include: true } if provider == "openrouter"
   res, sec = Probe.post_json(cfg[:url].call, body, "Authorization" => "Bearer #{key}")
   text = res.dig("choices", 0, "message", "content").to_s
