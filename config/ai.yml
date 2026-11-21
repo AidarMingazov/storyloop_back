@@ -18,7 +18,11 @@ shared:
     images: { provider: seedream, model: seedream-4-5-251128 }
     sheets: { provider: seedream, model: seedream-4-5-251128 }
     photo_sheets: { provider: seedream, model: seedream-5-0-lite-260128 }
-    audio: { provider: minimax, model: speech-2.8-turbo }
+    audio:
+      provider: minimax
+      model: speech-2.8-turbo
+      # characters without a voice, narration without series.narrator_voice, dictionary forms of words
+      voices: { ko: Korean_CalmLady, en: English_CalmWoman }
     stt: { provider: fake } # 7.12: provider not chosen yet
 
   providers:

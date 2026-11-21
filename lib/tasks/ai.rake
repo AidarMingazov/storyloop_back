@@ -109,6 +109,17 @@ namespace :ai do
     summary["unresolved"].each { |id, problems| puts "unresolved #{id}: #{problems.join('; ')}" }
   end
 
+  desc "Step 5 \"Audio\": SERIES=golden-axe NUMBER=1 [FORCE=1 to re-record bubbles] — bubbles + new dictionary forms"
+  task audio: :environment do
+    series = Series.find_by!(slug: ENV.fetch("SERIES") { abort "SERIES=<slug> is required" })
+    episode = series.episodes.find_by!(number: ENV.fetch("NUMBER") { abort "NUMBER=<episode number> is required" })
+    summary = Ai::Steps::Audio.call(episode, force: ENV["FORCE"].present?)
+    log = episode.generation_logs.where(step: "audio").order(:id).last
+    puts "#{series.slug} ##{episode.number}: #{summary['bubbles']} bubbles, #{summary['lemmas']} lemmas, #{log.characters} chars, " \
+         "#{log.duration_ms} ms, $#{format('%.4f', log.cost_usd)}"
+    summary["failed"].each { |name, error| puts "FAILED #{name}: #{error}" }
+  end
+
   desc "Generate character sheets with the image model (~$0.04 each): SERIES=golden-axe [CHARACTERS=woodcutter,spirit] " \
        "[FORCE=1 to redo existing sheets]"
   task sheets: :environment do

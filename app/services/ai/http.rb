@@ -40,6 +40,9 @@ module Ai
     end
 
     # Raw bytes (generated images and audio are downloaded right away: provider URLs expire).
+    # For adapters whose provider reports rate limits inside a 200 response (MiniMax).
+    def pause(seconds) = @sleeper.call(seconds)
+
     def get(url, timeout: 120)
       perform(Request.new(method: :get, url:, headers: {}, body: nil, timeout:)).body
     end

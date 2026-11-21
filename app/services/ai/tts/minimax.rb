@@ -7,6 +7,7 @@ module Ai
       LANGUAGES = { "ko" => "Korean", "en" => "English", "ja" => "Japanese", "zh" => "Chinese", "ru" => "Russian",
                     "es" => "Spanish", "fr" => "French", "de" => "German", "it" => "Italian", "pt" => "Portuguese" }.freeze
       EMOTIONS = %w[happy sad angry fearful disgusted surprised calm].freeze
+      RATE_LIMIT_WAITS = [ 3, 8, 20, 30 ].freeze # seconds; the RPM window is one minute
       ERRORS = { 1002 => RateLimited, 1004 => Unauthorized, 1008 => InsufficientBalance, 1026 => ContentRejected,
                  1027 => ContentRejected, 1039 => RateLimited }.freeze
 
@@ -28,9 +29,7 @@ module Ai
         body[:language_boost] = LANGUAGES[language.to_s] if LANGUAGES.key?(language.to_s)
 
         started = Process.clock_gettime(Process::CLOCK_MONOTONIC)
-        data = @http.post_json("#{@settings.fetch('base_url')}/v1/t2a_v2", body,
-                               headers: { "Authorization" => "Bearer #{@api_key}" }, timeout: @settings.fetch("timeout", 120))
-        check!(data)
+        data = request(body)
         hex = data.dig("data", "audio").presence || raise(InvalidResponse.new("#{provider}: empty audio", provider:))
         duration_ms = ((Process.clock_gettime(Process::CLOCK_MONOTONIC) - started) * 1000).round
         info = data["extra_info"] || {}
@@ -45,9 +44,24 @@ module Ai
 
       private
 
+      # Rate limits come as HTTP 200 with status 1002/1039, so Ai::Http does not retry them: wait and retry here.
+      def request(body)
+        RATE_LIMIT_WAITS.each do |seconds|
+          return check!(post(body))
+        rescue RateLimited
+          @http.pause(seconds)
+        end
+        check!(post(body))
+      end
+
+      def post(body)
+        @http.post_json("#{@settings.fetch('base_url')}/v1/t2a_v2", body,
+                        headers: { "Authorization" => "Bearer #{@api_key}" }, timeout: @settings.fetch("timeout", 120))
+      end
+
       def check!(data)
         code = data.dig("base_resp", "status_code").to_i
-        return if code.zero?
+        return data if code.zero?
 
         message = data.dig("base_resp", "status_msg")
         raise ERRORS.fetch(code, ProviderError).new("#{provider}: #{code} #{message}", provider:, status: code,

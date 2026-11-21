@@ -47,9 +47,18 @@ class Ai::Tts::MinimaxTest < ActiveSupport::TestCase
   test "errors in base_resp with HTTP 200 become typed errors" do
     { 1008 => Ai::InsufficientBalance, 1002 => Ai::RateLimited, 1004 => Ai::Unauthorized, 1026 => Ai::ContentRejected,
       2013 => Ai::ProviderError }.each do |code, klass|
-      transport = FakeTransport.new(json_response({ "base_resp" => { "status_code" => code, "status_msg" => "nope" } }))
-      error = assert_raises(klass) { adapter(transport).speak(text: "x", voice: "v") }
+      responses = Array.new(code == 1002 ? 5 : 1) { json_response({ "base_resp" => { "status_code" => code, "status_msg" => "nope" } }) }
+      error = assert_raises(klass) { adapter(FakeTransport.new(*responses)).speak(text: "x", voice: "v") }
       assert_equal code, error.status
     end
+    assert_equal [ 3, 8, 20, 30 ], sleeps, "a rate limit is retried 4 times before giving up"
+  end
+
+  test "a rate limit inside a 200 response is waited out" do
+    limited = json_response({ "base_resp" => { "status_code" => 1002, "status_msg" => "rate limit exceeded(RPM)" } })
+    result = adapter(FakeTransport.new(limited, limited, spoken)).speak(text: "안녕", voice: "v")
+
+    assert_equal MP3, result.audio.read
+    assert_equal [ 3, 8 ], sleeps
   end
 end
