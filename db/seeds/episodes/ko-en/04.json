@@ -1017,6 +1017,7 @@
       },
       {
         "image_prompt": "Late afternoon at the office in warm orange light: Team Leader Kim, wearing his coat, gives a small nod on his way out; Jisoo, packing her bag, stands up and bows politely.",
+        "image": "media/04/panel-06.webp",
         "layout": {
           "aspect_ratio": 0.85
         },
@@ -1166,6 +1167,7 @@
       },
       {
         "image_prompt": "Evening on a crowded subway train: Jisoo and Yuna stand side by side holding the hand straps and chatting, city lights blurring past the windows.",
+        "image": "media/04/panel-07.webp",
         "layout": {
           "aspect_ratio": 0.8
         },
@@ -1343,6 +1345,7 @@
       },
       {
         "image_prompt": "Close-up on the subway: Yuna claps her hands together with a delighted expression; Jisoo smiles next to her, a little surprised.",
+        "image": "media/04/panel-08.webp",
         "layout": {
           "aspect_ratio": 0.9
         },
@@ -1506,6 +1509,7 @@
       },
       {
         "image_prompt": "The familiar hallway of Jisoo's red-brick building at night: Yuna stops in front of the door right next to Jisoo's apartment and presses the doorbell; behind her Jisoo freezes, wide-eyed, looking from one door to the other.",
+        "image": "media/04/panel-09.webp",
         "layout": {
           "aspect_ratio": 0.8
         },
@@ -1676,6 +1680,7 @@
       },
       {
         "image_prompt": "The door swings open: Minho in his gray hoodie and slippers, holding a bag of snacks, freezes in shock as he sees Yuna and, right behind her, Jisoo; dramatic speed lines, comedic surprise.",
+        "image": "media/04/panel-10.webp",
         "layout": {
           "aspect_ratio": 0.75
         },

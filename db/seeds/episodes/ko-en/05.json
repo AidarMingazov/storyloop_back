@@ -70,6 +70,7 @@
     "panels": [
       {
         "image_prompt": "Soft watercolor book illustration, landscape: evening in the narrow hallway of a small red-brick apartment building in Sinchon. Minho (gray hoodie, black joggers, slippers, a bag of snacks in one hand) stands frozen in his open doorway; in front of him are his older sister Yuna (chin-length bob, beige blouse, office ID lanyard) and, just behind her, Jisoo (navy blazer, white blouse, small tan crossbody bag). All three stare at each other wide-eyed. Warm lamplight, gentle comedic surprise. No text, letters or speech bubbles in the image.",
+        "image": "media/05/panel-01.webp",
         "layout": {
           "aspect_ratio": 1.4
         },
@@ -1074,6 +1075,7 @@
       },
       {
         "image_prompt": "Soft watercolor book illustration, landscape: inside Minho's small, slightly messy studio apartment in the evening. Minho in his gray hoodie holds the fridge door open with a sheepish grin; the fridge is almost empty except for two water bottles, and a tall stack of instant ramen packs sits on the kitchen shelf next to it. Yuna, hands on her hips, gives him a teasing big-sister look, while Jisoo, still in her navy blazer, laughs behind them. Warm, cozy light. No text, letters or labels in the image.",
+        "image": "media/05/panel-04.webp",
         "layout": {
           "aspect_ratio": 1.4
         },
@@ -1735,6 +1737,7 @@
       },
       {
         "image_prompt": "Soft watercolor book illustration, landscape: Minho, Yuna and Jisoo sit on floor cushions around a low folding table in Minho's small apartment, sharing delivery food: a wide bowl of glossy red tteokbokki and a box of golden fried chicken. Minho, red-faced, fans his open mouth with one hand; Jisoo, also flushed, holds a cup of water; Yuna laughs, chopsticks in hand. Soft steam, warm lamplight, cozy and funny. No text, letters or logos in the image.",
+        "image": "media/05/panel-06.webp",
         "layout": {
           "aspect_ratio": 1.5
         },
@@ -2711,6 +2714,7 @@
       },
       {
         "image_prompt": "Soft watercolor book illustration, landscape: the quiet hallway of the red-brick building at night, two apartment doors side by side with warm light spilling out. Jisoo (navy blazer, tan crossbody bag) stands at her own door, turning back with a surprised, slightly flustered look; Minho in his gray hoodie leans out of the next door, rubbing the back of his neck with a shy smile; inside behind him, Yuna waves goodbye. Soft blue night tones with warm yellow doorway light. No text, letters or numbers in the image.",
+        "image": "media/05/panel-08.webp",
         "layout": {
           "aspect_ratio": 1.3
         },
